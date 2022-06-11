@@ -1,5 +1,6 @@
 package com.ddgotxdy.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ddgotxdy.entity.Tag;
 import com.ddgotxdy.mapper.TagMapper;
 import com.ddgotxdy.service.TagService;
@@ -28,6 +29,14 @@ public class TagServiceImpl implements TagService {
         return Result.success(copyList(tagList));
     }
 
+    @Override
+    public Result hot(int limit) {
+        // 按所有标签分组，计数，从大到小排序
+        List<Long> hotsTagIds = tagMapper.selectHotsTagIds(limit);
+        // 查找tag对象
+        List<Tag> tagList = tagMapper.selectBatchIds(hotsTagIds);
+        return Result.success(tagList);
+    }
 
     private TagVO copy(Tag tag){
         TagVO tagVO = new TagVO();

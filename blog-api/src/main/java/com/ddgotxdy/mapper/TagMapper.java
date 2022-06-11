@@ -18,4 +18,10 @@ public interface TagMapper extends BaseMapper<Tag> {
      */
     List<Tag> selectTagsByArticleId(Long articleId);
 
+    /**
+     * 按所有标签分组，计数，从大到小排序
+     * @param limit 前limit条数据
+     * @return List<Long>
+     */
+    List<Long> selectHotsTagIds(int limit);
 }

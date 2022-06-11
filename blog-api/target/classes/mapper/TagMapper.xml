@@ -9,4 +9,11 @@
             (select tag_id from ms_article_tag where article_id = #{articleId})
         </where>
     </select>
+    <select id="selectHotsTagIds" resultType="java.lang.Long">
+        select tag_id
+        from ms_article_tag at
+        group by tag_id
+        order by count(1) desc
+        limit #{limit}
+    </select>
 </mapper>

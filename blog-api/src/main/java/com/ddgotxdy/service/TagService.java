@@ -1,6 +1,9 @@
 package com.ddgotxdy.service;
 
 import com.ddgotxdy.vo.Result;
+import com.ddgotxdy.vo.TagVO;
+
+import java.util.List;
 
 /**
  * @author: ddgo
@@ -14,4 +17,11 @@ public interface TagService {
      * @return List<TagVO>
      */
     Result findTagsByArticleId(Long id);
+
+    /**
+     * 查询前几个最热标签
+     * @param limit 限制个数
+     * @return Result
+     */
+    Result hot(int limit);
 }
