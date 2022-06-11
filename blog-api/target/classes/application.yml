@@ -7,7 +7,7 @@ spring:
   # 数据源
   datasource:
     url: jdbc:mysql://182.92.216.59:3306/blog?useUnicode=true&characterEncoding=UTF-8&serverTimeZone=UTC
-    username: ddgo
+    username: root
     password: 1314520ASD@
     driver-class-name: com.mysql.cj.jdbc.Driver
 
@@ -18,3 +18,4 @@ mybatis-plus:
   global-config:
     db-config:
       table-prefix: ms_ # 前缀
+  mapper-locations: classpath:mapper/*.xml
