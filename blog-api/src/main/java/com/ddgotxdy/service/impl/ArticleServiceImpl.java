@@ -2,6 +2,7 @@ package com.ddgotxdy.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.ddgotxdy.dos.Archives;
 import com.ddgotxdy.entity.Article;
 import com.ddgotxdy.entity.SysUser;
 import com.ddgotxdy.mapper.ArticleMapper;
@@ -79,6 +80,12 @@ public class ArticleServiceImpl implements ArticleService {
         queryWrapper.last("limit " + limit);
         List<Article> articleList = articleMapper.selectList(queryWrapper);
         return Result.success(copyList(articleList, false, false, false));
+    }
+
+    @Override
+    public Result listArchives() {
+        List<Archives> archivesList = articleMapper.listArchives();
+        return Result.success(archivesList);
     }
 
 
