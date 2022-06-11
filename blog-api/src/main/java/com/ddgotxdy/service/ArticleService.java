@@ -16,4 +16,10 @@ public interface ArticleService {
      */
     Result listArticle(PageParams pageParams);
 
+    /**
+     * 返回最热文章
+     * @param limit 前limit个
+     * @return Result
+     */
+    Result hotArticle(int limit);
 }

@@ -53,6 +53,20 @@ public class ArticleServiceImpl implements ArticleService {
         return Result.success(articleVOList);
     }
 
+    @Override
+    public Result hotArticle(int limit) {
+        // sql语句
+        LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+        // 按照浏览量排序
+        queryWrapper.orderByDesc(Article::getViewCounts);
+        // 选择文章的id和标题
+        queryWrapper.select(Article::getId, Article::getTitle);
+        // 最后添加 limit
+        queryWrapper.last("limit " + limit);
+        List<Article> articleList = articleMapper.selectList(queryWrapper);
+        return Result.success(copyList(articleList, false, false, false));
+    }
+
 
     private List<ArticleVO> copyList(List<Article> records, boolean isAuthor, boolean isBody, boolean isTags) {
         List<ArticleVO> articleVoList = new ArrayList<>();
