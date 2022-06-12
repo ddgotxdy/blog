@@ -6,9 +6,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
  * @author: ddgo
- * @dateTime: 2022/6/11 20:48
- * @version: 1.0.0
- * @description: 跨域配置
+ * @description: 跨域，拦截器配置
  */
 @Configuration
 public class WebConfig  implements WebMvcConfigurer {
@@ -19,4 +17,5 @@ public class WebConfig  implements WebMvcConfigurer {
         //本地测试 端口不一致 也算跨域
         registry.addMapping("/**").allowedOrigins("http://localhost:8080");
     }
+
 }
