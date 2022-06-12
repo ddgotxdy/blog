@@ -1,5 +1,6 @@
 package com.ddgotxdy.service;
 
+import com.ddgotxdy.entity.SysUser;
 import com.ddgotxdy.vo.Result;
 
 /**
@@ -20,4 +21,18 @@ public interface SysUserService {
      * @return Result
      */
     Result getUserInfoByToken();
+
+    /**
+     * 通过账户查找用户
+     * @param account 账户
+     * @return SysUser
+     */
+    Result findUserByAccount(String account);
+
+    /**
+     * 保存用户
+     * @param sysUser 具体用户
+     * @return Result
+     */
+    Result save(SysUser sysUser);
 }

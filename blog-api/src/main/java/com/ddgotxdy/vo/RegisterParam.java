@@ -1,17 +1,16 @@
 package com.ddgotxdy.vo;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 
 /**
  * @author: ddgo
- * @description: 登录参数
+ * @description: 注册需要的参数
  */
 @Data
-@AllArgsConstructor
-public class LoginParam {
-
+public class RegisterParam {
     private String account;
 
     private String password;
+
+    private String nickname;
 }

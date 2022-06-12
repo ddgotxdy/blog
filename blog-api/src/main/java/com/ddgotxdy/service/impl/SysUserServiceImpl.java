@@ -1,5 +1,6 @@
 package com.ddgotxdy.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ddgotxdy.entity.LoginUser;
 import com.ddgotxdy.entity.SysUser;
 import com.ddgotxdy.mapper.SysUserMapper;
@@ -39,4 +40,19 @@ public class SysUserServiceImpl implements SysUserService {
         loginUserVO.setNickname(loginUser.getUser().getNickname());
         return Result.success(loginUserVO);
     }
+
+    @Override
+    public Result findUserByAccount(String account) {
+        LambdaQueryWrapper<SysUser> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(SysUser::getAccount, account);
+        return Result.success(sysUserMapper.selectOne(queryWrapper));
+    }
+
+    @Override
+    public Result save(SysUser sysUser) {
+        sysUserMapper.insert(sysUser);
+        return Result.success(null);
+    }
+
+
 }

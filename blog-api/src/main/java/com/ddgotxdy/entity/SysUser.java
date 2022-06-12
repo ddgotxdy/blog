@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class SysUser {
 
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Long id;
 
     private String account;

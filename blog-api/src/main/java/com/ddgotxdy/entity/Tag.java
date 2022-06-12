@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class Tag {
 
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Long id;
 
     private String avatar;

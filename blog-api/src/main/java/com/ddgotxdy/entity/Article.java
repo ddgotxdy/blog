@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 public class Article {
-    @TableId(type = IdType.AUTO)
+    @TableId
     private Long id;
 
     private String title;
