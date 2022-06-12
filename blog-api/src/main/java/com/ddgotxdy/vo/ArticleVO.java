@@ -29,10 +29,15 @@ public class ArticleVO {
 
     private String author;
 
-//    private ArticleBodyVo body;
+    private ArticleBodyVO body;
 
+    /**
+     * 多个标签
+     */
     private List<TagVO> tags;
-
-//    private List<CategoryVo> categorys;
+    /**
+     * 一个分类
+     */
+    private CategoryVO category;
 
 }

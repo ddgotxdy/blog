@@ -35,4 +35,18 @@ public interface ArticleService {
      * @return Result
      */
     Result listArchives();
+
+    /**
+     * 根据博客id返回博客
+     * @param id 博客id
+     * @return Result
+     */
+    Result findArticleById(Long id);
+
+    /**
+     * 根据博客id返回博客neirong
+     * @param id 博客id
+     * @return Result
+     */
+    Result findArticleBodyById(Long id);
 }

@@ -4,16 +4,16 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ddgotxdy.dos.Archives;
 import com.ddgotxdy.entity.Article;
+import com.ddgotxdy.entity.ArticleBody;
 import com.ddgotxdy.entity.SysUser;
+import com.ddgotxdy.mapper.ArticleBodyMapper;
 import com.ddgotxdy.mapper.ArticleMapper;
 import com.ddgotxdy.mapper.TagMapper;
 import com.ddgotxdy.service.ArticleService;
+import com.ddgotxdy.service.CategoryService;
 import com.ddgotxdy.service.SysUserService;
 import com.ddgotxdy.service.TagService;
-import com.ddgotxdy.vo.ArticleVO;
-import com.ddgotxdy.vo.PageParams;
-import com.ddgotxdy.vo.Result;
-import com.ddgotxdy.vo.TagVO;
+import com.ddgotxdy.vo.*;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +35,10 @@ public class ArticleServiceImpl implements ArticleService {
     private TagService tagService;
     @Autowired
     private SysUserService sysUserService;
+    @Autowired
+    private ArticleBodyMapper articleBodyMapper;
+    @Autowired
+    private CategoryService categoryService;
 
     @Override
     public Result listArticle(PageParams pageParams) {
@@ -88,30 +92,56 @@ public class ArticleServiceImpl implements ArticleService {
         return Result.success(archivesList);
     }
 
+    @Override
+    public Result findArticleById(Long id) {
+        Article article = articleMapper.selectById(id);
+        return Result.success(copy(article,true,true,true, true));
+    }
+
+    @Override
+    public Result findArticleBodyById(Long id) {
+        ArticleBody articleBody = articleBodyMapper.selectById(id);
+        ArticleBodyVO articleBodyVO = new ArticleBodyVO();
+        articleBodyVO.setContent(articleBody.getContent());
+        return Result.success(articleBodyVO);
+    }
+
 
     private List<ArticleVO> copyList(List<Article> records, boolean isAuthor, boolean isBody, boolean isTags) {
         List<ArticleVO> articleVoList = new ArrayList<>();
         for (Article article : records) {
-            ArticleVO articleVO = copy(article, isAuthor, isBody, isTags);
+            ArticleVO articleVO = copy(article, isAuthor, isBody, isTags, false);
             articleVoList.add(articleVO);
         }
         return articleVoList;
     }
 
-    private ArticleVO copy(Article article, boolean isAuthor, boolean isBody, boolean isTags) {
+    private ArticleVO copy(Article article, boolean isAuthor, boolean isBody, boolean isTags, boolean isCategory) {
         ArticleVO articleVO = new ArticleVO();
         // 把两个对象中相同字段进行赋值
         BeanUtils.copyProperties(article, articleVO);
         articleVO.setCreateDate(new DateTime(article.getCreateDate()).toString("yyyy-MM-dd HH:mm"));
+        // 是否显示标签
         if(isTags) {
             Long articleId = article.getId();
             List<TagVO> tagVOList = (List<TagVO>) tagService.findTagsByArticleId(articleId).getData();
             articleVO.setTags(tagVOList);
         }
+        // 是否显示作者
         if(isAuthor) {
             Long authorId = article.getAuthorId();
             SysUser sysUser = (SysUser) sysUserService.findUserById(authorId).getData();
             articleVO.setAuthor(sysUser.getNickname());
+        }
+        // 是否显示body
+        if(isBody) {
+            Long bodyId = article.getBodyId();
+            articleVO.setBody((ArticleBodyVO) findArticleBodyById(bodyId).getData());
+        }
+        // 是否显示分类
+        if(isCategory) {
+            Long categoryId = article.getCategoryId();
+            articleVO.setCategory((CategoryVO) categoryService.findCategoryById(categoryId).getData());
         }
 
         return articleVO;

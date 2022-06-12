@@ -4,10 +4,7 @@ import com.ddgotxdy.service.ArticleService;
 import com.ddgotxdy.vo.PageParams;
 import com.ddgotxdy.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author: ddgo
@@ -55,5 +52,17 @@ public class ArticleController {
     public Result listArchives(){
         return articleService.listArchives();
     }
+
+
+    /**
+     * 返回博客的具体内容
+     * @param id 博客id
+     * @return Result
+     */
+    @PostMapping("/view/{id}")
+    public Result findArticleById(@PathVariable("id") Long id) {
+        return articleService.findArticleById(id);
+    }
+
 
 }
