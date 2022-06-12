@@ -43,10 +43,8 @@ public class LoginServiceImpl implements LoginService {
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
         String userId = loginUser.getUser().getId().toString();
         String jwt = JwtUtil.createJWT(userId);
-        Map<String,String> map = new HashMap<>(16);
-        map.put("token",jwt);
         // 把完整的用户信息存入redis  userid作为key
         redisCache.setCacheObject(RedisPrefix.LOGIN + userId, loginUser);
-        return Result.success("登录成功", map);
+        return Result.success("登录成功", jwt);
     }
 }

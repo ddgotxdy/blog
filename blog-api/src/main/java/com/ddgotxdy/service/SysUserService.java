@@ -1,6 +1,5 @@
 package com.ddgotxdy.service;
 
-import com.ddgotxdy.entity.SysUser;
 import com.ddgotxdy.vo.Result;
 
 /**
@@ -16,4 +15,9 @@ public interface SysUserService {
      */
     Result findUserById(Long id);
 
+    /**
+     * 返回用户信息
+     * @return Result
+     */
+    Result getUserInfoByToken();
 }
