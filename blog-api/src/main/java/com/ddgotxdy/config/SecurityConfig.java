@@ -1,6 +1,8 @@
 package com.ddgotxdy.config;
 
 import com.ddgotxdy.filter.JwtAuthenticationTokenFilter;
+import com.ddgotxdy.handler.MyLogoutHandler;
+import com.ddgotxdy.handler.MyLogoutSuccessHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -14,6 +16,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutFilter;
 
 /**
  * @author: ddgo
@@ -42,6 +45,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private AccessDeniedHandler accessDeniedHandler;
 
+    @Autowired
+    private MyLogoutHandler myLogoutHandler;
+
+    @Autowired
+    private MyLogoutSuccessHandler myLogoutSuccessHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -58,8 +67,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             // 除上面外的所有请求全部需要鉴权认证
 //            .anyRequest().authenticated();
 
-        // 添加过滤器
-        http.addFilterBefore(jwtAuthenticationTokenFilter, UsernamePasswordAuthenticationFilter.class);
+        // 添加过滤器,在登出之前
+        http.addFilterBefore(jwtAuthenticationTokenFilter, LogoutFilter.class);
+
+        // 添加登出处理
+        http
+                .logout()
+                .addLogoutHandler(myLogoutHandler)
+                .logoutSuccessHandler(myLogoutSuccessHandler);
 
         // 配置异常处理器
         http.exceptionHandling()
