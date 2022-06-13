@@ -35,4 +35,12 @@ public interface SysUserService {
      * @return Result
      */
     Result save(SysUser sysUser);
+
+    /**
+     * 根据用户id查询用户视图信息
+     * @param id 用户id
+     * @return Result
+     */
+    Result findUserVoById(Long id);
+
 }

@@ -9,10 +9,7 @@ import com.ddgotxdy.entity.SysUser;
 import com.ddgotxdy.mapper.ArticleBodyMapper;
 import com.ddgotxdy.mapper.ArticleMapper;
 import com.ddgotxdy.mapper.TagMapper;
-import com.ddgotxdy.service.ArticleService;
-import com.ddgotxdy.service.CategoryService;
-import com.ddgotxdy.service.SysUserService;
-import com.ddgotxdy.service.TagService;
+import com.ddgotxdy.service.*;
 import com.ddgotxdy.vo.*;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
@@ -39,6 +36,8 @@ public class ArticleServiceImpl implements ArticleService {
     private ArticleBodyMapper articleBodyMapper;
     @Autowired
     private CategoryService categoryService;
+    @Autowired
+    private ThreadService threadService;
 
     @Override
     public Result listArticle(PageParams pageParams) {
@@ -95,7 +94,9 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     public Result findArticleById(Long id) {
         Article article = articleMapper.selectById(id);
-        return Result.success(copy(article,true,true,true, true));
+        ArticleVO articleVO = copy(article, true, true, true, true);
+        threadService.updateViewCount(article);
+        return Result.success(articleVO);
     }
 
     @Override

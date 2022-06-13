@@ -7,6 +7,8 @@ import com.ddgotxdy.mapper.SysUserMapper;
 import com.ddgotxdy.service.SysUserService;
 import com.ddgotxdy.vo.LoginUserVO;
 import com.ddgotxdy.vo.Result;
+import com.ddgotxdy.vo.UserVO;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -52,6 +54,14 @@ public class SysUserServiceImpl implements SysUserService {
     public Result save(SysUser sysUser) {
         sysUserMapper.insert(sysUser);
         return Result.success(null);
+    }
+
+    @Override
+    public Result findUserVoById(Long id) {
+        SysUser sysUser = (SysUser) findUserById(id).getData();
+        UserVO userVO = new UserVO();
+        BeanUtils.copyProperties(sysUser, userVO);
+        return Result.success(userVO);
     }
 
 
