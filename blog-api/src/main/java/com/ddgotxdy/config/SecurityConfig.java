@@ -60,13 +60,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 //不通过Session获取SecurityContext
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//        http
-//                // 对于登录接口 允许所有人
-//                .authorizeRequests()
-//                .antMatchers("/login")
-//                .permitAll()
-//                // 除上面外的所有请求全部需要鉴权认证
-//                .anyRequest().authenticated();
+        http
+                // 评论必须登录
+                .authorizeRequests()
+                .antMatchers("/comments/create/change")
+                .authenticated();
 
 
         // 添加过滤器,在登出之前

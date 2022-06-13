@@ -1,12 +1,10 @@
 package com.ddgotxdy.controller;
 
 import com.ddgotxdy.service.CommentService;
+import com.ddgotxdy.vo.CommentParam;
 import com.ddgotxdy.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author: ddgo
@@ -28,4 +26,15 @@ public class CommentController {
     public Result comments(@PathVariable("id") Long articleId){
         return commentService.commentByArticleId(articleId);
     }
+
+    /**
+     * 添加评论请求
+     * @param commentParam 评论需要的参数
+     * @return Result
+     */
+    @PostMapping("/create/change")
+    public Result comment(@RequestBody CommentParam commentParam){
+        return commentService.comment(commentParam);
+    }
+
 }

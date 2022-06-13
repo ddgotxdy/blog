@@ -1,17 +1,23 @@
 package com.ddgotxdy.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.ddgotxdy.entity.Article;
 import com.ddgotxdy.entity.Comment;
+import com.ddgotxdy.entity.LoginUser;
 import com.ddgotxdy.entity.SysUser;
+import com.ddgotxdy.mapper.ArticleMapper;
 import com.ddgotxdy.mapper.CommentMapper;
 import com.ddgotxdy.service.CommentService;
 import com.ddgotxdy.service.SysUserService;
+import com.ddgotxdy.service.ThreadService;
+import com.ddgotxdy.vo.CommentParam;
 import com.ddgotxdy.vo.CommentVO;
 import com.ddgotxdy.vo.Result;
 import com.ddgotxdy.vo.UserVO;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -28,6 +34,10 @@ public class CommentServiceImpl implements CommentService {
     private CommentMapper commentMapper;
     @Autowired
     private SysUserService sysUserService;
+    @Autowired
+    private ArticleMapper articleMapper;
+    @Autowired
+    private ThreadService threadService;
 
     @Override
     public Result commentByArticleId(Long articleId) {
@@ -38,6 +48,35 @@ public class CommentServiceImpl implements CommentService {
                 .eq(Comment::getLevel, 1);
         List<Comment> commentList = commentMapper.selectList(queryWrapper);
         return Result.success(copyList(commentList));
+    }
+
+    @Override
+    public Result comment(CommentParam commentParam) {
+        // springSecurity 上下文获取登录用户
+        LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SysUser sysUser = loginUser.getUser();
+
+        Comment comment = new Comment();
+        comment.setArticleId(commentParam.getArticleId());
+        comment.setAuthorId(sysUser.getId());
+        comment.setContent(commentParam.getContent());
+        comment.setCreateDate(System.currentTimeMillis());
+        Long parent = commentParam.getParent();
+        if (parent == null || parent == 0) {
+            comment.setLevel(1);
+        }else {
+            comment.setLevel(2);
+        }
+        comment.setParentId(parent == null ? 0 : parent);
+
+        Long toUserId = commentParam.getToUserId();
+        comment.setToUid(toUserId == null ? 0 : toUserId);
+        // 存入评论
+        commentMapper.insert(comment);
+        // 异步更新评论数
+        Article article = articleMapper.selectById(commentParam.getArticleId());
+        threadService.updateCommentCount(article);
+        return Result.success(copy(comment));
     }
 
     private List<CommentVO> copyList(List<Comment> commentList) {

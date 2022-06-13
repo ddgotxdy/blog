@@ -107,7 +107,6 @@ public class ArticleServiceImpl implements ArticleService {
         return Result.success(articleBodyVO);
     }
 
-
     private List<ArticleVO> copyList(List<Article> records, boolean isAuthor, boolean isBody, boolean isTags) {
         List<ArticleVO> articleVoList = new ArrayList<>();
         for (Article article : records) {

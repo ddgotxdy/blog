@@ -12,12 +12,12 @@ import org.springframework.stereotype.Service;
  * @author: ddgo
  * @description: 线程池服务具体实现类
  */
+@Async("taskExecutor")
 @Service
 public class ThreadServiceImpl implements ThreadService {
     @Autowired
     private ArticleMapper articleMapper;
 
-    @Async("taskExecutor")
     @Override
     public void updateViewCount(Article article) {
         Article articleUpdate = new Article();
@@ -25,6 +25,16 @@ public class ThreadServiceImpl implements ThreadService {
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Article::getId,article.getId());
         queryWrapper.eq(Article::getViewCounts, article.getViewCounts());
+        articleMapper.update(articleUpdate,queryWrapper);
+    }
+
+    @Override
+    public void updateCommentCount(Article article) {
+        Article articleUpdate = new Article();
+        articleUpdate.setViewCounts(article.getCommentCounts() + 1);
+        LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(Article::getId,article.getId());
+        queryWrapper.eq(Article::getCommentCounts, article.getCommentCounts());
         articleMapper.update(articleUpdate,queryWrapper);
     }
 }

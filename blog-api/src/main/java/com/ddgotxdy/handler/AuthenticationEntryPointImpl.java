@@ -1,6 +1,7 @@
 package com.ddgotxdy.handler;
 
 import com.alibaba.fastjson.JSON;
+import com.ddgotxdy.constant.ErrorCode;
 import com.ddgotxdy.util.WebUtil;
 import com.ddgotxdy.vo.Result;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ import java.io.IOException;
 public class AuthenticationEntryPointImpl implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        Result result = Result.fail(HttpStatus.UNAUTHORIZED.value(), "认证失败请重新登录");
+        Result result = Result.fail(ErrorCode.NO_LOGIN.getCode(), "未登录");
         String json = JSON.toJSONString(result);
         WebUtil.renderString(response, json);
     }

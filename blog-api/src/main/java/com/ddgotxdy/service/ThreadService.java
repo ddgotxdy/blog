@@ -14,4 +14,9 @@ public interface ThreadService {
      */
     void updateViewCount(Article article);
 
+    /**
+     * 线程池去更新评论数量
+     * @param article 具体待更新文章
+     */
+    void updateCommentCount(Article article);
 }

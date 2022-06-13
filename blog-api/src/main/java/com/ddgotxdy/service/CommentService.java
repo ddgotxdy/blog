@@ -1,5 +1,6 @@
 package com.ddgotxdy.service;
 
+import com.ddgotxdy.vo.CommentParam;
 import com.ddgotxdy.vo.Result;
 
 /**
@@ -14,4 +15,11 @@ public interface CommentService {
      * @return Result
      */
     Result commentByArticleId(Long articleId);
+
+    /**
+     * 添加评论请求
+     * @param commentParam 评论需要的参数
+     * @return Result
+     */
+    Result comment(CommentParam commentParam);
 }
