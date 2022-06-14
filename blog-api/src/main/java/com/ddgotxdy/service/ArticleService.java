@@ -1,5 +1,6 @@
 package com.ddgotxdy.service;
 
+import com.ddgotxdy.vo.ArticleParam;
 import com.ddgotxdy.vo.PageParams;
 import com.ddgotxdy.vo.Result;
 
@@ -44,9 +45,16 @@ public interface ArticleService {
     Result findArticleById(Long id);
 
     /**
-     * 根据博客id返回博客neirong
+     * 根据博客id返回博客内容
      * @param id 博客id
      * @return Result
      */
     Result findArticleBodyById(Long id);
+
+    /**
+     * 发布文章
+     * @param articleParam 发布文章需要的参数
+     * @return Result
+     */
+    Result publish(ArticleParam articleParam);
 }

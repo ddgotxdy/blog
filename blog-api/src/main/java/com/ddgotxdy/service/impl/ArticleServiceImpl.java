@@ -3,18 +3,19 @@ package com.ddgotxdy.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.ddgotxdy.dos.Archives;
-import com.ddgotxdy.entity.Article;
-import com.ddgotxdy.entity.ArticleBody;
-import com.ddgotxdy.entity.SysUser;
+import com.ddgotxdy.entity.*;
 import com.ddgotxdy.mapper.ArticleBodyMapper;
 import com.ddgotxdy.mapper.ArticleMapper;
+import com.ddgotxdy.mapper.ArticleTagMapper;
 import com.ddgotxdy.mapper.TagMapper;
 import com.ddgotxdy.service.*;
 import com.ddgotxdy.vo.*;
 import org.joda.time.DateTime;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +39,8 @@ public class ArticleServiceImpl implements ArticleService {
     private CategoryService categoryService;
     @Autowired
     private ThreadService threadService;
+    @Autowired
+    private ArticleTagMapper articleTagMapper;
 
     @Override
     public Result listArticle(PageParams pageParams) {
@@ -105,6 +108,53 @@ public class ArticleServiceImpl implements ArticleService {
         ArticleBodyVO articleBodyVO = new ArticleBodyVO();
         articleBodyVO.setContent(articleBody.getContent());
         return Result.success(articleBodyVO);
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public Result publish(ArticleParam articleParam) {
+        // springSecurity 上下文获取登录用户
+        LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        SysUser sysUser = loginUser.getUser();
+
+        // 设置article对象
+        Article article = new Article();
+        article.setAuthorId(sysUser.getId());
+        article.setCategoryId(articleParam.getCategory().getId());
+        article.setCreateDate(System.currentTimeMillis());
+        article.setCommentCounts(0);
+        article.setSummary(articleParam.getSummary());
+        article.setTitle(articleParam.getTitle());
+        article.setViewCounts(0);
+        article.setWeight(0);
+        article.setBodyId(-1L);
+
+        articleMapper.insert(article);
+
+        // 插入标签
+        List<TagVO> tags = articleParam.getTags();
+        if (tags != null) {
+            for (TagVO tag : tags) {
+                ArticleTag articleTag = new ArticleTag();
+                articleTag.setArticleId(article.getId());
+                articleTag.setTagId(tag.getId());
+                articleTagMapper.insert(articleTag);
+            }
+        }
+
+        // 插入文章具体内容
+        ArticleBody articleBody = new ArticleBody();
+        articleBody.setContent(articleParam.getBody().getContent());
+        articleBody.setContentHtml(articleParam.getBody().getContentHtml());
+        articleBody.setArticleId(article.getId());
+        articleBodyMapper.insert(articleBody);
+        // 更新文章里面的对应文章内容id
+        article.setBodyId(articleBody.getId());
+        articleMapper.updateById(article);
+        // 封装VO，返回前端文章id
+        ArticleVO articleVO = new ArticleVO();
+        articleVO.setId(article.getId());
+        return Result.success(articleVO);
     }
 
     private List<ArticleVO> copyList(List<Article> records, boolean isAuthor, boolean isBody, boolean isTags) {

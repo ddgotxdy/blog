@@ -1,6 +1,7 @@
 package com.ddgotxdy.controller;
 
 import com.ddgotxdy.service.ArticleService;
+import com.ddgotxdy.vo.ArticleParam;
 import com.ddgotxdy.vo.PageParams;
 import com.ddgotxdy.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,5 +65,14 @@ public class ArticleController {
         return articleService.findArticleById(id);
     }
 
+    /**
+     * 发布文章
+     * @param articleParam 发布文章需要的参数
+     * @return Result
+     */
+    @PostMapping("/publish")
+    public Result publish(@RequestBody ArticleParam articleParam){
+        return articleService.publish(articleParam);
+    }
 
 }

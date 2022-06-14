@@ -64,6 +64,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 // 评论必须登录
                 .authorizeRequests()
                 .antMatchers("/comments/create/change")
+                .authenticated()
+                .antMatchers("/articles/publish")
                 .authenticated();
 
 

@@ -1,6 +1,5 @@
 package com.ddgotxdy.service.impl;
 
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ddgotxdy.entity.Category;
 import com.ddgotxdy.mapper.CategoryMapper;
 import com.ddgotxdy.service.CategoryService;
