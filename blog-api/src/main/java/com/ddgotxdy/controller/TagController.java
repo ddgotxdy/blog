@@ -4,6 +4,7 @@ import com.ddgotxdy.service.TagService;
 import com.ddgotxdy.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,6 +45,16 @@ public class TagController {
     @GetMapping("detail")
     public Result findAllDetail(){
         return tagService.findAllDetail();
+    }
+
+    /**
+     * 获取具体的标签
+     * @param id 具体标签id
+     * @return Result
+     */
+    @GetMapping("detail/{id}")
+    public Result findDetailById(@PathVariable("id") Long id){
+        return tagService.findDetailById(id);
     }
 
 }

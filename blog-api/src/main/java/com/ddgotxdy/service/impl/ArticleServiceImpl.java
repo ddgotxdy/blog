@@ -52,6 +52,20 @@ public class ArticleServiceImpl implements ArticleService {
         if (pageParams.getCategoryId() != null) {
             queryWrapper.eq(Article::getCategoryId, pageParams.getCategoryId());
         }
+        // 根据标签查询文章id
+        if (pageParams.getTagId() != null){
+            List<Long> articleIdList = new ArrayList<>();
+            // 根据tagId查询文章id
+            LambdaQueryWrapper<ArticleTag> articleTagLambdaQueryWrapper = new LambdaQueryWrapper<>();
+            articleTagLambdaQueryWrapper.eq(ArticleTag::getTagId, pageParams.getTagId());
+
+            List<ArticleTag> articleTags = articleTagMapper.selectList(articleTagLambdaQueryWrapper);
+            for (ArticleTag articleTag : articleTags) {
+                articleIdList.add(articleTag.getArticleId());
+            }
+            queryWrapper.in(Article::getId, articleIdList);
+        }
+
         // 按照置顶排序
         queryWrapper.orderByDesc(Article::getWeight);
         // 按照发布时间从大到小排序
