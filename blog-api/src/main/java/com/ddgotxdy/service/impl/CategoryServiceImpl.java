@@ -1,5 +1,6 @@
 package com.ddgotxdy.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.ddgotxdy.entity.Category;
 import com.ddgotxdy.mapper.CategoryMapper;
 import com.ddgotxdy.service.CategoryService;
@@ -31,6 +32,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Result findAll() {
+        LambdaQueryWrapper<Category> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.select(Category::getId, Category::getCategoryName);
+        List<Category> categories = categoryMapper.selectList(queryWrapper);
+        return Result.success(copyList(categories));
+    }
+
+    @Override
+    public Result findAllDetail() {
         List<Category> categories = categoryMapper.selectList(null);
         return Result.success(copyList(categories));
     }

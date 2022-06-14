@@ -37,4 +37,13 @@ public class TagController {
         return tagService.findAll();
     }
 
+    /**
+     * 获取所有的标签的详情
+     * @return Result
+     */
+    @GetMapping("detail")
+    public Result findAllDetail(){
+        return tagService.findAllDetail();
+    }
+
 }

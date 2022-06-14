@@ -19,8 +19,22 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    /**
+     * 获取所有的分类
+     * @return public
+     */
     @GetMapping
     public Result listCategory() {
         return categoryService.findAll();
     }
+
+    /**
+     * 获取所有分类的详情
+     * @return Result
+     */
+    @GetMapping("/detail")
+    public Result listCategoryDetail() {
+        return categoryService.findAllDetail();
+    }
+
 }

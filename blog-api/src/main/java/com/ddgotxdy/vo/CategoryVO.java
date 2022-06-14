@@ -4,7 +4,7 @@ import lombok.Data;
 
 /**
  * @author: ddgo
- * @description: 分类展示VO
+ * @description: 分类的详细视图
  */
 @Data
 public class CategoryVO {
@@ -14,4 +14,6 @@ public class CategoryVO {
     private String avatar;
 
     private String categoryName;
+
+    private String description;
 }
