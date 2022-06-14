@@ -31,7 +31,7 @@ public class ThreadServiceImpl implements ThreadService {
     @Override
     public void updateCommentCount(Article article) {
         Article articleUpdate = new Article();
-        articleUpdate.setViewCounts(article.getCommentCounts() + 1);
+        articleUpdate.setCommentCounts(article.getCommentCounts() + 1);
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(Article::getId,article.getId());
         queryWrapper.eq(Article::getCommentCounts, article.getCommentCounts());

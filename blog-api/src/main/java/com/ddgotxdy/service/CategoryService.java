@@ -13,4 +13,10 @@ public interface CategoryService {
      * @return Result
      */
     Result findCategoryById(Long categoryId);
+
+    /**
+     * 查询所有的分类
+     * @return Result
+     */
+    Result findAll();
 }

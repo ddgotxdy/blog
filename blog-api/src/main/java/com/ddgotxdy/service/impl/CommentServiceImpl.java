@@ -55,7 +55,7 @@ public class CommentServiceImpl implements CommentService {
         // springSecurity 上下文获取登录用户
         LoginUser loginUser = (LoginUser) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         SysUser sysUser = loginUser.getUser();
-
+        // 设置评论
         Comment comment = new Comment();
         comment.setArticleId(commentParam.getArticleId());
         comment.setAuthorId(sysUser.getId());
