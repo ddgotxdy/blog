@@ -1,5 +1,6 @@
 package com.ddgotxdy.controller;
 
+import com.ddgotxdy.annotation.SysLog;
 import com.ddgotxdy.service.ArticleService;
 import com.ddgotxdy.vo.ArticleParam;
 import com.ddgotxdy.vo.PageParams;
@@ -24,6 +25,7 @@ public class ArticleController {
      * @param pageParams 分页请求参数
      * @return Result
      */
+    @SysLog(module = "文章", operation = "获取文章列表")
     @PostMapping
     public Result listArticle(@RequestBody PageParams pageParams) {
         return articleService.listArticle(pageParams);
