@@ -17,7 +17,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -53,7 +58,7 @@ public class ArticleServiceImpl implements ArticleService {
             queryWrapper.eq(Article::getCategoryId, pageParams.getCategoryId());
         }
         // 根据标签查询文章id
-        if (pageParams.getTagId() != null){
+        if (pageParams.getTagId() != null) {
             List<Long> articleIdList = new ArrayList<>();
             // 根据tagId查询文章id
             LambdaQueryWrapper<ArticleTag> articleTagLambdaQueryWrapper = new LambdaQueryWrapper<>();
@@ -70,6 +75,32 @@ public class ArticleServiceImpl implements ArticleService {
         queryWrapper.orderByDesc(Article::getWeight);
         // 按照发布时间从大到小排序
         queryWrapper.orderByDesc(Article::getCreateDate);
+
+        // 添加时间
+        if(pageParams.getYear() != null && pageParams.getMonth() != null) {
+            try {
+                SimpleDateFormat dateformat = new SimpleDateFormat("yyyyMM");
+                long start = dateformat.parse(pageParams.getYear() + pageParams.getMonth()).getTime();
+
+                long year = Long.parseLong(pageParams.getYear());
+                long month = Long.parseLong(pageParams.getMonth());
+                if(month == 12) {
+                    year ++;
+                } else {
+                    month ++;
+                }
+                String source = "" + year + month;
+                if(month < 10) {
+                    source = "" + year + "0" + month;
+                }
+                long end = dateformat.parse(source).getTime();
+                queryWrapper.between(Article::getCreateDate, start, end);
+            } catch (Exception e) {
+                e.printStackTrace();
+                return Result.fail(500, "日期错误");
+            }
+        }
+
         // 获取内容
         Page<Article> articlePage = articleMapper.selectPage(page, queryWrapper);
         List<Article> records = articlePage.getRecords();
