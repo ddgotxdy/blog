@@ -38,6 +38,12 @@ public class TagServiceImpl implements TagService {
         return Result.success(tagList);
     }
 
+    @Override
+    public Result findAll() {
+        List<Tag> tags = tagMapper.selectList(null);
+        return Result.success(copyList(tags));
+    }
+
     private TagVO copy(Tag tag){
         TagVO tagVO = new TagVO();
         BeanUtils.copyProperties(tag, tagVO);

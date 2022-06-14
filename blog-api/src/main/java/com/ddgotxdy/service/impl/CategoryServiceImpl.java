@@ -32,7 +32,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Result findAll() {
-        List<Category> categories = this.categoryMapper.selectList(null);
+        List<Category> categories = categoryMapper.selectList(null);
         return Result.success(copyList(categories));
     }
 

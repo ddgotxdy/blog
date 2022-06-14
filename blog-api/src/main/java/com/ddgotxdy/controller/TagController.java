@@ -28,4 +28,13 @@ public class TagController {
         return tagService.hot(limit);
     }
 
+    /**
+     * 获取所有的标签
+     * @return Result
+     */
+    @GetMapping
+    public Result findAll(){
+        return tagService.findAll();
+    }
+
 }

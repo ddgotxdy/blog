@@ -24,4 +24,10 @@ public interface TagService {
      * @return Result
      */
     Result hot(int limit);
+
+    /**
+     * 查询所有的文章标签
+     * @return Result
+     */
+    Result findAll();
 }
