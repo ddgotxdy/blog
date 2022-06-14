@@ -48,6 +48,10 @@ public class ArticleServiceImpl implements ArticleService {
         Page<Article> page = new Page<>(pageParams.getPage(), pageParams.getPageSize());
         // sql语句
         LambdaQueryWrapper<Article> queryWrapper = new LambdaQueryWrapper<>();
+        // 查询文章的参数 加上分类id，判断不为空 加上分类条件
+        if (pageParams.getCategoryId() != null) {
+            queryWrapper.eq(Article::getCategoryId, pageParams.getCategoryId());
+        }
         // 按照置顶排序
         queryWrapper.orderByDesc(Article::getWeight);
         // 按照发布时间从大到小排序

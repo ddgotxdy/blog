@@ -25,4 +25,11 @@ public interface CategoryService {
      * @return Result
      */
     Result findAllDetail();
+
+    /**
+     * 显示具体的分类
+     * @param id 分类id
+     * @return Result
+     */
+    Result findCategoryDetailById(Long id);
 }

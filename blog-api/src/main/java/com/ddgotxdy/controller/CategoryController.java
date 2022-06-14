@@ -5,6 +5,7 @@ import com.ddgotxdy.service.CategoryService;
 import com.ddgotxdy.vo.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,6 +36,16 @@ public class CategoryController {
     @GetMapping("/detail")
     public Result listCategoryDetail() {
         return categoryService.findAllDetail();
+    }
+
+    /**
+     * 显示具体的分类
+     * @param id 分类id
+     * @return Result
+     */
+    @GetMapping("/detail/{id}")
+    public Result listCategoryDetailById(@PathVariable("id") Long id){
+        return categoryService.findCategoryDetailById(id);
     }
 
 }
