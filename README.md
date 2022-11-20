@@ -3,5 +3,5 @@
 
 文件介绍
 
-JenKinsFile：自动化构建脚本  
+Jenkinsfile：自动化构建脚本  
 email.html：构建成功通知脚本
