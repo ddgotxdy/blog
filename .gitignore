@@ -1,0 +1,15 @@
+### Example user template template
+### Example user template
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+# Mac
+.DS_Store
+
+# Maven
+log/
+target/
