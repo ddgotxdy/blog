@@ -4,14 +4,12 @@ pipeline {
     stages {
         stage('Pull') {
             steps {
-                echo 'pull'
                 checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '0ba32dfc-6af7-4ccc-aa2b-9cddd4bdcdc5', url: 'git@github.com:ddgotxdy/blog.git']]])
             }
         }
-        stage('Build') {
+        stage('Compile&Install') {
             steps {
-                echo 'build'
-                sh 'mvn clean package'
+                sh 'mvn clean install'
             }
         }
         stage('Deploy') {
