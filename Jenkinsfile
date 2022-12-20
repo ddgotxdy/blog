@@ -9,7 +9,7 @@ pipeline {
         }
         stage('Compile&Install') {
             steps {
-                sh 'mvn clean install'
+                sh 'mvn clean install dockerfile:build'
             }
         }
         stage('Deploy') {
