@@ -20,7 +20,7 @@ pipeline {
             steps {
                 sh 'mvn -f ${project_name} clean package dockerfile:build'
                 // 打包并推送镜像
-                sh 'docker login --username=ddgotop registry.cn-beijing.aliyuncs.com'
+                sh 'winpty docker login --username=ddgotop registry.cn-beijing.aliyuncs.com'
                 sh 'docker tag ${params.image_name} registry.cn-beijing.aliyuncs.com/ddgotxdy-blog/${params.image_name}'
                 sh 'docker push registry.cn-beijing.aliyuncs.com/ddgotxdy-blog/${params.image_name}'
             }
