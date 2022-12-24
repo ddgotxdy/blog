@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    parameters {
+        string(name: 'tag', defaultValue: 'latest', description: '镜像版本号')
+    }
     stages {
         stage('Pull') {
             steps {
@@ -13,8 +15,16 @@ pipeline {
             }
         }
         stage('Package') {
+            // 定义镜像名字
+            parameters {
+                string(name: 'image_name', defaultValue: '${project_name}:${params.tag}', description: '镜像名字')
+            }
             steps {
                 sh 'mvn -f ${project_name} clean package dockerfile:build'
+                // 打包并推送镜像
+                sh 'docker login --username=ddgotop registry.cn-beijing.aliyuncs.com'
+                sh 'docker tag ${params.image_name} registry.cn-beijing.aliyuncs.com/ddgotxdy-blog/${params.image_name}'
+                sh 'docker push registry.cn-beijing.aliyuncs.com/ddgotxdy-blog/${params.image_name}'
             }
         }
         stage('Deploy') {
