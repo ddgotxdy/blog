@@ -2,6 +2,8 @@ pipeline {
     agent any
     parameters {
         string(name: 'tag', defaultValue: 'latest', description: '镜像版本号')
+        // 定义镜像名字
+        string(name: 'image_name', defaultValue: '${project_name}:${params.tag}', description: '镜像名字')
     }
     stages {
         stage('Pull') {
@@ -15,10 +17,6 @@ pipeline {
             }
         }
         stage('Package') {
-            // 定义镜像名字
-            parameters {
-                string(name: 'image_name', defaultValue: '${project_name}:${params.tag}', description: '镜像名字')
-            }
             steps {
                 sh 'mvn -f ${project_name} clean package dockerfile:build'
                 // 打包并推送镜像
