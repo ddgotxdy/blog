@@ -8,10 +8,10 @@ MAINTAINER ddgo
 ARG JAR_FILE
 
 # 复制修改名字
-COPY ${JAR_FILE} app.jar
+COPY ${JAR_FILE} article.jar
 
 # 运行jar包
-ENTRYPOINT java -jar app.jar
+ENTRYPOINT java -jar article.jar
 
 #暴露8080端口作为微服务
 EXPOSE 8080

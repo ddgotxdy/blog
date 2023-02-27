@@ -16,7 +16,12 @@
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
     <modules>
-        <module>blog-api</module>
+        <module>blog-user-api</module>
+        <module>blog-admin-api</module>
+        <module>blog-article-service</module>
+        <module>blog-file-service</module>
+        <module>blog-sms-service</module>
+        <module>blog-search-service</module>
     </modules>
 
     <properties>

@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @description: 启动类
  */
 @SpringBootApplication
-public class ApiApplication {
+public class UserApiApplication {
     public static void main(String[] args) {
-        SpringApplication.run(ApiApplication.class, args);
+        SpringApplication.run(UserApiApplication.class, args);
     }
 }
