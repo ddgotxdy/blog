@@ -14,6 +14,7 @@
         <module>blog-file-service</module>
         <module>blog-sms-service</module>
         <module>blog-search-service</module>
+        <module>blog-sdk</module>
     </modules>
 
     <properties>
