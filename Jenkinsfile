@@ -18,7 +18,7 @@ pipeline {
             steps {
                 sh 'mvn -f ${project_name} clean package dockerfile:build'
                 // 打包并推送镜像
-                sh 'docker login --username=ddgotop --password=1314520ASD registry.cn-beijing.aliyuncs.com'
+                sh 'docker login --username=ddgotxdy --password=1314520ASD registry.cn-beijing.aliyuncs.com'
                 sh 'docker tag ${project_name}:${tag} registry.cn-beijing.aliyuncs.com/ddgotxdy-blog/${project_name}:${tag}'
                 sh 'docker push registry.cn-beijing.aliyuncs.com/ddgotxdy-blog/${project_name}:${tag}'
             }
