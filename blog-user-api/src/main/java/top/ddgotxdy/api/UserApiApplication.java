@@ -11,9 +11,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class UserApiApplication {
     public static void main(String[] args) {
-//        SpringApplication.run(UserApiApplication.class, args);
-        ConfigurableApplicationContext applicationContext = SpringApplication.run(UserApiApplication.class, args);
-        String userName = applicationContext.getEnvironment().getProperty(" current.env");
-        System.err.println("user name :"+userName);
+        SpringApplication.run(UserApiApplication.class, args);
     }
 }

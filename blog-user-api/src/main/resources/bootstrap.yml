@@ -3,6 +3,7 @@ spring:
   application:
     name: user-api
   profiles:
+    # java -Dspring.profiles.active=dev -jar xxx
     active: dev
   # cloud 配置
   cloud:
@@ -12,4 +13,10 @@ spring:
         server-addr: 101.43.175.25:8848
         file-extension: yaml
         group: DDGOTXDY_GROUP
+        # -Dspring.cloud.nacos.config.namespace=xxx
+        namespace: 89e0b3c7-a725-407f-a4a2-80f4e9ced5b1
       # 实现服务的注册与发现
+      discovery:
+        server-addr: 101.43.175.25:8848
+        # -Dspring.cloud.nacos.discovery.namespace=xxx
+        namespace: 89e0b3c7-a725-407f-a4a2-80f4e9ced5b1
