@@ -1,7 +1,7 @@
 spring:
   # spring 基础配置
   application:
-    name: user-api
+    name: blog-api
   profiles:
     # java -Dspring.profiles.active=dev -jar xxx
     active: dev
