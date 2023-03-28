@@ -1,19 +1,17 @@
-package top.ddgotxdy.api;
+package top.ddgotxdy;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 
 /**
  * @author: ddgo
- * @description: 启动类
+ * @description: 博客网关启动类
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients
-public class BlogApiApplication {
+public class BlogGatewayApplication {
     public static void main(String[] args) {
-        SpringApplication.run(BlogApiApplication.class, args);
+        SpringApplication.run(BlogGatewayApplication.class, args);
     }
 }

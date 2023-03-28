@@ -1,10 +1,10 @@
 server:
-  port: 8081
+  port: 8080
 
 spring:
   # spring 基础配置
   application:
-    name: blog-api
+    name: blog-gateway
   profiles:
     # java -Dspring.profiles.active=dev -jar xxx
     active: dev
@@ -18,11 +18,6 @@ spring:
         group: DDGOTXDY_GROUP
         # -Dspring.cloud.nacos.config.namespace=xxx
         namespace: 89e0b3c7-a725-407f-a4a2-80f4e9ced5b1
-        shared-configs:
-          - data-id: test1-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
-            group: ${spring.cloud.nacos.config.group}
-            namespace: ${spring.cloud.nacos.config.namespace}
-            refresh: true
       # 实现服务的注册与发现
       discovery:
         server-addr: 101.43.175.25:8848
