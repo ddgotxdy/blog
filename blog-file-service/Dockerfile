@@ -14,4 +14,4 @@ COPY ${JAR_FILE} file.jar
 ENTRYPOINT java -jar file.jar
 
 #暴露8080端口作为微服务
-EXPOSE 8080
+EXPOSE 28083

@@ -13,5 +13,5 @@ COPY ${JAR_FILE} article.jar
 # 运行jar包
 ENTRYPOINT java -jar article.jar
 
-#暴露8080端口作为微服务
-EXPOSE 8080
+#暴露28082端口作为微服务
+EXPOSE 28082

@@ -13,5 +13,5 @@ COPY ${JAR_FILE} sms.jar
 # 运行jar包
 ENTRYPOINT java -jar sms.jar
 
-#暴露8080端口作为微服务
-EXPOSE 8080
+#暴露28084端口作为微服务
+EXPOSE 28084

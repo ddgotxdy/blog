@@ -1,19 +1,25 @@
 pipeline {
     agent any
     parameters {
+        string(name: 'project_name', defaultValue: 'blog-api', description: '项目名称')
         string(name: 'tag', defaultValue: 'latest', description: '镜像版本号')
+        string(name: 'branches', defaultValue: '*/main', description: '分支')
+        string(name: 'port', defaultValue: '28081', description: '端口号')
     }
     stages {
+        // 拉取代码
         stage('Pull') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[credentialsId: '0ba32dfc-6af7-4ccc-aa2b-9cddd4bdcdc5', url: 'git@github.com:ddgotxdy/blog.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: ${branches}]], extensions: [], userRemoteConfigs: [[credentialsId: '0ba32dfc-6af7-4ccc-aa2b-9cddd4bdcdc5', url: 'git@github.com:ddgotxdy/blog.git']]])
             }
         }
-        stage('Compile&Install') {
-            steps {
-                sh 'mvn clean install'
+        // 编译安装公共子工程
+        stages {
+            stage('Install') {
+                sh 'mvn clean install -Dmaven.test.skip=true -pl blog-common blog-dal'
             }
         }
+        // 打包上传服务
         stage('Package') {
             steps {
                 sh 'mvn -f ${project_name} clean package dockerfile:build'
@@ -23,9 +29,38 @@ pipeline {
                 sh 'docker push registry.cn-beijing.aliyuncs.com/ddgotxdy-blog/${project_name}:${tag}'
             }
         }
-        stage('Deploy') {
-            steps {
-                echo 'deploy'
+        // 部署服务
+        stages {
+            stage('Deploy') {
+                steps {
+                    //先上传文件，后执行命令，命令和源文件，两者必须有一个有值
+                    sshPublisher(
+                        publishers: [
+                            sshPublisherDesc(
+                                configName: 'ddgo-aliyun',
+                                transfers: [
+                                    sshTransfer(
+                                        cleanRemote: false,
+                                        excludes: '',
+                                        execCommand: '/root/java/deploy.sh $project_name $tag $port',
+                                        execTimeout: 120000,
+                                        flatten: false,
+                                        makeEmptyDirs: false,
+                                        noDefaultExcludes: false,
+                                        patternSeparator: '',
+                                        remoteDirectory: '/root/java',
+                                        remoteDirectorySDF: false,
+                                        removePrefix: '',
+                                        sourceFiles: ''
+                                    )
+                                ],
+                                usePromotionTimestamp: false,
+                                useWorkspaceInPromotion: false,
+                                verbose: false
+                            )
+                        ]
+                    )
+                }
             }
         }
     }
