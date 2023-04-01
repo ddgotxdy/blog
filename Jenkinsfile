@@ -17,8 +17,8 @@ pipeline {
             }
         }
         // 编译安装公共子工程
-        stages {
-            stage('Install') {
+        stage('Install') {
+            steps {
                 sh 'mvn clean install -Dmaven.test.skip=true -pl blog-common blog-dal'
             }
         }
@@ -33,37 +33,35 @@ pipeline {
             }
         }
         // 部署服务
-        stages {
-            stage('Deploy') {
-                steps {
-                    //先上传文件，后执行命令，命令和源文件，两者必须有一个有值
-                    sshPublisher(
-                        publishers: [
-                            sshPublisherDesc(
-                                configName: '$configName',
-                                transfers: [
-                                    sshTransfer(
-                                        cleanRemote: false,
-                                        excludes: '',
-                                        execCommand: '/root/java/deploy.sh $project_name $tag $port $active $namespace',
-                                        execTimeout: 120000,
-                                        flatten: false,
-                                        makeEmptyDirs: false,
-                                        noDefaultExcludes: false,
-                                        patternSeparator: '',
-                                        remoteDirectory: '/root/java',
-                                        remoteDirectorySDF: false,
-                                        removePrefix: '',
-                                        sourceFiles: ''
-                                    )
-                                ],
-                                usePromotionTimestamp: false,
-                                useWorkspaceInPromotion: false,
-                                verbose: false
-                            )
-                        ]
-                    )
-                }
+        stage('Deploy') {
+            steps {
+                //先上传文件，后执行命令，命令和源文件，两者必须有一个有值
+                sshPublisher(
+                    publishers: [
+                        sshPublisherDesc(
+                            configName: '$configName',
+                            transfers: [
+                                sshTransfer(
+                                    cleanRemote: false,
+                                    excludes: '',
+                                    execCommand: '/root/java/deploy.sh $project_name $tag $port $active $namespace',
+                                    execTimeout: 120000,
+                                    flatten: false,
+                                    makeEmptyDirs: false,
+                                    noDefaultExcludes: false,
+                                    patternSeparator: '',
+                                    remoteDirectory: '/root/java',
+                                    remoteDirectorySDF: false,
+                                    removePrefix: '',
+                                    sourceFiles: ''
+                                )
+                            ],
+                            usePromotionTimestamp: false,
+                            useWorkspaceInPromotion: false,
+                            verbose: false
+                        )
+                    ]
+                )
             }
         }
     }
