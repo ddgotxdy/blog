@@ -1,5 +1,5 @@
 # 基础镜像使用java
-FROM java:8
+FROM openjdk:8-jre
 
 # 作者
 MAINTAINER ddgo
