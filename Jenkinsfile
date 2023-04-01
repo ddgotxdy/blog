@@ -13,7 +13,7 @@ pipeline {
         // 拉取代码
         stage('Pull') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: ${branches}]], extensions: [], userRemoteConfigs: [[credentialsId: '0ba32dfc-6af7-4ccc-aa2b-9cddd4bdcdc5', url: 'git@github.com:ddgotxdy/blog.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: ${branches}]], extensions: [], userRemoteConfigs: [[credentialsId: '0d8ecd4d-2706-4f33-8df5-5e32f9dfcace', url: 'git@github.com:ddgotxdy/blog.git']]])
             }
         }
         // 编译安装公共子工程
