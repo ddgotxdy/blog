@@ -10,12 +10,13 @@ ARG JAR_FILE
 # 配置环境变量
 ENV ACTIVE="dev"
 ENV NAMESPACE="89e0b3c7-a725-407f-a4a2-80f4e9ced5b1"
+ENV PROT=28080
 
 # 复制修改名字
 COPY ${JAR_FILE} gateway.jar
 
 # 运行jar包
-ENTRYPOINT java -jar gateway.jar -Dspring.profiles.active=$ACTIVE -Dspring.cloud.nacos.config.namespace=$NAMESPACE -Dspring.cloud.nacos.discovery.namespace=$NAMESPACE
+ENTRYPOINT java -jar gateway.jar -Dspring.profiles.active=$ACTIVE -Dspring.cloud.nacos.config.namespace=$NAMESPACE -Dspring.cloud.nacos.discovery.namespace=$NAMESPACE -Dserver.port=$PROT
 
-#暴露28080端口作为微服务
-EXPOSE 28080
+#暴露端口作为微服务
+EXPOSE $PROT

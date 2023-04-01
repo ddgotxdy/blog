@@ -1,18 +1,42 @@
 pipeline {
     agent any
     parameters {
-        string(name: 'project_name', defaultValue: 'blog-api', description: '项目名称')
-        string(name: 'tag', defaultValue: 'latest', description: '镜像版本号')
-        string(name: 'branches', defaultValue: '*/main', description: '分支')
-        string(name: 'port', defaultValue: '28081', description: '端口号')
-        string(name: 'active', defaultValue: 'dev', description: '开发环境')
-        string(name: 'namespace', defaultValue: '89e0b3c7-a725-407f-a4a2-80f4e9ced5b1', description: 'nacos命名空间')
+        choice(
+            name: 'project_name',
+            choices: ['blog-gateway', 'blog-api', 'blog-article-service', 'blog-file-service', 'blog-sms-service'],
+            description: '项目名称'
+        )
+        choice(
+            name: 'tag',
+            choices: ['latest', 'snapshot'],
+            description: '镜像版本号'
+        )
+        choice(
+            name: 'branches',
+            choices: ['main', 'release'],
+            description: '分支'
+        )
+        choice(
+            name: 'port',
+            choices: ['28080', '28081', '28082', '28083', '28084'],
+            description: '端口号'
+        )
+        choice(
+            name: 'active',
+            choices: ['dev', 'prod'],
+            description: '开发环境'
+        )
+        choice(
+            name: 'namespace',
+            choices: ['89e0b3c7-a725-407f-a4a2-80f4e9ced5b1', 'ef4977dc-f6b9-4012-aa3c-e7921bd6bb3d'],
+            description: 'nacos命名空间'
+        )
     }
     stages {
         // 拉取代码
         stage('Pull') {
             steps {
-                checkout([$class: 'GitSCM', branches: [[name: '${branches}']], extensions: [], userRemoteConfigs: [[credentialsId: '0d8ecd4d-2706-4f33-8df5-5e32f9dfcace', url: 'git@github.com:ddgotxdy/blog.git']]])
+                checkout([$class: 'GitSCM', branches: [[name: '*/${branches}']], extensions: [], userRemoteConfigs: [[credentialsId: '0d8ecd4d-2706-4f33-8df5-5e32f9dfcace', url: 'git@github.com:ddgotxdy/blog.git']]])
             }
         }
         // 编译安装公共子工程

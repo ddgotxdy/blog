@@ -27,8 +27,5 @@ docker pull registry.cn-beijing.aliyuncs.com/ddgotxdy-blog/"$image_name"
 # 启动容器
 docker run -d -p "$port":"$port" registry.cn-beijing.aliyuncs.com/ddgotxdy-blog/"$image_name" \
 -e ACTIVE="$active" \
--e NAMESPACE="$namespace"
-
-docker run -d -p 28081:28081 registry.cn-beijing.aliyuncs.com/ddgotxdy-blog/blog-api:latest \
--e ACTIVE=dev \
--e NAMESPACE=89e0b3c7-a725-407f-a4a2-80f4e9ced5b1
+-e NAMESPACE="$namespace" \
+-e PORT="$port"
