@@ -1,4 +1,4 @@
-package top.ddgotxdy.controller;
+package top.ddgotxdy.article.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;

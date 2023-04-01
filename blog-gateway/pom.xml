@@ -64,7 +64,7 @@
                 <configuration>
                     <!--值为true是指打包时包含scope为system的第三方Jar包-->
                     <includeSystemScope>true</includeSystemScope>
-                    <mainClass>top.ddgotxdy.BlogGatewayApplication</mainClass>
+                    <mainClass>top.ddgotxdy.gateway.BlogGatewayApplication</mainClass>
                 </configuration>
             </plugin>
             <plugin>
