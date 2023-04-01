@@ -7,7 +7,7 @@ pipeline {
         string(name: 'port', defaultValue: '28081', description: '端口号')
         string(name: 'active', defaultValue: 'dev', description: '开发环境')
         string(name: 'namespace', defaultValue: '89e0b3c7-a725-407f-a4a2-80f4e9ced5b1', description: 'nacos命名空间')
-        string(name: 'configName', defaultValue: 'ddgo-aliyun', description: '远程的机器')
+        string(name: 'config_name', defaultValue: 'ddgo-aliyun', description: '远程的机器')
     }
     stages {
         // 拉取代码
@@ -40,7 +40,7 @@ pipeline {
                 sshPublisher(
                     publishers: [
                         sshPublisherDesc(
-                            configName: '${configName}',
+                            configName: '${config_name}',
                             transfers: [
                                 sshTransfer(
                                     cleanRemote: false,
