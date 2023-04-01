@@ -26,7 +26,7 @@ pipeline {
         // 打包上传服务
         stage('Package') {
             steps {
-                sh 'mvn -f ${project_name} clean package dockerfile:build'
+                sh 'mvn -f ${project_name} clean package -Dmaven.test.skip=true dockerfile:build'
                 // 打包并推送镜像
                 sh 'docker login --username=ddgotxdy --password=1314520ASD registry.cn-beijing.aliyuncs.com'
                 sh 'docker tag ${project_name}:${tag} registry.cn-beijing.aliyuncs.com/ddgotxdy-blog/${project_name}:${tag}'
