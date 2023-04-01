@@ -67,6 +67,10 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <includeSystemScope>true</includeSystemScope>
+                    <mainClass>top.ddgotxdy.api.BlogApiApplication</mainClass>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>com.spotify</groupId>
