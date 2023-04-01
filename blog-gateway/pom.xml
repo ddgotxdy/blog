@@ -53,7 +53,16 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
+                    <!--值为true是指打包时包含scope为system的第三方Jar包-->
                     <includeSystemScope>true</includeSystemScope>
                     <mainClass>top.ddgotxdy.BlogGatewayApplication</mainClass>
                 </configuration>
