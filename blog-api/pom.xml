@@ -5,7 +5,7 @@
     <parent>
         <artifactId>blog</artifactId>
         <groupId>top.ddgotxdy</groupId>
-        <version>1.0-SNAPSHOT</version>
+        <version>${revision}</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -17,6 +17,14 @@
     </properties>
 
     <dependencies>
+        <!-- 一方依赖 -->
+        <dependency>
+            <groupId>top.ddgotxdy</groupId>
+            <artifactId>blog-common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!-- 三方依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
