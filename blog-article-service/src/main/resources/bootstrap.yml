@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 28082
 
 spring:
   # spring 基础配置
@@ -24,9 +24,9 @@ spring:
             namespace: ${spring.cloud.nacos.config.namespace}
             refresh: true
           - data-id: datasource-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
-              group: ${spring.cloud.nacos.config.group}
-              namespace: ${spring.cloud.nacos.config.namespace}
-              refresh: true
+            group: ${spring.cloud.nacos.config.group}
+            namespace: ${spring.cloud.nacos.config.namespace}
+            refresh: true
       # 实现服务的注册与发现
       discovery:
         server-addr: 101.43.175.25:8848

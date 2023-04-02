@@ -42,9 +42,9 @@ pipeline {
         // 编译安装公共子工程
         stage('Install') {
             steps {
-                sh 'mvn clean install -Dmaven.test.skip=true'
-//                 sh 'mvn clean install -Dmaven.test.skip=true -pl blog-common'
-//                 sh 'mvn clean install -Dmaven.test.skip=true -pl blog-dal'
+                sh 'mvn clean install -Dmaven.test.skip=true -N'
+                sh 'mvn clean install -Dmaven.test.skip=true -pl blog-common'
+                sh 'mvn clean install -Dmaven.test.skip=true -pl blog-dal'
             }
         }
         // 打包上传服务
