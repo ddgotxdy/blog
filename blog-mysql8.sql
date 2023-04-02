@@ -25,9 +25,9 @@ CREATE TABLE `blog_article`  (
    `article_content` longtext NOT NULL COMMENT '文章内容',
    `article_type` tinyint(4) NOT NULL DEFAULT 0 COMMENT '文章类型 1原创 2转载 3翻译',
    `original_url` varchar(1024) NULL DEFAULT NULL COMMENT '原文链接',
-   `is_top` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否置顶 0否 1是',
+   `rank` tinyint(1) NOT NULL DEFAULT 0 COMMENT '置顶排序，值越大，排名越高',
    `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除  0否 1是',
-   `status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '文章状态值 1公开 2私密 3登录可见',
+   `article_status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '文章状态值 1公开 2私密 3登录可见',
    `create_time` bigint NOT NULL COMMENT '发表时间',
    `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
    PRIMARY KEY (`article_id`)
