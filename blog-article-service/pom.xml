@@ -5,7 +5,7 @@
     <parent>
         <artifactId>blog</artifactId>
         <groupId>top.ddgotxdy</groupId>
-        <version>${revision}</version>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -58,6 +58,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
                 <configuration>
                     <includeSystemScope>true</includeSystemScope>
                     <mainClass>top.ddgotxdy.article.BlogArticleServiceApplication</mainClass>
