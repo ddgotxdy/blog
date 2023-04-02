@@ -43,6 +43,10 @@ public class ResultView<T> {
         return new ResultView<>(200, message);
     }
 
+    public static <T> ResultView<T> success(T data) {
+        return new ResultView<>(200, data);
+    }
+
     public static <T> ResultView<T> fail(String message) {
         return new ResultView<>(500, message);
     }

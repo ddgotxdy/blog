@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import org.apache.ibatis.reflection.MetaObject;
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 /**
  * @author: ddgo
  * @description: 元数据拦截处理
@@ -16,11 +18,14 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void insertFill(MetaObject metaObject) {
-        // 获取某个字段
-        Object password = getFieldValByName("password", metaObject);
-        // 开始填充
-        if(password == null) {
-            setFieldValByName("password","666666", metaObject);
+        // 创建时间填充
+        long now = System.currentTimeMillis();
+        setFieldValByName("createTime", now, metaObject);
+        setFieldValByName("updateTime", now, metaObject);
+        // 为封面设置默认值 TODO 先放空值，后续才设置默认值
+        Object articleCoverUrl = getFieldValByName("articleCoverUrl", metaObject);
+        if (Objects.isNull(articleCoverUrl)) {
+            setFieldValByName("articleCoverUrl", "", metaObject);
         }
     }
 
@@ -30,6 +35,8 @@ public class MyMetaObjectHandler implements MetaObjectHandler {
      */
     @Override
     public void updateFill(MetaObject metaObject) {
-
+        // 更新时间填充
+        long now = System.currentTimeMillis();
+        setFieldValByName("updateTime", now, metaObject);
     }
 }

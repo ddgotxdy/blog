@@ -10,10 +10,10 @@ import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
  */
 public class MyBatisPlusGenerator {
 
-    private static final String URL = "jdbc:mysql://182.92.216.59:3306/myblog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8";
+    private static final String URL = "jdbc:mysql://101.43.175.25:3306/blog?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8";
     private static final String USERNAME = "root";
     private static final String PASSWORD = "1314520ASD@";
-    public static final String OUTPUT_DIR = "G:/My_code_project_tmp/blog-springboot/src/main/java";
+    public static final String OUTPUT_DIR = "G:/My_code_project/java/blog/blog-dal/src/main/java/top/ddgotxdy/dal/mapper";
 
     public static void main(String[] args) {
         FastAutoGenerator.create(URL, USERNAME, PASSWORD)
@@ -24,7 +24,7 @@ public class MyBatisPlusGenerator {
                             .outputDir(OUTPUT_DIR); // 指定输出目录
                 })
                 .packageConfig(builder -> {
-                    builder.parent("com.ddgotxdy"); // 设置父包名
+                    builder.parent("top.ddgotxdy"); // 设置父包名
 //                            .moduleName("system") // 设置父包模块名
 //                            .pathInfo(Collections.singletonMap(OutputFile.mapperXml,
 //                                    "D://")); // 设置mapperXml生成路径
@@ -33,7 +33,6 @@ public class MyBatisPlusGenerator {
 //                    builder.addInclude("t_simple"); // 设置需要生成的表名
 //                            .addTablePrefix("t_", "c_"); // 设置过滤表前缀
                     builder
-                            .addTablePrefix("tb_")
                             .entityBuilder()
                             .enableLombok();
                 })
