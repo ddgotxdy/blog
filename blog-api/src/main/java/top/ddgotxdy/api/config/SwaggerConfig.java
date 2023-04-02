@@ -1,5 +1,6 @@
 package top.ddgotxdy.api.config;
 
+import com.github.xiaoymin.knife4j.spring.annotations.EnableKnife4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,9 +24,12 @@ import java.util.List;
  * @author: ddgo
  * @description: swagger文档配置
  * EnableSwagger2 开启自动配置
+ * 地址/doc.html knife4j
+ * 地址/swagger-ui.htm swagger
  */
 @Configuration
 @EnableSwagger2
+@EnableKnife4j
 public class SwaggerConfig {
 
     @Autowired
@@ -38,9 +42,10 @@ public class SwaggerConfig {
     @Bean
     public Docket docket() {
         // 检测是否为dev和test环境
-        Profiles profiles = Profiles.of("dev","test");
+        Profiles profiles = Profiles.of("dev");
         boolean isEnable = environment.acceptsProfiles(profiles);
 
+        // 全局参数 token
         Parameter parameter = new ParameterBuilder()
                 .name("token")
                 .description("用户令牌")
@@ -52,29 +57,28 @@ public class SwaggerConfig {
         parameters.add(parameter);
 
         return new Docket(DocumentationType.SWAGGER_2)
+                // 选择是否开启swagger
+                .enable(isEnable)
                 .apiInfo(apiInfo())
-                .globalOperationParameters(parameters)
+                // 全局参数 TODO 开发登录模块再设置
+//                .globalOperationParameters(parameters)
                 // 忽略请求参数的类型
 //                .ignoredParameterTypes(Integer.class, Long.class)
-                // 选择api显示的范围 any,none,basePackage等里面
-                // 选择是否开启swagger
-//                .enable(isEnable)
                 // 组名
-                .groupName("用户")
+                .groupName("ALL API")
                 .select()
+                // 选择api显示的范围 any,none,basePackage等里面
                 .apis(RequestHandlerSelectors.basePackage("top.ddgotxdy.api.controller"))
-                // 筛选请求
-                .paths(PathSelectors.ant("/user"))
                 .build();
     }
 
     private ApiInfo apiInfo() {
-        Contact contact = new Contact("ddgotxdy", "ddgotxdy.top", "1812805089@qq.com");
+        Contact contact = new Contact("ddgo", "ddgotxdy.top", "1812805089@qq.com");
         return new ApiInfo(
-                "swagger学习接口文档",
-                "这是学习swagger生成的文档",
+                "博客API",
+                "博客swagger生成文档",
                 "v1.0.0",
-                "localhost:8080",
+                "",
                 contact,
                 "",
                 "",

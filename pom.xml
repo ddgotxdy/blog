@@ -33,10 +33,12 @@
         <mysql-connector-java.version>8.0.28</mysql-connector-java.version>
         <druid.version>1.2.8</druid.version>
         <swagger.version>2.9.2</swagger.version>
+        <knife4j.version>2.0.9</knife4j.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!-- spring boot + spring cloud + spring cloud alibaba -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -133,6 +135,12 @@
                 <artifactId>springfox-swagger-ui</artifactId>
                 <version>${swagger.version}</version>
             </dependency>
+            <!-- knife4j依赖 -->
+            <dependency>
+                <groupId>com.github.xiaoymin</groupId>
+                <artifactId>knife4j-spring-boot-starter</artifactId>
+                <version>${knife4j.version}</version>
+            </dependency>
 
             <!-- 七牛云的依赖 -->
             <dependency>
@@ -145,11 +153,13 @@
 
     <build>
         <plugins>
+            <!-- 指定版本，不然后续版本不支持jdk8了 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <version>2.2.7.RELEASE</version>
             </plugin>
+            <!-- docker 编译插件 -->
             <plugin>
                 <groupId>com.spotify</groupId>
                 <artifactId>dockerfile-maven-plugin</artifactId>
