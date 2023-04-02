@@ -39,6 +39,19 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- 一方依赖 -->
+            <dependency>
+                <groupId>top.ddgotxdy</groupId>
+                <artifactId>blog-common</artifactId>
+                <version>${revision}</version>
+            </dependency>
+            <dependency>
+                <groupId>top.ddgotxdy</groupId>
+                <artifactId>blog-dal</artifactId>
+                <version>${revision}</version>
+            </dependency>
+
+            <!-- 三方依赖 -->
             <!-- spring boot + spring cloud + spring cloud alibaba -->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
