@@ -11,7 +11,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  */
 @SpringBootApplication
 @EnableDiscoveryClient
-@EnableFeignClients
+@EnableFeignClients(basePackages = "top.ddgotxdy.*")
 public class BlogApiApplication {
     public static void main(String[] args) {
         SpringApplication.run(BlogApiApplication.class, args);

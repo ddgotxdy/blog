@@ -13,13 +13,12 @@ import top.ddgotxdy.common.model.article.ArticleListDTO;
  * @description: 博客服务对外接口
  */
 @Component
-@FeignClient("BlogArticleClient")
-@RequestMapping("openfeign/article")
+@FeignClient("article-service")
 public interface BlogArticleClient {
     /**
      * 首页获取文章列表，分页获取
      * @return ResultView<PageResult<ArticleListDTO>>
      */
-    @PostMapping("/list")
+    @PostMapping("openfeign/article/list")
     ResultView<PageResult<ArticleListDTO>> getArticleList();
 }
