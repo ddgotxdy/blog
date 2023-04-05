@@ -3,10 +3,12 @@ package top.ddgotxdy.common.client;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import top.ddgotxdy.common.model.IdView;
 import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.ResultView;
 import top.ddgotxdy.common.model.article.ArticleListDTO;
+import top.ddgotxdy.common.model.article.addparam.AddArticleParam;
 
 /**
  * @author: ddgo
@@ -21,4 +23,12 @@ public interface BlogArticleClient {
      */
     @PostMapping("openfeign/article/list")
     ResultView<PageResult<ArticleListDTO>> getArticleList();
+
+    /**
+     * 添加文章
+     * @param addArticleParam 添加文章强求参数
+     * @return 创建文章的id值
+     */
+    @PostMapping("openfeign/article/add")
+    ResultView<IdView> addArticle(@RequestBody AddArticleParam addArticleParam);
 }
