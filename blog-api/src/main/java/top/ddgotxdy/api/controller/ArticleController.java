@@ -3,10 +3,13 @@ package top.ddgotxdy.api.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import top.ddgotxdy.api.model.addparam.ArticleAddApiParam;
 import top.ddgotxdy.api.model.view.ArticleListView;
 import top.ddgotxdy.api.service.BlogArticleBizService;
+import top.ddgotxdy.common.model.IdView;
 import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.ResultView;
 
@@ -28,5 +31,14 @@ public class ArticleController {
     public ResultView<PageResult<ArticleListView>> getArticleList() {
         PageResult<ArticleListView> articleList = articleBizService.getArticleList();
         return ResultView.success(articleList);
+    }
+
+    @ApiOperation("添加文章")
+    @PostMapping("/admin/add")
+    public ResultView<IdView> addArticle(
+            @RequestBody ArticleAddApiParam articleAddApiParam
+    ) {
+        IdView idView = articleBizService.addArticle(articleAddApiParam);
+        return ResultView.success(idView);
     }
 }

@@ -13,8 +13,12 @@ public abstract class AbstractArticleService implements ArticleBaseService {
         if (!filter(articleContext)) {
             return;
         }
+        // 通过校验，操作日志预落库
+        preOplog(articleContext);
         // 开始执行文章操作
         doExecute(articleContext);
+        // 已经落库，操作日志实际落库
+        afterOplog(articleContext);
     }
 
     /**
@@ -29,4 +33,20 @@ public abstract class AbstractArticleService implements ArticleBaseService {
      * @param articleContext 文章上下文
      */
     protected abstract void doExecute(ArticleContext articleContext);
+
+    /**
+     * 操作日志预落库
+     * @param articleContext 文章上下文
+     */
+    protected void preOplog(ArticleContext articleContext) {
+        // TODO 操作日志记录
+    }
+
+    /**
+     * 操作日志后落库
+     * @param articleContext 文章上下文
+     */
+    protected void afterOplog(ArticleContext articleContext) {
+        // TODO 操作日志记录
+    }
 }

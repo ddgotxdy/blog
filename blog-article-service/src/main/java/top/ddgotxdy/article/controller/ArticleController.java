@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.ddgotxdy.article.service.ArticleBizService;
-import top.ddgotxdy.common.model.IdView;
+import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.ResultView;
 import top.ddgotxdy.common.model.article.ArticleListDTO;
-import top.ddgotxdy.common.model.article.addparam.AddArticleParam;
+import top.ddgotxdy.common.model.article.addparam.ArticleAddParam;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -38,10 +38,10 @@ public class ArticleController {
     }
 
     @PostMapping("/add")
-    public ResultView<IdView> addArticle(
-            @RequestBody AddArticleParam addArticleParam
+    public ResultView<IdDTO> addArticle(
+            @RequestBody ArticleAddParam addArticleParam
     ) {
-        IdView idView = articleBizService.addArticle(addArticleParam);
-        return ResultView.success(idView);
+        IdDTO idDTO = articleBizService.addArticle(addArticleParam);
+        return ResultView.success(idDTO);
     }
 }

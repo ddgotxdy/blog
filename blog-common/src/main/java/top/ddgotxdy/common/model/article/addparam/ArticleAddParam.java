@@ -7,7 +7,7 @@ import lombok.Data;
  * @description: 添加文章的参数
  */
 @Data
-public class AddArticleParam {
+public class ArticleAddParam {
     /**
      * 用户id
      */
