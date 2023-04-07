@@ -158,6 +158,14 @@
                 <artifactId>commons-lang3</artifactId>
                 <version>3.12.0</version>
             </dependency>
+            <!-- com.github.phantomthief 封装的 ThreadLocal工具类 -->
+            <!-- https://juejin.cn/post/7153287656624324638#heading-5 简单介绍 -->
+            <!-- https://github.com/PhantomThief/scope -->
+            <dependency>
+                <groupId>com.github.phantomthief</groupId>
+                <artifactId>scope</artifactId>
+                <version>1.0.20</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
