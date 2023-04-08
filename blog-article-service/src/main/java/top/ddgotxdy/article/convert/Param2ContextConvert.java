@@ -11,12 +11,18 @@ import top.ddgotxdy.common.model.article.addparam.ArticleAddParam;
  */
 public class Param2ContextConvert {
     private Param2ContextConvert() { }
+
+    /**
+     * 将文章添加参数转换为文章上下文
+     * @param articleAddParam 文章添加参数
+     * @return 文章上下文
+     */
     public static ArticleContext addParamConvert(ArticleAddParam articleAddParam) {
         ArticleContext articleContext = new ArticleContext();
-        // 设置为添加事件
-        articleContext.setArticleEvent(ArticleEvent.ARTICLE_ADD);
-        // 其它值的复制，目前没有特殊值
+        // 先对无需处理的值复制一份
         BeanUtils.copyProperties(articleAddParam, articleContext);
+        // 设置为添加事件
+        articleContext.setArticleEvent(ArticleEvent.ARTICLE_BODY_ADD);
         return articleContext;
     }
 }

@@ -2,7 +2,7 @@ package top.ddgotxdy.article.convert;
 
 import org.springframework.beans.BeanUtils;
 import top.ddgotxdy.article.model.ArticleContext;
-import top.ddgotxdy.dal.entity.Article;
+import top.ddgotxdy.dal.entity.BlogArticle;
 
 /**
  * @author: ddgo
@@ -16,10 +16,10 @@ public class Context2EntityConvert {
      * @param articleContext 文章上下文
      * @return Article
      */
-    public static Article articleContext2Article(ArticleContext articleContext) {
+    public static BlogArticle articleContext2Article(ArticleContext articleContext) {
         // 目前直接beanUtils就行
-        Article article = new Article();
-        BeanUtils.copyProperties(articleContext, article);
-        return article;
+        BlogArticle blogArticle = new BlogArticle();
+        BeanUtils.copyProperties(articleContext, blogArticle);
+        return blogArticle;
     }
 }

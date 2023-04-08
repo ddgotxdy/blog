@@ -2,6 +2,8 @@ package top.ddgotxdy.article.model;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author: ddgo
  * @description: 文章上下文
@@ -33,14 +35,6 @@ public class ArticleContext {
      */
     private String articleContent;
     /**
-     * 文章的类型
-     */
-    private Integer articleType;
-    /**
-     * 原始链接，这里是转载链接
-     */
-    private String originalUrl;
-    /**
      * 当前文章的置顶排名
      */
     private Integer rank;
@@ -48,4 +42,14 @@ public class ArticleContext {
      * 文章状态值
      */
     private Integer articleStatus;
+
+    /**
+     * 标签的id列表
+     */
+    private List<Long> tagIds;
+
+    /**
+     * 分类id
+     */
+    private Long categoryId;
 }

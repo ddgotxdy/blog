@@ -4,15 +4,19 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 import top.ddgotxdy.article.annotation.ArticleEventSelector;
 import top.ddgotxdy.article.convert.Context2EntityConvert;
 import top.ddgotxdy.article.model.ArticleContext;
 import top.ddgotxdy.article.model.ArticleEvent;
 import top.ddgotxdy.article.service.AbstractArticleService;
 import top.ddgotxdy.article.service.BlogArticleService;
-import top.ddgotxdy.dal.entity.Article;
+import top.ddgotxdy.dal.entity.BlogArticle;
 
 import javax.annotation.Resource;
+
+import java.util.List;
+import java.util.Objects;
 
 import static top.ddgotxdy.article.constant.ValidateConstant.MAX_ARTICLE_CONTENT_LENGTH;
 
@@ -20,10 +24,10 @@ import static top.ddgotxdy.article.constant.ValidateConstant.MAX_ARTICLE_CONTENT
  * @author: ddgo
  * @description: 文章添加服务
  */
-@ArticleEventSelector(ArticleEvent.ARTICLE_ADD)
+@ArticleEventSelector(ArticleEvent.ARTICLE_BODY_ADD)
 @Service
 @Slf4j
-public class ArticleAddServiceImpl extends AbstractArticleService {
+public class ArticleBodyAddServiceImpl extends AbstractArticleService {
     @Resource
     private BlogArticleService blogArticleService;
 
@@ -36,7 +40,17 @@ public class ArticleAddServiceImpl extends AbstractArticleService {
             log.error("Over MAX_ARTICLE_CONTENT_LENGTH");
             return false;
         }
-        // 3. TODO 必须包含一个标签
+        // 3. 必须包含一个标签
+        List<Long> tagIds = articleContext.getTagIds();
+        if (CollectionUtils.isEmpty(tagIds)) {
+            log.error("tag ids is empty");
+            return false;
+        }
+        // 4. 必须包含一个分类id
+        if (Objects.isNull(articleContext.getCategoryId())) {
+            log.error("category id is null");
+            return false;
+        }
         return true;
     }
 
@@ -44,13 +58,10 @@ public class ArticleAddServiceImpl extends AbstractArticleService {
     @Transactional(rollbackFor = Exception.class)
     protected void doExecute(ArticleContext articleContext) {
         // 1. 文章实体对象
-        Article article = Context2EntityConvert.articleContext2Article(articleContext);
-        // 2. TODO 标签实体对象
-        // 3. TODO 分类实体对象
-        // 文章落库
-        blogArticleService.save(article);
-
-        // 获取对应的文章主键id
-        articleContext.setArticleId(article.getArticleId());
+        BlogArticle blogArticle = Context2EntityConvert.articleContext2Article(articleContext);
+        // 2. 文章落库
+        blogArticleService.save(blogArticle);
+        // 3. 获取对应的文章主键id
+        articleContext.setArticleId(blogArticle.getArticleId());
     }
 }

@@ -23,11 +23,11 @@ CREATE TABLE `blog_article`  (
    `article_cover_url` varchar(1024) NOT NULL DEFAULT '' COMMENT '文章缩略图，没有则默认填充',
    `article_title` varchar(50) NOT NULL DEFAULT '' COMMENT '标题',
    `article_content` longtext NOT NULL COMMENT '文章内容',
-   `article_type` tinyint(4) NOT NULL DEFAULT 0 COMMENT '文章类型 1原创 2转载 3翻译',
-   `original_url` varchar(1024) NULL DEFAULT NULL COMMENT '原文链接',
    `rank` int NOT NULL DEFAULT 0 COMMENT '置顶排序，值越大，排名越高',
    `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除  0否 1是',
    `article_status` tinyint(4) NOT NULL DEFAULT 1 COMMENT '文章状态值 1公开 2私密 3登录可见',
+   `tag_ids` varchar(1024) NOT NULL DEFAULT '[]' COMMENT '包含的标签，1<=num<=3 例如[1001,1002,1003]',
+   `category_id` bigint NOT NULL COMMENT '所属分类',
    `create_time` bigint NOT NULL COMMENT '发表时间',
    `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
    PRIMARY KEY (`article_id`)
@@ -38,6 +38,7 @@ DROP TABLE IF EXISTS `blog_category`;
 CREATE TABLE `blog_category`(
     `category_id` bigint NOT NULL COMMENT '分类ID',
     `category_name` varchar(20) NOT NULL COMMENT '分类名',
+    `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除  0否 1是',
     `create_time` bigint NOT NULL COMMENT '创建时间',
     `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
     PRIMARY KEY (`category_id`)
@@ -48,6 +49,7 @@ DROP TABLE IF EXISTS `blog_tag`;
 CREATE TABLE `blog_tag`  (
     `tag_id` bigint NOT NULL COMMENT '标签ID',
     `tag_name` varchar(20) NOT NULL COMMENT '标签名',
+    `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除  0否 1是',
     `create_time` bigint NOT NULL COMMENT '创建时间',
     `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
     PRIMARY KEY (`tag_id`)

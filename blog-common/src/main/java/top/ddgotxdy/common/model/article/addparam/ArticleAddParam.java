@@ -2,6 +2,8 @@ package top.ddgotxdy.common.model.article.addparam;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author: ddgo
  * @description: 添加文章的参数
@@ -25,14 +27,6 @@ public class ArticleAddParam {
      */
     private String articleContent;
     /**
-     * 文章类型 1原创 2转载 3翻译
-     */
-    private Integer articleType;
-    /**
-     * 原文链接
-     */
-    private String originalUrl;
-    /**
      * 置顶排序，值越大，排名越高
      */
     private Integer rank;
@@ -40,4 +34,12 @@ public class ArticleAddParam {
      * 文章状态值 1公开 2私密 3登录可见
      */
     private Integer articleStatus;
+    /**
+     * 标签的id列表
+     */
+    private List<Long> tagIds;
+    /**
+     * 分类id
+     */
+    private Long categoryId;
 }

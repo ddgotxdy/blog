@@ -15,7 +15,7 @@ import lombok.*;
 @AllArgsConstructor
 @TableName("blog_article")
 @ApiModel(value = "BlogArticle对象", description = "博客实体类")
-public class Article {
+public class BlogArticle {
 
     @ApiModelProperty("文章ID")
     @TableId(type = IdType.ASSIGN_ID)
@@ -34,12 +34,6 @@ public class Article {
     @ApiModelProperty("文章内容")
     private String articleContent;
 
-    @ApiModelProperty("文章类型 1原创 2转载 3翻译")
-    private Integer articleType;
-
-    @ApiModelProperty("原文链接")
-    private String originalUrl;
-
     @ApiModelProperty("置顶排序，值越大，排名越高")
     private Integer rank;
 
@@ -49,6 +43,12 @@ public class Article {
 
     @ApiModelProperty("文章状态值 1公开 2私密 3登录可见")
     private Integer articleStatus;
+
+    @ApiModelProperty("包含的标签id列表对应的json")
+    private String tagIds;
+
+    @ApiModelProperty("分类id")
+    private Long categoryId;
 
     @ApiModelProperty("发表时间")
     @TableField(fill = FieldFill.INSERT)
