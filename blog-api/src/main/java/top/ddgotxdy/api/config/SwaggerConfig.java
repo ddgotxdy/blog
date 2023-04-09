@@ -25,7 +25,7 @@ import java.util.List;
  * @description: swagger文档配置
  * EnableSwagger2 开启自动配置
  * 地址/doc.html knife4j
- * 地址/swagger-ui.htm swagger
+ * 地址/swagger-ui.html swagger
  */
 @Configuration
 @EnableSwagger2

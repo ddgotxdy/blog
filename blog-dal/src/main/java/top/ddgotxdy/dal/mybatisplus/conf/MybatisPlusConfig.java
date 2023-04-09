@@ -12,7 +12,6 @@ import org.springframework.context.annotation.Configuration;
  * @description: mp 配置文件
  */
 @Configuration
-@MapperScan("top.ddgotxdy.mapper")
 public class MybatisPlusConfig {
 
     /**

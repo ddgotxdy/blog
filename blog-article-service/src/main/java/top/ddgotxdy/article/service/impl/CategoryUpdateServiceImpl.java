@@ -14,7 +14,7 @@ import javax.annotation.Resource;
  * @author: ddgo
  * @description: 分类更新服务类
  */
-@ArticleEventSelector(ArticleEvent.CATEGORY_ADD)
+@ArticleEventSelector(ArticleEvent.CATEGORY_UPDATE)
 @Component
 @Slf4j
 public class CategoryUpdateServiceImpl extends AbstractArticleService {

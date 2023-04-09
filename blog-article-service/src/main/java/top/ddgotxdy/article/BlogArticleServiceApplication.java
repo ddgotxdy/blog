@@ -9,7 +9,7 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
  * @author: ddgo
  * @description: 博客文章服务启动类
  */
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "top.ddgotxdy.*")
 @EnableDiscoveryClient
 @MapperScan("top.ddgotxdy.dal.mapper")
 public class BlogArticleServiceApplication {

@@ -6,6 +6,7 @@ import top.ddgotxdy.api.scope.ContextScope;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Optional;
 
 /**
  * @author: ddgo
@@ -28,9 +29,12 @@ public class DataInitInterceptor implements HandlerInterceptor {
         String method = request.getMethod();
         ContextScope.setRequestMethod(method);
         // 3. ip地址
-        ContextScope.setIp(this.getIpAddress(request));
+        String ip = this.getIpAddress(request);
+        ContextScope.setIp(ip);
         // 4. user id
-        ContextScope.setUserId(Long.valueOf(request.getHeader("USER-ID")));
+        Long userId = Long.valueOf(Optional.ofNullable(request.getHeader("USER-ID")).orElse("0"));
+        ContextScope.setUserId(userId);
+        log.info("uri [{}] method [{}] ip [{}] userid [{}]", uri, method, ip, userId);
         return true;
     }
 

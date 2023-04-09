@@ -30,8 +30,8 @@ public class CategoryAddServiceImpl extends AbstractArticleService {
     protected boolean filter(ArticleContext articleContext) {
         // 1. TODO 用户的权限必须是管理员，否者不允许创建文章
         // 2. 分类的大小不超过最长的长度
-        if (StringUtils.length(articleContext.getTagName()) > MAX_CATEGORY_LENGTH
-                || StringUtils.length(articleContext.getTagName()) < 1) {
+        if (StringUtils.length(articleContext.getCategoryName()) > MAX_CATEGORY_LENGTH
+                || StringUtils.length(articleContext.getCategoryName()) < 1) {
             // 先打error日志
             log.error("Over MAX_CATEGORY_LENGTH or Lower 1");
             return false;

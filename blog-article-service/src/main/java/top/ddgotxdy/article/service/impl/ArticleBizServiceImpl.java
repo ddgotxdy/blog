@@ -38,6 +38,7 @@ public class ArticleBizServiceImpl implements ArticleBizService {
 
     @Override
     public IdDTO addTag(TagAddParam tagAddParam) {
+        log.info("TagAddParam [{}]", toJSON(tagAddParam));
         ArticleContext articleContext = Param2ContextConvert.addParamConvert(tagAddParam);
         log.info("ArticleBizServiceImpl addTag request[{}]", toJSON(articleContext));
         articleManageAdaptor.execute(articleContext);
