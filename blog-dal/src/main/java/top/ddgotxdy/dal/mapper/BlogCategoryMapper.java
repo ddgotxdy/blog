@@ -1,16 +1,14 @@
 package top.ddgotxdy.dal.mapper;
 
+import org.apache.ibatis.annotations.Mapper;
 import top.ddgotxdy.dal.entity.BlogCategory;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
- * <p>
- *  Mapper 接口
- * </p>
- *
- * @author ddgo
- * @since 2023-04-09
+ * @author: ddgo
+ * @description: 分类mapper类型
  */
+@Mapper
 public interface BlogCategoryMapper extends BaseMapper<BlogCategory> {
 
 }

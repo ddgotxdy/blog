@@ -8,7 +8,7 @@ import lombok.*;
 
 /**
  * @author: ddgo
- * @description: 博客实体类
+ * @description: 博客文章实体类
  */
 @Data
 @NoArgsConstructor

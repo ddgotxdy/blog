@@ -22,7 +22,7 @@ import static top.ddgotxdy.article.constant.ValidateConstant.MAX_ARTICLE_CONTENT
 
 /**
  * @author: ddgo
- * @description: 文章添加服务
+ * @description: 文章添加服务 为了区分article这个概念，加了body
  */
 @ArticleEventSelector(ArticleEvent.ARTICLE_BODY_ADD)
 @Service

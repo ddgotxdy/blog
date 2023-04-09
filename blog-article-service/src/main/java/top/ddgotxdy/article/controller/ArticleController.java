@@ -1,6 +1,7 @@
 package top.ddgotxdy.article.controller;
 
 import com.google.common.collect.Lists;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,8 @@ import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.ResultView;
 import top.ddgotxdy.common.model.article.ArticleListDTO;
 import top.ddgotxdy.common.model.article.addparam.ArticleAddParam;
+import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
+import top.ddgotxdy.common.model.article.addparam.TagAddParam;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -37,11 +40,28 @@ public class ArticleController {
         return ResultView.success(pageResult);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/body/add")
     public ResultView<IdDTO> addArticle(
-            @RequestBody ArticleAddParam addArticleParam
+            @RequestBody ArticleAddParam articleAddParam
     ) {
-        IdDTO idDTO = articleBizService.addArticle(addArticleParam);
+        IdDTO idDTO = articleBizService.addArticle(articleAddParam);
         return ResultView.success(idDTO);
     }
+
+    @PostMapping("/tag/add")
+    public ResultView<IdDTO> addTag(
+            @Validated @RequestBody TagAddParam tagAddParam
+    ) {
+        IdDTO idDTO = articleBizService.addTag(tagAddParam);
+        return ResultView.success(idDTO);
+    }
+
+    @PostMapping("/category/add")
+    public ResultView<IdDTO> addCategory(
+            @Validated @RequestBody CategoryAddParam categoryAddParam
+    ) {
+        IdDTO idDTO = articleBizService.addCategory(categoryAddParam);
+        return ResultView.success(idDTO);
+    }
+
 }

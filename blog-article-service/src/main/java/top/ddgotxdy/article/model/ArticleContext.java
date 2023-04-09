@@ -42,14 +42,24 @@ public class ArticleContext {
      * 文章状态值
      */
     private Integer articleStatus;
-
     /**
      * 标签的id列表
      */
     private List<Long> tagIds;
-
+    /**
+     * 标签的id
+     */
+    private Long tagId;
+    /**
+     * 标签名称
+     */
+    private String tagName;
     /**
      * 分类id
      */
     private Long categoryId;
+    /**
+     * 分类名称
+     */
+    private String categoryName;
 }

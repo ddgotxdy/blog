@@ -1,41 +1,40 @@
 package top.ddgotxdy.dal.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
+import com.baomidou.mybatisplus.annotation.*;
+
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
- * <p>
- * 
- * </p>
- *
- * @author ddgo
- * @since 2023-04-09
+ * @author: ddgo
+ * @description: 博客标签实体类
  */
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("blog_tag")
-@ApiModel(value = "BlogTag对象", description = "")
-public class BlogTag implements Serializable {
-
-    private static final long serialVersionUID = 1L;
+@ApiModel(value = "BlogTag对象", description = "标签实体类")
+public class BlogTag {
 
     @ApiModelProperty("标签ID")
+    @TableId(type = IdType.ASSIGN_ID)
     private Long tagId;
 
     @ApiModelProperty("标签名")
     private String tagName;
 
     @ApiModelProperty("是否删除  0否 1是")
+    @TableLogic
     private Boolean isDelete;
 
     @ApiModelProperty("创建时间")
+    @TableField(fill = FieldFill.INSERT)
     private Long createTime;
 
     @ApiModelProperty("更新时间")
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateTime;
 
 

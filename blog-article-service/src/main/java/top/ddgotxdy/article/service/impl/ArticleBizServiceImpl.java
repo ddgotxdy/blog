@@ -8,6 +8,8 @@ import top.ddgotxdy.article.model.ArticleContext;
 import top.ddgotxdy.article.service.ArticleBizService;
 import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.article.addparam.ArticleAddParam;
+import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
+import top.ddgotxdy.common.model.article.addparam.TagAddParam;
 
 import javax.annotation.Resource;
 
@@ -31,6 +33,28 @@ public class ArticleBizServiceImpl implements ArticleBizService {
         log.info("ArticleBizServiceImpl addArticle id[{}]", articleContext.getArticleId());
         return IdDTO.builder()
                 .id(articleContext.getArticleId())
+                .build();
+    }
+
+    @Override
+    public IdDTO addTag(TagAddParam tagAddParam) {
+        ArticleContext articleContext = Param2ContextConvert.addParamConvert(tagAddParam);
+        log.info("ArticleBizServiceImpl addTag request[{}]", toJSON(articleContext));
+        articleManageAdaptor.execute(articleContext);
+        log.info("ArticleBizServiceImpl addTag id[{}]", articleContext.getArticleId());
+        return IdDTO.builder()
+                .id(articleContext.getTagId())
+                .build();
+    }
+
+    @Override
+    public IdDTO addCategory(CategoryAddParam categoryAddParam) {
+        ArticleContext articleContext = Param2ContextConvert.addParamConvert(categoryAddParam);
+        log.info("ArticleBizServiceImpl addCategory request[{}]", toJSON(articleContext));
+        articleManageAdaptor.execute(articleContext);
+        log.info("ArticleBizServiceImpl addCategory id[{}]", articleContext.getArticleId());
+        return IdDTO.builder()
+                .id(articleContext.getCategoryId())
                 .build();
     }
 }

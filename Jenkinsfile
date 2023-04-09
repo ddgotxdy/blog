@@ -75,7 +75,7 @@ pipeline {
                                     makeEmptyDirs: false,
                                     noDefaultExcludes: false,
                                     patternSeparator: '',
-                                    remoteDirectory: '/root/java',
+                                    remoteDirectory: '',
                                     remoteDirectorySDF: false,
                                     removePrefix: '',
                                     sourceFiles: ''
