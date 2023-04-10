@@ -1,6 +1,8 @@
 package top.ddgotxdy.api.service;
 
-import top.ddgotxdy.api.model.addparam.ArticleAddApiParam;
+import top.ddgotxdy.api.model.addparam.ArticleBodyAddApiParam;
+import top.ddgotxdy.api.model.addparam.CategoryAddApiParam;
+import top.ddgotxdy.api.model.addparam.TagAddApiParam;
 import top.ddgotxdy.api.model.view.ArticleListView;
 import top.ddgotxdy.common.model.IdView;
 import top.ddgotxdy.common.model.PageResult;
@@ -18,8 +20,22 @@ public interface BlogArticleBizService {
 
     /**
      * 添加文章
-     * @param articleAddApiParam 添加文章请求参数
+     * @param articleBodyAddApiParam 添加文章请求参数
      * @return 文章的id
      */
-    IdView addArticle(ArticleAddApiParam articleAddApiParam);
+    IdView addArticleBody(ArticleBodyAddApiParam articleBodyAddApiParam);
+
+    /**
+     * 添加标签
+     * @param tagAddApiParam 添加标签请求参数
+     * @return 标签的id
+     */
+    IdView addTag(TagAddApiParam tagAddApiParam);
+
+    /**
+     * 添加分类
+     * @param categoryAddApiParam 添加分类请求参数
+     * @return 分类的id
+     */
+    IdView addCategory(CategoryAddApiParam categoryAddApiParam);
 }

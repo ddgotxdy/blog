@@ -9,7 +9,7 @@ import java.util.List;
  * @description: 添加文章的参数
  */
 @Data
-public class ArticleAddParam {
+public class ArticleBodyAddParam {
     /**
      * 用户id
      */

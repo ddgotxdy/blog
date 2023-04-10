@@ -7,7 +7,7 @@ import top.ddgotxdy.article.convert.Param2ContextConvert;
 import top.ddgotxdy.article.model.ArticleContext;
 import top.ddgotxdy.article.service.ArticleBizService;
 import top.ddgotxdy.common.model.IdDTO;
-import top.ddgotxdy.common.model.article.addparam.ArticleAddParam;
+import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
 
@@ -26,7 +26,7 @@ public class ArticleBizServiceImpl implements ArticleBizService {
     private ArticleManageAdaptor articleManageAdaptor;
 
     @Override
-    public IdDTO addArticle(ArticleAddParam addArticleParam) {
+    public IdDTO addArticleBody(ArticleBodyAddParam addArticleParam) {
         ArticleContext articleContext = Param2ContextConvert.addParamConvert(addArticleParam);
         log.info("ArticleBizServiceImpl addArticle request[{}]", toJSON(articleContext));
         articleManageAdaptor.execute(articleContext);

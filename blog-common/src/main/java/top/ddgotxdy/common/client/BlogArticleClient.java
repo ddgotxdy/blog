@@ -9,7 +9,7 @@ import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.ResultView;
 import top.ddgotxdy.common.model.article.ArticleListDTO;
-import top.ddgotxdy.common.model.article.addparam.ArticleAddParam;
+import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
 
@@ -33,7 +33,7 @@ public interface BlogArticleClient {
      * @return 创建文章的id值
      */
     @PostMapping("openfeign/article/body/add")
-    ResultView<IdDTO> addArticle(@RequestBody ArticleAddParam addArticleParam);
+    ResultView<IdDTO> addArticle(@RequestBody ArticleBodyAddParam addArticleParam);
 
     /**
      * 添加标签

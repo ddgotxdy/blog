@@ -1,7 +1,7 @@
 package top.ddgotxdy.article.service;
 
 import top.ddgotxdy.common.model.IdDTO;
-import top.ddgotxdy.common.model.article.addparam.ArticleAddParam;
+import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
 
@@ -12,10 +12,10 @@ import top.ddgotxdy.common.model.article.addparam.TagAddParam;
 public interface ArticleBizService {
     /**
      * 添加文章
-     * @param articleAddParam 添加文章请求参数
+     * @param articleBodyAddParam 添加文章请求参数
      * @return 返回 IdDTO
      */
-    IdDTO addArticle(ArticleAddParam articleAddParam);
+    IdDTO addArticleBody(ArticleBodyAddParam articleBodyAddParam);
 
     /**
      * 添加标签

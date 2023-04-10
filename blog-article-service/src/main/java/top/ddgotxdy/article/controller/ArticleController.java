@@ -11,7 +11,7 @@ import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.ResultView;
 import top.ddgotxdy.common.model.article.ArticleListDTO;
-import top.ddgotxdy.common.model.article.addparam.ArticleAddParam;
+import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
 
@@ -42,9 +42,9 @@ public class ArticleController {
 
     @PostMapping("/body/add")
     public ResultView<IdDTO> addArticle(
-            @RequestBody ArticleAddParam articleAddParam
+            @RequestBody ArticleBodyAddParam articleBodyAddParam
     ) {
-        IdDTO idDTO = articleBizService.addArticle(articleAddParam);
+        IdDTO idDTO = articleBizService.addArticleBody(articleBodyAddParam);
         return ResultView.success(idDTO);
     }
 

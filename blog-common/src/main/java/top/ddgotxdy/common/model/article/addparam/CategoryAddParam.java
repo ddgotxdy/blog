@@ -10,6 +10,10 @@ import org.hibernate.validator.constraints.Length;
 @Data
 public class CategoryAddParam {
     /**
+     * 用户id
+     */
+    private Long userId;
+    /**
      * 分类名称
      */
     @Length(min = 1, max = 20)

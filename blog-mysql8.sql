@@ -19,7 +19,6 @@ CREATE TABLE `blog_user` (
 DROP TABLE IF EXISTS `blog_article`;
 CREATE TABLE `blog_article`  (
    `article_id` bigint NOT NULL COMMENT '文章ID',
-   `user_id` bigint NOT NULL COMMENT '用户ID',
    `article_cover_url` varchar(1024) NOT NULL DEFAULT '' COMMENT '文章缩略图，没有则默认填充',
    `article_title` varchar(50) NOT NULL DEFAULT '' COMMENT '标题',
    `article_content` longtext NOT NULL COMMENT '文章内容',
