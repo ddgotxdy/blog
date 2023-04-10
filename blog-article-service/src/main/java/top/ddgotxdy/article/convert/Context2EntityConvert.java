@@ -6,6 +6,12 @@ import top.ddgotxdy.dal.entity.BlogArticle;
 import top.ddgotxdy.dal.entity.BlogCategory;
 import top.ddgotxdy.dal.entity.BlogTag;
 
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
+
+import static com.alibaba.fastjson.JSON.toJSONString;
+
 /**
  * @author: ddgo
  * @description: ArticleContext转实体对象
@@ -22,6 +28,11 @@ public class Context2EntityConvert {
         // 目前直接beanUtils就行
         BlogArticle blogArticle = new BlogArticle();
         BeanUtils.copyProperties(articleContext, blogArticle);
+        // 标签的值
+        List<Long> tagIds = Optional.ofNullable(articleContext.getTagIds())
+                .orElse(Collections.emptyList());
+        String tagIdsString = toJSONString(tagIds);
+        blogArticle.setTagIds(tagIdsString);
         return blogArticle;
     }
 

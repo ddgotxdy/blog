@@ -21,9 +21,6 @@ public class BlogArticle {
     @TableId(type = IdType.ASSIGN_ID)
     private Long articleId;
 
-    @ApiModelProperty("用户ID")
-    private Long userId;
-
     @ApiModelProperty("文章缩略图，没有则默认填充")
     @TableField(fill = FieldFill.INSERT)
     private String articleCoverUrl;
@@ -35,6 +32,7 @@ public class BlogArticle {
     private String articleContent;
 
     @ApiModelProperty("置顶排序，值越大，排名越高")
+    @TableField("`rank`")
     private Integer rank;
 
     @ApiModelProperty("是否删除  0否 1是")
