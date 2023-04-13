@@ -12,8 +12,9 @@ import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.ResultView;
 import top.ddgotxdy.common.model.article.ArticleListDTO;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
-import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
+import top.ddgotxdy.common.model.article.updateparam.TagUpdateParam;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -56,11 +57,20 @@ public class ArticleController {
         return ResultView.success(idDTO);
     }
 
+    @PostMapping("/tag/update")
+    public ResultView<IdDTO> updateTag(
+            @Validated @RequestBody TagUpdateParam tagUpdateParam
+    ) {
+        IdDTO idDTO = articleBizService.updateTag(tagUpdateParam);
+        return ResultView.success(idDTO);
+    }
+
+
     @PostMapping("/category/add")
     public ResultView<IdDTO> addCategory(
-            @Validated @RequestBody CategoryAddParam categoryAddParam
+            @Validated @RequestBody CategoryUpdateParam categoryUpdateParam
     ) {
-        IdDTO idDTO = articleBizService.addCategory(categoryAddParam);
+        IdDTO idDTO = articleBizService.updateCategory(categoryUpdateParam);
         return ResultView.success(idDTO);
     }
 

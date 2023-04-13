@@ -10,6 +10,8 @@ import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
+import top.ddgotxdy.common.model.article.updateparam.TagUpdateParam;
 
 import javax.annotation.Resource;
 
@@ -49,6 +51,11 @@ public class ArticleBizServiceImpl implements ArticleBizService {
     }
 
     @Override
+    public IdDTO updateTag(TagUpdateParam tagUpdateParam) {
+        return null;
+    }
+
+    @Override
     public IdDTO addCategory(CategoryAddParam categoryAddParam) {
         ArticleContext articleContext = Param2ContextConvert.addParamConvert(categoryAddParam);
         log.info("ArticleBizServiceImpl addCategory request[{}]", toJSON(articleContext));
@@ -57,5 +64,10 @@ public class ArticleBizServiceImpl implements ArticleBizService {
         return IdDTO.builder()
                 .id(articleContext.getCategoryId())
                 .build();
+    }
+
+    @Override
+    public IdDTO updateCategory(CategoryUpdateParam categoryUpdateParam) {
+        return null;
     }
 }
