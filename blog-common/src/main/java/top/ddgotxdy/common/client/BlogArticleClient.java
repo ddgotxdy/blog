@@ -12,6 +12,9 @@ import top.ddgotxdy.common.model.article.ArticleListDTO;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
+import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
+import top.ddgotxdy.common.model.article.updateparam.TagUpdateParam;
 
 /**
  * @author: ddgo
@@ -36,12 +39,28 @@ public interface BlogArticleClient {
     ResultView<IdDTO> addArticle(@RequestBody ArticleBodyAddParam addArticleParam);
 
     /**
+     * 更新文章
+     * @param articleBodyUpdateParam 更新文章请求参数
+     * @return 更新文章的id
+     */
+    @PostMapping("openfeign/article/body/update")
+    ResultView<IdDTO> updateArticle(@RequestBody ArticleBodyUpdateParam articleBodyUpdateParam);
+
+    /**
      * 添加标签
      * @param tagAddParam 标签添加参数
      * @return 创建标签的id值
      */
     @PostMapping("openfeign/article/tag/add")
     ResultView<IdDTO> addTag(@Validated @RequestBody TagAddParam tagAddParam);
+
+    /**
+     * 更新标签
+     * @param tagUpdateParam 标签更新参数
+     * @return 更新标签的id值
+     */
+    @PostMapping("openfeign/article/tag/update")
+    ResultView<IdDTO> updateTag(@Validated @RequestBody TagUpdateParam tagUpdateParam);
 
     /**
      * 添加分类
@@ -51,4 +70,11 @@ public interface BlogArticleClient {
     @PostMapping("openfeign/article/category/add")
     ResultView<IdDTO> addCategory(@Validated @RequestBody CategoryAddParam categoryAddParam);
 
+    /**
+     * 更新分类
+     * @param categoryUpdateParam 分类更新参数
+     * @return 更新分类的id值
+     */
+    @PostMapping("openfeign/article/category/update")
+    ResultView<IdDTO> updateCategory(@Validated @RequestBody CategoryUpdateParam categoryUpdateParam);
 }

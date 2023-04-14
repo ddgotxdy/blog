@@ -6,6 +6,9 @@ import top.ddgotxdy.article.model.ArticleEvent;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
+import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
+import top.ddgotxdy.common.model.article.updateparam.TagUpdateParam;
 
 /**
  * @author: ddgo
@@ -56,4 +59,45 @@ public class Param2ContextConvert {
         return articleContext;
     }
 
+    /**
+     * 将文章修改参数转换为文章上下文
+     * @param articleBodyUpdateParam 文章修改参数
+     * @return 文章上下文
+     */
+    public static ArticleContext updateParamContext(ArticleBodyUpdateParam articleBodyUpdateParam) {
+        ArticleContext articleContext = new ArticleContext();
+        // 先对无需处理的值复制一份
+        BeanUtils.copyProperties(articleBodyUpdateParam, articleContext);
+        // 设置为添加事件
+        articleContext.setArticleEvent(ArticleEvent.ARTICLE_BODY_UPDATE);
+        return articleContext;
+    }
+
+    /**
+     * 将标签修改参数转换为文章上下文
+     * @param tagUpdateParam 标签修改参数
+     * @return 文章上下文
+     */
+    public static ArticleContext updateParamContext(TagUpdateParam tagUpdateParam) {
+        ArticleContext articleContext = new ArticleContext();
+        // 先对无需处理的值复制一份
+        BeanUtils.copyProperties(tagUpdateParam, articleContext);
+        // 设置为添加事件
+        articleContext.setArticleEvent(ArticleEvent.TAG_UPDATE);
+        return articleContext;
+    }
+
+    /**
+     * 将分类修改参数转换为文章上下文
+     * @param categoryUpdateParam 分类修改参数
+     * @return 文章上下文
+     */
+    public static ArticleContext updateParamContext(CategoryUpdateParam categoryUpdateParam) {
+        ArticleContext articleContext = new ArticleContext();
+        // 先对无需处理的值复制一份
+        BeanUtils.copyProperties(categoryUpdateParam, articleContext);
+        // 设置为添加事件
+        articleContext.setArticleEvent(ArticleEvent.CATEGORY_UPDATE);
+        return articleContext;
+    }
 }

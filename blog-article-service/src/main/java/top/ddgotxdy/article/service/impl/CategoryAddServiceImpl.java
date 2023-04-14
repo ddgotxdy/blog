@@ -28,7 +28,12 @@ public class CategoryAddServiceImpl extends AbstractArticleService {
 
     @Override
     protected boolean filter(ArticleContext articleContext) {
-        // 1. TODO 用户的权限必须是管理员，否者不允许创建文章
+        // 1. 所有通用校验逻辑全部校验通过
+        boolean allCommonCheck = this.checkIsAdmin(articleContext)
+                && this.checkUniqueCategoryName(articleContext);
+        if (!allCommonCheck) {
+            return false;
+        }
         // 2. 分类的大小不超过最长的长度
         if (StringUtils.length(articleContext.getCategoryName()) > MAX_CATEGORY_LENGTH
                 || StringUtils.length(articleContext.getCategoryName()) < 1) {

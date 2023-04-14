@@ -10,6 +10,7 @@ import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.TagUpdateParam;
 
@@ -30,9 +31,19 @@ public class ArticleBizServiceImpl implements ArticleBizService {
     @Override
     public IdDTO addArticleBody(ArticleBodyAddParam addArticleParam) {
         ArticleContext articleContext = Param2ContextConvert.addParamConvert(addArticleParam);
-        log.info("ArticleBizServiceImpl addArticle request[{}]", toJSON(articleContext));
+        log.info("ArticleBizServiceImpl addArticleBody request[{}]", toJSON(articleContext));
         articleManageAdaptor.execute(articleContext);
-        log.info("ArticleBizServiceImpl addArticle id[{}]", articleContext.getArticleId());
+        log.info("ArticleBizServiceImpl addArticleBody id[{}]", articleContext.getArticleId());
+        return IdDTO.builder()
+                .id(articleContext.getArticleId())
+                .build();
+    }
+
+    @Override
+    public IdDTO updateArticleBody(ArticleBodyUpdateParam articleBodyUpdateParam) {
+        ArticleContext articleContext = Param2ContextConvert.updateParamContext(articleBodyUpdateParam);
+        log.info("ArticleBizServiceImpl updateArticleBody request[{}]", toJSON(articleContext));
+        articleManageAdaptor.execute(articleContext);
         return IdDTO.builder()
                 .id(articleContext.getArticleId())
                 .build();
@@ -40,7 +51,6 @@ public class ArticleBizServiceImpl implements ArticleBizService {
 
     @Override
     public IdDTO addTag(TagAddParam tagAddParam) {
-        log.info("TagAddParam [{}]", toJSON(tagAddParam));
         ArticleContext articleContext = Param2ContextConvert.addParamConvert(tagAddParam);
         log.info("ArticleBizServiceImpl addTag request[{}]", toJSON(articleContext));
         articleManageAdaptor.execute(articleContext);
@@ -52,7 +62,12 @@ public class ArticleBizServiceImpl implements ArticleBizService {
 
     @Override
     public IdDTO updateTag(TagUpdateParam tagUpdateParam) {
-        return null;
+        ArticleContext articleContext = Param2ContextConvert.updateParamContext(tagUpdateParam);
+        log.info("ArticleBizServiceImpl updateTag request[{}]", toJSON(articleContext));
+        articleManageAdaptor.execute(articleContext);
+        return IdDTO.builder()
+                .id(articleContext.getTagId())
+                .build();
     }
 
     @Override
@@ -68,6 +83,11 @@ public class ArticleBizServiceImpl implements ArticleBizService {
 
     @Override
     public IdDTO updateCategory(CategoryUpdateParam categoryUpdateParam) {
-        return null;
+        ArticleContext articleContext = Param2ContextConvert.updateParamContext(categoryUpdateParam);
+        log.info("ArticleBizServiceImpl updateCategory request[{}]", toJSON(articleContext));
+        articleManageAdaptor.execute(articleContext);
+        return IdDTO.builder()
+                .id(articleContext.getCategoryId())
+                .build();
     }
 }

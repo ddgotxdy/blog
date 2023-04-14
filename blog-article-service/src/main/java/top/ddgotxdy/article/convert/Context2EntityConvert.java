@@ -8,6 +8,7 @@ import top.ddgotxdy.dal.entity.BlogTag;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 import static com.alibaba.fastjson.JSON.toJSONString;
@@ -24,7 +25,7 @@ public class Context2EntityConvert {
      * @param articleContext 文章上下文
      * @return Article
      */
-    public static BlogArticle articleContext2Article(ArticleContext articleContext) {
+    public static BlogArticle articleContext2ArticleForAdd(ArticleContext articleContext) {
         // 目前直接beanUtils就行
         BlogArticle blogArticle = new BlogArticle();
         BeanUtils.copyProperties(articleContext, blogArticle);
@@ -33,6 +34,23 @@ public class Context2EntityConvert {
                 .orElse(Collections.emptyList());
         String tagIdsString = toJSONString(tagIds);
         blogArticle.setTagIds(tagIdsString);
+        return blogArticle;
+    }
+
+    /**
+     * ArticleContext  <===> Article
+     * @param articleContext 文章上下文
+     * @return Article
+     */
+    public static BlogArticle articleContext2ArticleForUpdate(ArticleContext articleContext) {
+        // 目前直接beanUtils就行
+        BlogArticle blogArticle = new BlogArticle();
+        BeanUtils.copyProperties(articleContext, blogArticle);
+        // 标签的值
+        if (Objects.nonNull(articleContext.getTagIds())) {
+            String tagIdsString = toJSONString(articleContext.getTagIds());
+            blogArticle.setTagIds(tagIdsString);
+        }
         return blogArticle;
     }
 

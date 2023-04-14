@@ -33,7 +33,11 @@ public class ArticleBodyAddServiceImpl extends AbstractArticleService {
 
     @Override
     protected boolean filter(ArticleContext articleContext) {
-        // 1. TODO 用户的权限必须是管理员，否者不允许创建文章
+        // 1. 所有通用校验逻辑全部校验通过
+        boolean allCommonCheck = this.checkIsAdmin(articleContext);
+        if (!allCommonCheck) {
+            return false;
+        }
         // 2. 文章内容的大小不超过数据库的长度
         if (StringUtils.length(articleContext.getArticleContent()) > MAX_ARTICLE_CONTENT_LENGTH) {
             // 先打error日志
@@ -58,7 +62,7 @@ public class ArticleBodyAddServiceImpl extends AbstractArticleService {
     @Transactional(rollbackFor = Exception.class)
     protected void doExecute(ArticleContext articleContext) {
         // 1. 文章实体对象
-        BlogArticle blogArticle = Context2EntityConvert.articleContext2Article(articleContext);
+        BlogArticle blogArticle = Context2EntityConvert.articleContext2ArticleForAdd(articleContext);
         // 2. 文章落库
         blogArticleService.save(blogArticle);
         // 3. 获取对应的文章主键id

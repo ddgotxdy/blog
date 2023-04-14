@@ -4,6 +4,7 @@ import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.TagUpdateParam;
 
@@ -18,6 +19,13 @@ public interface ArticleBizService {
      * @return 返回 IdDTO
      */
     IdDTO addArticleBody(ArticleBodyAddParam articleBodyAddParam);
+
+    /**
+     * 更新文章
+     * @param articleBodyUpdateParam 文章更新参数
+     * @return IdDTO
+     */
+    IdDTO updateArticleBody(ArticleBodyUpdateParam articleBodyUpdateParam);
 
     /**
      * 添加标签
