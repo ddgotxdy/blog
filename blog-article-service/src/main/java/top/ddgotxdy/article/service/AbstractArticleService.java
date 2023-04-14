@@ -108,7 +108,7 @@ public abstract class AbstractArticleService implements ArticleBaseService {
         // 更新的分类具有唯一性，TODO 直接用mysql查，可能包含性能问题
         LambdaQueryWrapper<BlogTag> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(
-                Objects.nonNull(articleContext.getCategoryName()),
+                Objects.nonNull(articleContext.getTagName()),
                 BlogTag::getTagName,
                 articleContext.getTagName()
         );
