@@ -1,7 +1,6 @@
 package top.ddgotxdy.common.model.article.updateparam;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 
 /**
  * @author: ddgo
@@ -20,6 +19,5 @@ public class CategoryUpdateParam {
     /**
      * 分类名称
      */
-    @Length(min = 1, max = 20)
     private String categoryName;
 }

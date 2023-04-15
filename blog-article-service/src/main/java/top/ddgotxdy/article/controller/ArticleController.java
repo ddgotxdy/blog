@@ -2,18 +2,19 @@ package top.ddgotxdy.article.controller;
 
 import com.google.common.collect.Lists;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import top.ddgotxdy.article.service.ArticleBizService;
 import top.ddgotxdy.common.model.IdDTO;
+import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.ResultView;
 import top.ddgotxdy.common.model.article.ArticleListDTO;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.dto.TagDTO;
+import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
+import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
 import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.TagUpdateParam;
@@ -39,7 +40,7 @@ public class ArticleController {
         List<ArticleListDTO> articleListDTOList = Lists.newArrayList(articleListDTO);
         PageResult<ArticleListDTO> pageResult = new PageResult<>();
         pageResult.setData(articleListDTOList);
-        pageResult.setTotalNumber(10);
+        pageResult.setTotalNumber(10L);
         return ResultView.success(pageResult);
     }
 
@@ -65,6 +66,22 @@ public class ArticleController {
     ) {
         IdDTO idDTO = articleBizService.addTag(tagAddParam);
         return ResultView.success(idDTO);
+    }
+
+    @PostMapping("/tag/queryByPage")
+    public ResultView<PageResult<TagPageListDTO>> queryTagByPage(
+            @Validated @RequestBody PageQry<TagQueryParam> tagQueryParamPageQry
+    ) {
+        PageResult<TagPageListDTO> result = articleBizService.queryTagByPage(tagQueryParamPageQry);
+        return ResultView.success(result);
+    }
+
+    @GetMapping("/tag/queryById/{tagId}")
+    public ResultView<TagDTO> queryTagById(
+            @PathVariable("tagId") Long tagId
+    ) {
+        TagDTO result = articleBizService.queryTagById(tagId);
+        return ResultView.success(result);
     }
 
     @PostMapping("/tag/update")

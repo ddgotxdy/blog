@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import java.util.LinkedHashMap;
 
@@ -16,10 +17,12 @@ public class PageQry<QUERY_PARAM> {
 
     @ApiModelProperty("查询第x页")
     @Min(value = 1, message = "页数错误")
+    @Max(value = 1000, message = "页数错误错误")
     private int pageNum;
 
     @ApiModelProperty("每页数据量")
     @Min(value = 1, message = "每页数据量错误")
+    @Max(value = 100, message = "每页数据量错误")
     private int pageSize;
 
     @ApiModelProperty("查询条件")

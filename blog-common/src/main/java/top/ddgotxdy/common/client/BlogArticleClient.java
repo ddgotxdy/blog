@@ -6,12 +6,15 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import top.ddgotxdy.common.model.IdDTO;
+import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.ResultView;
 import top.ddgotxdy.common.model.article.ArticleListDTO;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
+import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
 import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.TagUpdateParam;
@@ -36,7 +39,9 @@ public interface BlogArticleClient {
      * @return 创建文章的id值
      */
     @PostMapping("openfeign/article/body/add")
-    ResultView<IdDTO> addArticle(@RequestBody ArticleBodyAddParam addArticleParam);
+    ResultView<IdDTO> addArticle(
+            @RequestBody ArticleBodyAddParam addArticleParam
+    );
 
     /**
      * 更新文章
@@ -44,7 +49,9 @@ public interface BlogArticleClient {
      * @return 更新文章的id
      */
     @PostMapping("openfeign/article/body/update")
-    ResultView<IdDTO> updateArticle(@RequestBody ArticleBodyUpdateParam articleBodyUpdateParam);
+    ResultView<IdDTO> updateArticle(
+            @RequestBody ArticleBodyUpdateParam articleBodyUpdateParam
+    );
 
     /**
      * 添加标签
@@ -52,7 +59,9 @@ public interface BlogArticleClient {
      * @return 创建标签的id值
      */
     @PostMapping("openfeign/article/tag/add")
-    ResultView<IdDTO> addTag(@Validated @RequestBody TagAddParam tagAddParam);
+    ResultView<IdDTO> addTag(
+            @Validated @RequestBody TagAddParam tagAddParam
+    );
 
     /**
      * 更新标签
@@ -60,7 +69,9 @@ public interface BlogArticleClient {
      * @return 更新标签的id值
      */
     @PostMapping("openfeign/article/tag/update")
-    ResultView<IdDTO> updateTag(@Validated @RequestBody TagUpdateParam tagUpdateParam);
+    ResultView<IdDTO> updateTag(
+            @Validated @RequestBody TagUpdateParam tagUpdateParam
+    );
 
     /**
      * 添加分类
@@ -68,7 +79,9 @@ public interface BlogArticleClient {
      * @return 创建分类的id值
      */
     @PostMapping("openfeign/article/category/add")
-    ResultView<IdDTO> addCategory(@Validated @RequestBody CategoryAddParam categoryAddParam);
+    ResultView<IdDTO> addCategory(
+            @Validated @RequestBody CategoryAddParam categoryAddParam
+    );
 
     /**
      * 更新分类
@@ -76,5 +89,21 @@ public interface BlogArticleClient {
      * @return 更新分类的id值
      */
     @PostMapping("openfeign/article/category/update")
-    ResultView<IdDTO> updateCategory(@Validated @RequestBody CategoryUpdateParam categoryUpdateParam);
+    ResultView<IdDTO> updateCategory(
+            @Validated @RequestBody CategoryUpdateParam categoryUpdateParam
+    );
+
+
+    //---------------------------------查询接口----------------------------------------//
+
+    /**
+     * 分页查询标签
+     * @param tagQueryParamPageQry 分页查询标签参数
+     * @return 标签分页结果对象
+     */
+    @PostMapping("openfeign/article/tag/queryByPage")
+    ResultView<PageResult<TagPageListDTO>> queryTagByPage(
+            @Validated @RequestBody PageQry<TagQueryParam> tagQueryParamPageQry
+    );
+
 }

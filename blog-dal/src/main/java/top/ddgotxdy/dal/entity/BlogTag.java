@@ -36,6 +36,4 @@ public class BlogTag {
     @ApiModelProperty("更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateTime;
-
-
 }

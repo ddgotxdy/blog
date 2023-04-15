@@ -1,9 +1,14 @@
 package top.ddgotxdy.article.service;
 
 import top.ddgotxdy.common.model.IdDTO;
+import top.ddgotxdy.common.model.PageQry;
+import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.dto.TagDTO;
+import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
+import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
 import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.TagUpdateParam;
@@ -54,4 +59,20 @@ public interface ArticleBizService {
      * @return IdDTO
      */
     IdDTO updateCategory(CategoryUpdateParam categoryUpdateParam);
+
+    //---------------------------------查询接口----------------------------------------//
+
+    /**
+     * admin标签列表页分页查询
+     * @param tagQueryParamPageQry 标签查询参数
+     * @return PageResult<TagPageListDTO>
+     */
+    PageResult<TagPageListDTO> queryTagByPage(PageQry<TagQueryParam> tagQueryParamPageQry);
+
+    /**
+     * 标签按照id查询
+     * @param tagId 标签id
+     * @return TagDTO
+     */
+    TagDTO queryTagById(Long tagId);
 }
