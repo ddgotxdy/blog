@@ -10,9 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 import top.ddgotxdy.api.model.addparam.ArticleBodyAddApiParam;
 import top.ddgotxdy.api.model.addparam.CategoryAddApiParam;
 import top.ddgotxdy.api.model.addparam.TagAddApiParam;
+import top.ddgotxdy.api.model.queryparam.TagQueryApiParam;
+import top.ddgotxdy.api.model.updateparam.TagUpdateApiParam;
 import top.ddgotxdy.api.model.view.ArticleListView;
+import top.ddgotxdy.api.model.view.TagPageListView;
 import top.ddgotxdy.api.service.BlogArticleBizService;
 import top.ddgotxdy.common.model.IdView;
+import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.ResultView;
 
@@ -29,6 +33,8 @@ public class ArticleController {
     @Resource
     private BlogArticleBizService articleBizService;
 
+    //--------------------文章相关接口---------------------------------------------
+
     @ApiOperation("首页获取文章列表，分页获取")
     @PostMapping("/blog/list")
     public ResultView<PageResult<ArticleListView>> getArticleList() {
@@ -37,16 +43,17 @@ public class ArticleController {
     }
 
     @ApiOperation("添加文章")
-    @PostMapping("/admin/add/articleBody")
+    @PostMapping("/admin/articleBody/add")
     public ResultView<IdView> addArticleBody(
             @Validated @RequestBody ArticleBodyAddApiParam articleBodyAddApiParam
     ) {
         IdView idView = articleBizService.addArticleBody(articleBodyAddApiParam);
         return ResultView.success(idView);
     }
+    //--------------------标签相关接口---------------------------------------------
 
     @ApiOperation("添加标签")
-    @PostMapping("/admin/add/tag")
+    @PostMapping("/admin/tag/add")
     public ResultView<IdView> addTag(
             @Validated @RequestBody TagAddApiParam tagAddApiParam
     ) {
@@ -54,13 +61,32 @@ public class ArticleController {
         return ResultView.success(idView);
     }
 
+    @ApiOperation("更新标签标签")
+    @PostMapping("/admin/tag/update")
+    public ResultView<IdView> updateTag(
+            @Validated @RequestBody TagUpdateApiParam tagUpdateApiParam
+    ) {
+        IdView idView = articleBizService.updateTag(tagUpdateApiParam);
+        return ResultView.success(idView);
+    }
+
+    @ApiOperation("标签分页查询")
+    @PostMapping("admin/tag/queryByPage")
+    public ResultView<PageResult<TagPageListView>> queryTagByPage(
+            @Validated @RequestBody PageQry<TagQueryApiParam> tagQueryParamPageQry
+    ) {
+        PageResult<TagPageListView> result = articleBizService.queryTagByPage(tagQueryParamPageQry);
+        return ResultView.success(result);
+    }
+
+    //--------------------分类相关接口---------------------------------------------
+
     @ApiOperation("添加分类")
-    @PostMapping("/admin/add/category")
+    @PostMapping("/admin/category/add")
     public ResultView<IdView> addCategory(
             @Validated @RequestBody CategoryAddApiParam categoryAddApiParam
     ) {
         IdView idView = articleBizService.addCategory(categoryAddApiParam);
         return ResultView.success(idView);
     }
-
 }

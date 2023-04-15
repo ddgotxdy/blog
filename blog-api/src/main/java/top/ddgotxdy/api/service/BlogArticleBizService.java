@@ -3,8 +3,12 @@ package top.ddgotxdy.api.service;
 import top.ddgotxdy.api.model.addparam.ArticleBodyAddApiParam;
 import top.ddgotxdy.api.model.addparam.CategoryAddApiParam;
 import top.ddgotxdy.api.model.addparam.TagAddApiParam;
+import top.ddgotxdy.api.model.queryparam.TagQueryApiParam;
+import top.ddgotxdy.api.model.updateparam.TagUpdateApiParam;
 import top.ddgotxdy.api.model.view.ArticleListView;
+import top.ddgotxdy.api.model.view.TagPageListView;
 import top.ddgotxdy.common.model.IdView;
+import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.PageResult;
 
 /**
@@ -31,6 +35,20 @@ public interface BlogArticleBizService {
      * @return 标签的id
      */
     IdView addTag(TagAddApiParam tagAddApiParam);
+
+    /**
+     * 更新标签
+     * @param tagUpdateApiParam 更新标签参数
+     * @return 标签的id
+     */
+    IdView updateTag(TagUpdateApiParam tagUpdateApiParam);
+
+    /**
+     * 分页查询标签
+     * @param tagQueryParamPageQry 分页查询标签参数
+     * @return PageResult<TagPageListView>
+     */
+    PageResult<TagPageListView> queryTagByPage(PageQry<TagQueryApiParam> tagQueryParamPageQry);
 
     /**
      * 添加分类
