@@ -11,10 +11,10 @@ import lombok.Data;
 @Data
 @ApiModel("标签分页查询参数api")
 public class TagQueryApiParam {
-    @ApiModelProperty("标签id")
+    @ApiModelProperty(value = "标签id")
     private Long tagId;
-    @ApiModelProperty("标签名称")
+    @ApiModelProperty(value = "标签名称")
     private String tagName;
-    @ApiModelProperty("是否删除")
+    @ApiModelProperty(value = "是否删除", required = true)
     private Boolean isDelete;
 }

@@ -78,6 +78,24 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
     }
 
     @Override
+    public IdsView deleteTag(List<Long> tagList) {
+        ResultView<IdsDTO> response = articleClient.deleteTag(tagList);
+        IdsDTO idsDTO = response.getData();
+        return IdsView.builder()
+                .ids(idsDTO.getIds())
+                .build();
+    }
+
+    @Override
+    public IdsView recoverTag(List<Long> tagList) {
+        ResultView<IdsDTO> response = articleClient.recoverTag(tagList);
+        IdsDTO idsDTO = response.getData();
+        return IdsView.builder()
+                .ids(idsDTO.getIds())
+                .build();
+    }
+
+    @Override
     public PageResult<TagPageListView> queryTagByPage(PageQry<TagQueryApiParam> tagQueryParamPageQry) {
         PageQry<TagQueryParam> tagQueryParam = ApiParam2ClientParamConvert.queryApiParam2QueryParam(tagQueryParamPageQry);
         ResultView<PageResult<TagPageListDTO>> response = articleClient.queryTagByPage(tagQueryParam);

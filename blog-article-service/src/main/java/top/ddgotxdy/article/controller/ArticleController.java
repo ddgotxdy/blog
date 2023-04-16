@@ -3,18 +3,18 @@ package top.ddgotxdy.article.controller;
 import com.google.common.collect.Lists;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import top.ddgotxdy.article.service.ArticleBizService;
-import top.ddgotxdy.common.model.IdDTO;
-import top.ddgotxdy.common.model.PageQry;
-import top.ddgotxdy.common.model.PageResult;
-import top.ddgotxdy.common.model.ResultView;
+import top.ddgotxdy.article.service.ArticleCmdBizService;
+import top.ddgotxdy.article.service.ArticleQueryBizService;
+import top.ddgotxdy.common.model.*;
 import top.ddgotxdy.common.model.article.ArticleListDTO;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.deleteparam.TagDeleteParam;
 import top.ddgotxdy.common.model.article.dto.TagDTO;
 import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
+import top.ddgotxdy.common.model.article.recoverparam.TagRecoverParam;
 import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.TagUpdateParam;
@@ -30,7 +30,9 @@ import java.util.List;
 @RequestMapping("openfeign/article")
 public class ArticleController {
     @Resource
-    private ArticleBizService articleBizService;
+    private ArticleCmdBizService articleCmdBizService;
+    @Resource
+    private ArticleQueryBizService articleQueryBizService;
 
     @PostMapping("/list")
     public ResultView<PageResult<ArticleListDTO>> getArticleList() {
@@ -48,7 +50,7 @@ public class ArticleController {
     public ResultView<IdDTO> addArticle(
             @RequestBody ArticleBodyAddParam articleBodyAddParam
     ) {
-        IdDTO idDTO = articleBizService.addArticleBody(articleBodyAddParam);
+        IdDTO idDTO = articleCmdBizService.addArticleBody(articleBodyAddParam);
         return ResultView.success(idDTO);
     }
 
@@ -56,7 +58,7 @@ public class ArticleController {
     public ResultView<IdDTO> updateArticle(
             @RequestBody ArticleBodyUpdateParam articleBodyUpdateParam
     ) {
-        IdDTO idDTO = articleBizService.updateArticleBody(articleBodyUpdateParam);
+        IdDTO idDTO = articleCmdBizService.updateArticleBody(articleBodyUpdateParam);
         return ResultView.success(idDTO);
     }
 
@@ -64,7 +66,7 @@ public class ArticleController {
     public ResultView<IdDTO> addTag(
             @Validated @RequestBody TagAddParam tagAddParam
     ) {
-        IdDTO idDTO = articleBizService.addTag(tagAddParam);
+        IdDTO idDTO = articleCmdBizService.addTag(tagAddParam);
         return ResultView.success(idDTO);
     }
 
@@ -72,7 +74,7 @@ public class ArticleController {
     public ResultView<PageResult<TagPageListDTO>> queryTagByPage(
             @Validated @RequestBody PageQry<TagQueryParam> tagQueryParamPageQry
     ) {
-        PageResult<TagPageListDTO> result = articleBizService.queryTagByPage(tagQueryParamPageQry);
+        PageResult<TagPageListDTO> result = articleQueryBizService.queryTagByPage(tagQueryParamPageQry);
         return ResultView.success(result);
     }
 
@@ -80,7 +82,7 @@ public class ArticleController {
     public ResultView<TagDTO> queryTagById(
             @PathVariable("tagId") Long tagId
     ) {
-        TagDTO result = articleBizService.queryTagById(tagId);
+        TagDTO result = articleQueryBizService.queryTagById(tagId);
         return ResultView.success(result);
     }
 
@@ -88,15 +90,31 @@ public class ArticleController {
     public ResultView<IdDTO> updateTag(
             @Validated @RequestBody TagUpdateParam tagUpdateParam
     ) {
-        IdDTO idDTO = articleBizService.updateTag(tagUpdateParam);
+        IdDTO idDTO = articleCmdBizService.updateTag(tagUpdateParam);
         return ResultView.success(idDTO);
+    }
+
+    @DeleteMapping("/tag/delete")
+    public ResultView<IdsDTO> deleteTag(
+            @RequestBody TagDeleteParam tagDeleteParam
+            ) {
+        IdsDTO idsDTO = articleCmdBizService.deleteTag(tagDeleteParam);
+        return ResultView.success(idsDTO);
+    }
+
+    @PostMapping("/tag/recover")
+    public ResultView<IdsDTO> recoverTag(
+            @RequestBody TagRecoverParam tagRecoverParam
+    ) {
+        IdsDTO idsDTO = articleCmdBizService.recoverTag(tagRecoverParam);
+        return ResultView.success(idsDTO);
     }
 
     @PostMapping("/category/add")
     public ResultView<IdDTO> addCategory(
             @Validated @RequestBody CategoryAddParam categoryAddParam
     ) {
-        IdDTO idDTO = articleBizService.addCategory(categoryAddParam);
+        IdDTO idDTO = articleCmdBizService.addCategory(categoryAddParam);
         return ResultView.success(idDTO);
     }
 
@@ -104,7 +122,7 @@ public class ArticleController {
     public ResultView<IdDTO> updateCategory(
             @Validated @RequestBody CategoryUpdateParam categoryUpdateParam
     ) {
-        IdDTO idDTO = articleBizService.updateCategory(categoryUpdateParam);
+        IdDTO idDTO = articleCmdBizService.updateCategory(categoryUpdateParam);
         return ResultView.success(idDTO);
     }
 

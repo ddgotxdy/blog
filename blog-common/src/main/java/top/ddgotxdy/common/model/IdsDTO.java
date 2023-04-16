@@ -6,16 +6,17 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 /**
  * @author: ddgo
- * @description: 统一返回id视图
+ * @description:
  */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class IdView {
-
-    @ApiModelProperty("id")
-    private Long id;
+public class IdsDTO {
+    @ApiModelProperty("未成功的ids列表")
+    private List<Long> ids;
 }

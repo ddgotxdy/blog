@@ -36,7 +36,6 @@ public class BlogArticle {
     private Integer rank;
 
     @ApiModelProperty("是否删除  0否 1是")
-    @TableLogic
     private Boolean isDelete;
 
     @ApiModelProperty("文章状态值 1公开 2私密 3登录可见")

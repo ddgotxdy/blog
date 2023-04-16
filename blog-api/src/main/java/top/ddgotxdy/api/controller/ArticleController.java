@@ -3,10 +3,7 @@ package top.ddgotxdy.api.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import top.ddgotxdy.api.model.addparam.ArticleBodyAddApiParam;
 import top.ddgotxdy.api.model.addparam.CategoryAddApiParam;
 import top.ddgotxdy.api.model.addparam.TagAddApiParam;
@@ -15,12 +12,10 @@ import top.ddgotxdy.api.model.updateparam.TagUpdateApiParam;
 import top.ddgotxdy.api.model.view.ArticleListView;
 import top.ddgotxdy.api.model.view.TagPageListView;
 import top.ddgotxdy.api.service.BlogArticleBizService;
-import top.ddgotxdy.common.model.IdView;
-import top.ddgotxdy.common.model.PageQry;
-import top.ddgotxdy.common.model.PageResult;
-import top.ddgotxdy.common.model.ResultView;
+import top.ddgotxdy.common.model.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author: ddgo
@@ -77,6 +72,24 @@ public class ArticleController {
     ) {
         PageResult<TagPageListView> result = articleBizService.queryTagByPage(tagQueryParamPageQry);
         return ResultView.success(result);
+    }
+
+    @ApiOperation("标签删除接口")
+    @DeleteMapping("admin/tag/delete")
+    public ResultView<IdsView> deleteTag(
+            @RequestBody List<Long> tagList
+    ) {
+        IdsView idView = articleBizService.deleteTag(tagList);
+        return ResultView.success(idView);
+    }
+
+    @ApiOperation("标签恢复接口")
+    @PostMapping("admin/tag/recover")
+    public ResultView<IdsView> recoverTag(
+            @RequestBody List<Long> tagList
+    ) {
+        IdsView idView = articleBizService.recoverTag(tagList);
+        return ResultView.success(idView);
     }
 
     //--------------------分类相关接口---------------------------------------------

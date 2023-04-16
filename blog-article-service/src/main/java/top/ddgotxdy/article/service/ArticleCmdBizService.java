@@ -1,23 +1,26 @@
 package top.ddgotxdy.article.service;
 
 import top.ddgotxdy.common.model.IdDTO;
+import top.ddgotxdy.common.model.IdsDTO;
 import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.deleteparam.TagDeleteParam;
 import top.ddgotxdy.common.model.article.dto.TagDTO;
 import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
+import top.ddgotxdy.common.model.article.recoverparam.TagRecoverParam;
 import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.TagUpdateParam;
 
 /**
  * @author: ddgo
- * @description: 文章服务biz层，controller <--> service转换
+ * @description: 文章服务biz层，组装cud操作
  */
-public interface ArticleBizService {
+public interface ArticleCmdBizService {
     /**
      * 添加文章
      * @param articleBodyAddParam 添加文章请求参数
@@ -47,6 +50,20 @@ public interface ArticleBizService {
     IdDTO updateTag(TagUpdateParam tagUpdateParam);
 
     /**
+     * 删除标签接口
+     * @param tagDeleteParam 删除标签参数
+     * @return 列表dto
+     */
+    IdsDTO deleteTag(TagDeleteParam tagDeleteParam);
+
+    /**
+     * 恢复标签接口
+     * @param tagRecoverParam 恢复标签参数
+     * @return 列表dto
+     */
+    IdsDTO recoverTag(TagRecoverParam tagRecoverParam);
+
+    /**
      * 添加分类
      * @param categoryAddParam 添加分类请求参数
      * @return IdDTO
@@ -59,20 +76,4 @@ public interface ArticleBizService {
      * @return IdDTO
      */
     IdDTO updateCategory(CategoryUpdateParam categoryUpdateParam);
-
-    //---------------------------------查询接口----------------------------------------//
-
-    /**
-     * admin标签列表页分页查询
-     * @param tagQueryParamPageQry 标签查询参数
-     * @return PageResult<TagPageListDTO>
-     */
-    PageResult<TagPageListDTO> queryTagByPage(PageQry<TagQueryParam> tagQueryParamPageQry);
-
-    /**
-     * 标签按照id查询
-     * @param tagId 标签id
-     * @return TagDTO
-     */
-    TagDTO queryTagById(Long tagId);
 }

@@ -8,8 +8,11 @@ import top.ddgotxdy.api.model.updateparam.TagUpdateApiParam;
 import top.ddgotxdy.api.model.view.ArticleListView;
 import top.ddgotxdy.api.model.view.TagPageListView;
 import top.ddgotxdy.common.model.IdView;
+import top.ddgotxdy.common.model.IdsView;
 import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.PageResult;
+
+import java.util.List;
 
 /**
  * @author: ddgo
@@ -42,6 +45,20 @@ public interface BlogArticleBizService {
      * @return 标签的id
      */
     IdView updateTag(TagUpdateApiParam tagUpdateApiParam);
+
+    /**
+     * 标签删除
+     * @param tagList 标签列表
+     * @return 列表视图
+     */
+    IdsView deleteTag(List<Long> tagList);
+
+    /**
+     * 标签恢复
+     * @param tagList 标签列表
+     * @return 列表视图
+     */
+    IdsView recoverTag(List<Long> tagList);
 
     /**
      * 分页查询标签

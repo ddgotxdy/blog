@@ -26,7 +26,6 @@ public class BlogCategory {
     private String categoryName;
 
     @ApiModelProperty("是否删除  0否 1是")
-    @TableLogic
     private Boolean isDelete;
 
     @ApiModelProperty("创建时间")

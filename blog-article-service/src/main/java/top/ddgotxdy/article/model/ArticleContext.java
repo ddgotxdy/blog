@@ -62,4 +62,8 @@ public class ArticleContext {
      * 分类名称
      */
     private String categoryName;
+    /**
+     * 分类id列表
+     */
+    private List<Long> categoryIds;
 }
