@@ -3,18 +3,18 @@ package top.ddgotxdy.common.client;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import top.ddgotxdy.common.model.IdDTO;
-import top.ddgotxdy.common.model.PageQry;
-import top.ddgotxdy.common.model.PageResult;
-import top.ddgotxdy.common.model.ResultView;
+import top.ddgotxdy.common.model.*;
 import top.ddgotxdy.common.model.article.ArticleListDTO;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.deleteparam.TagDeleteParam;
 import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
+import top.ddgotxdy.common.model.article.recoverparam.TagRecoverParam;
 import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.TagUpdateParam;
@@ -71,6 +71,26 @@ public interface BlogArticleClient {
     @PostMapping("openfeign/article/tag/update")
     ResultView<IdDTO> updateTag(
             @Validated @RequestBody TagUpdateParam tagUpdateParam
+    );
+
+    /**
+     * 标签删除
+     * @param tagDeleteParam 标签删除参数
+     * @return ResultView<IdsDTO>
+     */
+    @DeleteMapping("openfeign/article/tag/delete")
+    ResultView<IdsDTO> deleteTag(
+            @RequestBody TagDeleteParam tagDeleteParam
+    );
+
+    /**
+     * 标签恢复接口
+     * @param tagRecoverParam 标签恢复参数
+     * @return ResultView<IdsDTO>
+     */
+    @PostMapping("openfeign/article/tag/recover")
+    ResultView<IdsDTO> recoverTag(
+            @RequestBody TagRecoverParam tagRecoverParam
     );
 
     /**

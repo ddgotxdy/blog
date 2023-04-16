@@ -97,7 +97,7 @@ public class ArticleController {
     @DeleteMapping("/tag/delete")
     public ResultView<IdsDTO> deleteTag(
             @RequestBody TagDeleteParam tagDeleteParam
-            ) {
+    ) {
         IdsDTO idsDTO = articleCmdBizService.deleteTag(tagDeleteParam);
         return ResultView.success(idsDTO);
     }

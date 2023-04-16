@@ -11,9 +11,13 @@ import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.deleteparam.TagDeleteParam;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
+import top.ddgotxdy.common.model.article.recoverparam.TagRecoverParam;
 import top.ddgotxdy.common.model.article.updateparam.TagUpdateParam;
 import top.ddgotxdy.common.util.BeanCopyUtil;
+
+import java.util.List;
 
 /**
  * @author: ddgo
@@ -53,6 +57,24 @@ public class ApiParam2ClientParamConvert {
         return tagUpdateParam;
     }
 
+    public static TagDeleteParam deleteApiParam2deleteParam(List<Long> tagList) {
+        TagDeleteParam tagDeleteParam = new TagDeleteParam();
+        tagDeleteParam.setTagIds(tagList);
+        Long userId = ContextScope.getUserId();
+        tagDeleteParam.setUserId(userId);
+        return tagDeleteParam;
+    }
+
+    public static TagRecoverParam recoverApiParam2recoverParam(List<Long> tagList) {
+        TagRecoverParam tagRecoverParam = new TagRecoverParam();
+        tagRecoverParam.setTagIds(tagList);
+        Long userId = ContextScope.getUserId();
+        tagRecoverParam.setUserId(userId);
+        return tagRecoverParam;
+    }
+
+    //--------------------------------------查询---------------------------------------
+
     public static PageQry<TagQueryParam> queryApiParam2QueryParam(PageQry<TagQueryApiParam> tagQueryApiParamPageQry) {
         TagQueryParam tagQueryParam = new TagQueryParam();
         // 范型复制
@@ -65,5 +87,4 @@ public class ApiParam2ClientParamConvert {
         tagQueryParamPageQry.setQueryParam(tagQueryParam);
         return tagQueryParamPageQry;
     }
-
 }

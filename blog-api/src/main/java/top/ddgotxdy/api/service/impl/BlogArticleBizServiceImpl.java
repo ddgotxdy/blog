@@ -18,8 +18,10 @@ import top.ddgotxdy.common.model.article.ArticleListDTO;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.deleteparam.TagDeleteParam;
 import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
+import top.ddgotxdy.common.model.article.recoverparam.TagRecoverParam;
 import top.ddgotxdy.common.model.article.updateparam.TagUpdateParam;
 
 import javax.annotation.Resource;
@@ -79,7 +81,8 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
 
     @Override
     public IdsView deleteTag(List<Long> tagList) {
-        ResultView<IdsDTO> response = articleClient.deleteTag(tagList);
+        TagDeleteParam tagDeleteParam = ApiParam2ClientParamConvert.deleteApiParam2deleteParam(tagList);
+        ResultView<IdsDTO> response = articleClient.deleteTag(tagDeleteParam);
         IdsDTO idsDTO = response.getData();
         return IdsView.builder()
                 .ids(idsDTO.getIds())
@@ -88,7 +91,8 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
 
     @Override
     public IdsView recoverTag(List<Long> tagList) {
-        ResultView<IdsDTO> response = articleClient.recoverTag(tagList);
+        TagRecoverParam tagRecoverParam = ApiParam2ClientParamConvert.recoverApiParam2recoverParam(tagList);
+        ResultView<IdsDTO> response = articleClient.recoverTag(tagRecoverParam);
         IdsDTO idsDTO = response.getData();
         return IdsView.builder()
                 .ids(idsDTO.getIds())
