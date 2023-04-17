@@ -5,13 +5,12 @@ import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Configuration;
 
 /**
  * @author: ddgo
- * @description: 精度配置
+ * @description: 精度配置，去掉
  */
-@Configuration
+//@Configuration
 public class Long2StringConfig implements InitializingBean {
 
     @Autowired
