@@ -10,10 +10,12 @@ import top.ddgotxdy.common.model.article.ArticleListDTO;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.deleteparam.CategoryDeleteParam;
 import top.ddgotxdy.common.model.article.deleteparam.TagDeleteParam;
 import top.ddgotxdy.common.model.article.dto.TagDTO;
 import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
+import top.ddgotxdy.common.model.article.recoverparam.CategoryRecoverParam;
 import top.ddgotxdy.common.model.article.recoverparam.TagRecoverParam;
 import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
@@ -126,4 +128,19 @@ public class ArticleController {
         return ResultView.success(idDTO);
     }
 
+    @DeleteMapping("/category/delete")
+    public ResultView<IdsDTO> deleteCategory(
+            @RequestBody CategoryDeleteParam categoryDeleteParam
+    ) {
+        IdsDTO idsDTO = articleCmdBizService.deleteCategory(categoryDeleteParam);
+        return ResultView.success(idsDTO);
+    }
+
+    @PostMapping("/category/recover")
+    public ResultView<IdsDTO> recoverCategory(
+            @RequestBody CategoryRecoverParam categoryRecoverParam
+    ) {
+        IdsDTO idsDTO = articleCmdBizService.recoverCategory(categoryRecoverParam);
+        return ResultView.success(idsDTO);
+    }
 }

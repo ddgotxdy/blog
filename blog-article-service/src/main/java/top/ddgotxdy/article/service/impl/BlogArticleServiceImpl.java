@@ -24,4 +24,13 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleMapper, BlogA
                 .like(BlogArticle::getTagIds, tagId);
         return this.list(queryWrapper);
     }
+
+    @Override
+    public List<BlogArticle> getArticleByCategoryId(Long categoryId) {
+        LambdaQueryWrapper<BlogArticle> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper
+                .select(BlogArticle::getArticleId, BlogArticle::getArticleId, BlogArticle::getIsDelete)
+                .eq(BlogArticle::getCategoryId, categoryId);
+        return this.list(queryWrapper);
+    }
 }

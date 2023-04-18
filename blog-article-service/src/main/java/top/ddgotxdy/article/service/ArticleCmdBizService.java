@@ -7,10 +7,12 @@ import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.deleteparam.CategoryDeleteParam;
 import top.ddgotxdy.common.model.article.deleteparam.TagDeleteParam;
 import top.ddgotxdy.common.model.article.dto.TagDTO;
 import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
+import top.ddgotxdy.common.model.article.recoverparam.CategoryRecoverParam;
 import top.ddgotxdy.common.model.article.recoverparam.TagRecoverParam;
 import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
@@ -76,4 +78,18 @@ public interface ArticleCmdBizService {
      * @return IdDTO
      */
     IdDTO updateCategory(CategoryUpdateParam categoryUpdateParam);
+
+    /**
+     * 删除分类
+     * @param categoryDeleteParam 删除分类请求参数
+     * @return 没有被删除的列表集合
+     */
+    IdsDTO deleteCategory(CategoryDeleteParam categoryDeleteParam);
+
+    /**
+     * 恢复分类
+     * @param categoryRecoverParam 恢复分类请求参数
+     * @return 没有被恢复的列表集合
+     */
+    IdsDTO recoverCategory(CategoryRecoverParam categoryRecoverParam);
 }

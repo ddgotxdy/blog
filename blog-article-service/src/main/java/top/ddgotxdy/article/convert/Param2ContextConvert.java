@@ -6,7 +6,9 @@ import top.ddgotxdy.article.model.ArticleEvent;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.deleteparam.CategoryDeleteParam;
 import top.ddgotxdy.common.model.article.deleteparam.TagDeleteParam;
+import top.ddgotxdy.common.model.article.recoverparam.CategoryRecoverParam;
 import top.ddgotxdy.common.model.article.recoverparam.TagRecoverParam;
 import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
@@ -120,4 +122,23 @@ public class Param2ContextConvert {
         articleContext.setArticleEvent(ArticleEvent.TAG_RECOVER);
         return articleContext;
     }
+
+    public static ArticleContext deleteParamContext(CategoryDeleteParam categoryDeleteParam) {
+        ArticleContext articleContext = new ArticleContext();
+        // 先对无需处理的值复制一份
+        BeanUtils.copyProperties(categoryDeleteParam, articleContext);
+        // 设置为添加事件
+        articleContext.setArticleEvent(ArticleEvent.CATEGORY_DELETE);
+        return articleContext;
+    }
+
+    public static ArticleContext recoverParamContext(CategoryRecoverParam categoryRecoverParam) {
+        ArticleContext articleContext = new ArticleContext();
+        // 先对无需处理的值复制一份
+        BeanUtils.copyProperties(categoryRecoverParam, articleContext);
+        // 设置为添加事件
+        articleContext.setArticleEvent(ArticleEvent.CATEGORY_RECOVER);
+        return articleContext;
+    }
+
 }

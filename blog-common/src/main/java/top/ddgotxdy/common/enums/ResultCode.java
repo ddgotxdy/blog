@@ -1,4 +1,4 @@
-package top.ddgotxdy.common.model;
+package top.ddgotxdy.common.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
