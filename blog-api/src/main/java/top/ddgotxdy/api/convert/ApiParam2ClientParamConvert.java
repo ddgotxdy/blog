@@ -4,16 +4,22 @@ import org.springframework.beans.BeanUtils;
 import top.ddgotxdy.api.model.addparam.ArticleBodyAddApiParam;
 import top.ddgotxdy.api.model.addparam.CategoryAddApiParam;
 import top.ddgotxdy.api.model.addparam.TagAddApiParam;
+import top.ddgotxdy.api.model.queryparam.CategoryQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.TagQueryApiParam;
+import top.ddgotxdy.api.model.updateparam.CategoryUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.TagUpdateApiParam;
 import top.ddgotxdy.api.scope.ContextScope;
 import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.deleteparam.CategoryDeleteParam;
 import top.ddgotxdy.common.model.article.deleteparam.TagDeleteParam;
+import top.ddgotxdy.common.model.article.queryparam.CategoryQueryParam;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
+import top.ddgotxdy.common.model.article.recoverparam.CategoryRecoverParam;
 import top.ddgotxdy.common.model.article.recoverparam.TagRecoverParam;
+import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.TagUpdateParam;
 import top.ddgotxdy.common.util.BeanCopyUtil;
 
@@ -57,7 +63,7 @@ public class ApiParam2ClientParamConvert {
         return tagUpdateParam;
     }
 
-    public static TagDeleteParam deleteApiParam2deleteParam(List<Long> tagList) {
+    public static TagDeleteParam tagDeleteApiParam2deleteParam(List<Long> tagList) {
         TagDeleteParam tagDeleteParam = new TagDeleteParam();
         tagDeleteParam.setTagIds(tagList);
         Long userId = ContextScope.getUserId();
@@ -65,7 +71,7 @@ public class ApiParam2ClientParamConvert {
         return tagDeleteParam;
     }
 
-    public static TagRecoverParam recoverApiParam2recoverParam(List<Long> tagList) {
+    public static TagRecoverParam tagRecoverApiParam2recoverParam(List<Long> tagList) {
         TagRecoverParam tagRecoverParam = new TagRecoverParam();
         tagRecoverParam.setTagIds(tagList);
         Long userId = ContextScope.getUserId();
@@ -73,9 +79,34 @@ public class ApiParam2ClientParamConvert {
         return tagRecoverParam;
     }
 
+    public static CategoryUpdateParam updateApiParam2UpdateParam(CategoryUpdateApiParam categoryUpdateApiParam) {
+        CategoryUpdateParam categoryUpdateParam = new CategoryUpdateParam();
+        BeanCopyUtil.copyProperties(categoryUpdateApiParam, categoryUpdateParam);
+        Long userId = ContextScope.getUserId();
+        categoryUpdateParam.setUserId(userId);
+        return categoryUpdateParam;
+    }
+
+
+    public static CategoryDeleteParam categoryDeleteApiParam2deleteParam(List<Long> categoryList) {
+        CategoryDeleteParam categoryDeleteParam = new CategoryDeleteParam();
+        categoryDeleteParam.setCategoryIds(categoryList);
+        Long userId = ContextScope.getUserId();
+        categoryDeleteParam.setUserId(userId);
+        return categoryDeleteParam;
+    }
+
+    public static CategoryRecoverParam categoryRecoverApiParam2recoverParam(List<Long> categoryList) {
+        CategoryRecoverParam categoryRecoverParam = new CategoryRecoverParam();
+        categoryRecoverParam.setCategoryIds(categoryList);
+        Long userId = ContextScope.getUserId();
+        categoryRecoverParam.setUserId(userId);
+        return categoryRecoverParam;
+    }
+
     //--------------------------------------查询---------------------------------------
 
-    public static PageQry<TagQueryParam> queryApiParam2QueryParam(PageQry<TagQueryApiParam> tagQueryApiParamPageQry) {
+    public static PageQry<TagQueryParam> tagQueryApiParam2QueryParam(PageQry<TagQueryApiParam> tagQueryApiParamPageQry) {
         TagQueryParam tagQueryParam = new TagQueryParam();
         // 范型复制
         TagQueryApiParam tagQueryApiParam = tagQueryApiParamPageQry.getQueryParam();
@@ -86,5 +117,18 @@ public class ApiParam2ClientParamConvert {
         // 范型赋值进去
         tagQueryParamPageQry.setQueryParam(tagQueryParam);
         return tagQueryParamPageQry;
+    }
+
+    public static PageQry<CategoryQueryParam> categoryQueryApiParam2QueryParam(PageQry<CategoryQueryApiParam> categoryQueryApiParamPageQry) {
+        CategoryQueryParam categoryQueryParam = new CategoryQueryParam();
+        // 范型复制
+        CategoryQueryApiParam categoryQueryApiParam = categoryQueryApiParamPageQry.getQueryParam();
+        BeanCopyUtil.copyProperties(categoryQueryApiParam, categoryQueryParam);
+        // 分页参数复制
+        PageQry<CategoryQueryParam> categoryQueryParamPageQry = new PageQry<>();
+        BeanCopyUtil.copyProperties(categoryQueryApiParamPageQry, categoryQueryParamPageQry);
+        // 范型赋值进去
+        categoryQueryParamPageQry.setQueryParam(categoryQueryParam);
+        return categoryQueryParamPageQry;
     }
 }

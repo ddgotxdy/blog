@@ -7,9 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import top.ddgotxdy.api.model.addparam.ArticleBodyAddApiParam;
 import top.ddgotxdy.api.model.addparam.CategoryAddApiParam;
 import top.ddgotxdy.api.model.addparam.TagAddApiParam;
+import top.ddgotxdy.api.model.queryparam.CategoryQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.TagQueryApiParam;
+import top.ddgotxdy.api.model.updateparam.CategoryUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.TagUpdateApiParam;
 import top.ddgotxdy.api.model.view.ArticleListView;
+import top.ddgotxdy.api.model.view.CategoryPageListView;
 import top.ddgotxdy.api.model.view.TagPageListView;
 import top.ddgotxdy.api.service.BlogArticleBizService;
 import top.ddgotxdy.common.model.*;
@@ -56,7 +59,7 @@ public class ArticleController {
         return ResultView.success(idView);
     }
 
-    @ApiOperation("更新标签标签")
+    @ApiOperation("更新标签")
     @PostMapping("/admin/tag/update")
     public ResultView<IdView> updateTag(
             @Validated @RequestBody TagUpdateApiParam tagUpdateApiParam
@@ -102,4 +105,41 @@ public class ArticleController {
         IdView idView = articleBizService.addCategory(categoryAddApiParam);
         return ResultView.success(idView);
     }
+
+    @ApiOperation("更新分类")
+    @PostMapping("/admin/category/update")
+    public ResultView<IdView> updateCategory(
+            @Validated @RequestBody CategoryUpdateApiParam categoryUpdateApiParam
+    ) {
+        IdView idView = articleBizService.updateCategory(categoryUpdateApiParam);
+        return ResultView.success(idView);
+    }
+
+    @ApiOperation("分类删除接口")
+    @DeleteMapping("admin/category/delete")
+    public ResultView<IdsView> deleteCategory(
+            @RequestBody List<Long> categoryList
+    ) {
+        IdsView idView = articleBizService.deleteCategory(categoryList);
+        return ResultView.success(idView);
+    }
+
+    @ApiOperation("分类恢复接口")
+    @PostMapping("admin/category/recover")
+    public ResultView<IdsView> recoverCategory(
+            @RequestBody List<Long> categoryList
+    ) {
+        IdsView idView = articleBizService.recoverCategory(categoryList);
+        return ResultView.success(idView);
+    }
+
+    @ApiOperation("分类分页查询")
+    @PostMapping("admin/category/queryByPage")
+    public ResultView<PageResult<CategoryPageListView>> queryCategoryByPage(
+            @Validated @RequestBody PageQry<CategoryQueryApiParam> categoryQueryApiParamPageQry
+    ) {
+        PageResult<CategoryPageListView> result = articleBizService.queryCategoryByPage(categoryQueryApiParamPageQry);
+        return ResultView.success(result);
+    }
+
 }

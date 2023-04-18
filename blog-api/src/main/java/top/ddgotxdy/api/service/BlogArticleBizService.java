@@ -3,9 +3,12 @@ package top.ddgotxdy.api.service;
 import top.ddgotxdy.api.model.addparam.ArticleBodyAddApiParam;
 import top.ddgotxdy.api.model.addparam.CategoryAddApiParam;
 import top.ddgotxdy.api.model.addparam.TagAddApiParam;
+import top.ddgotxdy.api.model.queryparam.CategoryQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.TagQueryApiParam;
+import top.ddgotxdy.api.model.updateparam.CategoryUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.TagUpdateApiParam;
 import top.ddgotxdy.api.model.view.ArticleListView;
+import top.ddgotxdy.api.model.view.CategoryPageListView;
 import top.ddgotxdy.api.model.view.TagPageListView;
 import top.ddgotxdy.common.model.IdView;
 import top.ddgotxdy.common.model.IdsView;
@@ -73,4 +76,32 @@ public interface BlogArticleBizService {
      * @return 分类的id
      */
     IdView addCategory(CategoryAddApiParam categoryAddApiParam);
+
+    /**
+     * 更新分类接口
+     * @param categoryUpdateApiParam 更新分类的参数
+     * @return 分类id
+     */
+    IdView updateCategory(CategoryUpdateApiParam categoryUpdateApiParam);
+
+    /**
+     * 删除分类接口
+     * @param categoryList 分类id列表
+     * @return 未删除的分类
+     */
+    IdsView deleteCategory(List<Long> categoryList);
+
+    /**
+     * 恢复分类接口
+     * @param categoryList 分类id列表
+     * @return 未恢复的分类
+     */
+    IdsView recoverCategory(List<Long> categoryList);
+
+    /**
+     * 分类分页查询
+     * @param categoryQueryApiParamPageQry 分类分页查询参数
+     * @return PageResult<CategoryPageListView>
+     */
+    PageResult<CategoryPageListView> queryCategoryByPage(PageQry<CategoryQueryApiParam> categoryQueryApiParamPageQry);
 }

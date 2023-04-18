@@ -7,9 +7,12 @@ import top.ddgotxdy.api.convert.DTO2ViewConvert;
 import top.ddgotxdy.api.model.addparam.ArticleBodyAddApiParam;
 import top.ddgotxdy.api.model.addparam.CategoryAddApiParam;
 import top.ddgotxdy.api.model.addparam.TagAddApiParam;
+import top.ddgotxdy.api.model.queryparam.CategoryQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.TagQueryApiParam;
+import top.ddgotxdy.api.model.updateparam.CategoryUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.TagUpdateApiParam;
 import top.ddgotxdy.api.model.view.ArticleListView;
+import top.ddgotxdy.api.model.view.CategoryPageListView;
 import top.ddgotxdy.api.model.view.TagPageListView;
 import top.ddgotxdy.api.service.BlogArticleBizService;
 import top.ddgotxdy.common.client.BlogArticleClient;
@@ -18,10 +21,15 @@ import top.ddgotxdy.common.model.article.ArticleListDTO;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.deleteparam.CategoryDeleteParam;
 import top.ddgotxdy.common.model.article.deleteparam.TagDeleteParam;
+import top.ddgotxdy.common.model.article.dto.CategoryPageListDTO;
 import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
+import top.ddgotxdy.common.model.article.queryparam.CategoryQueryParam;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
+import top.ddgotxdy.common.model.article.recoverparam.CategoryRecoverParam;
 import top.ddgotxdy.common.model.article.recoverparam.TagRecoverParam;
+import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.TagUpdateParam;
 
 import javax.annotation.Resource;
@@ -81,7 +89,7 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
 
     @Override
     public IdsView deleteTag(List<Long> tagList) {
-        TagDeleteParam tagDeleteParam = ApiParam2ClientParamConvert.deleteApiParam2deleteParam(tagList);
+        TagDeleteParam tagDeleteParam = ApiParam2ClientParamConvert.tagDeleteApiParam2deleteParam(tagList);
         ResultView<IdsDTO> response = articleClient.deleteTag(tagDeleteParam);
         IdsDTO idsDTO = response.getData();
         return IdsView.builder()
@@ -91,7 +99,7 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
 
     @Override
     public IdsView recoverTag(List<Long> tagList) {
-        TagRecoverParam tagRecoverParam = ApiParam2ClientParamConvert.recoverApiParam2recoverParam(tagList);
+        TagRecoverParam tagRecoverParam = ApiParam2ClientParamConvert.tagRecoverApiParam2recoverParam(tagList);
         ResultView<IdsDTO> response = articleClient.recoverTag(tagRecoverParam);
         IdsDTO idsDTO = response.getData();
         return IdsView.builder()
@@ -101,7 +109,7 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
 
     @Override
     public PageResult<TagPageListView> queryTagByPage(PageQry<TagQueryApiParam> tagQueryParamPageQry) {
-        PageQry<TagQueryParam> tagQueryParam = ApiParam2ClientParamConvert.queryApiParam2QueryParam(tagQueryParamPageQry);
+        PageQry<TagQueryParam> tagQueryParam = ApiParam2ClientParamConvert.tagQueryApiParam2QueryParam(tagQueryParamPageQry);
         ResultView<PageResult<TagPageListDTO>> response = articleClient.queryTagByPage(tagQueryParam);
         PageResult<TagPageListView> tagPageListViewPageResult = DTO2ViewConvert.tagPageListDTO2View(response.getData());
         return tagPageListViewPageResult;
@@ -115,5 +123,43 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
         return IdView.builder()
                 .id(idDTO.getId())
                 .build();
+    }
+
+    @Override
+    public IdView updateCategory(CategoryUpdateApiParam categoryUpdateApiParam) {
+        CategoryUpdateParam categoryUpdateParam = ApiParam2ClientParamConvert.updateApiParam2UpdateParam(categoryUpdateApiParam);
+        ResultView<IdDTO> response = articleClient.updateCategory(categoryUpdateParam);
+        IdDTO idDTO = response.getData();
+        return IdView.builder()
+                .id(idDTO.getId())
+                .build();
+    }
+
+    @Override
+    public IdsView deleteCategory(List<Long> categoryList) {
+        CategoryDeleteParam categoryDeleteParam = ApiParam2ClientParamConvert.categoryDeleteApiParam2deleteParam(categoryList);
+        ResultView<IdsDTO> response = articleClient.deleteCategory(categoryDeleteParam);
+        IdsDTO idsDTO = response.getData();
+        return IdsView.builder()
+                .ids(idsDTO.getIds())
+                .build();
+    }
+
+    @Override
+    public IdsView recoverCategory(List<Long> categoryList) {
+        CategoryRecoverParam categoryRecoverParam = ApiParam2ClientParamConvert.categoryRecoverApiParam2recoverParam(categoryList);
+        ResultView<IdsDTO> response = articleClient.recoverCategory(categoryRecoverParam);
+        IdsDTO idsDTO = response.getData();
+        return IdsView.builder()
+                .ids(idsDTO.getIds())
+                .build();
+    }
+
+    @Override
+    public PageResult<CategoryPageListView> queryCategoryByPage(PageQry<CategoryQueryApiParam> categoryQueryApiParamPageQry) {
+        PageQry<CategoryQueryParam> categoryQueryParam = ApiParam2ClientParamConvert.categoryQueryApiParam2QueryParam(categoryQueryApiParamPageQry);
+        ResultView<PageResult<CategoryPageListDTO>> response = articleClient.queryCategoryByPage(categoryQueryParam);
+        PageResult<CategoryPageListView> categoryPageListViewPageResult = DTO2ViewConvert.categoryPageListDTO2View(response.getData());
+        return categoryPageListViewPageResult;
     }
 }

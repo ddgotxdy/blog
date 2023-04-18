@@ -9,10 +9,8 @@ import lombok.Data;
  * @description:
  */
 @Data
-@ApiModel("标签分页参数api")
+@ApiModel("标签更新参数api")
 public class TagUpdateApiParam {
-    @ApiModelProperty("用户id")
-    private Long userId;
     @ApiModelProperty("标签id")
     private Long tagId;
     @ApiModelProperty("标签名称")
