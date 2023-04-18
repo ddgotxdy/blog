@@ -1,7 +1,9 @@
 package top.ddgotxdy.article.convert;
 
+import top.ddgotxdy.common.model.article.dto.CategoryPageListDTO;
 import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
 import top.ddgotxdy.common.util.BeanCopyUtil;
+import top.ddgotxdy.dal.entity.BlogCategory;
 import top.ddgotxdy.dal.entity.BlogTag;
 
 import java.util.List;
@@ -17,5 +19,12 @@ public class Entity2DTOConvert {
                 = BeanCopyUtil.copyListProperties(blogTagList, TagPageListDTO::new);
         // 特殊字段处理，暂无
         return tagPageListDTOList;
+    }
+
+    public static List<CategoryPageListDTO> categoryList2DTO(List<BlogCategory> blogCategoryList) {
+        List<CategoryPageListDTO> categoryPageListDTOList
+                = BeanCopyUtil.copyListProperties(blogCategoryList, CategoryPageListDTO::new);
+        // 特殊字段处理，暂无
+        return categoryPageListDTOList;
     }
 }

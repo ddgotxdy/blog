@@ -11,9 +11,13 @@ import top.ddgotxdy.common.model.article.ArticleListDTO;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.deleteparam.CategoryDeleteParam;
 import top.ddgotxdy.common.model.article.deleteparam.TagDeleteParam;
+import top.ddgotxdy.common.model.article.dto.CategoryPageListDTO;
 import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
+import top.ddgotxdy.common.model.article.queryparam.CategoryQueryParam;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
+import top.ddgotxdy.common.model.article.recoverparam.CategoryRecoverParam;
 import top.ddgotxdy.common.model.article.recoverparam.TagRecoverParam;
 import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
@@ -113,6 +117,25 @@ public interface BlogArticleClient {
             @Validated @RequestBody CategoryUpdateParam categoryUpdateParam
     );
 
+    /**
+     * 删除分类
+     * @param categoryDeleteParam 分类删除参数
+     * @return 没有被删除的分类列表
+     */
+    @DeleteMapping("openfeign/article/category/delete")
+    ResultView<IdsDTO> deleteCategory(
+            @RequestBody CategoryDeleteParam categoryDeleteParam
+    );
+
+    /**
+     * 恢复分类
+     * @param categoryRecoverParam 恢复分类参数
+     * @return 没有被恢复的分类列表
+     */
+    @PostMapping("openfeign/article/category/recover")
+    ResultView<IdsDTO> recoverCategory(
+            @RequestBody CategoryRecoverParam categoryRecoverParam
+    );
 
     //---------------------------------查询接口----------------------------------------//
 
@@ -124,6 +147,16 @@ public interface BlogArticleClient {
     @PostMapping("openfeign/article/tag/queryByPage")
     ResultView<PageResult<TagPageListDTO>> queryTagByPage(
             @Validated @RequestBody PageQry<TagQueryParam> tagQueryParamPageQry
+    );
+
+    /**
+     * 分页查询分类
+     * @param categoryQueryParamPageQry 分页查询分类参数
+     * @return 分类分页结果对象
+     */
+    @PostMapping("openfeign/article/category/queryByPage")
+    ResultView<PageResult<CategoryPageListDTO>> queryCategoryByPage(
+            @Validated @RequestBody PageQry<CategoryQueryParam> categoryQueryParamPageQry
     );
 
 }

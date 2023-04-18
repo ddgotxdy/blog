@@ -8,12 +8,17 @@ import org.springframework.util.CollectionUtils;
 import top.ddgotxdy.article.convert.Entity2DTOConvert;
 import top.ddgotxdy.article.convert.FieldName2FunctionConvert;
 import top.ddgotxdy.article.service.ArticleQueryBizService;
+import top.ddgotxdy.article.service.BlogCategoryService;
 import top.ddgotxdy.article.service.BlogTagService;
 import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.PageResult;
+import top.ddgotxdy.common.model.article.dto.CategoryDTO;
+import top.ddgotxdy.common.model.article.dto.CategoryPageListDTO;
 import top.ddgotxdy.common.model.article.dto.TagDTO;
 import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
+import top.ddgotxdy.common.model.article.queryparam.CategoryQueryParam;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
+import top.ddgotxdy.dal.entity.BlogCategory;
 import top.ddgotxdy.dal.entity.BlogTag;
 
 import javax.annotation.Resource;
@@ -30,6 +35,8 @@ import java.util.Objects;
 public class ArticleQueryBizServiceImpl implements ArticleQueryBizService {
     @Resource
     private BlogTagService blogTagService;
+    @Resource
+    private BlogCategoryService blogCategoryService;
 
     @Override
     public PageResult<TagPageListDTO> queryTagByPage(PageQry<TagQueryParam> tagQueryParamPageQry) {
@@ -66,6 +73,44 @@ public class ArticleQueryBizServiceImpl implements ArticleQueryBizService {
 
     @Override
     public TagDTO queryTagById(Long tagId) {
+        return null;
+    }
+
+    @Override
+    public PageResult<CategoryPageListDTO> queryCategoryByPage(PageQry<CategoryQueryParam> categoryQueryParamPageQry) {
+        // 分页参数组装
+        int pageNum = categoryQueryParamPageQry.getPageNum();
+        int pageSize = categoryQueryParamPageQry.getPageSize();
+        Page<BlogCategory> page = new Page<>(pageNum, pageSize);
+        // 查询参数组装
+        LambdaQueryWrapper<BlogCategory> queryWrapper = new LambdaQueryWrapper<>();
+        // 查询值
+        CategoryQueryParam queryParam = categoryQueryParamPageQry.getQueryParam();
+        queryWrapper
+                .eq(Objects.nonNull(queryParam.getCategoryId()), BlogCategory::getCategoryId, queryParam.getCategoryId())
+                .eq(Objects.nonNull(queryParam.getIsDelete()), BlogCategory::getIsDelete, queryParam.getIsDelete())
+                .like(Objects.nonNull(queryParam.getCategoryName()), BlogCategory::getCategoryName, queryParam.getCategoryName());
+        // 排序规则
+        LinkedHashMap<String, Boolean> orderByFields = categoryQueryParamPageQry.getOrderByFields();
+        if (CollectionUtils.isEmpty(orderByFields)) {
+            orderByFields = new LinkedHashMap<>();
+            orderByFields.put("createTime", false);
+        }
+        orderByFields.forEach((name, asc) ->
+                queryWrapper.orderBy(true, asc, FieldName2FunctionConvert.categoryFiledName2Function(name))
+        );
+        Page<BlogCategory> blogCategoryPage = blogCategoryService.page(page, queryWrapper);
+        List<BlogCategory> blogCategoryList = blogCategoryPage.getRecords();
+        List<CategoryPageListDTO> categoryPageListDTOList = Entity2DTOConvert.categoryList2DTO(blogCategoryList);
+        // 封装返回值
+        PageResult<CategoryPageListDTO> pageResult = new PageResult<>();
+        pageResult.setTotalNumber(blogCategoryPage.getPages());
+        pageResult.setData(categoryPageListDTOList);
+        return pageResult;
+    }
+
+    @Override
+    public CategoryDTO queryCategoryById(Long categoryId) {
         return null;
     }
 }

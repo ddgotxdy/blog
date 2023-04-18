@@ -2,8 +2,11 @@ package top.ddgotxdy.article.service;
 
 import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.PageResult;
+import top.ddgotxdy.common.model.article.dto.CategoryDTO;
+import top.ddgotxdy.common.model.article.dto.CategoryPageListDTO;
 import top.ddgotxdy.common.model.article.dto.TagDTO;
 import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
+import top.ddgotxdy.common.model.article.queryparam.CategoryQueryParam;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
 
 /**
@@ -24,4 +27,18 @@ public interface ArticleQueryBizService {
      * @return TagDTO
      */
     TagDTO queryTagById(Long tagId);
+
+    /**
+     * admin分页列表页分页查询
+     * @param categoryQueryParamPageQry 分页查询参数
+     * @return PageResult<CategoryPageListDTO>
+     */
+    PageResult<CategoryPageListDTO> queryCategoryByPage(PageQry<CategoryQueryParam> categoryQueryParamPageQry);
+
+    /**
+     * 分类按照id查询
+     * @param categoryId 分类id
+     * @return CategoryDTO
+     */
+    CategoryDTO queryCategoryById(Long categoryId);
 }

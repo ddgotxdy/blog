@@ -12,8 +12,11 @@ import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
 import top.ddgotxdy.common.model.article.deleteparam.CategoryDeleteParam;
 import top.ddgotxdy.common.model.article.deleteparam.TagDeleteParam;
+import top.ddgotxdy.common.model.article.dto.CategoryDTO;
+import top.ddgotxdy.common.model.article.dto.CategoryPageListDTO;
 import top.ddgotxdy.common.model.article.dto.TagDTO;
 import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
+import top.ddgotxdy.common.model.article.queryparam.CategoryQueryParam;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
 import top.ddgotxdy.common.model.article.recoverparam.CategoryRecoverParam;
 import top.ddgotxdy.common.model.article.recoverparam.TagRecoverParam;
@@ -143,4 +146,21 @@ public class ArticleController {
         IdsDTO idsDTO = articleCmdBizService.recoverCategory(categoryRecoverParam);
         return ResultView.success(idsDTO);
     }
+
+    @PostMapping("/category/queryByPage")
+    public ResultView<PageResult<CategoryPageListDTO>> queryCategoryByPage(
+            @Validated @RequestBody PageQry<CategoryQueryParam> categoryQueryParamPageQry
+    ) {
+        PageResult<CategoryPageListDTO> result = articleQueryBizService.queryCategoryByPage(categoryQueryParamPageQry);
+        return ResultView.success(result);
+    }
+
+    @GetMapping("/category/queryById/{categoryId}")
+    public ResultView<CategoryDTO> queryCategoryById(
+            @PathVariable("categoryId") Long categoryId
+    ) {
+        CategoryDTO result = articleQueryBizService.queryCategoryById(categoryId);
+        return ResultView.success(result);
+    }
+
 }
