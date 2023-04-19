@@ -39,10 +39,6 @@ public class ResultView<T> {
         return new ResultView<>(200, message, data);
     }
 
-    public static <T> ResultView<T> success(String message) {
-        return new ResultView<>(200, message);
-    }
-
     public static <T> ResultView<T> success(T data) {
         return new ResultView<>(200, data);
     }
