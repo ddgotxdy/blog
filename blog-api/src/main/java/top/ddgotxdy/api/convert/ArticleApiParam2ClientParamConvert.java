@@ -29,8 +29,8 @@ import java.util.List;
  * @author: ddgo
  * @description: 请求参数远程服务的请求参数
  */
-public class ApiParam2ClientParamConvert {
-    private ApiParam2ClientParamConvert() { }
+public class ArticleApiParam2ClientParamConvert {
+    private ArticleApiParam2ClientParamConvert() { }
     public static ArticleBodyAddParam addApiParam2AddParam(ArticleBodyAddApiParam articleBodyAddApiParam) {
         ArticleBodyAddParam articleBodyAddParam = new ArticleBodyAddParam();
         BeanUtils.copyProperties(articleBodyAddApiParam, articleBodyAddParam);

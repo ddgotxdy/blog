@@ -1,5 +1,7 @@
 package top.ddgotxdy.file.service;
 
+import org.springframework.web.multipart.MultipartFile;
+
 /**
  * @author: ddgo
  * @description: 上传服务
@@ -7,9 +9,8 @@ package top.ddgotxdy.file.service;
 public interface UploadService {
     /**
      * 输入字节码返回对应的url
-     * @param uploadBytes 字节码
-     * @param fileName 文件名称
+     * @param imageFile 图片
      * @return url
      */
-    String uploadImage(byte[] uploadBytes, String fileName);
+    String uploadImage(MultipartFile imageFile);
 }

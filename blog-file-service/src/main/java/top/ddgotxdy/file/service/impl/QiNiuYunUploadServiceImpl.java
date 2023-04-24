@@ -8,10 +8,15 @@ import com.qiniu.storage.UploadManager;
 import com.qiniu.storage.model.DefaultPutRet;
 import com.qiniu.util.Auth;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import top.ddgotxdy.common.util.UUIDUtil;
 import top.ddgotxdy.file.service.UploadService;
+
+import java.io.IOException;
 
 /**
  * @author: ddgo
@@ -31,7 +36,16 @@ public class QiNiuYunUploadServiceImpl implements UploadService {
     private String bucket;
 
     @Override
-    public String uploadImage(byte[] uploadBytes, String fileName) {
+    public String uploadImage(MultipartFile imageFile) {
+        byte[] uploadBytes = null;
+        try {
+            uploadBytes = imageFile.getBytes();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        // 这里先默认自己构建名称
+        String fileName = UUIDUtil.getUUID() + "."
+                + StringUtils.substringAfterLast(imageFile.getOriginalFilename(), ".");
         // 构造一个带指定 Region 对象的配置类
         Configuration cfg = new Configuration(Region.huanan());
         UploadManager uploadManager = new UploadManager(cfg);

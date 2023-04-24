@@ -20,8 +20,8 @@ public interface BlogFileClient {
      * @param imageFile MultipartFile
      * @return 返回 url
      */
-    @PostMapping(value = "openfeign/file/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    ResultView<String> upload(
+    @PostMapping(value = "openfeign/file/image/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    ResultView<String> uploadImage(
             @RequestPart("image") MultipartFile imageFile
     );
 }
