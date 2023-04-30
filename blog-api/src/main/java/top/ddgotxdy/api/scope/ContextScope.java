@@ -25,6 +25,10 @@ public class ContextScope {
      * ip地址
      */
     private static final ScopeKey<String> IP_SCOPE = ScopeKey.withDefaultValue("");
+    /**
+     * trace id
+     */
+    private static final ScopeKey<String> TRACE_ID = ScopeKey.withDefaultValue("");
 
     /**
      * user id 赋值
@@ -88,6 +92,22 @@ public class ContextScope {
      */
     public static String getIp() {
         return IP_SCOPE.get();
+    }
+
+    /**
+     * 设置traceId地址
+     * @param traceId id
+     */
+    public static void setTraceId(String traceId) {
+        TRACE_ID.set(traceId);
+    }
+
+    /**
+     * 获取traceId地址
+     * @return traceId
+     */
+    public static String getTraceId() {
+        return TRACE_ID.get();
     }
 
 }

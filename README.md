@@ -9,7 +9,7 @@ Jenkinsfile：自动化构建脚本
 email.html：构建成功通知模板  
 .gitignore：确定某些文件不上传  
 
-服务地址：101.43.175.25
+服务地址-tx：101.43.175.25
 - redis: 6379
 - mysql: 3306
 - CMAK: 19000
@@ -17,4 +17,6 @@ email.html：构建成功通知模板
 - zookeeper: 2181
 - jenkins: 18080,50000
 - nacos: 8848
-- 
+
+服务地址-ali：59.110.143.1
+- zipkin：9411

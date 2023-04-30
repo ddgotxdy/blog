@@ -27,7 +27,6 @@ public class ScopeFilter extends OncePerRequestFilter {
         // 开启Scope
         Scope.beginScope();
         try {
-            log.info("fliter sucess");
             filterChain.doFilter(request, response);
         } finally {
             // 关闭Scope
