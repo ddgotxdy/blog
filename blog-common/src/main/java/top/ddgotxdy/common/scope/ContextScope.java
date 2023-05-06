@@ -1,4 +1,4 @@
-package top.ddgotxdy.api.scope;
+package top.ddgotxdy.common.scope;
 
 import com.github.phantomthief.scope.ScopeKey;
 

@@ -8,7 +8,7 @@ import top.ddgotxdy.api.model.queryparam.CategoryQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.TagQueryApiParam;
 import top.ddgotxdy.api.model.updateparam.CategoryUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.TagUpdateApiParam;
-import top.ddgotxdy.api.scope.ContextScope;
+import top.ddgotxdy.common.scope.ContextScope;
 import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;

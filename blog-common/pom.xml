@@ -67,6 +67,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-validation</artifactId>
         </dependency>
+        <!-- ThreadLocal封装工具类 -->
+        <dependency>
+            <groupId>com.github.phantomthief</groupId>
+            <artifactId>scope</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

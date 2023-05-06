@@ -2,7 +2,7 @@ package top.ddgotxdy.api.convert;
 
 import org.springframework.beans.BeanUtils;
 import top.ddgotxdy.api.model.addparam.ImageAddApiParam;
-import top.ddgotxdy.api.scope.ContextScope;
+import top.ddgotxdy.common.scope.ContextScope;
 import top.ddgotxdy.common.model.file.addparam.ImageAddParam;
 
 /**

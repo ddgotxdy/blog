@@ -1,9 +1,9 @@
 package top.ddgotxdy.api.interceptor;
 
-import brave.propagation.TraceContext;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cloud.sleuth.TraceContext;
 import org.springframework.web.servlet.HandlerInterceptor;
-import top.ddgotxdy.api.scope.ContextScope;
+import top.ddgotxdy.common.scope.ContextScope;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,11 +36,11 @@ public class DataInitInterceptor implements HandlerInterceptor {
         Long userId = Long.valueOf(Optional.ofNullable(request.getHeader("USER-ID")).orElse("0"));
         ContextScope.setUserId(userId);
         log.info("uri [{}] method [{}] ip [{}] userid [{}]", uri, method, ip, userId);
-//        // 5. trace id
-//        TraceContext traceContext = (TraceContext) request.getAttribute(TraceContext.class.getName());
-//        String traceId = traceContext.traceIdString();
-//        ContextScope.setTraceId(traceId);
-//        log.info("trace id [{}]", traceId);
+        // 5. trace id
+        TraceContext traceContext = (TraceContext)request.getAttribute(TraceContext.class.getName());
+        String traceId = traceContext.traceId();
+        ContextScope.setTraceId(traceId);
+        log.info("trace id [{}]", traceId);
         return true;
     }
 
