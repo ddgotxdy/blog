@@ -3,6 +3,7 @@ package top.ddgotxdy.api.service.impl;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import top.ddgotxdy.api.convert.FileApiParam2ClientParamConvert;
+import top.ddgotxdy.api.convert.FileDTO2ViewConvert;
 import top.ddgotxdy.api.model.addparam.ImageAddApiParam;
 import top.ddgotxdy.api.model.queryparam.ImageQueryApiParam;
 import top.ddgotxdy.api.model.updateparam.ImageUpdateApiParam;
@@ -11,6 +12,8 @@ import top.ddgotxdy.api.service.BlogFileBizService;
 import top.ddgotxdy.common.client.BlogFileClient;
 import top.ddgotxdy.common.model.*;
 import top.ddgotxdy.common.model.file.addparam.ImageAddParam;
+import top.ddgotxdy.common.model.file.dto.ImagePageListDTO;
+import top.ddgotxdy.common.model.file.queryparam.ImageQueryParam;
 import top.ddgotxdy.common.model.file.updateparam.ImageUpdateParam;
 
 import javax.annotation.Resource;
@@ -43,7 +46,10 @@ public class BlogFileBizServiceImpl implements BlogFileBizService {
 
     @Override
     public PageResult<ImagePageListView> queryImageByPage(PageQry<ImageQueryApiParam> imageQueryApiParamPageQry) {
-        return null;
+        PageQry<ImageQueryParam> imageQueryParamPageQry = FileApiParam2ClientParamConvert.imageQueryApiParam2QueryParam(imageQueryApiParamPageQry);
+        ResultView<PageResult<ImagePageListDTO>> response = blogFileClient.queryImageByPage(imageQueryParamPageQry);
+        PageResult<ImagePageListView> imagePageListViewPageResult = FileDTO2ViewConvert.imagePageListDTO2View(response.getData());
+        return imagePageListViewPageResult;
     }
 
     @Override

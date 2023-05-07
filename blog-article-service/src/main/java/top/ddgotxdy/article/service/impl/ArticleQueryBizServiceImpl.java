@@ -66,7 +66,7 @@ public class ArticleQueryBizServiceImpl implements ArticleQueryBizService {
         List<TagPageListDTO> tagPageListDTOList = Entity2DTOConvert.TagList2DTO(blogTagList);
         // 封装返回值
         PageResult<TagPageListDTO> pageResult = new PageResult<>();
-        pageResult.setTotalNumber(blogTagPage.getPages());
+        pageResult.setTotalPage(blogTagPage.getPages());
         pageResult.setData(tagPageListDTOList);
         return pageResult;
     }
@@ -104,7 +104,7 @@ public class ArticleQueryBizServiceImpl implements ArticleQueryBizService {
         List<CategoryPageListDTO> categoryPageListDTOList = Entity2DTOConvert.categoryList2DTO(blogCategoryList);
         // 封装返回值
         PageResult<CategoryPageListDTO> pageResult = new PageResult<>();
-        pageResult.setTotalNumber(blogCategoryPage.getPages());
+        pageResult.setTotalPage(blogCategoryPage.getPages());
         pageResult.setData(categoryPageListDTOList);
         return pageResult;
     }

@@ -15,6 +15,6 @@ public class ImageQueryApiParam {
     private Long imageId;
     @ApiModelProperty(value = "图片名称")
     private String imageName;
-    @ApiModelProperty(value = "是否删除", required = true)
-    private Boolean isDelete;
+//    @ApiModelProperty(value = "是否删除", required = true)
+//    private Boolean isDelete;
 }

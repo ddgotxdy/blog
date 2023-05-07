@@ -3,13 +3,18 @@ package top.ddgotxdy.common.client;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import top.ddgotxdy.common.model.IdDTO;
+import top.ddgotxdy.common.model.PageQry;
+import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.ResultView;
 import top.ddgotxdy.common.model.file.addparam.ImageAddParam;
+import top.ddgotxdy.common.model.file.dto.ImagePageListDTO;
+import top.ddgotxdy.common.model.file.queryparam.ImageQueryParam;
 import top.ddgotxdy.common.model.file.updateparam.ImageUpdateParam;
 
 /**
@@ -47,6 +52,16 @@ public interface BlogFileClient {
     @PostMapping("openfeign/file/image/update")
     ResultView<IdDTO> updateImage(
             @RequestBody ImageUpdateParam imageUpdateParam
+    );
+
+    /**
+     * 分页查询接口
+     * @param imageQueryParamPageQry 分页查询参数
+     * @return ResultView<PageResult<ImagePageListDTO>>
+     */
+    @PostMapping("openfeign/file/image/queryByPage")
+    ResultView<PageResult<ImagePageListDTO>> queryImageByPage(
+            @Validated @RequestBody PageQry<ImageQueryParam> imageQueryParamPageQry
     );
 
 }

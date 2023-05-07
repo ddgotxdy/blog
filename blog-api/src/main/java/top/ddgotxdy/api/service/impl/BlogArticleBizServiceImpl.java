@@ -3,7 +3,7 @@ package top.ddgotxdy.api.service.impl;
 import com.google.common.collect.Lists;
 import org.springframework.stereotype.Service;
 import top.ddgotxdy.api.convert.ArticleApiParam2ClientParamConvert;
-import top.ddgotxdy.api.convert.DTO2ViewConvert;
+import top.ddgotxdy.api.convert.ArticleDTO2ViewConvert;
 import top.ddgotxdy.api.model.addparam.ArticleBodyAddApiParam;
 import top.ddgotxdy.api.model.addparam.CategoryAddApiParam;
 import top.ddgotxdy.api.model.addparam.TagAddApiParam;
@@ -53,7 +53,7 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
         List<ArticleListView> articleListViewList = Lists.newArrayList(articleListView);
         PageResult<ArticleListView> pageResult = new PageResult<>();
         pageResult.setData(articleListViewList);
-        pageResult.setTotalNumber(articleList.getData().getTotalNumber());
+        pageResult.setTotalPage(articleList.getData().getTotalPage());
         return pageResult;
     }
 
@@ -111,7 +111,7 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
     public PageResult<TagPageListView> queryTagByPage(PageQry<TagQueryApiParam> tagQueryParamPageQry) {
         PageQry<TagQueryParam> tagQueryParam = ArticleApiParam2ClientParamConvert.tagQueryApiParam2QueryParam(tagQueryParamPageQry);
         ResultView<PageResult<TagPageListDTO>> response = articleClient.queryTagByPage(tagQueryParam);
-        PageResult<TagPageListView> tagPageListViewPageResult = DTO2ViewConvert.tagPageListDTO2View(response.getData());
+        PageResult<TagPageListView> tagPageListViewPageResult = ArticleDTO2ViewConvert.tagPageListDTO2View(response.getData());
         return tagPageListViewPageResult;
     }
 
@@ -159,7 +159,7 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
     public PageResult<CategoryPageListView> queryCategoryByPage(PageQry<CategoryQueryApiParam> categoryQueryApiParamPageQry) {
         PageQry<CategoryQueryParam> categoryQueryParam = ArticleApiParam2ClientParamConvert.categoryQueryApiParam2QueryParam(categoryQueryApiParamPageQry);
         ResultView<PageResult<CategoryPageListDTO>> response = articleClient.queryCategoryByPage(categoryQueryParam);
-        PageResult<CategoryPageListView> categoryPageListViewPageResult = DTO2ViewConvert.categoryPageListDTO2View(response.getData());
+        PageResult<CategoryPageListView> categoryPageListViewPageResult = ArticleDTO2ViewConvert.categoryPageListDTO2View(response.getData());
         return categoryPageListViewPageResult;
     }
 }

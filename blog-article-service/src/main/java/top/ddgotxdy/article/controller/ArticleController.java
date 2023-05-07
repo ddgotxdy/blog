@@ -47,7 +47,7 @@ public class ArticleController {
         List<ArticleListDTO> articleListDTOList = Lists.newArrayList(articleListDTO);
         PageResult<ArticleListDTO> pageResult = new PageResult<>();
         pageResult.setData(articleListDTOList);
-        pageResult.setTotalNumber(10L);
+        pageResult.setTotalPage(10L);
         return ResultView.success(pageResult);
     }
 

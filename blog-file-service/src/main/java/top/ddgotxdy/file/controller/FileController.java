@@ -1,12 +1,18 @@
 package top.ddgotxdy.file.controller;
 
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import top.ddgotxdy.common.model.IdDTO;
+import top.ddgotxdy.common.model.PageQry;
+import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.ResultView;
 import top.ddgotxdy.common.model.file.addparam.ImageAddParam;
+import top.ddgotxdy.common.model.file.dto.ImagePageListDTO;
+import top.ddgotxdy.common.model.file.queryparam.ImageQueryParam;
 import top.ddgotxdy.common.model.file.updateparam.ImageUpdateParam;
 import top.ddgotxdy.file.service.FileCmdBizService;
+import top.ddgotxdy.file.service.FileQueryBizService;
 import top.ddgotxdy.file.service.UploadService;
 
 import javax.annotation.Resource;
@@ -22,6 +28,8 @@ public class FileController {
     private UploadService uploadService;
     @Resource
     private FileCmdBizService fileCmdBizService;
+    @Resource
+    private FileQueryBizService fileQueryBizService;
 
     @PostMapping("/image/upload")
     public ResultView<String> uploadImage(
@@ -46,4 +54,13 @@ public class FileController {
         IdDTO idDTO = fileCmdBizService.updateImage(imageUpdateParam);
         return ResultView.success(idDTO);
     }
+
+    @PostMapping("/image/queryByPage")
+    public ResultView<PageResult<ImagePageListDTO>> queryImageByPage(
+            @Validated @RequestBody PageQry<ImageQueryParam> imageQueryParamPageQry
+    ) {
+        PageResult<ImagePageListDTO> result = fileQueryBizService.queryImageByPage(imageQueryParamPageQry);
+        return ResultView.success(result);
+    }
+
 }

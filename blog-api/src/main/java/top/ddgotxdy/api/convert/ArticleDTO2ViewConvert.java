@@ -13,7 +13,7 @@ import java.util.List;
  * @author: ddgo
  * @description:
  */
-public class DTO2ViewConvert {
+public class ArticleDTO2ViewConvert {
 
     public static PageResult<TagPageListView> tagPageListDTO2View(PageResult<TagPageListDTO> tagPageListDTOPageResult) {
         // 范型赋值

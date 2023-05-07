@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 public class PageResult<T> {
     @ApiModelProperty("总页数")
-    private Long totalNumber;
+    private Long totalPage;
     @ApiModelProperty("返回结果")
     private List<T> data;
 }
