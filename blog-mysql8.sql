@@ -54,6 +54,18 @@ CREATE TABLE `blog_tag`  (
     PRIMARY KEY (`tag_id`)
 );
 
+-- 图片表
+DROP TABLE IF EXISTS `blog_image`;
+CREATE TABLE `blog_image`(
+     `image_id` bigint NOT NULL COMMENT '图片ID',
+     `image_name` varchar(20) NOT NULL COMMENT '图片名',
+     `image_url` varchar(200) NOT NULL COMMENT '图片url地址',
+     `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除  0否 1是',
+     `create_time` bigint NOT NULL COMMENT '创建时间',
+     `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
+     PRIMARY KEY (`image_id`)
+);
+
 -- 文章评论表
 DROP TABLE IF EXISTS `blog_comment`;
 CREATE TABLE `blog_comment`  (

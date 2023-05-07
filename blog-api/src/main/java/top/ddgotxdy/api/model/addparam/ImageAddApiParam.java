@@ -12,7 +12,7 @@ import org.hibernate.validator.constraints.Length;
 @Data
 @ApiModel("图片添加api参数")
 public class ImageAddApiParam {
-    @ApiModelProperty(value = "图片名称", allowEmptyValue = true)
+    @ApiModelProperty(value = "图片名称")
     @Length(min = 1, max = 20)
     private String imageName;
     @ApiModelProperty(value = "图片url")

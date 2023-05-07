@@ -4,9 +4,13 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.ResultView;
+import top.ddgotxdy.common.model.file.addparam.ImageAddParam;
+import top.ddgotxdy.common.model.file.updateparam.ImageUpdateParam;
 
 /**
  * @author: ddgo
@@ -24,4 +28,25 @@ public interface BlogFileClient {
     ResultView<String> uploadImage(
             @RequestPart("image") MultipartFile imageFile
     );
+
+    /**
+     * 添加图片接口
+     * @param imageAddParam 图片添加参数
+     * @return ResultView<IdDTO>
+     */
+    @PostMapping("openfeign/file/image/add")
+    ResultView<IdDTO> addImage(
+            @RequestBody ImageAddParam imageAddParam
+    );
+
+    /**
+     * 更新图片接口
+     * @param imageUpdateParam 图片更新接口
+     * @return ResultView<IdDTO>
+     */
+    @PostMapping("openfeign/file/image/update")
+    ResultView<IdDTO> updateImage(
+            @RequestBody ImageUpdateParam imageUpdateParam
+    );
+
 }

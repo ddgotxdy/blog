@@ -1,26 +1,27 @@
-package top.ddgotxdy.common.model.file.addparam;
+package top.ddgotxdy.common.model.file.updateparam;
 
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
 
 /**
  * @author: ddgo
- * @description:
+ * @description: 图片更新参数
  */
 @Data
-public class ImageAddParam {
+public class ImageUpdateParam {
     /**
      * 用户id
      */
     private Long userId;
     /**
+     * 图片id
+     */
+    private Long imageId;
+    /**
      * 图集名称
      */
-    @Length(min = 1, max = 20)
     private String imageName;
     /**
      * 图片URL
      */
-    @Length(min = 1, max = 200)
     private String imageUrl;
 }

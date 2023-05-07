@@ -26,7 +26,7 @@ public class ResultView<T> {
     @ApiModelProperty("返回数据")
     private T data;
 
-    @ApiModelProperty
+    @ApiModelProperty("链路跟踪id")
     private String traceId;
 
     public ResultView(Integer code, String msg) {

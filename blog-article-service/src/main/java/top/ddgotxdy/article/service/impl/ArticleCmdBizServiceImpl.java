@@ -27,7 +27,6 @@ import static com.alibaba.fastjson.JSON.toJSON;
  * @author: ddgo
  * @description:
  * 1. 调用命令管理分发 cud
- * 2. 组合查询逻辑 r
  *
  */
 @Service
