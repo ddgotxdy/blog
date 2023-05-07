@@ -2,6 +2,7 @@ package top.ddgotxdy.api.service.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import top.ddgotxdy.api.convert.FileApiParam2ClientParamConvert;
 import top.ddgotxdy.api.model.addparam.ImageAddApiParam;
 import top.ddgotxdy.api.model.queryparam.ImageQueryApiParam;
 import top.ddgotxdy.api.model.updateparam.ImageUpdateApiParam;
@@ -9,6 +10,8 @@ import top.ddgotxdy.api.model.view.ImagePageListView;
 import top.ddgotxdy.api.service.BlogFileBizService;
 import top.ddgotxdy.common.client.BlogFileClient;
 import top.ddgotxdy.common.model.*;
+import top.ddgotxdy.common.model.file.addparam.ImageAddParam;
+import top.ddgotxdy.common.model.file.updateparam.ImageUpdateParam;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -30,7 +33,12 @@ public class BlogFileBizServiceImpl implements BlogFileBizService {
 
     @Override
     public IdView updateImage(ImageUpdateApiParam imageUpdateApiParam) {
-        return null;
+        ImageUpdateParam imageUpdateParam = FileApiParam2ClientParamConvert.updateApiParam2updateParam(imageUpdateApiParam);
+        ResultView<IdDTO> response = blogFileClient.updateImage(imageUpdateParam);
+        IdDTO idDTO = response.getData();
+        return IdView.builder()
+                .id(idDTO.getId())
+                .build();
     }
 
     @Override
@@ -50,6 +58,11 @@ public class BlogFileBizServiceImpl implements BlogFileBizService {
 
     @Override
     public IdView addImage(ImageAddApiParam imageAddApiParam) {
-        return null;
+        ImageAddParam imageAddParam = FileApiParam2ClientParamConvert.addApiParam2AddParam(imageAddApiParam);
+        ResultView<IdDTO> response = blogFileClient.addImage(imageAddParam);
+        IdDTO idDTO = response.getData();
+        return IdView.builder()
+                .id(idDTO.getId())
+                .build();
     }
 }

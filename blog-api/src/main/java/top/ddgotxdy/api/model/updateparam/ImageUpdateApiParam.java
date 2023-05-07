@@ -11,6 +11,12 @@ import lombok.Data;
 @Data
 @ApiModel("图片更新api参数")
 public class ImageUpdateApiParam {
+    @ApiModelProperty(value = "图片id")
+    private Long imageId;
+
     @ApiModelProperty(value = "图片名称", allowEmptyValue = true)
     private String imageName;
+
+    @ApiModelProperty(value = "图片链接", allowEmptyValue = true)
+    private String imageUrl;
 }
