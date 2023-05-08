@@ -31,6 +31,12 @@ public enum ResultCode {
     IMAGE_ADD_ERROR(801, "图片新增失败"),
     IMAGE_UPDATE_ERROR(802, "图片修改失败"),
     IMAGE_QUERY_ERROR(803, "图片查询失败"),
+    // 901 - 1000 消息异常
+    SENSITIVE_ADD_ERROR(901, "敏感词新增失败"),
+    SENSITIVE_DELETE_ERROR(902, "敏感词删除失败"),
+    SENSITIVE_UPDATE_ERROR(903, "敏感词修改失败"),
+    SENSITIVE_QUERY_ERROR(904, "敏感词查询失败"),
+    SENSITIVE_RECOVERY_ERROR(905, "敏感词恢复失败"),
     ;
     private final Integer code;
     private final String msg;

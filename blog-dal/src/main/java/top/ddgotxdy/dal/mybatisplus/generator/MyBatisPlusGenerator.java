@@ -30,7 +30,7 @@ public class MyBatisPlusGenerator {
 //                                    "D://")); // 设置mapperXml生成路径
                 })
                 .strategyConfig(builder -> {
-                    builder.addInclude("blog_image"); // 设置需要生成的表名
+                    builder.addInclude("blog_sensitive"); // 设置需要生成的表名
 //                            .addTablePrefix("t_", "c_"); // 设置过滤表前缀
                     builder
                             .entityBuilder()

@@ -72,15 +72,37 @@ CREATE TABLE `blog_comment`  (
    `comment_id` bigint NOT NULL COMMENT '评论ID',
    `user_id` bigint NOT NULL COMMENT '评论用户ID',
    `article_id` bigint NULL DEFAULT NULL COMMENT '评论主题id',
-   `comment_content` text NOT NULL COMMENT '评论内容',
+   `comment_content` varchar(1024) NOT NULL COMMENT '评论内容',
    `reply_user_id` bigint NULL DEFAULT NULL COMMENT '回复用户id',
    `parent_id` int NULL DEFAULT NULL COMMENT '父评论id',
-   `type` tinyint NOT NULL COMMENT '评论类型 1.文章 2.友链 3.说说',
    `is_delete` tinyint NOT NULL DEFAULT 0 COMMENT '是否删除  0否 1是',
    `audit_type` tinyint(4) NOT NULL DEFAULT 0 COMMENT '审核类型 0审核中 1审核通过 2审核失败',
    `create_time` bigint NOT NULL COMMENT '评论时间',
    `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
    PRIMARY KEY (`comment_id`)
+);
+
+-- 留言表
+DROP TABLE IF EXISTS `blog_message`;
+CREATE TABLE `blog_message`  (
+     `message_id` bigint NOT NULL COMMENT '留言ID',
+     `message_content` varchar(50) NOT NULL COMMENT '留言内容',
+     `audit_type` tinyint(4) NOT NULL DEFAULT 0 COMMENT '审核类型 0审核中 1审核通过 2审核失败',
+     `create_time` bigint NOT NULL COMMENT '留言时间',
+     `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
+     PRIMARY KEY (`message_id`)
+);
+
+-- 敏感词过滤
+DROP TABLE IF EXISTS `blog_sensitive`;
+CREATE TABLE `blog_sensitive`  (
+     `sensitive_id` bigint NOT NULL COMMENT '敏感ID',
+     `word` varchar(50) NOT NULL COMMENT '敏感词',
+     `sensitive_type` tinyint(4) NOT NULL DEFAULT 0 COMMENT '敏感类型 0 deny 1 allow',
+     `is_delete` tinyint NOT NULL DEFAULT 0 COMMENT '是否删除  0否 1是',
+     `create_time` bigint NOT NULL COMMENT '创建时间',
+     `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
+     PRIMARY KEY (`sensitive_id`)
 );
 
 -- 角色表

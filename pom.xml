@@ -172,6 +172,12 @@
                 <artifactId>spring-cloud-starter-zipkin</artifactId>
                 <version>2.2.8.RELEASE</version>
             </dependency>
+            <!-- 敏感词过滤工具包 https://github.com/houbb/sensitive-word -->
+            <dependency>
+                <groupId>com.github.houbb</groupId>
+                <artifactId>sensitive-word</artifactId>
+                <version>0.2.1</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

@@ -3,7 +3,7 @@ pipeline {
     parameters {
         choice(
             name: 'project_name',
-            choices: ['blog-gateway', 'blog-api', 'blog-article-service', 'blog-file-service', 'blog-sms-service'],
+            choices: ['blog-gateway', 'blog-api', 'blog-article-service', 'blog-file-service', 'blog-search-service', 'blog-sms-service'],
             description: '项目名称'
         )
         choice(
@@ -18,7 +18,7 @@ pipeline {
         )
         choice(
             name: 'port',
-            choices: ['28080', '28081', '28082', '28083', '28084'],
+            choices: ['28080', '28081', '28082', '28083', '28084', '28085'],
             description: '端口号'
         )
         choice(

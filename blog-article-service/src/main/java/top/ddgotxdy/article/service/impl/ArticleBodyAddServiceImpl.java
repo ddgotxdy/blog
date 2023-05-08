@@ -37,7 +37,7 @@ public class ArticleBodyAddServiceImpl extends AbstractArticleService {
         // 1. 所有通用校验逻辑全部校验通过
         boolean allCommonCheck = this.checkIsAdmin(articleContext);
         if (!allCommonCheck) {
-            throw new BlogException(ResultCode.ARTICLE_ADD_ERROR.getCode(), "不是admin");
+            throw new BlogException(ResultCode.ARTICLE_ADD_ERROR.getCode(), "not admin");
         }
         // 2. 文章内容的大小不超过数据库的长度
         if (StringUtils.length(articleContext.getArticleContent()) > MAX_ARTICLE_CONTENT_LENGTH) {

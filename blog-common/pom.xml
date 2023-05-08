@@ -72,6 +72,11 @@
             <groupId>com.github.phantomthief</groupId>
             <artifactId>scope</artifactId>
         </dependency>
+        <!-- 敏感词过滤工具包 https://github.com/houbb/sensitive-word -->
+        <dependency>
+            <groupId>com.github.houbb</groupId>
+            <artifactId>sensitive-word</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

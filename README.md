@@ -20,3 +20,7 @@ email.html：构建成功通知模板
 
 服务地址-ali：59.110.143.1
 - zipkin：9411
+
+使用的相关技术/三方包
+- 敏感词过滤：https://github.com/houbb/sensitive-word
+- scope: https://github.com/PhantomThief/scope
