@@ -11,10 +11,11 @@ import top.ddgotxdy.article.model.ArticleContext;
 import top.ddgotxdy.article.model.ArticleEvent;
 import top.ddgotxdy.article.service.AbstractArticleService;
 import top.ddgotxdy.article.service.BlogArticleService;
+import top.ddgotxdy.common.enums.ResultCode;
+import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.dal.entity.BlogArticle;
 
 import javax.annotation.Resource;
-
 import java.util.List;
 import java.util.Objects;
 
@@ -36,24 +37,20 @@ public class ArticleBodyAddServiceImpl extends AbstractArticleService {
         // 1. 所有通用校验逻辑全部校验通过
         boolean allCommonCheck = this.checkIsAdmin(articleContext);
         if (!allCommonCheck) {
-            return false;
+            throw new BlogException(ResultCode.ARTICLE_ADD_ERROR.getCode(), "不是admin");
         }
         // 2. 文章内容的大小不超过数据库的长度
         if (StringUtils.length(articleContext.getArticleContent()) > MAX_ARTICLE_CONTENT_LENGTH) {
-            // 先打error日志
-            log.error("Over MAX_ARTICLE_CONTENT_LENGTH");
-            return false;
+            throw new BlogException(ResultCode.ARTICLE_ADD_ERROR.getCode(), "Over MAX_ARTICLE_CONTENT_LENGTH");
         }
         // 3. 必须包含一个标签
         List<Long> tagIds = articleContext.getTagIds();
         if (CollectionUtils.isEmpty(tagIds)) {
-            log.error("tag ids is empty");
-            return false;
+            throw new BlogException(ResultCode.ARTICLE_ADD_ERROR.getCode(), "tag ids is empty");
         }
         // 4. 必须包含一个分类id
         if (Objects.isNull(articleContext.getCategoryId())) {
-            log.error("category id is null");
-            return false;
+            throw new BlogException(ResultCode.ARTICLE_ADD_ERROR.getCode(), "category id is null");
         }
         return true;
     }

@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import top.ddgotxdy.common.enums.ResultCode;
+import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.dal.entity.BlogImage;
 import top.ddgotxdy.file.annotation.FileEventSelector;
 import top.ddgotxdy.file.convert.Context2EntityConvert;
@@ -35,28 +37,25 @@ public class ImageUpdateServiceImpl extends AbstractFileService {
         boolean allCommonCheck = this.checkIsAdmin(fileContext)
                 && this.checkUniqueImageName(fileContext);
         if (!allCommonCheck) {
-            return false;
+            throw new BlogException(ResultCode.IMAGE_UPDATE_ERROR.getCode(), "not admin or not unique name");
         }
         // 2. 图片名称长度
         String imageName = fileContext.getImageName();
         if (Objects.nonNull(imageName)
                 && (StringUtils.length(imageName) < 1
                 || StringUtils.length(imageName) > MAX_IMAGE_NAME_LENGTH)) {
-            log.error("Over MAX_IMAGE_NAME_LENGTH or Lower 1");
-            return false;
+            throw new BlogException(ResultCode.IMAGE_UPDATE_ERROR.getCode(), "Over MAX_IMAGE_NAME_LENGTH or Lower 1");
         }
         // 3. url的长度校验
         String imageUrl = fileContext.getImageUrl();
         if (Objects.nonNull(imageUrl)
                 && (StringUtils.length(imageUrl) < 1
                 || StringUtils.length(imageUrl) > MAX_IMAGE_URL_LENGTH)) {
-            log.error("Over MAX_IMAGE_URL_LENGTH or Lower 1");
-            return false;
+            throw new BlogException(ResultCode.IMAGE_UPDATE_ERROR.getCode(), "Over MAX_IMAGE_URL_LENGTH or Lower 1");
         }
         // 4. 图片id必传
         if (Objects.isNull(fileContext.getImageId())) {
-            log.error("image id is null");
-            return false;
+            throw new BlogException(ResultCode.IMAGE_UPDATE_ERROR.getCode(), "image id is null");
         }
         return true;
     }

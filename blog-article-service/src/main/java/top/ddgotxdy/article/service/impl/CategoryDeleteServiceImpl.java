@@ -9,6 +9,8 @@ import top.ddgotxdy.article.model.ArticleEvent;
 import top.ddgotxdy.article.service.AbstractArticleService;
 import top.ddgotxdy.article.service.BlogArticleService;
 import top.ddgotxdy.article.service.BlogCategoryService;
+import top.ddgotxdy.common.enums.ResultCode;
+import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.dal.entity.BlogArticle;
 
 import javax.annotation.Resource;
@@ -34,12 +36,11 @@ public class CategoryDeleteServiceImpl extends AbstractArticleService {
         // 1. 所有通用校验逻辑全部校验通过
         boolean allCommonCheck = this.checkIsAdmin(articleContext);
         if (!allCommonCheck) {
-            return false;
+            throw new BlogException(ResultCode.CATEGORY_DELETE_ERROR.getCode(), "not admin");
         }
         // 2. 标签列表是否传过来
         if (Objects.isNull(articleContext.getCategoryIds())) {
-            log.error("category ids is null");
-            return false;
+            throw new BlogException(ResultCode.CATEGORY_DELETE_ERROR.getCode(), "category ids is null");
         }
         return true;
     }

@@ -10,6 +10,8 @@ import top.ddgotxdy.article.model.ArticleContext;
 import top.ddgotxdy.article.model.ArticleEvent;
 import top.ddgotxdy.article.service.AbstractArticleService;
 import top.ddgotxdy.article.service.BlogCategoryService;
+import top.ddgotxdy.common.enums.ResultCode;
+import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.dal.entity.BlogCategory;
 
 import javax.annotation.Resource;
@@ -34,20 +36,17 @@ public class CategoryUpdateServiceImpl extends AbstractArticleService {
         boolean allCommonCheck = this.checkIsAdmin(articleContext)
                 && this.checkUniqueCategoryName(articleContext);
         if (!allCommonCheck) {
-            return false;
+            throw new BlogException(ResultCode.CATEGORY_UPDATE_ERROR.getCode(), "not admin or not unique name");
         }
         // 2. 更新的分类的大小不超过最长的长度
         if (Objects.nonNull(articleContext.getCategoryName())
                 && (StringUtils.length(articleContext.getCategoryName()) > MAX_CATEGORY_LENGTH
                 || StringUtils.length(articleContext.getCategoryName()) < 1)) {
-            // 先打error日志
-            log.error("Over MAX_CATEGORY_LENGTH or Lower 1");
-            return false;
+            throw new BlogException(ResultCode.CATEGORY_UPDATE_ERROR.getCode(), "Over MAX_CATEGORY_LENGTH or Lower 1");
         }
         // 3. 分类id必须传递
         if (Objects.isNull(articleContext.getCategoryId())) {
-            log.error("category id is null");
-            return false;
+            throw new BlogException(ResultCode.CATEGORY_UPDATE_ERROR.getCode(), "category id is null");
         }
         return true;
     }

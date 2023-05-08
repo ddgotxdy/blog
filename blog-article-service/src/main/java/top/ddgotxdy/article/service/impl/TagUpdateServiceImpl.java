@@ -10,6 +10,8 @@ import top.ddgotxdy.article.model.ArticleContext;
 import top.ddgotxdy.article.model.ArticleEvent;
 import top.ddgotxdy.article.service.AbstractArticleService;
 import top.ddgotxdy.article.service.BlogTagService;
+import top.ddgotxdy.common.enums.ResultCode;
+import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.dal.entity.BlogTag;
 
 import javax.annotation.Resource;
@@ -34,20 +36,17 @@ public class TagUpdateServiceImpl extends AbstractArticleService {
         boolean allCommonCheck = this.checkIsAdmin(articleContext)
                 && this.checkUniqueTagName(articleContext);
         if (!allCommonCheck) {
-            return false;
+            throw new BlogException(ResultCode.TAG_UPDATE_ERROR.getCode(), "not admin or not unique name");
         }
         // 2. 传标签的大小不超过最长的长度
         if (Objects.nonNull(articleContext.getTagName())
                 && (StringUtils.length(articleContext.getTagName()) > MAX_TAG_LENGTH
                 || StringUtils.length(articleContext.getTagName()) < 1)) {
-            // 先打error日志
-            log.error("Over MAX_TAG_LENGTH or Lower 1");
-            return false;
+            throw new BlogException(ResultCode.TAG_UPDATE_ERROR.getCode(), "Over MAX_TAG_LENGTH or Lower 1");
         }
         // 3. 标签id必须传递
         if (Objects.isNull(articleContext.getTagId())) {
-            log.error("tag id is null");
-            return false;
+            throw new BlogException(ResultCode.TAG_UPDATE_ERROR.getCode(), "tag id is null");
         }
         return true;
     }

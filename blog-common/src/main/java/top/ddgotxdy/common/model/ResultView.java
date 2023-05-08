@@ -60,4 +60,8 @@ public class ResultView<T> {
         return new ResultView<>(500, message);
     }
 
+    public static <T> ResultView<T> fail(Integer code, String message) {
+        return new ResultView<>(code, message);
+    }
+
 }

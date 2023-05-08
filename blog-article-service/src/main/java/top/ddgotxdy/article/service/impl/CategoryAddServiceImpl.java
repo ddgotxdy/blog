@@ -9,6 +9,8 @@ import top.ddgotxdy.article.model.ArticleContext;
 import top.ddgotxdy.article.model.ArticleEvent;
 import top.ddgotxdy.article.service.AbstractArticleService;
 import top.ddgotxdy.article.service.BlogCategoryService;
+import top.ddgotxdy.common.enums.ResultCode;
+import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.dal.entity.BlogCategory;
 
 import javax.annotation.Resource;
@@ -32,14 +34,12 @@ public class CategoryAddServiceImpl extends AbstractArticleService {
         boolean allCommonCheck = this.checkIsAdmin(articleContext)
                 && this.checkUniqueCategoryName(articleContext);
         if (!allCommonCheck) {
-            return false;
+            throw new BlogException(ResultCode.CATEGORY_ADD_ERROR.getCode(), "not admin or not unique name");
         }
         // 2. 分类的大小不超过最长的长度
         if (StringUtils.length(articleContext.getCategoryName()) > MAX_CATEGORY_LENGTH
                 || StringUtils.length(articleContext.getCategoryName()) < 1) {
-            // 先打error日志
-            log.error("Over MAX_CATEGORY_LENGTH or Lower 1");
-            return false;
+            throw new BlogException(ResultCode.CATEGORY_ADD_ERROR.getCode(), "Over MAX_CATEGORY_LENGTH or Lower 1");
         }
         return true;
     }

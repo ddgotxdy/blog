@@ -7,10 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 import top.ddgotxdy.article.annotation.ArticleEventSelector;
 import top.ddgotxdy.article.convert.Context2EntityConvert;
-import top.ddgotxdy.article.service.AbstractArticleService;
 import top.ddgotxdy.article.model.ArticleContext;
 import top.ddgotxdy.article.model.ArticleEvent;
+import top.ddgotxdy.article.service.AbstractArticleService;
 import top.ddgotxdy.article.service.BlogArticleService;
+import top.ddgotxdy.common.enums.ResultCode;
+import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.dal.entity.BlogArticle;
 
 import javax.annotation.Resource;
@@ -34,26 +36,22 @@ public class ArticleBodyUpdateServiceImpl extends AbstractArticleService {
         // 1. 所有通用校验逻辑全部校验通过
         boolean allCommonCheck = this.checkIsAdmin(articleContext);
         if (!allCommonCheck) {
-            return false;
+            throw new BlogException(ResultCode.ARTICLE_UPDATE_ERROR.getCode(), "不是admin");
         }
         // 2. 文章如果传值了更新内容的大小不超过数据库的长度
         if (Objects.nonNull(articleContext.getArticleContent())
                 && StringUtils.length(articleContext.getArticleContent()) > MAX_ARTICLE_CONTENT_LENGTH) {
-            // 先打error日志
-            log.error("Over MAX_ARTICLE_CONTENT_LENGTH");
-            return false;
+            throw new BlogException(ResultCode.ARTICLE_UPDATE_ERROR.getCode(), "Over MAX_ARTICLE_CONTENT_LENGTH");
         }
         // 3. 必须包含一个标签
         List<Long> tagIds = articleContext.getTagIds();
         if (Objects.nonNull(tagIds) && CollectionUtils.isEmpty(tagIds)) {
-            log.error("tag ids is empty");
-            return false;
+            throw new BlogException(ResultCode.ARTICLE_UPDATE_ERROR.getCode(), "tag ids is empty");
         }
         // 4. TODO 分类id合法
         // 5. 必须传文章id
         if (Objects.isNull(articleContext.getArticleId())) {
-            log.error("article id is null");
-            return false;
+            throw new BlogException(ResultCode.ARTICLE_UPDATE_ERROR.getCode(), "article id is null");
         }
         return true;
     }

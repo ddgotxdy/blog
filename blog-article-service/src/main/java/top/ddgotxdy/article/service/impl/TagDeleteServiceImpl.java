@@ -11,6 +11,8 @@ import top.ddgotxdy.article.model.ArticleEvent;
 import top.ddgotxdy.article.service.AbstractArticleService;
 import top.ddgotxdy.article.service.BlogArticleService;
 import top.ddgotxdy.article.service.BlogTagService;
+import top.ddgotxdy.common.enums.ResultCode;
+import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.dal.entity.BlogArticle;
 
 import javax.annotation.Resource;
@@ -36,12 +38,11 @@ public class TagDeleteServiceImpl extends AbstractArticleService {
         // 1. 所有通用校验逻辑全部校验通过
         boolean allCommonCheck = this.checkIsAdmin(articleContext);
         if (!allCommonCheck) {
-            return false;
+            throw new BlogException(ResultCode.TAG_DELETE_ERROR.getCode(), "not admin");
         }
         // 2. 标签列表是否传过来
         if (Objects.isNull(articleContext.getTagIds())) {
-            log.error("tag ids is null");
-            return false;
+            throw new BlogException(ResultCode.TAG_DELETE_ERROR.getCode(), "tag ids is null");
         }
         return true;
     }
