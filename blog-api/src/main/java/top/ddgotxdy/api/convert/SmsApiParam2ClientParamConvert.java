@@ -13,6 +13,7 @@ import top.ddgotxdy.common.scope.ContextScope;
 import top.ddgotxdy.common.util.BeanCopyUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author: ddgo
@@ -34,8 +35,10 @@ public class SmsApiParam2ClientParamConvert {
     public static SensitiveUpdateParam updateApiParam2Param(SensitiveUpdateApiParam sensitiveUpdateApiParam) {
         SensitiveUpdateParam sensitiveUpdateParam = new SensitiveUpdateParam();
         BeanCopyUtil.copyProperties(sensitiveUpdateApiParam, sensitiveUpdateParam);
-        // 枚举值处理
-        sensitiveUpdateParam.setSensitiveType(sensitiveUpdateApiParam.getSensitiveType().getCode());
+        // 枚举值处理，存在则赋值
+        if (Objects.nonNull(sensitiveUpdateApiParam.getSensitiveType())) {
+            sensitiveUpdateParam.setSensitiveType(sensitiveUpdateApiParam.getSensitiveType().getCode());
+        }
         Long userId = ContextScope.getUserId();
         sensitiveUpdateParam.setUserId(userId);
         return sensitiveUpdateParam;
