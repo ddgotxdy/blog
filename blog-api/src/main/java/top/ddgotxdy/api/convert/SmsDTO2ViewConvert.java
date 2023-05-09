@@ -1,8 +1,11 @@
 package top.ddgotxdy.api.convert;
 
+import top.ddgotxdy.api.model.view.MessagePageListView;
 import top.ddgotxdy.api.model.view.SensitivePageListView;
+import top.ddgotxdy.common.enums.sms.AuditType;
 import top.ddgotxdy.common.enums.sms.SensitiveType;
 import top.ddgotxdy.common.model.PageResult;
+import top.ddgotxdy.common.model.sms.dto.MessagePageListDTO;
 import top.ddgotxdy.common.model.sms.dto.SensitivePageListDTO;
 import top.ddgotxdy.common.util.BeanCopyUtil;
 
@@ -31,5 +34,23 @@ public class SmsDTO2ViewConvert {
         // 赋值
         sensitivePageListViewPageResult.setData(sensitivePageListViews);
         return sensitivePageListViewPageResult;
+    }
+
+    public static PageResult<MessagePageListView> messagePageListDTO2View(PageResult<MessagePageListDTO> messagePageListDTOPageResult) {
+        // 范型赋值
+        List<MessagePageListDTO> data = messagePageListDTOPageResult.getData();
+        List<MessagePageListView> messagePageListViews = BeanCopyUtil.copyListProperties(data, MessagePageListView::new);
+        // 特殊值处理
+        for (int i = 0; i < messagePageListViews.size(); i++) {
+            MessagePageListView messagePageListView = messagePageListViews.get(i);
+            MessagePageListDTO messagePageListDTO = data.get(i);
+            messagePageListView.setAuditType(AuditType.of(messagePageListDTO.getAuditType()));
+        }
+        // 分页结果赋值
+        PageResult<MessagePageListView> messagePageListViewPageResult = new PageResult<>();
+        BeanCopyUtil.copyProperties(messagePageListDTOPageResult, messagePageListViewPageResult);
+        // 赋值
+        messagePageListViewPageResult.setData(messagePageListViews);
+        return messagePageListViewPageResult;
     }
 }

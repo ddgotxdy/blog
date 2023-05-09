@@ -1,13 +1,19 @@
 package top.ddgotxdy.api.convert;
 
+import top.ddgotxdy.api.model.addparam.MessageAddApiParam;
 import top.ddgotxdy.api.model.addparam.SensitiveAddApiParam;
+import top.ddgotxdy.api.model.queryparam.MessageQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.SensitiveQueryApiParam;
+import top.ddgotxdy.api.model.updateparam.MessageUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.SensitiveUpdateApiParam;
 import top.ddgotxdy.common.model.PageQry;
+import top.ddgotxdy.common.model.sms.addparam.MessageAddParam;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
 import top.ddgotxdy.common.model.sms.deleteparam.SensitiveDeleteParam;
+import top.ddgotxdy.common.model.sms.queryparam.MessageQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.SensitiveQueryParam;
 import top.ddgotxdy.common.model.sms.recoverparam.SensitiveRecoverParam;
+import top.ddgotxdy.common.model.sms.updateparam.MessageUpdateParam;
 import top.ddgotxdy.common.model.sms.updateparam.SensitiveUpdateParam;
 import top.ddgotxdy.common.scope.ContextScope;
 import top.ddgotxdy.common.util.BeanCopyUtil;
@@ -65,11 +71,50 @@ public class SmsApiParam2ClientParamConvert {
         // 范型复制
         SensitiveQueryApiParam sensitiveQueryApiParam = sensitiveQueryApiParamPageQry.getQueryParam();
         BeanCopyUtil.copyProperties(sensitiveQueryApiParam, sensitiveQueryParam);
+        // 枚举值处理
+        if (Objects.nonNull(sensitiveQueryApiParam.getSensitiveType())) {
+            sensitiveQueryParam.setSensitiveType(sensitiveQueryApiParam.getSensitiveType().getCode());
+        }
         // 分页参数复制
         PageQry<SensitiveQueryParam> sensitiveQueryParamPageQry = new PageQry<>();
         BeanCopyUtil.copyProperties(sensitiveQueryApiParamPageQry, sensitiveQueryParamPageQry);
         // 范型赋值进去
         sensitiveQueryParamPageQry.setQueryParam(sensitiveQueryParam);
         return sensitiveQueryParamPageQry;
+    }
+
+    public static MessageAddParam addApiParam2Param(MessageAddApiParam messageAddApiParam) {
+        MessageAddParam messageAddParam = new MessageAddParam();
+        BeanCopyUtil.copyProperties(messageAddApiParam, messageAddParam);
+        return messageAddParam;
+    }
+
+    public static MessageUpdateParam updateApiParam2Param(MessageUpdateApiParam messageUpdateApiParam) {
+        MessageUpdateParam messageUpdateParam = new MessageUpdateParam();
+        BeanCopyUtil.copyProperties(messageUpdateApiParam, messageUpdateParam);
+        // 枚举值处理
+        if (Objects.nonNull(messageUpdateApiParam.getAuditType())) {
+            messageUpdateParam.setAuditType(messageUpdateApiParam.getAuditType().getCode());
+        }
+        Long userId = ContextScope.getUserId();
+        messageUpdateParam.setUserId(userId);
+        return messageUpdateParam;
+    }
+
+    public static PageQry<MessageQueryParam> messageQueryApiParam2Param(PageQry<MessageQueryApiParam> messageQueryApiParamPageQry) {
+        MessageQueryParam messageQueryParam = new MessageQueryParam();
+        // 范型复制
+        MessageQueryApiParam messageQueryApiParam = messageQueryApiParamPageQry.getQueryParam();
+        BeanCopyUtil.copyProperties(messageQueryApiParam, messageQueryParam);
+        // 枚举值处理
+        if (Objects.nonNull(messageQueryApiParam.getAuditType())) {
+            messageQueryParam.setAuditType(messageQueryApiParam.getAuditType().getCode());
+        }
+        // 分页参数复制
+        PageQry<MessageQueryParam> messageQueryParamPageQry = new PageQry<>();
+        BeanCopyUtil.copyProperties(messageQueryApiParamPageQry, messageQueryParamPageQry);
+        // 范型赋值进去
+        messageQueryParamPageQry.setQueryParam(messageQueryParam);
+        return messageQueryParamPageQry;
     }
 }

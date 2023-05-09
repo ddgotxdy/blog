@@ -107,7 +107,7 @@ public class SmsController {
      */
     @PostMapping("/message/queryByPage")
     ResultView<PageResult<MessagePageListView>> queryMessageByPage(
-            @RequestBody PageQry<MessageQueryApiParam> messageQueryApiParamPageQry
+            @Validated @RequestBody PageQry<MessageQueryApiParam> messageQueryApiParamPageQry
     ) {
         PageResult<MessagePageListView> result = blogSmsBizService.queryMessageByPage(messageQueryApiParamPageQry);
         return ResultView.success(result);

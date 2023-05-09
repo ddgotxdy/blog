@@ -14,11 +14,15 @@ import top.ddgotxdy.api.model.view.SensitivePageListView;
 import top.ddgotxdy.api.service.BlogSmsBizService;
 import top.ddgotxdy.common.client.BlogSmsClient;
 import top.ddgotxdy.common.model.*;
+import top.ddgotxdy.common.model.sms.addparam.MessageAddParam;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
 import top.ddgotxdy.common.model.sms.deleteparam.SensitiveDeleteParam;
+import top.ddgotxdy.common.model.sms.dto.MessagePageListDTO;
 import top.ddgotxdy.common.model.sms.dto.SensitivePageListDTO;
+import top.ddgotxdy.common.model.sms.queryparam.MessageQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.SensitiveQueryParam;
 import top.ddgotxdy.common.model.sms.recoverparam.SensitiveRecoverParam;
+import top.ddgotxdy.common.model.sms.updateparam.MessageUpdateParam;
 import top.ddgotxdy.common.model.sms.updateparam.SensitiveUpdateParam;
 
 import javax.annotation.Resource;
@@ -83,16 +87,29 @@ public class BlogSmsBizServiceImpl implements BlogSmsBizService {
 
     @Override
     public IdView addMessage(MessageAddApiParam messageAddApiParam) {
-        return null;
+        MessageAddParam messageAddParam = SmsApiParam2ClientParamConvert.addApiParam2Param(messageAddApiParam);
+        ResultView<IdDTO> response = blogSmsClient.addMessage(messageAddParam);
+        IdDTO data = response.getData();
+        return IdView.builder()
+                .id(data.getId())
+                .build();
     }
 
     @Override
     public IdView updateMessage(MessageUpdateApiParam messageUpdateApiParam) {
-        return null;
+        MessageUpdateParam messageUpdateParam = SmsApiParam2ClientParamConvert.updateApiParam2Param(messageUpdateApiParam);
+        ResultView<IdDTO> response = blogSmsClient.updateMessage(messageUpdateParam);
+        IdDTO data = response.getData();
+        return IdView.builder()
+                .id(data.getId())
+                .build();
     }
 
     @Override
     public PageResult<MessagePageListView> queryMessageByPage(PageQry<MessageQueryApiParam> messageQueryApiParamPageQry) {
-        return null;
+        PageQry<MessageQueryParam> messageQueryParamPageQry = SmsApiParam2ClientParamConvert.messageQueryApiParam2Param(messageQueryApiParamPageQry);
+        ResultView<PageResult<MessagePageListDTO>> response = blogSmsClient.queryMessageByPage(messageQueryParamPageQry);
+        PageResult<MessagePageListView> sensitivePageListViewPageResult = SmsDTO2ViewConvert.messagePageListDTO2View(response.getData());
+        return sensitivePageListViewPageResult;
     }
 }
