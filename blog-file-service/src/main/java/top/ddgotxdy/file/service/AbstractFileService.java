@@ -81,6 +81,9 @@ public abstract class AbstractFileService implements FileBaseService {
      * @return true 唯一  false 不唯一
      */
     protected boolean checkUniqueImageName(FileContext fileContext) {
+        if (Objects.isNull(fileContext.getImageName())) {
+            return true;
+        }
         LambdaQueryWrapper<BlogImage> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(
                 Objects.nonNull(fileContext.getImageName()),

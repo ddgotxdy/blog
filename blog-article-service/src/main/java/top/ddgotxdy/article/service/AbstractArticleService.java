@@ -85,6 +85,9 @@ public abstract class AbstractArticleService implements ArticleBaseService {
      */
     protected boolean checkUniqueCategoryName(ArticleContext articleContext) {
         // 更新的分类具有唯一性，TODO 直接用mysql查，可能包含性能问题
+        if (Objects.isNull(articleContext.getCategoryName())) {
+            return true;
+        }
         LambdaQueryWrapper<BlogCategory> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(
                 Objects.nonNull(articleContext.getCategoryName()),
@@ -106,6 +109,9 @@ public abstract class AbstractArticleService implements ArticleBaseService {
      */
     protected boolean checkUniqueTagName(ArticleContext articleContext) {
         // 更新的分类具有唯一性，TODO 直接用mysql查，可能包含性能问题
+        if (Objects.isNull(articleContext.getTagName())) {
+            return true;
+        }
         LambdaQueryWrapper<BlogTag> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(
                 Objects.nonNull(articleContext.getTagName()),

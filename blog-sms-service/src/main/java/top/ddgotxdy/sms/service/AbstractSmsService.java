@@ -87,6 +87,9 @@ public abstract class AbstractSmsService implements SmsBaseService {
      */
     protected boolean checkUniqueSensitiveName(SmsContext smsContext) {
         // 更新的分类具有唯一性，TODO 直接用mysql查，可能包含性能问题
+        if (Objects.isNull(smsContext.getWord())) {
+            return true;
+        }
         LambdaQueryWrapper<BlogSensitive> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper.eq(
                 Objects.nonNull(smsContext.getWord()),
