@@ -13,8 +13,6 @@ import top.ddgotxdy.common.enums.sms.SensitiveType;
 @Data
 @ApiModel("敏感词添加api接口")
 public class SensitiveAddApiParam {
-    @ApiModelProperty("用户id")
-    private Long userId;
     @ApiModelProperty("敏感词")
     @Length(min = 1, max = 50)
     private String word;
