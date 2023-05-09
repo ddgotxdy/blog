@@ -98,7 +98,7 @@ DROP TABLE IF EXISTS `blog_sensitive`;
 CREATE TABLE `blog_sensitive`  (
      `sensitive_id` bigint NOT NULL COMMENT '敏感ID',
      `word` varchar(50) NOT NULL COMMENT '敏感词',
-     `sensitive_type` tinyint(4) NOT NULL DEFAULT 0 COMMENT '敏感类型 0 deny 1 allow',
+     `sensitive_type` tinyint(4) NOT NULL DEFAULT 2 COMMENT '敏感类型 2 deny 1 allow',
      `is_delete` tinyint NOT NULL DEFAULT 0 COMMENT '是否删除  0否 1是',
      `create_time` bigint NOT NULL COMMENT '创建时间',
      `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',

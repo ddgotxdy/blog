@@ -1,4 +1,4 @@
-package top.ddgotxdy.common.conf;
+package top.ddgotxdy.sms.conf;
 
 import com.github.houbb.sensitive.word.bs.SensitiveWordBs;
 import com.github.houbb.sensitive.word.support.allow.WordAllows;
@@ -6,8 +6,6 @@ import com.github.houbb.sensitive.word.support.deny.WordDenys;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import top.ddgotxdy.common.service.MyDdWordAllow;
-import top.ddgotxdy.common.service.MyDdWordDeny;
 
 /**
  * @author: ddgo

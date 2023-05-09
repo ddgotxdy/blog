@@ -1,15 +1,10 @@
 package top.ddgotxdy.common.aspect;
 
-import com.github.houbb.sensitive.word.bs.SensitiveWordBs;
-import com.github.houbb.sensitive.word.core.SensitiveWordHelper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.stereotype.Component;
-import top.ddgotxdy.common.service.SensitiveWordService;
-
-import javax.annotation.Resource;
 
 /**
  * @author: ddgo
@@ -18,9 +13,6 @@ import javax.annotation.Resource;
 @Aspect
 @Component
 public class SensitiveWordAspect {
-
-    @Resource
-    private SensitiveWordService sensitiveWordService;
 
     @Pointcut("@annotation(top.ddgotxdy.common.annotation.SensitiveWord)")
     public void sensitiveWordPoint(){
@@ -35,8 +27,8 @@ public class SensitiveWordAspect {
         }
         // 否者替换敏感词
         String textString = (String) text;
-        SensitiveWordBs sensitiveWordBs = sensitiveWordService.getSensitiveWordBs();
-        textString = sensitiveWordBs.replace(textString);
+//        SensitiveWordBs sensitiveWordBs = sensitiveWordService.getSensitiveWordBs();
+//        textString = sensitiveWordBs.replace(textString);
 
         return pjp.proceed();
     }

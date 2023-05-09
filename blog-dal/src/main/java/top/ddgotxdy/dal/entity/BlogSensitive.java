@@ -1,11 +1,11 @@
 package top.ddgotxdy.dal.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
-
-import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author: ddgo
@@ -25,11 +25,11 @@ public class BlogSensitive {
     @ApiModelProperty("敏感词")
     private String word;
 
-    @ApiModelProperty("敏感类型 0 deny 1 allow")
+    @ApiModelProperty("敏感类型 2 deny 1 allow")
     private Integer sensitiveType;
 
     @ApiModelProperty("是否删除  0否 1是")
-    private Integer isDelete;
+    private Boolean isDelete;
 
     @ApiModelProperty("创建时间")
     @TableField(fill = FieldFill.INSERT)

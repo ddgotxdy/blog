@@ -1,5 +1,7 @@
 package top.ddgotxdy.common.enums.sms;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -25,4 +27,19 @@ public enum SensitiveType {
     ;
     private final Integer code;
     private final String msg;
+
+    @JsonValue
+    public int getCode() {
+        return this.code;
+    }
+
+    @JsonCreator
+    public static SensitiveType of(int code) {
+        for (SensitiveType sensitiveType : SensitiveType.values()) {
+            if (sensitiveType.getCode() == code) {
+                return sensitiveType;
+            }
+        }
+        return SensitiveType.SENSITIVE_UNKNOWN;
+    }
 }

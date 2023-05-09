@@ -1,11 +1,11 @@
 package top.ddgotxdy.sms.controller;
 
 import org.springframework.web.bind.annotation.*;
-import top.ddgotxdy.common.model.IdDTO;
-import top.ddgotxdy.common.model.IdsDTO;
-import top.ddgotxdy.common.model.ResultView;
+import top.ddgotxdy.common.model.*;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
 import top.ddgotxdy.common.model.sms.deleteparam.SensitiveDeleteParam;
+import top.ddgotxdy.common.model.sms.dto.SensitivePageListDTO;
+import top.ddgotxdy.common.model.sms.queryparam.SensitiveQueryParam;
 import top.ddgotxdy.common.model.sms.recoverparam.SensitiveRecoverParam;
 import top.ddgotxdy.common.model.sms.updateparam.SensitiveUpdateParam;
 import top.ddgotxdy.sms.service.SmsCmdBizService;
@@ -57,4 +57,11 @@ public class SmsController {
         return ResultView.success(idsDTO);
     }
 
+    @PostMapping("sensitive/queryByPage")
+    public ResultView<PageResult<SensitivePageListDTO>> querySensitiveByPage(
+            @RequestBody PageQry<SensitiveQueryParam> sensitiveQueryParamPageQry
+    ) {
+        PageResult<SensitivePageListDTO> result = smsQueryBizService.querySensitiveByPage(sensitiveQueryParamPageQry);
+        return ResultView.success(result);
+    }
 }
