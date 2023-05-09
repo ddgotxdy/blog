@@ -10,12 +10,7 @@ import top.ddgotxdy.common.annotation.SensitiveWordProperty;
  * @description: 留言添加参数
  */
 @Data
-@SensitiveWord
 public class MessageAddParam {
-    /**
-     * 用户id
-     */
-    private Long userId;
     /**
      * 留言内容
      */

@@ -3,9 +3,13 @@ package top.ddgotxdy.api.service.impl;
 import org.springframework.stereotype.Service;
 import top.ddgotxdy.api.convert.SmsApiParam2ClientParamConvert;
 import top.ddgotxdy.api.convert.SmsDTO2ViewConvert;
+import top.ddgotxdy.api.model.addparam.MessageAddApiParam;
 import top.ddgotxdy.api.model.addparam.SensitiveAddApiParam;
+import top.ddgotxdy.api.model.queryparam.MessageQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.SensitiveQueryApiParam;
+import top.ddgotxdy.api.model.updateparam.MessageUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.SensitiveUpdateApiParam;
+import top.ddgotxdy.api.model.view.MessagePageListView;
 import top.ddgotxdy.api.model.view.SensitivePageListView;
 import top.ddgotxdy.api.service.BlogSmsBizService;
 import top.ddgotxdy.common.client.BlogSmsClient;
@@ -75,5 +79,20 @@ public class BlogSmsBizServiceImpl implements BlogSmsBizService {
         ResultView<PageResult<SensitivePageListDTO>> response = blogSmsClient.querySensitiveByPage(sensitiveQueryParamPageQry);
         PageResult<SensitivePageListView> sensitivePageListViewPageResult = SmsDTO2ViewConvert.sensitivePageListDTO2View(response.getData());
         return sensitivePageListViewPageResult;
+    }
+
+    @Override
+    public IdView addMessage(MessageAddApiParam messageAddApiParam) {
+        return null;
+    }
+
+    @Override
+    public IdView updateMessage(MessageUpdateApiParam messageUpdateApiParam) {
+        return null;
+    }
+
+    @Override
+    public PageResult<MessagePageListView> queryMessageByPage(PageQry<MessageQueryApiParam> messageQueryApiParamPageQry) {
+        return null;
     }
 }

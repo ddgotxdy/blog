@@ -2,6 +2,7 @@ package top.ddgotxdy.sms.controller;
 
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import top.ddgotxdy.common.annotation.SensitiveWord;
 import top.ddgotxdy.common.model.*;
 import top.ddgotxdy.common.model.sms.addparam.MessageAddParam;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
@@ -71,6 +72,7 @@ public class SmsController {
     }
 
     @PostMapping("message/add")
+    @SensitiveWord
     public ResultView<IdDTO> addMessage(
             @Validated @RequestBody MessageAddParam messageAddParam
     ) {

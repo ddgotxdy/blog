@@ -6,6 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import top.ddgotxdy.common.annotation.SensitiveWord;
 import top.ddgotxdy.common.model.*;
 import top.ddgotxdy.common.model.sms.addparam.MessageAddParam;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
@@ -81,6 +82,7 @@ public interface BlogSmsClient {
      * @return ResultView<IdDTO>
      */
     @PostMapping("openfeign/sms/message/add")
+    @SensitiveWord
     ResultView<IdDTO> addMessage(
             @Validated @RequestBody MessageAddParam messageAddParam
     );

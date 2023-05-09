@@ -29,12 +29,7 @@ public class MessageUpdateServiceImpl extends AbstractSmsService {
 
     @Override
     protected boolean filter(SmsContext smsContext) {
-        // 1. 所有通用校验逻辑全部校验通过
-        boolean allCommonCheck = this.checkIsAdmin(smsContext);
-        if (!allCommonCheck) {
-            throw new BlogException(ResultCode.MESSAGE_UPDATE_ERROR.getCode(), "not admin");
-        }
-        // 2. 必须传messageId
+        // 1. 必须传messageId
         if (Objects.isNull(smsContext.getMessageId())) {
             throw new BlogException(ResultCode.MESSAGE_UPDATE_ERROR.getCode(), "message id is null");
         }

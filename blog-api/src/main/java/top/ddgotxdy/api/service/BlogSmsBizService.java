@@ -1,8 +1,12 @@
 package top.ddgotxdy.api.service;
 
+import top.ddgotxdy.api.model.addparam.MessageAddApiParam;
 import top.ddgotxdy.api.model.addparam.SensitiveAddApiParam;
+import top.ddgotxdy.api.model.queryparam.MessageQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.SensitiveQueryApiParam;
+import top.ddgotxdy.api.model.updateparam.MessageUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.SensitiveUpdateApiParam;
+import top.ddgotxdy.api.model.view.MessagePageListView;
 import top.ddgotxdy.api.model.view.SensitivePageListView;
 import top.ddgotxdy.common.model.IdView;
 import top.ddgotxdy.common.model.IdsView;
@@ -50,5 +54,26 @@ public interface BlogSmsBizService {
      * @return
      */
     PageResult<SensitivePageListView> querySensitiveByPage(PageQry<SensitiveQueryApiParam> sensitiveQueryApiParamPageQry);
+
+    /**
+     * 添加留言
+     * @param messageAddApiParam
+     * @return
+     */
+    IdView addMessage(MessageAddApiParam messageAddApiParam);
+
+    /**
+     * 更新留言
+     * @param messageUpdateApiParam
+     * @return
+     */
+    IdView updateMessage(MessageUpdateApiParam messageUpdateApiParam);
+
+    /**
+     * 分页查询留言
+     * @param messageQueryApiParamPageQry
+     * @return
+     */
+    PageResult<MessagePageListView> queryMessageByPage(PageQry<MessageQueryApiParam> messageQueryApiParamPageQry);
 }
 
