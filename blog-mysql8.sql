@@ -87,7 +87,7 @@ DROP TABLE IF EXISTS `blog_message`;
 CREATE TABLE `blog_message`  (
      `message_id` bigint NOT NULL COMMENT '留言ID',
      `message_content` varchar(50) NOT NULL COMMENT '留言内容',
-     `audit_type` tinyint(4) NOT NULL DEFAULT 0 COMMENT '审核类型 0审核中 1审核通过 2审核失败',
+     `audit_type` tinyint(4) NOT NULL DEFAULT 1 COMMENT '审核类型 1审核中 2审核通过 3审核失败',
      `create_time` bigint NOT NULL COMMENT '留言时间',
      `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
      PRIMARY KEY (`message_id`)
@@ -132,20 +132,5 @@ CREATE TABLE `blog_page`  (
     `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
     PRIMARY KEY (`page_id`)
 );
-
--- 留言表
-DROP TABLE IF EXISTS `blog_message`;
-CREATE TABLE `blog_message`  (
-   `message_id` bigint NOT NULL AUTO_INCREMENT COMMENT '主键id',
-   `username` varchar(50) NOT NULL DEFAULT '' COMMENT '用户名称，默认访客',
-   `avatar_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '头像',
-   `message_content` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '留言内容',
-   `audit_type` tinyint(4) NOT NULL DEFAULT 0 COMMENT '审核类型 0审核中 1审核通过 2审核失败',
-   `create_time` bigint NOT NULL COMMENT '创建时间',
-   `update_time` bigint NULL DEFAULT NULL COMMENT '修改时间',
-   PRIMARY KEY (`message_id`)
-);
-
-
 
 -- 各种日志表，后续添加

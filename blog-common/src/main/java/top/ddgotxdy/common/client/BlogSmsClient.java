@@ -2,15 +2,20 @@ package top.ddgotxdy.common.client;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import top.ddgotxdy.common.model.*;
+import top.ddgotxdy.common.model.sms.addparam.MessageAddParam;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
 import top.ddgotxdy.common.model.sms.deleteparam.SensitiveDeleteParam;
+import top.ddgotxdy.common.model.sms.dto.MessagePageListDTO;
 import top.ddgotxdy.common.model.sms.dto.SensitivePageListDTO;
+import top.ddgotxdy.common.model.sms.queryparam.MessageQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.SensitiveQueryParam;
 import top.ddgotxdy.common.model.sms.recoverparam.SensitiveRecoverParam;
+import top.ddgotxdy.common.model.sms.updateparam.MessageUpdateParam;
 import top.ddgotxdy.common.model.sms.updateparam.SensitiveUpdateParam;
 
 /**
@@ -68,5 +73,35 @@ public interface BlogSmsClient {
     @PostMapping("openfeign/sms/sensitive/queryByPage")
     ResultView<PageResult<SensitivePageListDTO>> querySensitiveByPage(
             @RequestBody PageQry<SensitiveQueryParam> sensitiveQueryParamPageQry
+    );
+
+    /**
+     * 留言新增接口
+     * @param messageAddParam 添加参数
+     * @return ResultView<IdDTO>
+     */
+    @PostMapping("openfeign/sms/message/add")
+    ResultView<IdDTO> addMessage(
+            @Validated @RequestBody MessageAddParam messageAddParam
+    );
+
+    /**
+     * 留言更新接口
+     * @param messageUpdateParam 更新参数
+     * @return ResultView<IdDTO>
+     */
+    @PostMapping("openfeign/sms/message/update")
+    ResultView<IdDTO> updateMessage(
+            @RequestBody MessageUpdateParam messageUpdateParam
+    );
+
+    /**
+     * 留言查询接口
+     * @param messageQueryParamPageQry 查询参数
+     * @return ResultView<PageResult<MessagePageListDTO>>
+     */
+    @PostMapping("openfeign/sms/message/queryByPage")
+    ResultView<PageResult<MessagePageListDTO>> queryMessageByPage(
+            @RequestBody PageQry<MessageQueryParam> messageQueryParamPageQry
     );
 }

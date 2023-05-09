@@ -4,9 +4,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.IdsDTO;
+import top.ddgotxdy.common.model.sms.addparam.MessageAddParam;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
 import top.ddgotxdy.common.model.sms.deleteparam.SensitiveDeleteParam;
 import top.ddgotxdy.common.model.sms.recoverparam.SensitiveRecoverParam;
+import top.ddgotxdy.common.model.sms.updateparam.MessageUpdateParam;
 import top.ddgotxdy.common.model.sms.updateparam.SensitiveUpdateParam;
 import top.ddgotxdy.sms.adaptor.SmsManageAdaptor;
 import top.ddgotxdy.sms.convert.Param2ContextConvert;
@@ -64,6 +66,26 @@ public class SmsCmdBizServiceImpl implements SmsCmdBizService {
         smsManageAdaptor.execute(smsContext);
         return IdsDTO.builder()
                 .ids(smsContext.getSensitiveIds())
+                .build();
+    }
+
+    @Override
+    public IdDTO addMessage(MessageAddParam messageAddParam) {
+        SmsContext smsContext = Param2ContextConvert.addMessage(messageAddParam);
+        log.info("SmsCmdBizServiceImpl addMessage request[{}]", toJSON(smsContext));
+        smsManageAdaptor.execute(smsContext);
+        return IdDTO.builder()
+                .id(smsContext.getMessageId())
+                .build();
+    }
+
+    @Override
+    public IdDTO updateMessage(MessageUpdateParam messageUpdateParam) {
+        SmsContext smsContext = Param2ContextConvert.updateMessage(messageUpdateParam);
+        log.info("SmsCmdBizServiceImpl updateMessage request[{}]", toJSON(smsContext));
+        smsManageAdaptor.execute(smsContext);
+        return IdDTO.builder()
+                .id(smsContext.getMessageId())
                 .build();
     }
 }

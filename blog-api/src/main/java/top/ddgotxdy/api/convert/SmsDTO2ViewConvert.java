@@ -1,6 +1,7 @@
 package top.ddgotxdy.api.convert;
 
 import top.ddgotxdy.api.model.view.SensitivePageListView;
+import top.ddgotxdy.common.enums.sms.SensitiveType;
 import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.sms.dto.SensitivePageListDTO;
 import top.ddgotxdy.common.util.BeanCopyUtil;
@@ -18,6 +19,12 @@ public class SmsDTO2ViewConvert {
         // 范型赋值
         List<SensitivePageListDTO> data = sensitivePageListDTOPageResult.getData();
         List<SensitivePageListView> sensitivePageListViews = BeanCopyUtil.copyListProperties(data, SensitivePageListView::new);
+        // 特殊值处理
+        for (int i = 0; i < sensitivePageListViews.size(); i++) {
+            SensitivePageListView sensitivePageListView = sensitivePageListViews.get(i);
+            SensitivePageListDTO sensitivePageListDTO = data.get(i);
+            sensitivePageListView.setSensitiveType(SensitiveType.of(sensitivePageListDTO.getSensitiveType()));
+        }
         // 分页结果赋值
         PageResult<SensitivePageListView> sensitivePageListViewPageResult = new PageResult<>();
         BeanCopyUtil.copyProperties(sensitivePageListDTOPageResult, sensitivePageListViewPageResult);

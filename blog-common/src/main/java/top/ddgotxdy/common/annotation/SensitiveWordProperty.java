@@ -4,10 +4,10 @@ import java.lang.annotation.*;
 
 /**
  * @author: ddgo
- * @description: 敏感词过滤，标注某一个属性
+ * @description:
  */
-@Target({ElementType.TYPE})
+@Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface SensitiveWord {
+public @interface SensitiveWordProperty {
 }

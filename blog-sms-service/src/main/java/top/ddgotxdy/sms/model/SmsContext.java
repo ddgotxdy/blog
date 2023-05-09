@@ -34,4 +34,19 @@ public class SmsContext {
      * 敏感词列表
      */
     private List<Long> sensitiveIds;
+
+    /**
+     * 留言id
+     */
+    private Long messageId;
+
+    /**
+     * 留言内容
+     */
+    private String messageContent;
+
+    /**
+     * 审核结果
+     */
+    private Integer auditType;
 }

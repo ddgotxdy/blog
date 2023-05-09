@@ -37,6 +37,8 @@ public enum ResultCode {
     SENSITIVE_UPDATE_ERROR(903, "敏感词修改失败"),
     SENSITIVE_QUERY_ERROR(904, "敏感词查询失败"),
     SENSITIVE_RECOVERY_ERROR(905, "敏感词恢复失败"),
+    MESSAGE_ADD_ERROR(906, "留言添加失败"),
+    MESSAGE_UPDATE_ERROR(906, "留言更新失败"),
     ;
     private final Integer code;
     private final String msg;

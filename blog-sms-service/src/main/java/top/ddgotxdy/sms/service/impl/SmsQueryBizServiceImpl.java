@@ -6,11 +6,15 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.PageResult;
+import top.ddgotxdy.common.model.sms.dto.MessagePageListDTO;
 import top.ddgotxdy.common.model.sms.dto.SensitivePageListDTO;
+import top.ddgotxdy.common.model.sms.queryparam.MessageQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.SensitiveQueryParam;
+import top.ddgotxdy.dal.entity.BlogMessage;
 import top.ddgotxdy.dal.entity.BlogSensitive;
 import top.ddgotxdy.sms.convert.Entity2DTOConvert;
 import top.ddgotxdy.sms.convert.FieldName2FunctionConvert;
+import top.ddgotxdy.sms.service.BlogMessageService;
 import top.ddgotxdy.sms.service.BlogSensitiveService;
 import top.ddgotxdy.sms.service.SmsQueryBizService;
 
@@ -27,6 +31,8 @@ import java.util.Objects;
 public class SmsQueryBizServiceImpl implements SmsQueryBizService {
     @Resource
     private BlogSensitiveService blogSensitiveService;
+    @Resource
+    private BlogMessageService blogMessageService;
 
     @Override
     public PageResult<SensitivePageListDTO> querySensitiveByPage(PageQry<SensitiveQueryParam> sensitiveQueryParamPageQry) {
@@ -50,15 +56,48 @@ public class SmsQueryBizServiceImpl implements SmsQueryBizService {
             orderByFields.put("createTime", false);
         }
         orderByFields.forEach((name, asc) ->
-                queryWrapper.orderBy(true, asc, FieldName2FunctionConvert.SensitiveFiledName2Function(name))
+                queryWrapper.orderBy(true, asc, FieldName2FunctionConvert.sensitiveFiledName2Function(name))
         );
         Page<BlogSensitive> blogSensitivePage = blogSensitiveService.page(page, queryWrapper);
         List<BlogSensitive> blogSensitiveList = blogSensitivePage.getRecords();
-        List<SensitivePageListDTO> sensitivePageListDTOList = Entity2DTOConvert.SensitiveList2DTO(blogSensitiveList);
+        List<SensitivePageListDTO> sensitivePageListDTOList = Entity2DTOConvert.sensitiveList2DTO(blogSensitiveList);
         // 封装返回值
         PageResult<SensitivePageListDTO> pageResult = new PageResult<>();
         pageResult.setTotalPage(blogSensitivePage.getPages());
         pageResult.setData(sensitivePageListDTOList);
+        return pageResult;
+    }
+
+    @Override
+    public PageResult<MessagePageListDTO> queryMessageByPage(PageQry<MessageQueryParam> messageQueryParamPageQry) {
+        // 分页参数组装
+        int pageNum = messageQueryParamPageQry.getPageNum();
+        int pageSize = messageQueryParamPageQry.getPageSize();
+        Page<BlogMessage> page = new Page<>(pageNum, pageSize);
+        // 查询参数组装
+        LambdaQueryWrapper<BlogMessage> queryWrapper = new LambdaQueryWrapper<>();
+        // 查询值
+        MessageQueryParam queryParam = messageQueryParamPageQry.getQueryParam();
+        queryWrapper
+                .eq(Objects.nonNull(queryParam.getMessageId()), BlogMessage::getMessageId, queryParam.getMessageId())
+                .eq(Objects.nonNull(queryParam.getAuditType()), BlogMessage::getAuditType, queryParam.getAuditType())
+                .like(Objects.nonNull(queryParam.getMessageContent()), BlogMessage::getMessageContent, queryParam.getMessageContent());
+        // 排序规则
+        LinkedHashMap<String, Boolean> orderByFields = messageQueryParamPageQry.getOrderByFields();
+        if (CollectionUtils.isEmpty(orderByFields)) {
+            orderByFields = new LinkedHashMap<>();
+            orderByFields.put("createTime", false);
+        }
+        orderByFields.forEach((name, asc) ->
+                queryWrapper.orderBy(true, asc, FieldName2FunctionConvert.messageFiledName2Function(name))
+        );
+        Page<BlogMessage> blogMessagePage = blogMessageService.page(page, queryWrapper);
+        List<BlogMessage> blogMessageList = blogMessagePage.getRecords();
+        List<MessagePageListDTO> messagePageListDTOList = Entity2DTOConvert.messageList2DTO(blogMessageList);
+        // 封装返回值
+        PageResult<MessagePageListDTO> pageResult = new PageResult<>();
+        pageResult.setTotalPage(blogMessagePage.getPages());
+        pageResult.setData(messagePageListDTOList);
         return pageResult;
     }
 }

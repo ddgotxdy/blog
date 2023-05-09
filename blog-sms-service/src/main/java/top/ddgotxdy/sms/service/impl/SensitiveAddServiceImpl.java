@@ -43,7 +43,7 @@ public class SensitiveAddServiceImpl extends AbstractSmsService {
         // 2. 敏感词长度<=50
         String word = smsContext.getWord();
         if (StringUtils.length(word) > MAX_WORD_LENGTH || StringUtils.length(word) < 1) {
-            throw new BlogException(ResultCode.SENSITIVE_ADD_ERROR.getCode(), "Over MAX_ARTICLE_CONTENT_LENGTH or lower 1");
+            throw new BlogException(ResultCode.SENSITIVE_ADD_ERROR.getCode(), "Over MAX_WORD_LENGTH or lower 1");
         }
         // 3. 敏感词的类型是合法的
         Integer sensitiveType = smsContext.getSensitiveType();

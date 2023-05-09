@@ -1,8 +1,10 @@
 package top.ddgotxdy.sms.convert;
 
+import top.ddgotxdy.common.model.sms.addparam.MessageAddParam;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
 import top.ddgotxdy.common.model.sms.deleteparam.SensitiveDeleteParam;
 import top.ddgotxdy.common.model.sms.recoverparam.SensitiveRecoverParam;
+import top.ddgotxdy.common.model.sms.updateparam.MessageUpdateParam;
 import top.ddgotxdy.common.model.sms.updateparam.SensitiveUpdateParam;
 import top.ddgotxdy.common.util.BeanCopyUtil;
 import top.ddgotxdy.sms.model.SmsContext;
@@ -48,6 +50,24 @@ public class Param2ContextConvert {
         BeanCopyUtil.copyProperties(sensitiveRecoverParam, smsContext);
         // 设置为恢复事件
         smsContext.setSmsEvent(SmsEvent.SENSITIVE_RECOVER);
+        return smsContext;
+    }
+
+    public static SmsContext addMessage(MessageAddParam messageAddParam) {
+        SmsContext smsContext = new SmsContext();
+        // 先对无需处理的值复制一份
+        BeanCopyUtil.copyProperties(messageAddParam, smsContext);
+        // 设置事件
+        smsContext.setSmsEvent(SmsEvent.MESSAGE_ADD);
+        return smsContext;
+    }
+
+    public static SmsContext updateMessage(MessageUpdateParam messageUpdateParam) {
+        SmsContext smsContext = new SmsContext();
+        // 先对无需处理的值复制一份
+        BeanCopyUtil.copyProperties(messageUpdateParam, smsContext);
+        // 设置事件
+        smsContext.setSmsEvent(SmsEvent.MESSAGE_UPDATE);
         return smsContext;
     }
 }

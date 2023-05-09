@@ -2,9 +2,11 @@ package top.ddgotxdy.sms.service;
 
 import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.IdsDTO;
+import top.ddgotxdy.common.model.sms.addparam.MessageAddParam;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
 import top.ddgotxdy.common.model.sms.deleteparam.SensitiveDeleteParam;
 import top.ddgotxdy.common.model.sms.recoverparam.SensitiveRecoverParam;
+import top.ddgotxdy.common.model.sms.updateparam.MessageUpdateParam;
 import top.ddgotxdy.common.model.sms.updateparam.SensitiveUpdateParam;
 
 /**
@@ -39,4 +41,18 @@ public interface SmsCmdBizService {
      * @return IdsDTO
      */
     IdsDTO recoverSensitive(SensitiveRecoverParam sensitiveRecoverParam);
+
+    /**
+     * 留言添加
+     * @param messageAddParam 留言添加参数
+     * @return IdDTO
+     */
+    IdDTO addMessage(MessageAddParam messageAddParam);
+
+    /**
+     * 留言更新
+     * @param messageUpdateParam
+     * @return
+     */
+    IdDTO updateMessage(MessageUpdateParam messageUpdateParam);
 }

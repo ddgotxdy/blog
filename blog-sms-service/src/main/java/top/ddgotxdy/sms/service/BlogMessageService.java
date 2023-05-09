@@ -1,4 +1,4 @@
-package top.ddgotxdy.article.service;
+package top.ddgotxdy.sms.service;
 
 import top.ddgotxdy.dal.entity.BlogMessage;
 import com.baomidou.mybatisplus.extension.service.IService;

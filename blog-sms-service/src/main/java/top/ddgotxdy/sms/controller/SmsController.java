@@ -1,12 +1,17 @@
 package top.ddgotxdy.sms.controller;
 
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.ddgotxdy.common.model.*;
+import top.ddgotxdy.common.model.sms.addparam.MessageAddParam;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
 import top.ddgotxdy.common.model.sms.deleteparam.SensitiveDeleteParam;
+import top.ddgotxdy.common.model.sms.dto.MessagePageListDTO;
 import top.ddgotxdy.common.model.sms.dto.SensitivePageListDTO;
+import top.ddgotxdy.common.model.sms.queryparam.MessageQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.SensitiveQueryParam;
 import top.ddgotxdy.common.model.sms.recoverparam.SensitiveRecoverParam;
+import top.ddgotxdy.common.model.sms.updateparam.MessageUpdateParam;
 import top.ddgotxdy.common.model.sms.updateparam.SensitiveUpdateParam;
 import top.ddgotxdy.sms.service.SmsCmdBizService;
 import top.ddgotxdy.sms.service.SmsQueryBizService;
@@ -64,4 +69,29 @@ public class SmsController {
         PageResult<SensitivePageListDTO> result = smsQueryBizService.querySensitiveByPage(sensitiveQueryParamPageQry);
         return ResultView.success(result);
     }
+
+    @PostMapping("message/add")
+    public ResultView<IdDTO> addMessage(
+            @Validated @RequestBody MessageAddParam messageAddParam
+    ) {
+        IdDTO idDTO = smsCmdBizService.addMessage(messageAddParam);
+        return ResultView.success(idDTO);
+    }
+
+    @PostMapping("message/update")
+    public ResultView<IdDTO> updateMessage(
+            @RequestBody MessageUpdateParam messageUpdateParam
+    ) {
+        IdDTO idDTO = smsCmdBizService.updateMessage(messageUpdateParam);
+        return ResultView.success(idDTO);
+    }
+
+    @PostMapping("message/queryByPage")
+    public ResultView<PageResult<MessagePageListDTO>> queryMessageByPage(
+            @RequestBody PageQry<MessageQueryParam> messageQueryParamPageQry
+    ) {
+        PageResult<MessagePageListDTO> result = smsQueryBizService.queryMessageByPage(messageQueryParamPageQry);
+        return ResultView.success(result);
+    }
+
 }
