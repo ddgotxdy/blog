@@ -11,8 +11,10 @@ import top.ddgotxdy.common.model.IdsDTO;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.deleteparam.ArticleBodyDeleteParam;
 import top.ddgotxdy.common.model.article.deleteparam.CategoryDeleteParam;
 import top.ddgotxdy.common.model.article.deleteparam.TagDeleteParam;
+import top.ddgotxdy.common.model.article.recoverparam.ArticleBodyRecoverParam;
 import top.ddgotxdy.common.model.article.recoverparam.CategoryRecoverParam;
 import top.ddgotxdy.common.model.article.recoverparam.TagRecoverParam;
 import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
@@ -52,6 +54,26 @@ public class ArticleCmdBizServiceImpl implements ArticleCmdBizService {
         articleManageAdaptor.execute(articleContext);
         return IdDTO.builder()
                 .id(articleContext.getArticleId())
+                .build();
+    }
+
+    @Override
+    public IdsDTO deleteArticleBody(ArticleBodyDeleteParam articleBodyDeleteParam) {
+        ArticleContext articleContext = Param2ContextConvert.deleteParamContext(articleBodyDeleteParam);
+        log.info("ArticleBizServiceImpl deleteArticleBody request[{}]", toJSON(articleContext));
+        articleManageAdaptor.execute(articleContext);
+        return IdsDTO.builder()
+                .ids(articleContext.getArticleIds())
+                .build();
+    }
+
+    @Override
+    public IdsDTO recoverArticleBody(ArticleBodyRecoverParam articleBodyRecoverParam) {
+        ArticleContext articleContext = Param2ContextConvert.recoverParamContext(articleBodyRecoverParam);
+        log.info("ArticleBizServiceImpl recoverArticleBody request[{}]", toJSON(articleContext));
+        articleManageAdaptor.execute(articleContext);
+        return IdsDTO.builder()
+                .ids(articleContext.getArticleIds())
                 .build();
     }
 

@@ -1,23 +1,23 @@
 package top.ddgotxdy.api.service.impl;
 
-import com.google.common.collect.Lists;
 import org.springframework.stereotype.Service;
 import top.ddgotxdy.api.convert.ArticleApiParam2ClientParamConvert;
 import top.ddgotxdy.api.convert.ArticleDTO2ViewConvert;
 import top.ddgotxdy.api.model.addparam.ArticleBodyAddApiParam;
 import top.ddgotxdy.api.model.addparam.CategoryAddApiParam;
 import top.ddgotxdy.api.model.addparam.TagAddApiParam;
+import top.ddgotxdy.api.model.queryparam.ArticleBodyQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.CategoryQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.TagQueryApiParam;
+import top.ddgotxdy.api.model.updateparam.ArticleBodyUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.CategoryUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.TagUpdateApiParam;
-import top.ddgotxdy.api.model.view.ArticleListView;
+import top.ddgotxdy.api.model.view.ArticleBodyPageListView;
 import top.ddgotxdy.api.model.view.CategoryPageListView;
 import top.ddgotxdy.api.model.view.TagPageListView;
 import top.ddgotxdy.api.service.BlogArticleBizService;
 import top.ddgotxdy.common.client.BlogArticleClient;
 import top.ddgotxdy.common.model.*;
-import top.ddgotxdy.common.model.article.ArticleListDTO;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
@@ -29,6 +29,7 @@ import top.ddgotxdy.common.model.article.queryparam.CategoryQueryParam;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
 import top.ddgotxdy.common.model.article.recoverparam.CategoryRecoverParam;
 import top.ddgotxdy.common.model.article.recoverparam.TagRecoverParam;
+import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.TagUpdateParam;
 
@@ -45,19 +46,6 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
     private BlogArticleClient articleClient;
 
     @Override
-    public PageResult<ArticleListView> getArticleList() {
-        ResultView<PageResult<ArticleListDTO>> articleList = articleClient.getArticleList();
-        // TODO 简单转换一下
-        ArticleListView articleListView = new ArticleListView();
-        articleListView.setArticleId(articleList.getData().getData().get(0).getArticleId());
-        List<ArticleListView> articleListViewList = Lists.newArrayList(articleListView);
-        PageResult<ArticleListView> pageResult = new PageResult<>();
-        pageResult.setData(articleListViewList);
-        pageResult.setTotalPage(articleList.getData().getTotalPage());
-        return pageResult;
-    }
-
-    @Override
     public IdView addArticleBody(ArticleBodyAddApiParam articleBodyAddApiParam) {
         ArticleBodyAddParam articleBodyAddParam = ArticleApiParam2ClientParamConvert.addApiParam2AddParam(articleBodyAddApiParam);
         ResultView<IdDTO> response = articleClient.addArticle(articleBodyAddParam);
@@ -65,6 +53,31 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
         return IdView.builder()
                 .id(idDTO.getId())
                 .build();
+    }
+
+    @Override
+    public IdView updateArticleBody(ArticleBodyUpdateApiParam articleBodyUpdateApiParam) {
+        ArticleBodyUpdateParam articleBodyUpdateParam =ArticleApiParam2ClientParamConvert.updateApiParam2UpdateParam(articleBodyUpdateApiParam);
+        ResultView<IdDTO> response = articleClient.updateArticleBody(articleBodyUpdateParam);
+        IdDTO idDTO = response.getData();
+        return IdView.builder()
+                .id(idDTO.getId())
+                .build();
+    }
+
+    @Override
+    public IdsView deleteArticleBody(List<Long> articleIdList) {
+        return null;
+    }
+
+    @Override
+    public IdsView recoverArticleBody(List<Long> articleIdList) {
+        return null;
+    }
+
+    @Override
+    public PageResult<ArticleBodyPageListView> queryArticleBodyByPage(PageQry<ArticleBodyQueryApiParam> articleBodyQueryApiParamPageQry) {
+        return null;
     }
 
     @Override

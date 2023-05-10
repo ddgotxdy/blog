@@ -7,11 +7,13 @@ import org.springframework.web.bind.annotation.*;
 import top.ddgotxdy.api.model.addparam.ArticleBodyAddApiParam;
 import top.ddgotxdy.api.model.addparam.CategoryAddApiParam;
 import top.ddgotxdy.api.model.addparam.TagAddApiParam;
+import top.ddgotxdy.api.model.queryparam.ArticleBodyQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.CategoryQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.TagQueryApiParam;
+import top.ddgotxdy.api.model.updateparam.ArticleBodyUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.CategoryUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.TagUpdateApiParam;
-import top.ddgotxdy.api.model.view.ArticleListView;
+import top.ddgotxdy.api.model.view.ArticleBodyPageListView;
 import top.ddgotxdy.api.model.view.CategoryPageListView;
 import top.ddgotxdy.api.model.view.TagPageListView;
 import top.ddgotxdy.api.service.BlogArticleBizService;
@@ -33,10 +35,12 @@ public class ArticleController {
 
     //--------------------文章相关接口---------------------------------------------
 
-    @ApiOperation("首页获取文章列表，分页获取")
-    @PostMapping("/blog/list")
-    public ResultView<PageResult<ArticleListView>> getArticleList() {
-        PageResult<ArticleListView> articleList = articleBizService.getArticleList();
+    @ApiOperation("分页获取文章列表")
+    @PostMapping("/articleBody/queryByPage")
+    public ResultView<PageResult<ArticleBodyPageListView>> queryArticleBodyByPage(
+            @Validated @RequestBody PageQry<ArticleBodyQueryApiParam> articleBodyQueryApiParamPageQry
+    ) {
+        PageResult<ArticleBodyPageListView> articleList = articleBizService.queryArticleBodyByPage(articleBodyQueryApiParamPageQry);
         return ResultView.success(articleList);
     }
 
@@ -48,6 +52,34 @@ public class ArticleController {
         IdView idView = articleBizService.addArticleBody(articleBodyAddApiParam);
         return ResultView.success(idView);
     }
+
+    @ApiOperation("更新文章")
+    @PostMapping("/admin/articleBody/update")
+    public ResultView<IdView> updateArticleBody(
+            @Validated @RequestBody ArticleBodyUpdateApiParam articleBodyUpdateApiParam
+    ) {
+        IdView idView = articleBizService.updateArticleBody(articleBodyUpdateApiParam);
+        return ResultView.success(idView);
+    }
+
+    @ApiOperation("文章删除接口")
+    @DeleteMapping("/admin/articleBody/delete")
+    public ResultView<IdsView> deleteArticleBody(
+            @RequestBody List<Long> articleIdList
+    ) {
+        IdsView idView = articleBizService.deleteArticleBody(articleIdList);
+        return ResultView.success(idView);
+    }
+
+    @ApiOperation("文章恢复接口")
+    @PostMapping("admin/articleBody/recover")
+    public ResultView<IdsView> recoverArticleBody(
+            @RequestBody List<Long> articleIdList
+    ) {
+        IdsView idView = articleBizService.recoverArticleBody(articleIdList);
+        return ResultView.success(idView);
+    }
+
     //--------------------标签相关接口---------------------------------------------
 
     @ApiOperation("添加标签")

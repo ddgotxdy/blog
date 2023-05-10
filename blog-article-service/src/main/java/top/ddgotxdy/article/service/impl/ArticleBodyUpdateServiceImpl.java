@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static top.ddgotxdy.article.constant.ValidateConstant.MAX_ARTICLE_CONTENT_LENGTH;
+import static top.ddgotxdy.article.constant.ValidateConstant.MAX_ARTICLE_TITLE_LENGTH;
 
 /**
  * @author: ddgo
@@ -43,7 +44,7 @@ public class ArticleBodyUpdateServiceImpl extends AbstractArticleService {
                 && StringUtils.length(articleContext.getArticleContent()) > MAX_ARTICLE_CONTENT_LENGTH) {
             throw new BlogException(ResultCode.ARTICLE_UPDATE_ERROR.getCode(), "Over MAX_ARTICLE_CONTENT_LENGTH");
         }
-        // 3. 必须包含一个标签
+        // 3. 传了标签则必须包含一个标签
         List<Long> tagIds = articleContext.getTagIds();
         if (Objects.nonNull(tagIds) && CollectionUtils.isEmpty(tagIds)) {
             throw new BlogException(ResultCode.ARTICLE_UPDATE_ERROR.getCode(), "tag ids is empty");
@@ -52,6 +53,12 @@ public class ArticleBodyUpdateServiceImpl extends AbstractArticleService {
         // 5. 必须传文章id
         if (Objects.isNull(articleContext.getArticleId())) {
             throw new BlogException(ResultCode.ARTICLE_UPDATE_ERROR.getCode(), "article id is null");
+        }
+        // 6. 传了则要标题长度校验
+        String articleTitle = articleContext.getArticleTitle();
+        if (Objects.nonNull(articleTitle)
+                && (StringUtils.length(articleTitle) > MAX_ARTICLE_TITLE_LENGTH || StringUtils.length(articleTitle) < 1)) {
+            throw new BlogException(ResultCode.ARTICLE_UPDATE_ERROR.getCode(), "Over MAX_ARTICLE_CONTENT_LENGTH or lower 1");
         }
         return true;
     }

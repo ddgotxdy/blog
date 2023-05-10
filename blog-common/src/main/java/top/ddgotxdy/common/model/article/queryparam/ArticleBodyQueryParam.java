@@ -1,4 +1,4 @@
-package top.ddgotxdy.common.model.article.updateparam;
+package top.ddgotxdy.common.model.article.queryparam;
 
 import lombok.Data;
 
@@ -9,19 +9,11 @@ import java.util.List;
  * @description:
  */
 @Data
-public class ArticleBodyUpdateParam {
-    /**
-     * 用户id
-     */
-    private Long userId;
+public class ArticleBodyQueryParam {
     /**
      * 文章id
      */
     private Long articleId;
-    /**
-     * 文章缩略图
-     */
-    private String articleCoverUrl;
     /**
      * 标题
      */
@@ -31,14 +23,6 @@ public class ArticleBodyUpdateParam {
      */
     private String articleContent;
     /**
-     * 置顶排序，值越大，排名越高
-     */
-    private Integer rank;
-    /**
-     * 文章状态值 1公开 2私密 3登录可见
-     */
-    private Integer articleStatus;
-    /**
      * 标签的id列表
      */
     private List<Long> tagIds;
@@ -46,4 +30,8 @@ public class ArticleBodyUpdateParam {
      * 分类id
      */
     private Long categoryId;
+    /**
+     * 是否删除
+     */
+    private Boolean isDelete;
 }

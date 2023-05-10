@@ -1,4 +1,4 @@
-package top.ddgotxdy.common.model.article;
+package top.ddgotxdy.common.model.article.dto;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -8,7 +8,7 @@ import lombok.Data;
  * @description: 博客列表类
  */
 @Data
-public class ArticleListDTO {
+public class ArticleBodyPageListDTO {
     @ApiModelProperty("文章ID")
     private Long articleId;
 

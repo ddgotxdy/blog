@@ -1,23 +1,21 @@
 package top.ddgotxdy.article.controller;
 
-import com.google.common.collect.Lists;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.ddgotxdy.article.service.ArticleCmdBizService;
 import top.ddgotxdy.article.service.ArticleQueryBizService;
 import top.ddgotxdy.common.model.*;
-import top.ddgotxdy.common.model.article.ArticleListDTO;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.deleteparam.ArticleBodyDeleteParam;
 import top.ddgotxdy.common.model.article.deleteparam.CategoryDeleteParam;
 import top.ddgotxdy.common.model.article.deleteparam.TagDeleteParam;
-import top.ddgotxdy.common.model.article.dto.CategoryDTO;
-import top.ddgotxdy.common.model.article.dto.CategoryPageListDTO;
-import top.ddgotxdy.common.model.article.dto.TagDTO;
-import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
+import top.ddgotxdy.common.model.article.dto.*;
+import top.ddgotxdy.common.model.article.queryparam.ArticleBodyQueryParam;
 import top.ddgotxdy.common.model.article.queryparam.CategoryQueryParam;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
+import top.ddgotxdy.common.model.article.recoverparam.ArticleBodyRecoverParam;
 import top.ddgotxdy.common.model.article.recoverparam.CategoryRecoverParam;
 import top.ddgotxdy.common.model.article.recoverparam.TagRecoverParam;
 import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
@@ -25,7 +23,6 @@ import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.TagUpdateParam;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 /**
  * @author: ddgo
@@ -39,32 +36,44 @@ public class ArticleController {
     @Resource
     private ArticleQueryBizService articleQueryBizService;
 
-    @PostMapping("/list")
-    public ResultView<PageResult<ArticleListDTO>> getArticleList() {
-        // TODO 这里先Mock数据回去
-        ArticleListDTO articleListDTO = new ArticleListDTO();
-        articleListDTO.setArticleId(12345678900L);
-        List<ArticleListDTO> articleListDTOList = Lists.newArrayList(articleListDTO);
-        PageResult<ArticleListDTO> pageResult = new PageResult<>();
-        pageResult.setData(articleListDTOList);
-        pageResult.setTotalPage(10L);
-        return ResultView.success(pageResult);
+    @PostMapping("body/queryByPage")
+    public ResultView<PageResult<ArticleBodyPageListDTO>> queryArticleBodyByPage(
+            @Validated @RequestBody PageQry<ArticleBodyQueryParam> articleBodyQueryParamPageQry
+    ) {
+        PageResult<ArticleBodyPageListDTO> articleList = articleQueryBizService.queryArticleBodyByPage(articleBodyQueryParamPageQry);
+        return ResultView.success(articleList);
     }
 
     @PostMapping("/body/add")
-    public ResultView<IdDTO> addArticle(
-            @RequestBody ArticleBodyAddParam articleBodyAddParam
+    public ResultView<IdDTO> addArticleBody(
+            @Validated @RequestBody ArticleBodyAddParam articleBodyAddParam
     ) {
         IdDTO idDTO = articleCmdBizService.addArticleBody(articleBodyAddParam);
         return ResultView.success(idDTO);
     }
 
-    @PostMapping("/body/update")
-    public ResultView<IdDTO> updateArticle(
-            @RequestBody ArticleBodyUpdateParam articleBodyUpdateParam
+    @PostMapping("body/update")
+    public ResultView<IdDTO> updateArticleBody(
+            @Validated @RequestBody ArticleBodyUpdateParam articleBodyUpdateParam
     ) {
         IdDTO idDTO = articleCmdBizService.updateArticleBody(articleBodyUpdateParam);
         return ResultView.success(idDTO);
+    }
+
+    @DeleteMapping("body/delete")
+    public ResultView<IdsDTO> deleteArticleBody(
+            @Validated @RequestBody ArticleBodyDeleteParam articleBodyDeleteParam
+    ) {
+        IdsDTO idsDTO = articleCmdBizService.deleteArticleBody(articleBodyDeleteParam);
+        return ResultView.success(idsDTO);
+    }
+
+    @PostMapping("body/recover")
+    public ResultView<IdsDTO> recoverArticleBody(
+            @Validated @RequestBody ArticleBodyRecoverParam articleBodyRecoverParam
+    ) {
+        IdsDTO idsDTO = articleCmdBizService.recoverArticleBody(articleBodyRecoverParam);
+        return ResultView.success(idsDTO);
     }
 
     @PostMapping("/tag/add")

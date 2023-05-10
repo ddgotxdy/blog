@@ -2,13 +2,16 @@ package top.ddgotxdy.api.model.view;
 
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import top.ddgotxdy.common.enums.article.ArticleStatus;
+
+import java.util.List;
 
 /**
  * @author: ddgo
  * @description: 文章列表视图类
  */
 @Data
-public class ArticleListView {
+public class ArticleBodyPageListView {
     @ApiModelProperty("文章ID")
     private Long articleId;
 
@@ -21,18 +24,15 @@ public class ArticleListView {
     @ApiModelProperty("文章内容")
     private String articleContent;
 
-    @ApiModelProperty("文章类型 1原创 2转载 3翻译")
-    private Integer articleType;
-
-    @ApiModelProperty("原文链接")
-    private String originalUrl;
-
     @ApiModelProperty("文章状态值 1公开 2私密 3登录可见")
-    private Integer articleStatus;
+    private ArticleStatus articleStatus;
+
+    @ApiModelProperty("标签名列表")
+    private List<String> tagIds;
+
+    @ApiModelProperty("分类名")
+    private String categoryId;
 
     @ApiModelProperty("发表时间")
     private Long createTime;
-
-    @ApiModelProperty("更新时间")
-    private Long updateTime;
 }

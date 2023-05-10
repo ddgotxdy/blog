@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import top.ddgotxdy.common.model.*;
-import top.ddgotxdy.common.model.article.ArticleListDTO;
+import top.ddgotxdy.common.model.article.dto.ArticleBodyPageListDTO;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
@@ -35,7 +35,7 @@ public interface BlogArticleClient {
      * @return ResultView<PageResult<ArticleListDTO>>
      */
     @PostMapping("openfeign/article/list")
-    ResultView<PageResult<ArticleListDTO>> getArticleList();
+    ResultView<PageResult<ArticleBodyPageListDTO>> getArticleList();
 
     /**
      * 添加文章

@@ -79,6 +79,7 @@ public class SmsController {
      * @param messageAddApiParam 添加参数
      * @return ResultView<IdView>
      */
+    @ApiOperation("留言添加")
     @PostMapping("user/message/add")
     ResultView<IdView> addMessage(
             @Validated @RequestBody MessageAddApiParam messageAddApiParam
@@ -92,6 +93,7 @@ public class SmsController {
      * @param messageUpdateApiParam 更新参数
      * @return ResultView<IdView>
      */
+    @ApiOperation("留言更新")
     @PostMapping("admin/message/update")
     ResultView<IdView> updateMessage(
             @RequestBody MessageUpdateApiParam messageUpdateApiParam
@@ -105,6 +107,7 @@ public class SmsController {
      * @param messageQueryApiParamPageQry 查询参数
      * @return ResultView<PageResult<MessagePageListView>>
      */
+    @ApiOperation("留言分页查询")
     @PostMapping("/message/queryByPage")
     ResultView<PageResult<MessagePageListView>> queryMessageByPage(
             @Validated @RequestBody PageQry<MessageQueryApiParam> messageQueryApiParamPageQry

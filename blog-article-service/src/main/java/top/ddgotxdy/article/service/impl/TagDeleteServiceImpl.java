@@ -60,8 +60,8 @@ public class TagDeleteServiceImpl extends AbstractArticleService {
                 if (CollectionUtils.isEmpty(tagIdList)) {
                     return;
                 }
-                // 没有被删除且唯一引用这个标签的，不允许删除
-                if (tagIdList.size() == 1 && !blogArticle.getIsDelete()) {
+                // 没有被删除且引用这个标签的，不允许删除
+                if (tagIdList.size() >= 1 && !blogArticle.getIsDelete()) {
                     tagIdsRemain.add(tagId);
                     return;
                 }

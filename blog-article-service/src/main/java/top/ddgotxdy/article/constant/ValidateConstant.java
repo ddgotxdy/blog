@@ -18,4 +18,8 @@ public class ValidateConstant {
      * 分类的最长长度
      */
     public static final Integer MAX_CATEGORY_LENGTH = 20;
+    /**
+     * 文章内容的长度
+     */
+    public static final Integer MAX_ARTICLE_TITLE_LENGTH = 50;
 }

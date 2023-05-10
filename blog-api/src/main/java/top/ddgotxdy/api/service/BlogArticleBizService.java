@@ -3,11 +3,13 @@ package top.ddgotxdy.api.service;
 import top.ddgotxdy.api.model.addparam.ArticleBodyAddApiParam;
 import top.ddgotxdy.api.model.addparam.CategoryAddApiParam;
 import top.ddgotxdy.api.model.addparam.TagAddApiParam;
+import top.ddgotxdy.api.model.queryparam.ArticleBodyQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.CategoryQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.TagQueryApiParam;
+import top.ddgotxdy.api.model.updateparam.ArticleBodyUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.CategoryUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.TagUpdateApiParam;
-import top.ddgotxdy.api.model.view.ArticleListView;
+import top.ddgotxdy.api.model.view.ArticleBodyPageListView;
 import top.ddgotxdy.api.model.view.CategoryPageListView;
 import top.ddgotxdy.api.model.view.TagPageListView;
 import top.ddgotxdy.common.model.IdView;
@@ -23,17 +25,39 @@ import java.util.List;
  */
 public interface BlogArticleBizService {
     /**
-     * 获取首页的文章列表
-     * @return PageResult<ArticleListView>
-     */
-    PageResult<ArticleListView> getArticleList();
-
-    /**
      * 添加文章
      * @param articleBodyAddApiParam 添加文章请求参数
      * @return 文章的id
      */
     IdView addArticleBody(ArticleBodyAddApiParam articleBodyAddApiParam);
+
+    /**
+     * 更新文章
+     * @param articleBodyUpdateApiParam 更新文章参数
+     * @return IdView
+     */
+    IdView updateArticleBody(ArticleBodyUpdateApiParam articleBodyUpdateApiParam);
+
+    /**
+     * 删除文章
+     * @param articleIdList 文章id列表
+     * @return IdsView
+     */
+    IdsView deleteArticleBody(List<Long> articleIdList);
+
+    /**
+     * 恢复文章列表
+     * @param articleIdList 文章列表
+     * @return IdsView
+     */
+    IdsView recoverArticleBody(List<Long> articleIdList);
+
+    /**
+     * 分页获取文章列表
+     * @param articleBodyQueryApiParamPageQry 分页查询参数
+     * @return PageResult<ArticlePageListView>
+     */
+    PageResult<ArticleBodyPageListView> queryArticleBodyByPage(PageQry<ArticleBodyQueryApiParam> articleBodyQueryApiParamPageQry);
 
     /**
      * 添加标签

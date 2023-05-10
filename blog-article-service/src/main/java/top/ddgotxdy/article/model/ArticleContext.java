@@ -19,6 +19,10 @@ public class ArticleContext {
      */
     private Long articleId;
     /**
+     * 文章id列表
+     */
+    private List<Long> articleIds;
+    /**
      * 用户的id
      */
     private Long userId;

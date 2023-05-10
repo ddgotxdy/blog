@@ -2,16 +2,13 @@ package top.ddgotxdy.article.service;
 
 import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.IdsDTO;
-import top.ddgotxdy.common.model.PageQry;
-import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.deleteparam.ArticleBodyDeleteParam;
 import top.ddgotxdy.common.model.article.deleteparam.CategoryDeleteParam;
 import top.ddgotxdy.common.model.article.deleteparam.TagDeleteParam;
-import top.ddgotxdy.common.model.article.dto.TagDTO;
-import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
-import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
+import top.ddgotxdy.common.model.article.recoverparam.ArticleBodyRecoverParam;
 import top.ddgotxdy.common.model.article.recoverparam.CategoryRecoverParam;
 import top.ddgotxdy.common.model.article.recoverparam.TagRecoverParam;
 import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
@@ -36,6 +33,20 @@ public interface ArticleCmdBizService {
      * @return IdDTO
      */
     IdDTO updateArticleBody(ArticleBodyUpdateParam articleBodyUpdateParam);
+
+    /**
+     * 删除文章
+     * @param articleBodyDeleteParam 删除文章参数
+     * @return IdsDTO
+     */
+    IdsDTO deleteArticleBody(ArticleBodyDeleteParam articleBodyDeleteParam);
+
+    /**
+     * 恢复文章
+     * @param articleBodyRecoverParam 恢复文章参数
+     * @return IdsDTO
+     */
+    IdsDTO recoverArticleBody(ArticleBodyRecoverParam articleBodyRecoverParam);
 
     /**
      * 添加标签

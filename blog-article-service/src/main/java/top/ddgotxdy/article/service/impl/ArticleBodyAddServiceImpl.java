@@ -20,6 +20,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static top.ddgotxdy.article.constant.ValidateConstant.MAX_ARTICLE_CONTENT_LENGTH;
+import static top.ddgotxdy.article.constant.ValidateConstant.MAX_ARTICLE_TITLE_LENGTH;
 
 /**
  * @author: ddgo
@@ -51,6 +52,12 @@ public class ArticleBodyAddServiceImpl extends AbstractArticleService {
         // 4. 必须包含一个分类id
         if (Objects.isNull(articleContext.getCategoryId())) {
             throw new BlogException(ResultCode.ARTICLE_ADD_ERROR.getCode(), "category id is null");
+        }
+        // 5. 标题长度校验
+        String articleTitle = articleContext.getArticleTitle();
+        if (StringUtils.length(articleTitle) > MAX_ARTICLE_TITLE_LENGTH
+                || StringUtils.length(articleTitle) < 1) {
+            throw new BlogException(ResultCode.ARTICLE_ADD_ERROR.getCode(), "Over MAX_ARTICLE_CONTENT_LENGTH or lower 1");
         }
         return true;
     }

@@ -6,9 +6,9 @@ import top.ddgotxdy.api.model.addparam.CategoryAddApiParam;
 import top.ddgotxdy.api.model.addparam.TagAddApiParam;
 import top.ddgotxdy.api.model.queryparam.CategoryQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.TagQueryApiParam;
+import top.ddgotxdy.api.model.updateparam.ArticleBodyUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.CategoryUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.TagUpdateApiParam;
-import top.ddgotxdy.common.scope.ContextScope;
 import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
@@ -19,11 +19,14 @@ import top.ddgotxdy.common.model.article.queryparam.CategoryQueryParam;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
 import top.ddgotxdy.common.model.article.recoverparam.CategoryRecoverParam;
 import top.ddgotxdy.common.model.article.recoverparam.TagRecoverParam;
+import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.CategoryUpdateParam;
 import top.ddgotxdy.common.model.article.updateparam.TagUpdateParam;
+import top.ddgotxdy.common.scope.ContextScope;
 import top.ddgotxdy.common.util.BeanCopyUtil;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author: ddgo
@@ -34,6 +37,8 @@ public class ArticleApiParam2ClientParamConvert {
     public static ArticleBodyAddParam addApiParam2AddParam(ArticleBodyAddApiParam articleBodyAddApiParam) {
         ArticleBodyAddParam articleBodyAddParam = new ArticleBodyAddParam();
         BeanUtils.copyProperties(articleBodyAddApiParam, articleBodyAddParam);
+        // 标签处理
+        articleBodyAddParam.setArticleStatus(articleBodyAddApiParam.getArticleStatus().getCode());
         Long userId = ContextScope.getUserId();
         articleBodyAddParam.setUserId(userId);
         return articleBodyAddParam;
@@ -130,5 +135,17 @@ public class ArticleApiParam2ClientParamConvert {
         // 范型赋值进去
         categoryQueryParamPageQry.setQueryParam(categoryQueryParam);
         return categoryQueryParamPageQry;
+    }
+
+    public static ArticleBodyUpdateParam updateApiParam2UpdateParam(ArticleBodyUpdateApiParam articleBodyUpdateApiParam) {
+        ArticleBodyUpdateParam articleBodyUpdateParam = new ArticleBodyUpdateParam();
+        BeanUtils.copyProperties(articleBodyUpdateApiParam, articleBodyUpdateParam);
+        // 标签处理
+        if (Objects.nonNull(articleBodyUpdateApiParam.getArticleStatus())) {
+            articleBodyUpdateParam.setArticleStatus(articleBodyUpdateApiParam.getArticleStatus().getCode());
+        }
+        Long userId = ContextScope.getUserId();
+        articleBodyUpdateParam.setUserId(userId);
+        return articleBodyUpdateParam;
     }
 }
