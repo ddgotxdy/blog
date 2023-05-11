@@ -3,6 +3,8 @@ package top.ddgotxdy.common.model.article.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author: ddgo
  * @description: 博客列表类
@@ -21,18 +23,18 @@ public class ArticleBodyPageListDTO {
     @ApiModelProperty("文章内容")
     private String articleContent;
 
-    @ApiModelProperty("文章类型 1原创 2转载 3翻译")
-    private Integer articleType;
-
-    @ApiModelProperty("原文链接")
-    private String originalUrl;
-
     @ApiModelProperty("文章状态值 1公开 2私密 3登录可见")
     private Integer articleStatus;
 
+    @ApiModelProperty("标签id列表")
+    private List<Long> tagIds;
+
+    @ApiModelProperty("分类id")
+    private Long categoryId;
+
+    @ApiModelProperty("rank")
+    private Integer rank;
+
     @ApiModelProperty("发表时间")
     private Long createTime;
-
-    @ApiModelProperty("更新时间")
-    private Long updateTime;
 }

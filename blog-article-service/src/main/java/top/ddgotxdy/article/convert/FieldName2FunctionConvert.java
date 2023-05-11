@@ -1,6 +1,7 @@
 package top.ddgotxdy.article.convert;
 
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import top.ddgotxdy.dal.entity.BlogArticle;
 import top.ddgotxdy.dal.entity.BlogCategory;
 import top.ddgotxdy.dal.entity.BlogTag;
 
@@ -25,6 +26,15 @@ public class FieldName2FunctionConvert {
                 return BlogCategory::getCategoryName;
             default:
                 return BlogCategory::getCreateTime;
+        }
+    }
+
+    public static SFunction<BlogArticle, ?> articleBodyFiledName2Function(String name) {
+        switch (name) {
+            case "articleTitle":
+                return BlogArticle::getArticleTitle;
+            default:
+                return BlogArticle::getCreateTime;
         }
     }
 }

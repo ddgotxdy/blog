@@ -55,6 +55,7 @@ public class TagDeleteServiceImpl extends AbstractArticleService {
         List<Long> tagIds = articleContext.getTagIds();
         tagIds.forEach(tagId -> {
             List<BlogArticle> blogArticleList = blogArticleService.getArticleByTagId(tagId);
+            // 先判断能不能删除
             blogArticleList.forEach(blogArticle -> {
                 List<Long> tagIdList = JSON.parseArray(blogArticle.getTagIds(), Long.class);
                 if (CollectionUtils.isEmpty(tagIdList)) {
@@ -63,16 +64,23 @@ public class TagDeleteServiceImpl extends AbstractArticleService {
                 // 没有被删除且引用这个标签的，不允许删除
                 if (tagIdList.size() >= 1 && !blogArticle.getIsDelete()) {
                     tagIdsRemain.add(tagId);
-                    return;
                 }
-                tagIdList.remove(tagId);
-                blogArticle.setIsDelete(null);
-                blogArticle.setTagIds(JSON.toJSONString(tagIdList));
-                // 更新文章
-                blogArticleService.updateById(blogArticle);
             });
-            // 更新标签
-            blogTagService.deleteById(tagId);
+            if (!tagIdsRemain.contains(tagId)) {
+                blogArticleList.forEach(blogArticle -> {
+                    List<Long> tagIdList = JSON.parseArray(blogArticle.getTagIds(), Long.class);
+                    if (CollectionUtils.isEmpty(tagIdList)) {
+                        return;
+                    }
+                    tagIdList.remove(tagId);
+                    blogArticle.setIsDelete(null);
+                    blogArticle.setTagIds(JSON.toJSONString(tagIdList));
+                    // 更新文章
+                    blogArticleService.updateById(blogArticle);
+                });
+                // 更新标签
+                blogTagService.deleteById(tagId);
+            }
         });
         // 没有被删除
         articleContext.setTagIds(tagIdsRemain);

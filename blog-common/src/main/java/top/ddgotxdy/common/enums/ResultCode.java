@@ -27,6 +27,7 @@ public enum ResultCode {
     CATEGORY_UPDATE_ERROR(712, "分类修改失败"),
     CATEGORY_QUERY_ERROR(713, "分类查询失败"),
     CATEGORY_RECOVERY_ERROR(714, "分类恢复失败"),
+    ARTICLE_RECOVERY_ERROR(715, "文章恢复失败"),
     // 801 - 900 文件异常
     IMAGE_ADD_ERROR(801, "图片新增失败"),
     IMAGE_UPDATE_ERROR(802, "图片修改失败"),

@@ -8,16 +8,16 @@ import org.springframework.util.CollectionUtils;
 import top.ddgotxdy.article.convert.Entity2DTOConvert;
 import top.ddgotxdy.article.convert.FieldName2FunctionConvert;
 import top.ddgotxdy.article.service.ArticleQueryBizService;
+import top.ddgotxdy.article.service.BlogArticleService;
 import top.ddgotxdy.article.service.BlogCategoryService;
 import top.ddgotxdy.article.service.BlogTagService;
 import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.PageResult;
-import top.ddgotxdy.common.model.article.dto.CategoryDTO;
-import top.ddgotxdy.common.model.article.dto.CategoryPageListDTO;
-import top.ddgotxdy.common.model.article.dto.TagDTO;
-import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
+import top.ddgotxdy.common.model.article.dto.*;
+import top.ddgotxdy.common.model.article.queryparam.ArticleBodyQueryParam;
 import top.ddgotxdy.common.model.article.queryparam.CategoryQueryParam;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
+import top.ddgotxdy.dal.entity.BlogArticle;
 import top.ddgotxdy.dal.entity.BlogCategory;
 import top.ddgotxdy.dal.entity.BlogTag;
 
@@ -27,6 +27,7 @@ import java.util.List;
 import java.util.Objects;
 
 /**
+ * TODO 后续实现可以切换数据源
  * @author: ddgo
  * @description:
  */
@@ -37,6 +38,8 @@ public class ArticleQueryBizServiceImpl implements ArticleQueryBizService {
     private BlogTagService blogTagService;
     @Resource
     private BlogCategoryService blogCategoryService;
+    @Resource
+    private BlogArticleService blogArticleService;
 
     @Override
     public PageResult<TagPageListDTO> queryTagByPage(PageQry<TagQueryParam> tagQueryParamPageQry) {
@@ -112,5 +115,48 @@ public class ArticleQueryBizServiceImpl implements ArticleQueryBizService {
     @Override
     public CategoryDTO queryCategoryById(Long categoryId) {
         return null;
+    }
+
+    @Override
+    public PageResult<ArticleBodyPageListDTO> queryArticleBodyByPage(PageQry<ArticleBodyQueryParam> articleBodyQueryParamPageQry) {
+        // 分页参数组装
+        int pageNum = articleBodyQueryParamPageQry.getPageNum();
+        int pageSize = articleBodyQueryParamPageQry.getPageSize();
+        Page<BlogArticle> page = new Page<>(pageNum, pageSize);
+        // 查询参数组装
+        LambdaQueryWrapper<BlogArticle> queryWrapper = new LambdaQueryWrapper<>();
+        // 查询值
+        ArticleBodyQueryParam queryParam = articleBodyQueryParamPageQry.getQueryParam();
+        // 按照rank排序
+        queryWrapper.orderByDesc(BlogArticle::getRank);
+        queryWrapper
+                .eq(Objects.nonNull(queryParam.getArticleId()), BlogArticle::getArticleId, queryParam.getArticleId())
+                .eq(Objects.nonNull(queryParam.getIsDelete()), BlogArticle::getIsDelete, queryParam.getIsDelete())
+                .eq(Objects.nonNull(queryParam.getCategoryId()), BlogArticle::getCategoryId, queryParam.getCategoryId())
+                .like(Objects.nonNull(queryParam.getArticleTitle()), BlogArticle::getArticleTitle, queryParam.getArticleTitle())
+                .like(Objects.nonNull(queryParam.getArticleContent()), BlogArticle::getArticleContent, queryParam.getArticleContent());
+        // 标签比较特殊
+        if (Objects.nonNull(queryParam.getTagIds())) {
+            List<Long> tagIds = queryParam.getTagIds();
+            tagIds.forEach(tagId -> queryWrapper
+                    .like(BlogArticle::getTagIds, tagId.toString()));
+        }
+        // 排序规则
+        LinkedHashMap<String, Boolean> orderByFields = articleBodyQueryParamPageQry.getOrderByFields();
+        if (CollectionUtils.isEmpty(orderByFields)) {
+            orderByFields = new LinkedHashMap<>();
+            orderByFields.put("createTime", false);
+        }
+        orderByFields.forEach((name, asc) ->
+                queryWrapper.orderBy(true, asc, FieldName2FunctionConvert.articleBodyFiledName2Function(name))
+        );
+        Page<BlogArticle> blogArticlePage = blogArticleService.page(page, queryWrapper);
+        List<BlogArticle> blogArticleList = blogArticlePage.getRecords();
+        List<ArticleBodyPageListDTO> articleBodyPageListDTOList = Entity2DTOConvert.articleBodyList2DTO(blogArticleList);
+        // 封装返回值
+        PageResult<ArticleBodyPageListDTO> pageResult = new PageResult<>();
+        pageResult.setTotalPage(blogArticlePage.getPages());
+        pageResult.setData(articleBodyPageListDTOList);
+        return pageResult;
     }
 }

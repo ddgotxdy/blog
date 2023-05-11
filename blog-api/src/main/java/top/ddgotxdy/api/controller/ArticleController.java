@@ -36,7 +36,7 @@ public class ArticleController {
     //--------------------文章相关接口---------------------------------------------
 
     @ApiOperation("分页获取文章列表")
-    @PostMapping("/articleBody/queryByPage")
+    @PostMapping("/body/queryByPage")
     public ResultView<PageResult<ArticleBodyPageListView>> queryArticleBodyByPage(
             @Validated @RequestBody PageQry<ArticleBodyQueryApiParam> articleBodyQueryApiParamPageQry
     ) {
@@ -45,7 +45,7 @@ public class ArticleController {
     }
 
     @ApiOperation("添加文章")
-    @PostMapping("/admin/articleBody/add")
+    @PostMapping("/admin/body/add")
     public ResultView<IdView> addArticleBody(
             @Validated @RequestBody ArticleBodyAddApiParam articleBodyAddApiParam
     ) {
@@ -54,7 +54,7 @@ public class ArticleController {
     }
 
     @ApiOperation("更新文章")
-    @PostMapping("/admin/articleBody/update")
+    @PostMapping("/admin/body/update")
     public ResultView<IdView> updateArticleBody(
             @Validated @RequestBody ArticleBodyUpdateApiParam articleBodyUpdateApiParam
     ) {
@@ -63,7 +63,7 @@ public class ArticleController {
     }
 
     @ApiOperation("文章删除接口")
-    @DeleteMapping("/admin/articleBody/delete")
+    @DeleteMapping("/admin/body/delete")
     public ResultView<IdsView> deleteArticleBody(
             @RequestBody List<Long> articleIdList
     ) {
@@ -72,7 +72,7 @@ public class ArticleController {
     }
 
     @ApiOperation("文章恢复接口")
-    @PostMapping("admin/articleBody/recover")
+    @PostMapping("admin/body/recover")
     public ResultView<IdsView> recoverArticleBody(
             @RequestBody List<Long> articleIdList
     ) {

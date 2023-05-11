@@ -1,6 +1,7 @@
 package top.ddgotxdy.article.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
 import top.ddgotxdy.article.service.BlogArticleService;
@@ -32,5 +33,23 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleMapper, BlogA
                 .select(BlogArticle::getArticleId, BlogArticle::getArticleId, BlogArticle::getIsDelete)
                 .eq(BlogArticle::getCategoryId, categoryId);
         return this.list(queryWrapper);
+    }
+
+    @Override
+    public boolean deleteBatchByIds(List<Long> articleIds) {
+        LambdaUpdateWrapper<BlogArticle> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper
+                .set(BlogArticle::getIsDelete, true)
+                .in(BlogArticle::getArticleId, articleIds);
+        return this.update(updateWrapper);
+    }
+
+    @Override
+    public boolean recoveryBatchByIds(List<Long> articleIds) {
+        LambdaUpdateWrapper<BlogArticle> updateWrapper = new LambdaUpdateWrapper<>();
+        updateWrapper
+                .set(BlogArticle::getIsDelete, false)
+                .in(BlogArticle::getArticleId, articleIds);
+        return this.update(updateWrapper);
     }
 }

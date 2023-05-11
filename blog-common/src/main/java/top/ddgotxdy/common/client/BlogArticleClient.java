@@ -7,16 +7,19 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import top.ddgotxdy.common.model.*;
-import top.ddgotxdy.common.model.article.dto.ArticleBodyPageListDTO;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.deleteparam.ArticleBodyDeleteParam;
 import top.ddgotxdy.common.model.article.deleteparam.CategoryDeleteParam;
 import top.ddgotxdy.common.model.article.deleteparam.TagDeleteParam;
+import top.ddgotxdy.common.model.article.dto.ArticleBodyPageListDTO;
 import top.ddgotxdy.common.model.article.dto.CategoryPageListDTO;
 import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
+import top.ddgotxdy.common.model.article.queryparam.ArticleBodyQueryParam;
 import top.ddgotxdy.common.model.article.queryparam.CategoryQueryParam;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
+import top.ddgotxdy.common.model.article.recoverparam.ArticleBodyRecoverParam;
 import top.ddgotxdy.common.model.article.recoverparam.CategoryRecoverParam;
 import top.ddgotxdy.common.model.article.recoverparam.TagRecoverParam;
 import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
@@ -30,12 +33,16 @@ import top.ddgotxdy.common.model.article.updateparam.TagUpdateParam;
 @Component
 @FeignClient("article-service")
 public interface BlogArticleClient {
+
     /**
-     * 首页获取文章列表，分页获取
-     * @return ResultView<PageResult<ArticleListDTO>>
+     * 分页查询文章
+     * @param articleBodyQueryParamPageQry 分页查询文章参数
+     * @return ResultView<PageResult<ArticleBodyPageListDTO>>
      */
-    @PostMapping("openfeign/article/list")
-    ResultView<PageResult<ArticleBodyPageListDTO>> getArticleList();
+    @PostMapping("openfeign/article/body/queryByPage")
+    ResultView<PageResult<ArticleBodyPageListDTO>> queryArticleBodyByPage(
+            @Validated @RequestBody PageQry<ArticleBodyQueryParam> articleBodyQueryParamPageQry
+    );
 
     /**
      * 添加文章
@@ -43,8 +50,8 @@ public interface BlogArticleClient {
      * @return 创建文章的id值
      */
     @PostMapping("openfeign/article/body/add")
-    ResultView<IdDTO> addArticle(
-            @RequestBody ArticleBodyAddParam addArticleParam
+    ResultView<IdDTO> addArticleBody(
+            @Validated @RequestBody ArticleBodyAddParam addArticleParam
     );
 
     /**
@@ -53,8 +60,28 @@ public interface BlogArticleClient {
      * @return 更新文章的id
      */
     @PostMapping("openfeign/article/body/update")
-    ResultView<IdDTO> updateArticle(
-            @RequestBody ArticleBodyUpdateParam articleBodyUpdateParam
+    ResultView<IdDTO> updateArticleBody(
+            @Validated @RequestBody ArticleBodyUpdateParam articleBodyUpdateParam
+    );
+
+    /**
+     * 删除文章
+     * @param articleBodyDeleteParam 删除文章参数
+     * @return ResultView<IdsDTO>
+     */
+    @DeleteMapping("openfeign/article/body/delete")
+    ResultView<IdsDTO> deleteArticleBody(
+            @Validated @RequestBody ArticleBodyDeleteParam articleBodyDeleteParam
+    );
+
+    /**
+     * 恢复文章
+     * @param articleBodyRecoverParam 恢复文章参数
+     * @return ResultView<IdsDTO>
+     */
+    @PostMapping("body/recover")
+    ResultView<IdsDTO> recoverArticleBody(
+            @Validated @RequestBody ArticleBodyRecoverParam articleBodyRecoverParam
     );
 
     /**

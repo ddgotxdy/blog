@@ -24,4 +24,18 @@ public interface BlogArticleService extends IService<BlogArticle> {
      */
     List<BlogArticle> getArticleByCategoryId(Long categoryId);
 
+    /**
+     * 批量删除
+     * @param articleIds 文章ids
+     * @return boolean
+     */
+    boolean deleteBatchByIds(List<Long> articleIds);
+
+    /**
+     * 批量恢复
+     * @param articleIds 文章ids
+     * @return boolean
+     */
+    boolean recoveryBatchByIds(List<Long> articleIds);
+
 }

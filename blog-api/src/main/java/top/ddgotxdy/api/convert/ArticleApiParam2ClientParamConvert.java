@@ -4,6 +4,7 @@ import org.springframework.beans.BeanUtils;
 import top.ddgotxdy.api.model.addparam.ArticleBodyAddApiParam;
 import top.ddgotxdy.api.model.addparam.CategoryAddApiParam;
 import top.ddgotxdy.api.model.addparam.TagAddApiParam;
+import top.ddgotxdy.api.model.queryparam.ArticleBodyQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.CategoryQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.TagQueryApiParam;
 import top.ddgotxdy.api.model.updateparam.ArticleBodyUpdateApiParam;
@@ -13,10 +14,13 @@ import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
 import top.ddgotxdy.common.model.article.addparam.TagAddParam;
+import top.ddgotxdy.common.model.article.deleteparam.ArticleBodyDeleteParam;
 import top.ddgotxdy.common.model.article.deleteparam.CategoryDeleteParam;
 import top.ddgotxdy.common.model.article.deleteparam.TagDeleteParam;
+import top.ddgotxdy.common.model.article.queryparam.ArticleBodyQueryParam;
 import top.ddgotxdy.common.model.article.queryparam.CategoryQueryParam;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
+import top.ddgotxdy.common.model.article.recoverparam.ArticleBodyRecoverParam;
 import top.ddgotxdy.common.model.article.recoverparam.CategoryRecoverParam;
 import top.ddgotxdy.common.model.article.recoverparam.TagRecoverParam;
 import top.ddgotxdy.common.model.article.updateparam.ArticleBodyUpdateParam;
@@ -42,6 +46,34 @@ public class ArticleApiParam2ClientParamConvert {
         Long userId = ContextScope.getUserId();
         articleBodyAddParam.setUserId(userId);
         return articleBodyAddParam;
+    }
+
+    public static ArticleBodyUpdateParam updateApiParam2UpdateParam(ArticleBodyUpdateApiParam articleBodyUpdateApiParam) {
+        ArticleBodyUpdateParam articleBodyUpdateParam = new ArticleBodyUpdateParam();
+        BeanUtils.copyProperties(articleBodyUpdateApiParam, articleBodyUpdateParam);
+        // 标签处理
+        if (Objects.nonNull(articleBodyUpdateApiParam.getArticleStatus())) {
+            articleBodyUpdateParam.setArticleStatus(articleBodyUpdateApiParam.getArticleStatus().getCode());
+        }
+        Long userId = ContextScope.getUserId();
+        articleBodyUpdateParam.setUserId(userId);
+        return articleBodyUpdateParam;
+    }
+
+    public static ArticleBodyDeleteParam articleBodyDeleteApiParam2deleteParam(List<Long> articleIdList) {
+        ArticleBodyDeleteParam articleBodyDeleteParam = new ArticleBodyDeleteParam();
+        articleBodyDeleteParam.setArticleIds(articleIdList);
+        Long userId = ContextScope.getUserId();
+        articleBodyDeleteParam.setUserId(userId);
+        return articleBodyDeleteParam;
+    }
+
+    public static ArticleBodyRecoverParam articleBodyRecoverApiParam2recoverParam(List<Long> articleIdList) {
+        ArticleBodyRecoverParam articleBodyRecoverParam = new ArticleBodyRecoverParam();
+        articleBodyRecoverParam.setArticleIds(articleIdList);
+        Long userId = ContextScope.getUserId();
+        articleBodyRecoverParam.setUserId(userId);
+        return articleBodyRecoverParam;
     }
 
     public static TagAddParam addApiParam2AddParam(TagAddApiParam tagAddApiParam) {
@@ -92,7 +124,6 @@ public class ArticleApiParam2ClientParamConvert {
         return categoryUpdateParam;
     }
 
-
     public static CategoryDeleteParam categoryDeleteApiParam2deleteParam(List<Long> categoryList) {
         CategoryDeleteParam categoryDeleteParam = new CategoryDeleteParam();
         categoryDeleteParam.setCategoryIds(categoryList);
@@ -137,15 +168,15 @@ public class ArticleApiParam2ClientParamConvert {
         return categoryQueryParamPageQry;
     }
 
-    public static ArticleBodyUpdateParam updateApiParam2UpdateParam(ArticleBodyUpdateApiParam articleBodyUpdateApiParam) {
-        ArticleBodyUpdateParam articleBodyUpdateParam = new ArticleBodyUpdateParam();
-        BeanUtils.copyProperties(articleBodyUpdateApiParam, articleBodyUpdateParam);
-        // 标签处理
-        if (Objects.nonNull(articleBodyUpdateApiParam.getArticleStatus())) {
-            articleBodyUpdateParam.setArticleStatus(articleBodyUpdateApiParam.getArticleStatus().getCode());
-        }
-        Long userId = ContextScope.getUserId();
-        articleBodyUpdateParam.setUserId(userId);
-        return articleBodyUpdateParam;
+    public static PageQry<ArticleBodyQueryParam> articleBodyQueryApiParam2QueryParam(PageQry<ArticleBodyQueryApiParam> articleBodyQueryApiParamPageQry) {
+        ArticleBodyQueryParam articleBodyQueryParam = new ArticleBodyQueryParam();
+        // 范型复制
+        ArticleBodyQueryApiParam articleBodyQueryApiParam = articleBodyQueryApiParamPageQry.getQueryParam();
+        BeanCopyUtil.copyProperties(articleBodyQueryApiParam, articleBodyQueryParam);
+        // 分页参数复制
+        PageQry<ArticleBodyQueryParam> articleBodyQueryParamPageQry = new PageQry<>();
+        BeanCopyUtil.copyProperties(articleBodyQueryApiParamPageQry, articleBodyQueryParamPageQry);
+        articleBodyQueryParamPageQry.setQueryParam(articleBodyQueryParam);
+        return articleBodyQueryParamPageQry;
     }
 }
