@@ -79,7 +79,7 @@ public interface BlogArticleClient {
      * @param articleBodyRecoverParam 恢复文章参数
      * @return ResultView<IdsDTO>
      */
-    @PostMapping("body/recover")
+    @PostMapping("openfeign/article/body/recover")
     ResultView<IdsDTO> recoverArticleBody(
             @Validated @RequestBody ArticleBodyRecoverParam articleBodyRecoverParam
     );
