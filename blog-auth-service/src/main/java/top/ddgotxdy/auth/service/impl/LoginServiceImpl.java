@@ -40,7 +40,7 @@ public class LoginServiceImpl implements LoginService {
         if(Objects.isNull(authenticate)) {
             throw new BlogException(ResultCode.LOGIN_ERROR);
         }
-        // 如果认证通过了，使用userid生成一个jwt jwt存入ResponseResult返回
+        // 如果认证通过了，使用userid生成一个jwt
         LoginUser loginUser = (LoginUser) authenticate.getPrincipal();
         String userId = loginUser.getUser().getUserId().toString();
         String jwt = JwtUtil.createJWT(userId);
