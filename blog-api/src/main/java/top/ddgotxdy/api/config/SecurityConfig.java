@@ -52,7 +52,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             .and()
             .authorizeRequests()
             // 对于管理界面需要有管理权限
-            .antMatchers("/admin/**").hasAuthority("admin")
+//            .antMatchers("/admin/**").hasAuthority("admin")
             // 除上面外的所有请求可以匿名访问
             .anyRequest().permitAll();
 
