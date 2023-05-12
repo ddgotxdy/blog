@@ -4,15 +4,44 @@ CREATE TABLE `blog_user` (
      `user_id` bigint NOT NULL COMMENT '用户ID',
      `username` varchar(50) NOT NULL COMMENT '用户名',
      `password` varchar(100) NOT NULL COMMENT '密码',
-     `email` varchar(50) NOT NULL DEFAULT '' COMMENT '邮箱号',
-     `nickname` varchar(50) NOT NULL COMMENT '用户真实昵称',
-     `avatar_url` varchar(1024) NOT NULL DEFAULT '' COMMENT '用户头像地址',
-     `introduce` varchar(255) NOT NULL DEFAULT '' COMMENT '用户简介',
+     `email` varchar(50) NOT NULL COMMENT '邮箱号',
+     `nickname` varchar(50) NOT NULL DEFAULT '' COMMENT '用户真实昵称',
+     `phone_number` varchar(32) DEFAULT NULL DEFAULT '' COMMENT '手机号',
+     `sex` tinyint(1) DEFAULT 2 COMMENT '用户性别（0男，1女，2未知）',
+     `avatar_url` varchar(128) DEFAULT '' COMMENT '头像',
+     `role_id` bigint NOT NULL DEFAULT 0 COMMENT '角色ID',
      `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除，0否1是',
      `create_time` bigint NOT NULL COMMENT '创建时间',
      `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
-     PRIMARY KEY (`user_id`),
-     UNIQUE INDEX `username`(`username`)
+     PRIMARY KEY (`user_id`)
+);
+
+-- 角色表
+DROP TABLE IF EXISTS `blog_role`;
+CREATE TABLE `blog_role` (
+    `role_id` bigint NOT NULL COMMENT '角色ID',
+    `role_name` varchar(128) DEFAULT NULL COMMENT '角色名称',
+    `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除，0否1是',
+    `menu_ids` varchar(1024) NOT NULL DEFAULT '[]' COMMENT '包含的权限，例如[1001,1002,1003]',
+    `create_time` bigint NOT NULL COMMENT '创建时间',
+    `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
+    `role_desc` varchar(500) DEFAULT NULL COMMENT '备注',
+    PRIMARY KEY (`role_id`)
+);
+
+-- 菜单表
+DROP TABLE IF EXISTS `blog_menu`;
+CREATE TABLE `blog_menu` (
+    `menu_id` bigint NOT NULL COMMENT '菜单ID',
+    `menu_name` varchar(64) NOT NULL DEFAULT 'NULL' COMMENT '菜单名',
+    `path` varchar(200) DEFAULT NULL COMMENT '路由地址',
+    `component` varchar(255) DEFAULT NULL COMMENT '组件路径',
+    `perms` varchar(100) DEFAULT NULL COMMENT '权限标识',
+    `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除，0否1是',
+    `create_time` bigint NOT NULL COMMENT '创建时间',
+    `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
+    `menu_desc` varchar(500) DEFAULT NULL COMMENT '备注',
+    PRIMARY KEY (`menu_id`)
 );
 
 -- 文章表

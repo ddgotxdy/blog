@@ -35,7 +35,7 @@ public class ArticleController {
 
     //--------------------文章相关接口---------------------------------------------
 
-    @ApiOperation("分页获取文章列表")
+    @ApiOperation("文章分页获取")
     @PostMapping("/body/queryByPage")
     public ResultView<PageResult<ArticleBodyPageListView>> queryArticleBodyByPage(
             @Validated @RequestBody PageQry<ArticleBodyQueryApiParam> articleBodyQueryApiParamPageQry

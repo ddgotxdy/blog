@@ -40,6 +40,12 @@ public enum ResultCode {
     SENSITIVE_RECOVERY_ERROR(905, "敏感词恢复失败"),
     MESSAGE_ADD_ERROR(906, "留言添加失败"),
     MESSAGE_UPDATE_ERROR(906, "留言更新失败"),
+    SEND_MAIL_ERROR(907, "发送邮件失败"),
+    // 1001 - 1100 授权认证异常
+    LOGIN_ERROR(1001, "用户名或密码错误"),
+    ROLE_ERROR(1002, "角色异常"),
+    CAPTCHA_EXPIRE_ERROR(1003, "验证码过期"),
+    REGISTER_ERROR(1004, "注册失败"),
     ;
     private final Integer code;
     private final String msg;

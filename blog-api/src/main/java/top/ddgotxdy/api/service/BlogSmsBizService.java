@@ -1,5 +1,6 @@
 package top.ddgotxdy.api.service;
 
+import top.ddgotxdy.api.model.addparam.CaptchaSendApiParam;
 import top.ddgotxdy.api.model.addparam.MessageAddApiParam;
 import top.ddgotxdy.api.model.addparam.SensitiveAddApiParam;
 import top.ddgotxdy.api.model.queryparam.MessageQueryApiParam;
@@ -75,5 +76,11 @@ public interface BlogSmsBizService {
      * @return
      */
     PageResult<MessagePageListView> queryMessageByPage(PageQry<MessageQueryApiParam> messageQueryApiParamPageQry);
+
+    /**
+     * 发送验证码
+     * @param captchaSendApiParam 验证码发送参数
+     */
+    void sendCaptcha(CaptchaSendApiParam captchaSendApiParam);
 }
 

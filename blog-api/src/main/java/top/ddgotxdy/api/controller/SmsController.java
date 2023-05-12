@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import top.ddgotxdy.api.model.addparam.CaptchaSendApiParam;
 import top.ddgotxdy.api.model.addparam.MessageAddApiParam;
 import top.ddgotxdy.api.model.addparam.SensitiveAddApiParam;
 import top.ddgotxdy.api.model.queryparam.MessageQueryApiParam;
@@ -114,6 +115,19 @@ public class SmsController {
     ) {
         PageResult<MessagePageListView> result = blogSmsBizService.queryMessageByPage(messageQueryApiParamPageQry);
         return ResultView.success(result);
+    }
+
+    /**
+     * 发送验证码
+     * @param captchaSendApiParam 发送验证码参数
+     * @return ResultView
+     */
+    @PostMapping("/captcha/send")
+    ResultView sendCaptcha(
+            @RequestBody CaptchaSendApiParam captchaSendApiParam
+    ) {
+        blogSmsBizService.sendCaptcha(captchaSendApiParam);
+        return ResultView.success();
     }
 
 }

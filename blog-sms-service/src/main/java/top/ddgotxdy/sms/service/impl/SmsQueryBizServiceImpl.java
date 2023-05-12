@@ -4,12 +4,16 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
+import top.ddgotxdy.common.enums.ResultCode;
+import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.sms.dto.MessagePageListDTO;
 import top.ddgotxdy.common.model.sms.dto.SensitivePageListDTO;
+import top.ddgotxdy.common.model.sms.queryparam.CaptchaQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.MessageQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.SensitiveQueryParam;
+import top.ddgotxdy.common.util.RedisCache;
 import top.ddgotxdy.dal.entity.BlogMessage;
 import top.ddgotxdy.dal.entity.BlogSensitive;
 import top.ddgotxdy.sms.convert.Entity2DTOConvert;
@@ -23,6 +27,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 
+import static top.ddgotxdy.common.constant.RedisPrefix.CAPTCHA;
+
 /**
  * @author: ddgo
  * @description:
@@ -33,6 +39,8 @@ public class SmsQueryBizServiceImpl implements SmsQueryBizService {
     private BlogSensitiveService blogSensitiveService;
     @Resource
     private BlogMessageService blogMessageService;
+    @Resource
+    private RedisCache redisCache;
 
     @Override
     public PageResult<SensitivePageListDTO> querySensitiveByPage(PageQry<SensitiveQueryParam> sensitiveQueryParamPageQry) {
@@ -99,5 +107,15 @@ public class SmsQueryBizServiceImpl implements SmsQueryBizService {
         pageResult.setTotalPage(blogMessagePage.getPages());
         pageResult.setData(messagePageListDTOList);
         return pageResult;
+    }
+
+    @Override
+    public String queryCaptcha(CaptchaQueryParam captchaQueryParam) {
+        String key = CAPTCHA + captchaQueryParam.getMail();
+        if (!redisCache.hasKey(key)) {
+            throw new BlogException(ResultCode.CAPTCHA_EXPIRE_ERROR);
+        }
+        String captcha = redisCache.getCacheObject(CAPTCHA + captchaQueryParam.getMail());
+        return captcha;
     }
 }

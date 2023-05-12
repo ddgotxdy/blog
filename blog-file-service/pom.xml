@@ -20,11 +20,6 @@
         <!-- 一方包依赖 -->
         <dependency>
             <groupId>top.ddgotxdy</groupId>
-            <artifactId>blog-dal</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-        <dependency>
-            <groupId>top.ddgotxdy</groupId>
             <artifactId>blog-common</artifactId>
             <version>1.0.0</version>
         </dependency>

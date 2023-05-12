@@ -1,5 +1,6 @@
 package top.ddgotxdy.common.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -15,6 +16,7 @@ import top.ddgotxdy.common.scope.ContextScope;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ResultView<T> {
 
     @ApiModelProperty("状态码")
@@ -32,6 +34,11 @@ public class ResultView<T> {
     public ResultView(Integer code, String msg) {
         this.code = code;
         this.msg = msg;
+        this.traceId = ContextScope.getTraceId();
+    }
+
+    public ResultView(Integer code) {
+        this.code = code;
         this.traceId = ContextScope.getTraceId();
     }
 
@@ -54,6 +61,10 @@ public class ResultView<T> {
 
     public static <T> ResultView<T> success(T data) {
         return new ResultView<>(200, data);
+    }
+
+    public static <T> ResultView<T> success() {
+        return new ResultView<>(200);
     }
 
     public static <T> ResultView<T> fail(String message) {

@@ -4,11 +4,13 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.ddgotxdy.common.annotation.SensitiveWord;
 import top.ddgotxdy.common.model.*;
+import top.ddgotxdy.common.model.sms.addparam.CaptchaSendParam;
 import top.ddgotxdy.common.model.sms.addparam.MessageAddParam;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
 import top.ddgotxdy.common.model.sms.deleteparam.SensitiveDeleteParam;
 import top.ddgotxdy.common.model.sms.dto.MessagePageListDTO;
 import top.ddgotxdy.common.model.sms.dto.SensitivePageListDTO;
+import top.ddgotxdy.common.model.sms.queryparam.CaptchaQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.MessageQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.SensitiveQueryParam;
 import top.ddgotxdy.common.model.sms.recoverparam.SensitiveRecoverParam;
@@ -93,6 +95,22 @@ public class SmsController {
             @RequestBody PageQry<MessageQueryParam> messageQueryParamPageQry
     ) {
         PageResult<MessagePageListDTO> result = smsQueryBizService.queryMessageByPage(messageQueryParamPageQry);
+        return ResultView.success(result);
+    }
+
+    @PostMapping("captcha/send")
+    public ResultView sendCaptcha(
+            @Validated @RequestBody CaptchaSendParam captchaSendParam
+    ) {
+        smsCmdBizService.sendCaptcha(captchaSendParam);
+        return ResultView.success();
+    }
+
+    @PostMapping("captcha/query")
+    public ResultView<String> queryCaptcha(
+            @Validated @RequestBody CaptchaQueryParam captchaQueryParam
+    ) {
+        String result = smsQueryBizService.queryCaptcha(captchaQueryParam);
         return ResultView.success(result);
     }
 

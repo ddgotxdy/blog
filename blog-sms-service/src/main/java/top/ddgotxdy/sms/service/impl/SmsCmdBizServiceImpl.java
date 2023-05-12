@@ -1,23 +1,38 @@
 package top.ddgotxdy.sms.service.impl;
 
+import cn.hutool.core.lang.Dict;
+import cn.hutool.core.util.RandomUtil;
+import cn.hutool.extra.template.Template;
+import cn.hutool.extra.template.TemplateConfig;
+import cn.hutool.extra.template.TemplateEngine;
+import cn.hutool.extra.template.TemplateUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.IdsDTO;
+import top.ddgotxdy.common.model.sms.addparam.CaptchaSendParam;
 import top.ddgotxdy.common.model.sms.addparam.MessageAddParam;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
 import top.ddgotxdy.common.model.sms.deleteparam.SensitiveDeleteParam;
 import top.ddgotxdy.common.model.sms.recoverparam.SensitiveRecoverParam;
 import top.ddgotxdy.common.model.sms.updateparam.MessageUpdateParam;
 import top.ddgotxdy.common.model.sms.updateparam.SensitiveUpdateParam;
+import top.ddgotxdy.common.util.RedisCache;
 import top.ddgotxdy.sms.adaptor.SmsManageAdaptor;
 import top.ddgotxdy.sms.convert.Param2ContextConvert;
+import top.ddgotxdy.sms.model.EmailModel;
 import top.ddgotxdy.sms.model.SmsContext;
+import top.ddgotxdy.sms.service.EmailService;
 import top.ddgotxdy.sms.service.SmsCmdBizService;
 
 import javax.annotation.Resource;
 
+import java.util.Collections;
+import java.util.concurrent.TimeUnit;
+
 import static com.alibaba.fastjson.JSON.toJSON;
+import static top.ddgotxdy.common.constant.RedisExpireTime.CAPTCHA_EXPIRE_SECOND;
+import static top.ddgotxdy.common.constant.RedisPrefix.CAPTCHA;
 
 /**
  * @author: ddgo
@@ -28,6 +43,10 @@ import static com.alibaba.fastjson.JSON.toJSON;
 public class SmsCmdBizServiceImpl implements SmsCmdBizService {
     @Resource
     private SmsManageAdaptor smsManageAdaptor;
+    @Resource
+    private RedisCache redisCache;
+    @Resource
+    private EmailService emailService;
 
     @Override
     public IdDTO addSensitive(SensitiveAddParam sensitiveAddParam) {
@@ -87,5 +106,25 @@ public class SmsCmdBizServiceImpl implements SmsCmdBizService {
         return IdDTO.builder()
                 .id(smsContext.getMessageId())
                 .build();
+    }
+
+    @Override
+    public void sendCaptcha(CaptchaSendParam captchaSendParam) {
+        // 获取发送邮箱验证码的HTML模板
+        TemplateEngine engine = TemplateUtil.createEngine(new TemplateConfig("template", TemplateConfig.ResourceMode.CLASSPATH));
+        Template template = engine.getTemplate("email-code.ftl");
+        // 发送验证码
+        EmailModel emailModel = new EmailModel();
+        emailModel.setTos(Collections.singletonList(captchaSendParam.getMail()));
+        emailModel.setSubject("邮箱验证码");
+        String code = RandomUtil.randomNumbers(6);
+        emailModel.setContent(template.render(Dict.create().set("code", code)));
+        emailService.send(emailModel);
+        // 将验证码设置到缓存里面
+        redisCache.setCacheObject(
+                CAPTCHA + captchaSendParam.getMail(),
+                code,
+                CAPTCHA_EXPIRE_SECOND,
+                TimeUnit.SECONDS);
     }
 }

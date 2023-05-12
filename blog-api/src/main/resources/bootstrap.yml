@@ -23,6 +23,14 @@ spring:
             group: ${spring.cloud.nacos.config.group}
             namespace: ${spring.cloud.nacos.config.namespace}
             refresh: true
+          - data-id: redis-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+            group: ${spring.cloud.nacos.config.group}
+            namespace: ${spring.cloud.nacos.config.namespace}
+            refresh: true
+          - data-id: datasource-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+            group: ${spring.cloud.nacos.config.group}
+            namespace: ${spring.cloud.nacos.config.namespace}
+            refresh: true
       # 实现服务的注册与发现
       discovery:
         server-addr: 101.43.175.25:8848

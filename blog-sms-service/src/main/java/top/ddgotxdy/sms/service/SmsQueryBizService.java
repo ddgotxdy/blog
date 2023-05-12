@@ -4,6 +4,7 @@ import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.sms.dto.MessagePageListDTO;
 import top.ddgotxdy.common.model.sms.dto.SensitivePageListDTO;
+import top.ddgotxdy.common.model.sms.queryparam.CaptchaQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.MessageQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.SensitiveQueryParam;
 
@@ -25,4 +26,11 @@ public interface SmsQueryBizService {
      * @return
      */
     PageResult<MessagePageListDTO> queryMessageByPage(PageQry<MessageQueryParam> messageQueryParamPageQry);
+
+    /**
+     * 获取验证码
+     * @param captchaQueryParam
+     * @return
+     */
+    String queryCaptcha(CaptchaQueryParam captchaQueryParam);
 }

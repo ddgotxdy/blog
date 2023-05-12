@@ -8,11 +8,13 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import top.ddgotxdy.common.annotation.SensitiveWord;
 import top.ddgotxdy.common.model.*;
+import top.ddgotxdy.common.model.sms.addparam.CaptchaSendParam;
 import top.ddgotxdy.common.model.sms.addparam.MessageAddParam;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
 import top.ddgotxdy.common.model.sms.deleteparam.SensitiveDeleteParam;
 import top.ddgotxdy.common.model.sms.dto.MessagePageListDTO;
 import top.ddgotxdy.common.model.sms.dto.SensitivePageListDTO;
+import top.ddgotxdy.common.model.sms.queryparam.CaptchaQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.MessageQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.SensitiveQueryParam;
 import top.ddgotxdy.common.model.sms.recoverparam.SensitiveRecoverParam;
@@ -105,5 +107,25 @@ public interface BlogSmsClient {
     @PostMapping("openfeign/sms/message/queryByPage")
     ResultView<PageResult<MessagePageListDTO>> queryMessageByPage(
             @RequestBody PageQry<MessageQueryParam> messageQueryParamPageQry
+    );
+
+    /**
+     * 发送验证码
+     * @param captchaSendParam 发送验证码参数
+     * @return ResultView
+     */
+    @PostMapping("openfeign/sms/captcha/send")
+    ResultView sendCaptcha(
+            @Validated @RequestBody CaptchaSendParam captchaSendParam
+    );
+
+    /**
+     * 获取验证码
+     * @param captchaQueryParam 获取验证码参数
+     * @return ResultView<String>
+     */
+    @PostMapping("openfeign/sms/captcha/query")
+    ResultView<String> queryCaptcha(
+            @Validated @RequestBody CaptchaQueryParam captchaQueryParam
     );
 }

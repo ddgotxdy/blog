@@ -3,6 +3,7 @@ package top.ddgotxdy.api.service.impl;
 import org.springframework.stereotype.Service;
 import top.ddgotxdy.api.convert.SmsApiParam2ClientParamConvert;
 import top.ddgotxdy.api.convert.SmsDTO2ViewConvert;
+import top.ddgotxdy.api.model.addparam.CaptchaSendApiParam;
 import top.ddgotxdy.api.model.addparam.MessageAddApiParam;
 import top.ddgotxdy.api.model.addparam.SensitiveAddApiParam;
 import top.ddgotxdy.api.model.queryparam.MessageQueryApiParam;
@@ -14,6 +15,7 @@ import top.ddgotxdy.api.model.view.SensitivePageListView;
 import top.ddgotxdy.api.service.BlogSmsBizService;
 import top.ddgotxdy.common.client.BlogSmsClient;
 import top.ddgotxdy.common.model.*;
+import top.ddgotxdy.common.model.sms.addparam.CaptchaSendParam;
 import top.ddgotxdy.common.model.sms.addparam.MessageAddParam;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
 import top.ddgotxdy.common.model.sms.deleteparam.SensitiveDeleteParam;
@@ -111,5 +113,13 @@ public class BlogSmsBizServiceImpl implements BlogSmsBizService {
         ResultView<PageResult<MessagePageListDTO>> response = blogSmsClient.queryMessageByPage(messageQueryParamPageQry);
         PageResult<MessagePageListView> sensitivePageListViewPageResult = SmsDTO2ViewConvert.messagePageListDTO2View(response.getData());
         return sensitivePageListViewPageResult;
+    }
+
+    @Override
+    public void sendCaptcha(CaptchaSendApiParam captchaSendApiParam) {
+        // 比较简单
+        CaptchaSendParam captchaSendParam = new CaptchaSendParam();
+        captchaSendParam.setMail(captchaSendApiParam.getMail());
+        blogSmsClient.sendCaptcha(captchaSendParam);
     }
 }
