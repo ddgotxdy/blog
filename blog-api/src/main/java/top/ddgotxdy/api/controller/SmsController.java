@@ -122,6 +122,7 @@ public class SmsController {
      * @param captchaSendApiParam 发送验证码参数
      * @return ResultView
      */
+    @ApiOperation("发送验证码")
     @PostMapping("/captcha/send")
     ResultView sendCaptcha(
             @RequestBody CaptchaSendApiParam captchaSendApiParam
