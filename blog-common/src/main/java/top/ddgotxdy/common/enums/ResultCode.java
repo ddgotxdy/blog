@@ -46,6 +46,8 @@ public enum ResultCode {
     ROLE_ERROR(1002, "角色异常"),
     CAPTCHA_EXPIRE_ERROR(1003, "验证码过期"),
     REGISTER_ERROR(1004, "注册失败"),
+    PASSWORD_NOT_EQUAL(1005, "密码不相等"),
+    CAPTCHA_ERROR(1006, "验证码错误"),
     ;
     private final Integer code;
     private final String msg;

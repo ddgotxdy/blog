@@ -1,5 +1,6 @@
-package top.ddgotxdy.common.model.auth.addparam;
+package top.ddgotxdy.api.model;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
@@ -9,7 +10,8 @@ import org.hibernate.validator.constraints.Length;
  * @description:
  */
 @Data
-public class UserAddParam {
+@ApiModel("用户登录参数")
+public class UserLoginApiModel {
     @ApiModelProperty("用户名")
     @Length(min = 1, max = 20)
     private String username;
@@ -17,8 +19,4 @@ public class UserAddParam {
     @ApiModelProperty("密码")
     @Length(min = 6, max = 50)
     private String password;
-
-    @ApiModelProperty("邮箱号")
-    @Length(min = 6, max = 50)
-    private String email;
 }

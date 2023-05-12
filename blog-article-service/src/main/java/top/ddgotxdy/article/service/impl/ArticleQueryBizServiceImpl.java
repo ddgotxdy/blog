@@ -133,6 +133,7 @@ public class ArticleQueryBizServiceImpl implements ArticleQueryBizService {
                 .eq(Objects.nonNull(queryParam.getArticleId()), BlogArticle::getArticleId, queryParam.getArticleId())
                 .eq(Objects.nonNull(queryParam.getIsDelete()), BlogArticle::getIsDelete, queryParam.getIsDelete())
                 .eq(Objects.nonNull(queryParam.getCategoryId()), BlogArticle::getCategoryId, queryParam.getCategoryId())
+                .eq(Objects.nonNull(queryParam.getArticleStatus()), BlogArticle::getArticleStatus, queryParam.getArticleStatus())
                 .like(Objects.nonNull(queryParam.getArticleTitle()), BlogArticle::getArticleTitle, queryParam.getArticleTitle())
                 .like(Objects.nonNull(queryParam.getArticleContent()), BlogArticle::getArticleContent, queryParam.getArticleContent());
         // 标签比较特殊

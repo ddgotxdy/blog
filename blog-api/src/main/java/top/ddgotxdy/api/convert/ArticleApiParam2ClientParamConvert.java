@@ -173,6 +173,9 @@ public class ArticleApiParam2ClientParamConvert {
         // 范型复制
         ArticleBodyQueryApiParam articleBodyQueryApiParam = articleBodyQueryApiParamPageQry.getQueryParam();
         BeanCopyUtil.copyProperties(articleBodyQueryApiParam, articleBodyQueryParam);
+        if (Objects.nonNull(articleBodyQueryApiParam.getArticleStatus())) {
+            articleBodyQueryParam.setArticleStatus(articleBodyQueryApiParam.getArticleStatus().getCode());
+        }
         // 分页参数复制
         PageQry<ArticleBodyQueryParam> articleBodyQueryParamPageQry = new PageQry<>();
         BeanCopyUtil.copyProperties(articleBodyQueryApiParamPageQry, articleBodyQueryParamPageQry);

@@ -1,5 +1,6 @@
 package top.ddgotxdy.common.model.article.queryparam;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.List;
@@ -34,4 +35,8 @@ public class ArticleBodyQueryParam {
      * 是否删除
      */
     private Boolean isDelete;
+    /**
+     * 文章状态值 1公开 2私密 3登录可见
+     */
+    private Integer articleStatus;
 }
