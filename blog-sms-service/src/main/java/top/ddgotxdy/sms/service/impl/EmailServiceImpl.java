@@ -66,7 +66,7 @@ public class EmailServiceImpl implements EmailService {
                     .setUseGlobalSession(false)
                     .send();
         } catch (Exception e) {
-            e.printStackTrace();
+            log.error("{}", e.getMessage());
             throw new BlogException(ResultCode.SEND_MAIL_ERROR.getCode(), ResultCode.SEND_MAIL_ERROR.getMsg());
         }
     }
