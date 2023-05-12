@@ -25,7 +25,7 @@ docker login --username=ddgotxdy --password=1314520ASD registry.cn-beijing.aliyu
 docker pull registry.cn-beijing.aliyuncs.com/ddgotxdy-blog/"$image_name"
 
 # 启动容器
-docker run -d -p "$port":"$port" -p 465:465 -p 587:587 registry.cn-beijing.aliyuncs.com/ddgotxdy-blog/"$image_name" \
+docker run -d -p "$port":"$port" -p 25:25 registry.cn-beijing.aliyuncs.com/ddgotxdy-blog/"$image_name" \
 -e ACTIVE="$active" \
 -e NAMESPACE="$namespace" \
 -e PORT="$port"
