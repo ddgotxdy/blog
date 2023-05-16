@@ -2,8 +2,10 @@ package top.ddgotxdy.api.service.impl;
 
 import org.springframework.stereotype.Service;
 import top.ddgotxdy.api.convert.AuthApiParam2ClientParamConvert;
+import top.ddgotxdy.api.convert.SmsDTO2ViewConvert;
 import top.ddgotxdy.api.model.UserLoginApiModel;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
+import top.ddgotxdy.api.model.view.UserInfoView;
 import top.ddgotxdy.api.service.BlogAuthBizService;
 import top.ddgotxdy.common.client.BlogAuthClient;
 import top.ddgotxdy.common.client.BlogSmsClient;
@@ -13,6 +15,7 @@ import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.IdView;
 import top.ddgotxdy.common.model.ResultView;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
+import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
 import top.ddgotxdy.common.model.sms.queryparam.CaptchaQueryParam;
 
@@ -65,5 +68,14 @@ public class BlogAuthBizServiceImpl implements BlogAuthBizService {
     @Override
     public void logout() {
         blogAuthClient.logout();
+    }
+
+    @Override
+    public UserInfoView getUserInfo() {
+        ResultView<UserInfoDTO> response = blogAuthClient.getUserInfo();
+        UserInfoView userInfoView = SmsDTO2ViewConvert.userInfoDTO2View(response.getData());
+        // 根据角色id获取角色名称 TODO
+        userInfoView.setRoleName("普通用户");
+        return userInfoView;
     }
 }

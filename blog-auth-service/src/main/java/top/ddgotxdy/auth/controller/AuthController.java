@@ -10,6 +10,7 @@ import top.ddgotxdy.auth.service.AuthQueryBizService;
 import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.ResultView;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
+import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
 
 import javax.annotation.Resource;
@@ -49,4 +50,9 @@ public class AuthController {
         return ResultView.success();
     }
 
+    @PostMapping("/getUserInfo")
+    public ResultView<UserInfoDTO> getUserInfo() {
+        UserInfoDTO userInfoDTO = authQueryBizService.getUserInfo();
+        return ResultView.success(userInfoDTO);
+    }
 }

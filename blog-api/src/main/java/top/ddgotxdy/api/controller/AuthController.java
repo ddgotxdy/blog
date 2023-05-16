@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.ddgotxdy.api.model.UserLoginApiModel;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
+import top.ddgotxdy.api.model.view.UserInfoView;
 import top.ddgotxdy.api.service.BlogAuthBizService;
 import top.ddgotxdy.common.model.IdView;
 import top.ddgotxdy.common.model.ResultView;
@@ -45,5 +46,11 @@ public class AuthController {
     public ResultView logout() {
         blogAuthBizService.logout();
         return ResultView.success();
+    }
+
+    @PostMapping("/getUserInfo")
+    public ResultView<UserInfoView> getUserInfo() {
+        UserInfoView userInfoView = blogAuthBizService.getUserInfo();
+        return ResultView.success(userInfoView);
     }
 }

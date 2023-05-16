@@ -2,9 +2,12 @@ package top.ddgotxdy.api.convert;
 
 import top.ddgotxdy.api.model.view.MessagePageListView;
 import top.ddgotxdy.api.model.view.SensitivePageListView;
+import top.ddgotxdy.api.model.view.UserInfoView;
+import top.ddgotxdy.common.enums.auth.SexEnum;
 import top.ddgotxdy.common.enums.sms.AuditType;
 import top.ddgotxdy.common.enums.sms.SensitiveType;
 import top.ddgotxdy.common.model.PageResult;
+import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
 import top.ddgotxdy.common.model.sms.dto.MessagePageListDTO;
 import top.ddgotxdy.common.model.sms.dto.SensitivePageListDTO;
 import top.ddgotxdy.common.util.BeanCopyUtil;
@@ -52,5 +55,12 @@ public class SmsDTO2ViewConvert {
         // 赋值
         messagePageListViewPageResult.setData(messagePageListViews);
         return messagePageListViewPageResult;
+    }
+
+    public static UserInfoView userInfoDTO2View(UserInfoDTO userInfoDTO) {
+        UserInfoView userInfoView = new UserInfoView();
+        BeanCopyUtil.copyProperties(userInfoDTO, userInfoView);
+        userInfoView.setSexEnum(SexEnum.of(userInfoDTO.getSex()));
+        return userInfoView;
     }
 }
