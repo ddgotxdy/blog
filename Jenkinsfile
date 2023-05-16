@@ -69,7 +69,7 @@ pipeline {
                                 sshTransfer(
                                     cleanRemote: false,
                                     excludes: '',
-                                    execCommand: '/root/java/deploy.sh ${project_name} ${tag} ${port} ${active} ${namespace}',
+                                    execCommand: '/root/java/deploy_${project_name}.sh ${project_name} ${tag} ${port} ${active} ${namespace}',
                                     execTimeout: 120000,
                                     flatten: false,
                                     makeEmptyDirs: false,
