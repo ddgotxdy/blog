@@ -1,6 +1,7 @@
 package top.ddgotxdy.api.controller;
 
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -26,6 +27,7 @@ public class AuthController {
     @Resource
     private BlogAuthBizService blogAuthBizService;
 
+    @ApiOperation("注册")
     @PostMapping("/register")
     public ResultView<IdView> register(
             @Validated @RequestBody UserAddApiParam userAddApiParam
@@ -34,6 +36,7 @@ public class AuthController {
         return ResultView.success(idView);
     }
 
+    @ApiOperation("登录")
     @PostMapping("/login")
     public ResultView<String> login(
             @Validated @RequestBody UserLoginApiModel userLoginApiModel
@@ -42,12 +45,14 @@ public class AuthController {
         return ResultView.success(token);
     }
 
+    @ApiOperation("登出")
     @PostMapping("/logout")
     public ResultView logout() {
         blogAuthBizService.logout();
         return ResultView.success();
     }
 
+    @ApiOperation("获取用户信息")
     @PostMapping("/getUserInfo")
     public ResultView<UserInfoView> getUserInfo() {
         UserInfoView userInfoView = blogAuthBizService.getUserInfo();
