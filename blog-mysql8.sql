@@ -134,32 +134,14 @@ CREATE TABLE `blog_sensitive`  (
      PRIMARY KEY (`sensitive_id`)
 );
 
--- 角色表
-DROP TABLE IF EXISTS `blog_role`;
-CREATE TABLE `blog_role`  (
-    `role_id` bigint NOT NULL COMMENT '角色ID',
-    `role_name` varchar(20) NOT NULL COMMENT '角色名',
-    `role_desc` varchar(50) NOT NULL COMMENT '角色描述',
-    `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否禁用  0否 1是',
-    `create_time` bigint NOT NULL COMMENT '创建时间',
-    `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
-    PRIMARY KEY (`role_id`)
+-- 操作日志表
+DROP TABLE IF EXISTS `blog_oplog`;
+CREATE TABLE `blog_oplog`  (
+    `operator_id` bigint NOT NULL COMMENT '操作id',
+    `user_id` bigint NOT NULL COMMENT '操作用户ID',
+    `operator_content` varchar(200) NOT NULL COMMENT '操作内容',
+    `operator_type` tinyint(4) NOT NULL DEFAULT 0 COMMENT '操作类型 1文章新增',
+    `operator_stage` tinyint(4) NOT NULL DEFAULT 0 COMMENT '操作阶段 1预操作 2操作成功',
+    `create_time` bigint NOT NULL COMMENT '操作时间',
+    PRIMARY KEY (`operator_id`)
 );
-
--- 菜单表
-
-
-
--- 界面配置
-DROP TABLE IF EXISTS `blog_page`;
-CREATE TABLE `blog_page`  (
-    `page_id` bigint NOT NULL AUTO_INCREMENT COMMENT '页面id',
-    `page_name` varchar(10) NOT NULL COMMENT '页面名',
-    `page_desc` varchar(255) NULL DEFAULT NULL COMMENT '页面描述',
-    `page_cover_url` varchar(1024) NOT NULL COMMENT '页面封面',
-    `create_time` bigint NOT NULL COMMENT '创建时间',
-    `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
-    PRIMARY KEY (`page_id`)
-);
-
--- 各种日志表，后续添加

@@ -39,14 +39,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private BlogMenuMapper blogMenuMapper;
 
     @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String accountName) throws UsernameNotFoundException {
         // 查询用户信息
         LambdaQueryWrapper<BlogUser> queryWrapper = new LambdaQueryWrapper<>();
-        queryWrapper.eq(BlogUser::getUsername, username);
+        // 可以根据用户名或者邮箱进行登录
+        queryWrapper
+                .eq(BlogUser::getUsername, accountName)
+                .or()
+                .eq(BlogUser::getEmail, accountName);
         BlogUser blogUser = blogUserMapper.selectOne(queryWrapper);
         // 如果没有查询到用户，就抛出异常
         if(Objects.isNull(blogUser)) {
-            throw new BlogException(ResultCode.LOGIN_ERROR.getCode(), ResultCode.LOGIN_ERROR.getMsg());
+            throw new BlogException(ResultCode.LOGIN_ERROR);
         }
         // 获取角色表
         Long roleId = blogUser.getRoleId();
