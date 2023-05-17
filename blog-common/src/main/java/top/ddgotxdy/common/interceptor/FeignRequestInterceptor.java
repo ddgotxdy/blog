@@ -25,8 +25,11 @@ public class FeignRequestInterceptor implements RequestInterceptor {
         if (headerNames != null) {
             while (headerNames.hasMoreElements()) {
                 String name = headerNames.nextElement();
-                String values = request.getHeader(name);
-                requestTemplate.header(name, values);
+                // 不能添加 content-length 不然有问题
+                if (!"content-length".equals(name)) {
+                    String values = request.getHeader(name);
+                    requestTemplate.header(name, values);
+                }
             }
         }
     }
