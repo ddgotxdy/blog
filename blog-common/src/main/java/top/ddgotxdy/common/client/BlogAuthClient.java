@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import top.ddgotxdy.common.interceptor.FeignRequestInterceptor;
 import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.ResultView;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
@@ -16,7 +17,7 @@ import top.ddgotxdy.common.model.auth.model.UserLoginModel;
  * @description:
  */
 @Component
-@FeignClient("auth-service")
+@FeignClient(value = "auth-service", configuration = FeignRequestInterceptor.class)
 public interface BlogAuthClient {
     /**
      * 注册

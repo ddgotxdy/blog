@@ -18,9 +18,6 @@ public class UserInfoView {
     @ApiModelProperty("用户名")
     private String username;
 
-    @ApiModelProperty("密码")
-    private String password;
-
     @ApiModelProperty("邮箱号")
     private String email;
 
