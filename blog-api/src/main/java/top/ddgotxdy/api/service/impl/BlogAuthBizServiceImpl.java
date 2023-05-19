@@ -67,7 +67,8 @@ public class BlogAuthBizServiceImpl implements BlogAuthBizService {
 
     @Override
     public void logout() {
-        blogAuthClient.logout();
+        ResultView response = blogAuthClient.logout();
+        response.checkAndGetData();
     }
 
     @Override

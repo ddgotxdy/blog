@@ -120,6 +120,7 @@ public class BlogSmsBizServiceImpl implements BlogSmsBizService {
         // 比较简单
         CaptchaSendParam captchaSendParam = new CaptchaSendParam();
         captchaSendParam.setMail(captchaSendApiParam.getMail());
-        blogSmsClient.sendCaptcha(captchaSendParam);
+        ResultView response = blogSmsClient.sendCaptcha(captchaSendParam);
+        response.checkAndGetData();
     }
 }
