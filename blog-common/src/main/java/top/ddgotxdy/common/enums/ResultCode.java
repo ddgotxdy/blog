@@ -10,6 +10,10 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 public enum ResultCode {
+    // 正确返回
+    OK(200, "ok"),
+    // 异常返回
+    ERROR(500, "error"),
     // 601 - 700 自定义异常
     SYSTEM_ERROR(601, "系统其它异常"),
     // 701 - 800 文章异常

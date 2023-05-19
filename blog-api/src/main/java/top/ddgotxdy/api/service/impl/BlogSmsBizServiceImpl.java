@@ -43,7 +43,7 @@ public class BlogSmsBizServiceImpl implements BlogSmsBizService {
     public IdView addSensitive(SensitiveAddApiParam sensitiveAddApiParam) {
         SensitiveAddParam sensitiveAddParam = SmsApiParam2ClientParamConvert.addApiParam2Param(sensitiveAddApiParam);
         ResultView<IdDTO> response = blogSmsClient.addSensitive(sensitiveAddParam);
-        IdDTO idDTO = response.getData();
+        IdDTO idDTO = response.checkAndGetData();
         return IdView.builder()
                 .id(idDTO.getId())
                 .build();
@@ -53,7 +53,7 @@ public class BlogSmsBizServiceImpl implements BlogSmsBizService {
     public IdView updateSensitive(SensitiveUpdateApiParam sensitiveUpdateApiParam) {
         SensitiveUpdateParam sensitiveUpdateParam = SmsApiParam2ClientParamConvert.updateApiParam2Param(sensitiveUpdateApiParam);
         ResultView<IdDTO> response = blogSmsClient.updateSensitive(sensitiveUpdateParam);
-        IdDTO idDTO = response.getData();
+        IdDTO idDTO = response.checkAndGetData();
         return IdView.builder()
                 .id(idDTO.getId())
                 .build();
@@ -63,7 +63,7 @@ public class BlogSmsBizServiceImpl implements BlogSmsBizService {
     public IdsView deleteSensitive(List<Long> sensitiveIdList) {
         SensitiveDeleteParam sensitiveDeleteParam = SmsApiParam2ClientParamConvert.deleteApiParam2Param(sensitiveIdList);
         ResultView<IdsDTO> response = blogSmsClient.deleteSensitive(sensitiveDeleteParam);
-        IdsDTO idsDTO = response.getData();
+        IdsDTO idsDTO = response.checkAndGetData();
         return IdsView.builder()
                 .ids(idsDTO.getIds())
                 .build();
@@ -73,7 +73,7 @@ public class BlogSmsBizServiceImpl implements BlogSmsBizService {
     public IdsView recoverSensitive(List<Long> sensitiveIdList) {
         SensitiveRecoverParam sensitiveRecoverParam = SmsApiParam2ClientParamConvert.recoveryApiParam2Param(sensitiveIdList);
         ResultView<IdsDTO> response = blogSmsClient.recoverSensitive(sensitiveRecoverParam);
-        IdsDTO idsDTO = response.getData();
+        IdsDTO idsDTO = response.checkAndGetData();
         return IdsView.builder()
                 .ids(idsDTO.getIds())
                 .build();
@@ -83,7 +83,7 @@ public class BlogSmsBizServiceImpl implements BlogSmsBizService {
     public PageResult<SensitivePageListView> querySensitiveByPage(PageQry<SensitiveQueryApiParam> sensitiveQueryApiParamPageQry) {
         PageQry<SensitiveQueryParam> sensitiveQueryParamPageQry = SmsApiParam2ClientParamConvert.sensitiveQueryApiParam2Param(sensitiveQueryApiParamPageQry);
         ResultView<PageResult<SensitivePageListDTO>> response = blogSmsClient.querySensitiveByPage(sensitiveQueryParamPageQry);
-        PageResult<SensitivePageListView> sensitivePageListViewPageResult = SmsDTO2ViewConvert.sensitivePageListDTO2View(response.getData());
+        PageResult<SensitivePageListView> sensitivePageListViewPageResult = SmsDTO2ViewConvert.sensitivePageListDTO2View(response.checkAndGetData());
         return sensitivePageListViewPageResult;
     }
 
@@ -91,7 +91,7 @@ public class BlogSmsBizServiceImpl implements BlogSmsBizService {
     public IdView addMessage(MessageAddApiParam messageAddApiParam) {
         MessageAddParam messageAddParam = SmsApiParam2ClientParamConvert.addApiParam2Param(messageAddApiParam);
         ResultView<IdDTO> response = blogSmsClient.addMessage(messageAddParam);
-        IdDTO data = response.getData();
+        IdDTO data = response.checkAndGetData();
         return IdView.builder()
                 .id(data.getId())
                 .build();
@@ -101,7 +101,7 @@ public class BlogSmsBizServiceImpl implements BlogSmsBizService {
     public IdView updateMessage(MessageUpdateApiParam messageUpdateApiParam) {
         MessageUpdateParam messageUpdateParam = SmsApiParam2ClientParamConvert.updateApiParam2Param(messageUpdateApiParam);
         ResultView<IdDTO> response = blogSmsClient.updateMessage(messageUpdateParam);
-        IdDTO data = response.getData();
+        IdDTO data = response.checkAndGetData();
         return IdView.builder()
                 .id(data.getId())
                 .build();
@@ -111,7 +111,7 @@ public class BlogSmsBizServiceImpl implements BlogSmsBizService {
     public PageResult<MessagePageListView> queryMessageByPage(PageQry<MessageQueryApiParam> messageQueryApiParamPageQry) {
         PageQry<MessageQueryParam> messageQueryParamPageQry = SmsApiParam2ClientParamConvert.messageQueryApiParam2Param(messageQueryApiParamPageQry);
         ResultView<PageResult<MessagePageListDTO>> response = blogSmsClient.queryMessageByPage(messageQueryParamPageQry);
-        PageResult<MessagePageListView> sensitivePageListViewPageResult = SmsDTO2ViewConvert.messagePageListDTO2View(response.getData());
+        PageResult<MessagePageListView> sensitivePageListViewPageResult = SmsDTO2ViewConvert.messagePageListDTO2View(response.checkAndGetData());
         return sensitivePageListViewPageResult;
     }
 

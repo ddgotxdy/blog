@@ -7,9 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import top.ddgotxdy.api.model.UserEmailCheckApiModel;
 import top.ddgotxdy.api.model.UserLoginApiModel;
-import top.ddgotxdy.api.model.UserNameCheckApiModel;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
 import top.ddgotxdy.api.model.view.UserInfoView;
 import top.ddgotxdy.api.service.BlogAuthBizService;
@@ -59,23 +57,5 @@ public class AuthController {
     public ResultView<UserInfoView> getUserInfo() {
         UserInfoView userInfoView = blogAuthBizService.getUserInfo();
         return ResultView.success(userInfoView);
-    }
-
-    @ApiOperation("检查用户名是否合法")
-    @PostMapping("/checkUserName")
-    public ResultView<Boolean> checkUserName(
-            @Validated @RequestBody UserNameCheckApiModel userNameCheckApiModel
-    ) {
-        Boolean ok = blogAuthBizService.checkUserName(userNameCheckApiModel);
-        return ResultView.success(ok);
-    }
-
-    @ApiOperation("检查邮箱是否合法")
-    @PostMapping("/checkEmail")
-    public ResultView<Boolean> checkEmail(
-            @Validated @RequestBody UserEmailCheckApiModel userEmailCheckApiModel
-    ) {
-        Boolean ok = blogAuthBizService.checkEmail(userEmailCheckApiModel);
-        return ResultView.success(ok);
     }
 }

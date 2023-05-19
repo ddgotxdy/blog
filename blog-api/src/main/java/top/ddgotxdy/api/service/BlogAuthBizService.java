@@ -1,8 +1,6 @@
 package top.ddgotxdy.api.service;
 
-import top.ddgotxdy.api.model.UserEmailCheckApiModel;
 import top.ddgotxdy.api.model.UserLoginApiModel;
-import top.ddgotxdy.api.model.UserNameCheckApiModel;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
 import top.ddgotxdy.api.model.view.UserInfoView;
 import top.ddgotxdy.common.model.IdView;
@@ -36,18 +34,4 @@ public interface BlogAuthBizService {
      * @return UserInfoView
      */
     UserInfoView getUserInfo();
-
-    /**
-     * 判断用户名是否合法
-     * @param userNameCheckApiModel 用户名查询参数
-     * @return Boolean
-     */
-    Boolean checkUserName(UserNameCheckApiModel userNameCheckApiModel);
-
-    /**
-     * 判断邮箱是否合法
-     * @param userEmailCheckApiModel 邮箱查询参数
-     * @return Boolean
-     */
-    Boolean checkEmail(UserEmailCheckApiModel userEmailCheckApiModel);
 }

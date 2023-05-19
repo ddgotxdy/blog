@@ -31,14 +31,14 @@ public class BlogFileBizServiceImpl implements BlogFileBizService {
     @Override
     public String uploadImage(MultipartFile imageFile) {
         ResultView<String> response = blogFileClient.uploadImage(imageFile);
-        return response.getData();
+        return response.checkAndGetData();
     }
 
     @Override
     public IdView updateImage(ImageUpdateApiParam imageUpdateApiParam) {
         ImageUpdateParam imageUpdateParam = FileApiParam2ClientParamConvert.updateApiParam2updateParam(imageUpdateApiParam);
         ResultView<IdDTO> response = blogFileClient.updateImage(imageUpdateParam);
-        IdDTO idDTO = response.getData();
+        IdDTO idDTO = response.checkAndGetData();
         return IdView.builder()
                 .id(idDTO.getId())
                 .build();
@@ -48,7 +48,7 @@ public class BlogFileBizServiceImpl implements BlogFileBizService {
     public PageResult<ImagePageListView> queryImageByPage(PageQry<ImageQueryApiParam> imageQueryApiParamPageQry) {
         PageQry<ImageQueryParam> imageQueryParamPageQry = FileApiParam2ClientParamConvert.imageQueryApiParam2QueryParam(imageQueryApiParamPageQry);
         ResultView<PageResult<ImagePageListDTO>> response = blogFileClient.queryImageByPage(imageQueryParamPageQry);
-        PageResult<ImagePageListView> imagePageListViewPageResult = FileDTO2ViewConvert.imagePageListDTO2View(response.getData());
+        PageResult<ImagePageListView> imagePageListViewPageResult = FileDTO2ViewConvert.imagePageListDTO2View(response.checkAndGetData());
         return imagePageListViewPageResult;
     }
 
@@ -66,7 +66,7 @@ public class BlogFileBizServiceImpl implements BlogFileBizService {
     public IdView addImage(ImageAddApiParam imageAddApiParam) {
         ImageAddParam imageAddParam = FileApiParam2ClientParamConvert.addApiParam2AddParam(imageAddApiParam);
         ResultView<IdDTO> response = blogFileClient.addImage(imageAddParam);
-        IdDTO idDTO = response.getData();
+        IdDTO idDTO = response.checkAndGetData();
         return IdView.builder()
                 .id(idDTO.getId())
                 .build();

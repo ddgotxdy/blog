@@ -1,9 +1,8 @@
-package top.ddgotxdy.api.handler;
+package top.ddgotxdy.common.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import top.ddgotxdy.common.enums.ResultCode;
 import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.common.model.ResultView;
 
@@ -34,7 +33,7 @@ public class AllExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ResultView doException(Exception ex) {
         ex.printStackTrace();
-        return ResultView.fail(ResultCode.SYSTEM_ERROR.getMsg());
+        return ResultView.fail(ex.getMessage());
     }
 
 }

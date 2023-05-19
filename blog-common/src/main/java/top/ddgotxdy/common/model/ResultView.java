@@ -6,7 +6,9 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import top.ddgotxdy.common.enums.ResultCode;
 import top.ddgotxdy.common.scope.ContextScope;
+import top.ddgotxdy.common.util.ResultViewCheckUtil;
 
 /**
  * @author: ddgo
@@ -55,24 +57,30 @@ public class ResultView<T> {
         this.traceId = ContextScope.getTraceId();
     }
 
+    public T checkAndGetData() {
+        // 先去校验是否成功
+        ResultViewCheckUtil.checkResultView(this);
+        // 再返回data
+        return this.getData();
+    }
+
     public static <T> ResultView<T> success(String message, T data) {
-        return new ResultView<>(200, message, data);
+        return new ResultView<>(ResultCode.OK.getCode(), message, data);
     }
 
     public static <T> ResultView<T> success(T data) {
-        return new ResultView<>(200, data);
+        return new ResultView<>(ResultCode.OK.getCode(), data);
     }
 
     public static <T> ResultView<T> success() {
-        return new ResultView<>(200);
+        return new ResultView<>(ResultCode.OK.getCode());
     }
 
     public static <T> ResultView<T> fail(String message) {
-        return new ResultView<>(500, message);
+        return new ResultView<>(ResultCode.ERROR.getCode(), message);
     }
 
     public static <T> ResultView<T> fail(Integer code, String message) {
         return new ResultView<>(code, message);
     }
-
 }
