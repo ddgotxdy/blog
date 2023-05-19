@@ -3,7 +3,9 @@ package top.ddgotxdy.api.service.impl;
 import org.springframework.stereotype.Service;
 import top.ddgotxdy.api.convert.AuthApiParam2ClientParamConvert;
 import top.ddgotxdy.api.convert.SmsDTO2ViewConvert;
+import top.ddgotxdy.api.model.UserEmailCheckApiModel;
 import top.ddgotxdy.api.model.UserLoginApiModel;
+import top.ddgotxdy.api.model.UserNameCheckApiModel;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
 import top.ddgotxdy.api.model.view.UserInfoView;
 import top.ddgotxdy.api.service.BlogAuthBizService;
@@ -16,7 +18,9 @@ import top.ddgotxdy.common.model.IdView;
 import top.ddgotxdy.common.model.ResultView;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
+import top.ddgotxdy.common.model.auth.model.UserEmailCheckModel;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.model.UserNameCheckModel;
 import top.ddgotxdy.common.model.sms.queryparam.CaptchaQueryParam;
 
 import javax.annotation.Resource;
@@ -77,5 +81,21 @@ public class BlogAuthBizServiceImpl implements BlogAuthBizService {
         // 根据角色id获取角色名称 TODO
         userInfoView.setRoleName("普通用户");
         return userInfoView;
+    }
+
+    @Override
+    public Boolean checkUserName(UserNameCheckApiModel userNameCheckApiModel) {
+        UserNameCheckModel userNameCheckModel
+                = AuthApiParam2ClientParamConvert.apiParam2Param(userNameCheckApiModel);
+        ResultView<Boolean> response = blogAuthClient.checkUserName(userNameCheckModel);
+        return response.getData();
+    }
+
+    @Override
+    public Boolean checkEmail(UserEmailCheckApiModel userEmailCheckApiModel) {
+        UserEmailCheckModel userEmailCheckModel
+                = AuthApiParam2ClientParamConvert.apiParam2Param(userEmailCheckApiModel);
+        ResultView<Boolean> response = blogAuthClient.checkEmail(userEmailCheckModel);
+        return response.getData();
     }
 }

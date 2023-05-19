@@ -11,7 +11,9 @@ import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.ResultView;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
+import top.ddgotxdy.common.model.auth.model.UserEmailCheckModel;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.model.UserNameCheckModel;
 
 import javax.annotation.Resource;
 
@@ -54,5 +56,21 @@ public class AuthController {
     public ResultView<UserInfoDTO> getUserInfo() {
         UserInfoDTO userInfoDTO = authQueryBizService.getUserInfo();
         return ResultView.success(userInfoDTO);
+    }
+
+    @PostMapping("/checkUserName")
+    public ResultView<Boolean> checkUserName(
+            @Validated @RequestBody UserNameCheckModel userNameCheckModel
+    ) {
+        Boolean ok = authQueryBizService.checkUserName(userNameCheckModel);
+        return ResultView.success(ok);
+    }
+
+    @PostMapping("/checkEmail")
+    public ResultView<Boolean> checkEmail(
+            @Validated @RequestBody UserEmailCheckModel userEmailCheckModel
+    ) {
+        Boolean ok = authQueryBizService.checkEmail(userEmailCheckModel);
+        return ResultView.success(ok);
     }
 }
