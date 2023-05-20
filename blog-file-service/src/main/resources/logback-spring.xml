@@ -4,7 +4,7 @@
 <!-- scanPeriod 设置监测配置文件是否有修改的时间间隔，如果没有给出时间单位，默认单位是毫秒。当scan为true时，此属性生效。默认的时间间隔为1分钟 -->
 <!-- debug 当此属性设置为true时，将打印出logback内部日志信息，实时查看logback运行状态。默认值为false -->
 <configuration>
-    <contextName>api-logback</contextName>
+    <contextName>file-logback</contextName>
     <!-- 彩色日志依赖的渲染类 -->
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>
     <conversionRule conversionWord="wex"
@@ -12,8 +12,17 @@
     <conversionRule conversionWord="wEx"
                     converterClass="org.springframework.boot.logging.logback.ExtendedWhitespaceThrowableProxyConverter"/>
 
+    <!--    %d表示时间
+            %thread表示线程名
+            %-5level 表示日志级别，允许以五个字符长度输出
+            %logger{50}表示具体的日志输出者，比如类名，括号内表示长度
+            %msg表示具体的日志消息，就是logger.info("xxx")中的xxx
+            %n表示换行
+    -->
+    <springProperty scope="context" name="appName" source="spring.application.name"/>
+
     <property name="file_pattern"
-              value="%date [%thread] %-5level [%logger{50}] %file:%line - %msg%n"/>
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} ${LOG_LEVEL_PATTERN:-%5p} [%thread] [%logger{50}] %file:%line - %msg%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>
     <property name="console_pattern"
               value="${CONSOLE_LOG_PATTERN:-%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}}"/>
     <property name="basePath" value="logs" />
@@ -25,6 +34,7 @@
             <pattern>${console_pattern}</pattern>
             <charset>UTF-8</charset>
         </encoder>
+        <!-- 此日志appender是为开发使用，只配置最底级别，控制台输出的日志级别是大于或等于此级别的日志信息 -->
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>DEBUG</level>
         </filter>
@@ -42,6 +52,11 @@
         <encoder>
             <pattern>${file_pattern}</pattern>
         </encoder>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
     </appender>
 
     <!-- Log file info output -->
@@ -55,8 +70,10 @@
         <encoder>
             <pattern>${file_pattern}</pattern>
         </encoder>
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
 
@@ -71,17 +88,40 @@
         <encoder>
             <pattern>${file_pattern}</pattern>
         </encoder>
-        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
             <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
         </filter>
     </appender>
 
 
-
+    <!--root配置必须在appender下边-->
+    <!--root节点是对所有appender的管理,添加哪个appender就会打印哪个appender的日志-->
+    <!--root节点的level是总的日志级别控制,如果appender的日志级别设定比root的高,会按照appender的日志级别打印日志,-->
+    <!--如果appender的日志级别比root的低,会按照root设定的日志级别进行打印日志-->
+    <!--也就是说root设定的日志级别是最低限制,如果root设定级别为最高ERROR,那么所有appender只能打印最高级别的日志-->
     <root level="debug">
         <appender-ref ref="stdout"/>
         <appender-ref ref="debug"/>
         <appender-ref ref="info"/>
         <appender-ref ref="error"/>
     </root>
+
+    <!--配置多环境日志输出  可以在application.properties中配置选择哪个profiles : spring.profiles.active=dev-->
+    <!--生产环境:输出到文件-->
+    <!--<springProfile name="pro">
+        <root level="info">
+            <appender-ref ref="DEBUG_FILE" />
+            <appender-ref ref="INFO_FILE" />
+            <appender-ref ref="ERROR_FILE" />
+            <appender-ref ref="WARN_FILE" />
+        </root>
+    </springProfile>-->
+    <!--开发环境:打印控制台-->
+    <!--<springProfile name="dev">
+        <root level="debug">
+            <appender-ref ref="CONSOLE" />
+        </root>
+    </springProfile>-->
 </configuration>
