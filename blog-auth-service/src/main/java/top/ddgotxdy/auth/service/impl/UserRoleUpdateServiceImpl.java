@@ -1,7 +1,6 @@
 package top.ddgotxdy.auth.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.ddgotxdy.auth.annotation.AuthEventSelector;
@@ -21,28 +20,24 @@ import java.util.Objects;
  * @author: ddgo
  * @description:
  */
-@AuthEventSelector(AuthEvent.REGISTER)
+@AuthEventSelector(AuthEvent.USER_ROLE_UPDATE)
 @Service
 @Slf4j
-public class AuthRegisterServiceImpl extends AbstractAuthService {
-
+public class UserRoleUpdateServiceImpl extends AbstractAuthService {
     @Resource
     private BlogUserService blogUserService;
-    @Resource
-    private PasswordEncoder passwordEncoder;
 
     @Override
     protected boolean filter(AuthContext authContext) {
-        if (Objects.isNull(authContext)) {
-            throw new BlogException(ResultCode.REGISTER_ERROR);
+        // 1. user id 校验
+        Long userId = authContext.getUserId();
+        if (Objects.isNull(userId)) {
+            throw new BlogException(ResultCode.USER_ROLE_UPDATE_ERROR.getCode(), "用户id为空");
         }
-        // 1. 用户名唯一
-        if (!uniqueUsername(authContext)) {
-            throw new BlogException(ResultCode.REGISTER_ERROR.getCode(), "用户名存在");
-        }
-        // 2. 邮箱唯一
-        if (!uniqueEmail(authContext)) {
-            throw new BlogException(ResultCode.REGISTER_ERROR.getCode(), "邮箱存在");
+        // 2. 角色 id 校验
+        Long roleId = authContext.getRoleId();
+        if (Objects.isNull(roleId)) {
+            throw new BlogException(ResultCode.USER_ROLE_UPDATE_ERROR.getCode(), "角色id为空");
         }
         return true;
     }
@@ -50,10 +45,7 @@ public class AuthRegisterServiceImpl extends AbstractAuthService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     protected void doExecute(AuthContext authContext) {
-        BlogUser blogUser = Context2EntityConvert.authContext2UserForAdd(authContext);
-        // 密码加密
-        blogUser.setPassword(passwordEncoder.encode(authContext.getPassword()));
-        blogUserService.save(blogUser);
-        authContext.setUserId(blogUser.getUserId());
+        BlogUser blogUser = Context2EntityConvert.authContext2UserForUpdate(authContext);
+        blogUserService.updateById(blogUser);
     }
 }

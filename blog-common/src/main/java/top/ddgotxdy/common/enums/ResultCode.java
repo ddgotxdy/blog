@@ -52,6 +52,10 @@ public enum ResultCode {
     REGISTER_ERROR(1004, "注册失败"),
     PASSWORD_NOT_EQUAL(1005, "密码不相等"),
     CAPTCHA_ERROR(1006, "验证码错误"),
+    USER_INFO_UPDATE_ERROR(1007, "用户信息修改错误"),
+    USER_PASSWORD_UPDATE_ERROR(1008, "用户密码修改错误"),
+    USER_EMAIL_UPDATE_ERROR(1009, "用户邮箱修改错误"),
+    USER_ROLE_UPDATE_ERROR(1010, "用户角色修改错误"),
     ;
     private final Integer code;
     private final String msg;

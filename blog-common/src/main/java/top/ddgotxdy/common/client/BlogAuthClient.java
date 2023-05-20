@@ -11,6 +11,10 @@ import top.ddgotxdy.common.model.ResultView;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.updateparam.UserEmailUpdateParam;
+import top.ddgotxdy.common.model.auth.updateparam.UserInfoUpdateParam;
+import top.ddgotxdy.common.model.auth.updateparam.UserPasswordUpdateParam;
+import top.ddgotxdy.common.model.auth.updateparam.UserRoleUpdateParam;
 
 /**
  * @author: ddgo
@@ -52,4 +56,44 @@ public interface BlogAuthClient {
      */
     @PostMapping("openfeign/auth/getUserInfo")
     ResultView<UserInfoDTO> getUserInfo();
+
+    /**
+     * 更新密码
+     * @param userPasswordUpdateParam 更新密码参数
+     * @return IdDTO
+     */
+    @PostMapping("/updatePassword")
+    ResultView<IdDTO> updatePassword(
+            @Validated @RequestBody UserPasswordUpdateParam userPasswordUpdateParam
+    );
+
+    /**
+     * 更新邮箱
+     * @param userEmailUpdateParam 更新邮箱参数
+     * @return IdDTO
+     */
+    @PostMapping("/updateEmail")
+    ResultView<IdDTO> updateEmail(
+            @Validated @RequestBody UserEmailUpdateParam userEmailUpdateParam
+    );
+
+    /**
+     * 更新用户信息
+     * @param userInfoUpdateParam 更新用户信息参数
+     * @return IdDTO
+     */
+    @PostMapping("/updateUserInfo")
+    ResultView<IdDTO> updateUserInfo(
+            @Validated @RequestBody UserInfoUpdateParam userInfoUpdateParam
+    );
+
+    /**
+     * 更新用户角色
+     * @param userRoleUpdateParam 更新用户角色参数
+     * @return IdDTO
+     */
+    @PostMapping("/updateRole")
+    ResultView<IdDTO> updateRole(
+            @Validated @RequestBody UserRoleUpdateParam userRoleUpdateParam
+    );
 }

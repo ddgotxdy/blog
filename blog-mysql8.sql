@@ -48,7 +48,7 @@ CREATE TABLE `blog_menu` (
 DROP TABLE IF EXISTS `blog_article`;
 CREATE TABLE `blog_article`  (
    `article_id` bigint NOT NULL COMMENT '文章ID',
-   `article_cover_url` varchar(1024) NOT NULL DEFAULT '' COMMENT '文章缩略图，没有则默认填充',
+   `article_cover_url` varchar(128) NOT NULL DEFAULT '' COMMENT '文章缩略图，没有则默认填充',
    `article_title` varchar(50) NOT NULL DEFAULT '' COMMENT '标题',
    `article_content` longtext NOT NULL COMMENT '文章内容',
    `rank` int NOT NULL DEFAULT 0 COMMENT '置顶排序，值越大，排名越高',

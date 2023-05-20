@@ -1,6 +1,8 @@
 package top.ddgotxdy.auth.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import org.hibernate.validator.constraints.Length;
 
 /**
  * @author: ddgo
@@ -26,6 +28,16 @@ public class AuthContext {
      * 密码
      */
     private String password;
+
+    /**
+     * 当前密码
+     */
+    private String currentPassword;
+
+    /**
+     * 重复新密码
+     */
+    private String rePassword;
 
     /**
      * 邮箱号
@@ -61,4 +73,8 @@ public class AuthContext {
      * 是否删除，0否1是
      */
     private Boolean isDelete;
+    /**
+     * 验证码
+     */
+    private String captcha;
 }

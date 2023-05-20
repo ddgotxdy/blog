@@ -12,6 +12,10 @@ import top.ddgotxdy.common.model.ResultView;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.updateparam.UserEmailUpdateParam;
+import top.ddgotxdy.common.model.auth.updateparam.UserInfoUpdateParam;
+import top.ddgotxdy.common.model.auth.updateparam.UserPasswordUpdateParam;
+import top.ddgotxdy.common.model.auth.updateparam.UserRoleUpdateParam;
 
 import javax.annotation.Resource;
 
@@ -54,5 +58,37 @@ public class AuthController {
     public ResultView<UserInfoDTO> getUserInfo() {
         UserInfoDTO userInfoDTO = authQueryBizService.getUserInfo();
         return ResultView.success(userInfoDTO);
+    }
+
+    @PostMapping("/updatePassword")
+    public ResultView<IdDTO> updatePassword(
+            @Validated @RequestBody UserPasswordUpdateParam userPasswordUpdateParam
+    ) {
+        IdDTO idDTO = authCmdBizService.updatePassword(userPasswordUpdateParam);
+        return ResultView.success(idDTO);
+    }
+
+    @PostMapping("/updateEmail")
+    public ResultView<IdDTO> updateEmail(
+            @Validated @RequestBody UserEmailUpdateParam userEmailUpdateParam
+    ) {
+        IdDTO idDTO = authCmdBizService.updateEmail(userEmailUpdateParam);
+        return ResultView.success(idDTO);
+    }
+
+    @PostMapping("/updateUserInfo")
+    public ResultView<IdDTO> updateUserInfo(
+            @Validated @RequestBody UserInfoUpdateParam userInfoUpdateParam
+    ) {
+        IdDTO idDTO = authCmdBizService.updateUserInfo(userInfoUpdateParam);
+        return ResultView.success(idDTO);
+    }
+
+    @PostMapping("/updateRole")
+    public ResultView<IdDTO> updateRole(
+            @Validated @RequestBody UserRoleUpdateParam userRoleUpdateParam
+    ) {
+        IdDTO idDTO = authCmdBizService.updateRole(userRoleUpdateParam);
+        return ResultView.success(idDTO);
     }
 }

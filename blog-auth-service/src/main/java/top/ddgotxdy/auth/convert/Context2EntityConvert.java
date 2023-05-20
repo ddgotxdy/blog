@@ -15,4 +15,10 @@ public class Context2EntityConvert {
         BeanCopyUtil.copyProperties(authContext, blogUser);
         return blogUser;
     }
+
+    public static BlogUser authContext2UserForUpdate(AuthContext authContext) {
+        BlogUser blogUser = new BlogUser();
+        BeanCopyUtil.copyProperties(authContext, blogUser);
+        return blogUser;
+    }
 }
