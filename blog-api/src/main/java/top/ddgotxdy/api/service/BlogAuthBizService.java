@@ -2,6 +2,10 @@ package top.ddgotxdy.api.service;
 
 import top.ddgotxdy.api.model.UserLoginApiModel;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
+import top.ddgotxdy.api.model.updateparam.UserEmailUpdateApiParam;
+import top.ddgotxdy.api.model.updateparam.UserInfoUpdateApiParam;
+import top.ddgotxdy.api.model.updateparam.UserPasswordUpdateApiParam;
+import top.ddgotxdy.api.model.updateparam.UserRoleUpdateApiParam;
 import top.ddgotxdy.api.model.view.UserInfoView;
 import top.ddgotxdy.common.model.IdView;
 
@@ -34,4 +38,32 @@ public interface BlogAuthBizService {
      * @return UserInfoView
      */
     UserInfoView getUserInfo();
+
+    /**
+     * 更新密码
+     * @param userPasswordUpdateApiParam 更新密码参数
+     * @return IdView
+     */
+    IdView updatePassword(UserPasswordUpdateApiParam userPasswordUpdateApiParam);
+
+    /**
+     * 更新邮箱
+     * @param userEmailUpdateApiParam 更新邮箱参数
+     * @return IdView
+     */
+    IdView updateEmail(UserEmailUpdateApiParam userEmailUpdateApiParam);
+
+    /**
+     * 更新用户信息
+     * @param userInfoUpdateApiParam 更新用户信息参数
+     * @return IdView
+     */
+    IdView updateUserInfo(UserInfoUpdateApiParam userInfoUpdateApiParam);
+
+    /**
+     * 更新角色
+     * @param userRoleUpdateApiParam 更新角色参数
+     * @return IdView
+     */
+    IdView updateRole(UserRoleUpdateApiParam userRoleUpdateApiParam);
 }

@@ -5,6 +5,10 @@ import top.ddgotxdy.api.convert.AuthApiParam2ClientParamConvert;
 import top.ddgotxdy.api.convert.SmsDTO2ViewConvert;
 import top.ddgotxdy.api.model.UserLoginApiModel;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
+import top.ddgotxdy.api.model.updateparam.UserEmailUpdateApiParam;
+import top.ddgotxdy.api.model.updateparam.UserInfoUpdateApiParam;
+import top.ddgotxdy.api.model.updateparam.UserPasswordUpdateApiParam;
+import top.ddgotxdy.api.model.updateparam.UserRoleUpdateApiParam;
 import top.ddgotxdy.api.model.view.UserInfoView;
 import top.ddgotxdy.api.service.BlogAuthBizService;
 import top.ddgotxdy.common.client.BlogAuthClient;
@@ -17,6 +21,10 @@ import top.ddgotxdy.common.model.ResultView;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.updateparam.UserEmailUpdateParam;
+import top.ddgotxdy.common.model.auth.updateparam.UserInfoUpdateParam;
+import top.ddgotxdy.common.model.auth.updateparam.UserPasswordUpdateParam;
+import top.ddgotxdy.common.model.auth.updateparam.UserRoleUpdateParam;
 import top.ddgotxdy.common.model.sms.queryparam.CaptchaQueryParam;
 
 import javax.annotation.Resource;
@@ -78,5 +86,45 @@ public class BlogAuthBizServiceImpl implements BlogAuthBizService {
         // 根据角色id获取角色名称 TODO
         userInfoView.setRoleName("普通用户");
         return userInfoView;
+    }
+
+    @Override
+    public IdView updatePassword(UserPasswordUpdateApiParam userPasswordUpdateApiParam) {
+        UserPasswordUpdateParam userPasswordUpdateParam
+                = AuthApiParam2ClientParamConvert.apiParam2Param(userPasswordUpdateApiParam);
+        ResultView<IdDTO> response = blogAuthClient.updatePassword(userPasswordUpdateParam);
+        return IdView.builder()
+                .id(response.checkAndGetData().getId())
+                .build();
+    }
+
+    @Override
+    public IdView updateEmail(UserEmailUpdateApiParam userEmailUpdateApiParam) {
+        UserEmailUpdateParam userEmailUpdateParam
+                = AuthApiParam2ClientParamConvert.apiParam2Param(userEmailUpdateApiParam);
+        ResultView<IdDTO> response = blogAuthClient.updateEmail(userEmailUpdateParam);
+        return IdView.builder()
+                .id(response.checkAndGetData().getId())
+                .build();
+    }
+
+    @Override
+    public IdView updateUserInfo(UserInfoUpdateApiParam userInfoUpdateApiParam) {
+        UserInfoUpdateParam userInfoUpdateParam
+                = AuthApiParam2ClientParamConvert.apiParam2Param(userInfoUpdateApiParam);
+        ResultView<IdDTO> response = blogAuthClient.updateUserInfo(userInfoUpdateParam);
+        return IdView.builder()
+                .id(response.checkAndGetData().getId())
+                .build();
+    }
+
+    @Override
+    public IdView updateRole(UserRoleUpdateApiParam userRoleUpdateApiParam) {
+        UserRoleUpdateParam userRoleUpdateParam
+                = AuthApiParam2ClientParamConvert.apiParam2Param(userRoleUpdateApiParam);
+        ResultView<IdDTO> response = blogAuthClient.updateRole(userRoleUpdateParam);
+        return IdView.builder()
+                .id(response.checkAndGetData().getId())
+                .build();
     }
 }

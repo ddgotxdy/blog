@@ -9,6 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.ddgotxdy.api.model.UserLoginApiModel;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
+import top.ddgotxdy.api.model.updateparam.UserEmailUpdateApiParam;
+import top.ddgotxdy.api.model.updateparam.UserInfoUpdateApiParam;
+import top.ddgotxdy.api.model.updateparam.UserPasswordUpdateApiParam;
+import top.ddgotxdy.api.model.updateparam.UserRoleUpdateApiParam;
 import top.ddgotxdy.api.model.view.UserInfoView;
 import top.ddgotxdy.api.service.BlogAuthBizService;
 import top.ddgotxdy.common.model.IdView;
@@ -57,5 +61,41 @@ public class AuthController {
     public ResultView<UserInfoView> getUserInfo() {
         UserInfoView userInfoView = blogAuthBizService.getUserInfo();
         return ResultView.success(userInfoView);
+    }
+
+    @ApiOperation("更新密码")
+    @PostMapping("/updatePassword")
+    public ResultView<IdView> updatePassword(
+            @Validated @RequestBody UserPasswordUpdateApiParam userPasswordUpdateApiParam
+    ) {
+        IdView idView = blogAuthBizService.updatePassword(userPasswordUpdateApiParam);
+        return ResultView.success(idView);
+    }
+
+    @ApiOperation("更新邮箱")
+    @PostMapping("/updateEmail")
+    public ResultView<IdView> updateEmail(
+            @Validated @RequestBody UserEmailUpdateApiParam userEmailUpdateApiParam
+    ) {
+        IdView idView = blogAuthBizService.updateEmail(userEmailUpdateApiParam);
+        return ResultView.success(idView);
+    }
+
+    @ApiOperation("更新用户信息")
+    @PostMapping("/updateUserInfo")
+    public ResultView<IdView> updateUserInfo(
+            @Validated @RequestBody UserInfoUpdateApiParam userInfoUpdateApiParam
+    ) {
+        IdView idView = blogAuthBizService.updateUserInfo(userInfoUpdateApiParam);
+        return ResultView.success(idView);
+    }
+
+    @ApiOperation("更新角色")
+    @PostMapping("/updateRole")
+    public ResultView<IdView> updateRole(
+            @Validated @RequestBody UserRoleUpdateApiParam userRoleUpdateApiParam
+    ) {
+        IdView idView = blogAuthBizService.updateRole(userRoleUpdateApiParam);
+        return ResultView.success(idView);
     }
 }
