@@ -35,14 +35,9 @@ public class TagDeleteServiceImpl extends AbstractArticleService {
 
     @Override
     protected boolean filter(ArticleContext articleContext) {
-        // 1. 所有通用校验逻辑全部校验通过
-        boolean allCommonCheck = this.checkIsAdmin(articleContext);
-        if (!allCommonCheck) {
-            throw new BlogException(ResultCode.TAG_DELETE_ERROR.getCode(), "not admin");
-        }
         // 2. 标签列表是否传过来
         if (Objects.isNull(articleContext.getTagIds())) {
-            throw new BlogException(ResultCode.TAG_DELETE_ERROR.getCode(), "tag ids is null");
+            throw new BlogException(ResultCode.TAG_DELETE_ERROR.getCode(), "标签列表为空");
         }
         return true;
     }

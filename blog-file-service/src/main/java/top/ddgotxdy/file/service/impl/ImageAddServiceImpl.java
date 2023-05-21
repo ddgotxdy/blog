@@ -33,22 +33,21 @@ public class ImageAddServiceImpl extends AbstractFileService {
     @Override
     protected boolean filter(FileContext fileContext) {
         // 1. 所有通用校验逻辑全部校验通过
-        boolean allCommonCheck = this.checkIsAdmin(fileContext)
-                && this.checkUniqueImageName(fileContext);
+        boolean allCommonCheck = this.checkUniqueImageName(fileContext);
         if (!allCommonCheck) {
-            throw new BlogException(ResultCode.IMAGE_ADD_ERROR.getCode(), "not admin or not unique name");
+            throw new BlogException(ResultCode.IMAGE_ADD_ERROR.getCode(), "图片名称长度错误");
         }
         // 2. 图片名称长度
         String imageName = fileContext.getImageName();
         if (StringUtils.length(imageName) < 1
                 || StringUtils.length(imageName) > MAX_IMAGE_NAME_LENGTH) {
-            throw new BlogException(ResultCode.IMAGE_ADD_ERROR.getCode(), "Over MAX_IMAGE_NAME_LENGTH or Lower 1");
+            throw new BlogException(ResultCode.IMAGE_ADD_ERROR.getCode(), "图片名称长度错误");
         }
         // 3. url的长度校验
         String imageUrl = fileContext.getImageUrl();
         if (StringUtils.length(imageUrl) < 1
                 || StringUtils.length(imageUrl) > MAX_IMAGE_URL_LENGTH) {
-            throw new BlogException(ResultCode.IMAGE_ADD_ERROR.getCode(), "Over MAX_IMAGE_URL_LENGTH or Lower 1");
+            throw new BlogException(ResultCode.IMAGE_ADD_ERROR.getCode(), "图片链接长度错误");
         }
         return true;
     }

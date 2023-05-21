@@ -31,11 +31,6 @@ public class ArticleBodyRecoverServiceImpl extends AbstractArticleService {
 
     @Override
     protected boolean filter(ArticleContext articleContext) {
-        // 1. 所有通用校验逻辑全部校验通过
-        boolean allCommonCheck = this.checkIsAdmin(articleContext);
-        if (!allCommonCheck) {
-            throw new BlogException(ResultCode.ARTICLE_RECOVERY_ERROR.getCode(), "not admin");
-        }
         // 2. 传递的列表
         if (Objects.isNull(articleContext.getArticleIds())) {
             throw new BlogException(ResultCode.ARTICLE_RECOVERY_ERROR.getCode(), "article ids is null");

@@ -29,14 +29,9 @@ public class SensitiveRecoverServiceImpl extends AbstractSmsService {
 
     @Override
     protected boolean filter(SmsContext smsContext) {
-        // 1. 所有通用校验逻辑全部校验通过
-        boolean allCommonCheck = this.checkIsAdmin(smsContext);
-        if (!allCommonCheck) {
-            throw new BlogException(ResultCode.SENSITIVE_RECOVERY_ERROR.getCode(), "not admin");
-        }
         // 2. 传递的列表
         if (Objects.isNull(smsContext.getSensitiveIds())) {
-            throw new BlogException(ResultCode.SENSITIVE_RECOVERY_ERROR.getCode(), "Sensitive Ids empty");
+            throw new BlogException(ResultCode.SENSITIVE_RECOVERY_ERROR.getCode(), "敏感词id列表为空");
         }
         return true;
     }

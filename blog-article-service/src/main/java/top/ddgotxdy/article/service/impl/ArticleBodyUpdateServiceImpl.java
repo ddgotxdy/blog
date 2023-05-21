@@ -34,11 +34,6 @@ public class ArticleBodyUpdateServiceImpl extends AbstractArticleService {
     private BlogArticleService blogArticleService;
     @Override
     protected boolean filter(ArticleContext articleContext) {
-        // 1. 所有通用校验逻辑全部校验通过
-        boolean allCommonCheck = this.checkIsAdmin(articleContext);
-        if (!allCommonCheck) {
-            throw new BlogException(ResultCode.ARTICLE_UPDATE_ERROR.getCode(), "不是admin");
-        }
         // 2. 文章如果传值了更新内容的大小不超过数据库的长度
         if (Objects.nonNull(articleContext.getArticleContent())
                 && StringUtils.length(articleContext.getArticleContent()) > MAX_ARTICLE_CONTENT_LENGTH) {

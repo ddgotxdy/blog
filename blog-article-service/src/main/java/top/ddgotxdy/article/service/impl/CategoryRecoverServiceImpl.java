@@ -28,14 +28,9 @@ public class CategoryRecoverServiceImpl extends AbstractArticleService {
     private BlogCategoryService blogCategoryService;
     @Override
     protected boolean filter(ArticleContext articleContext) {
-        // 1. 所有通用校验逻辑全部校验通过
-        boolean allCommonCheck = this.checkIsAdmin(articleContext);
-        if (!allCommonCheck) {
-            throw new BlogException(ResultCode.CATEGORY_RECOVERY_ERROR.getCode(), "not admin");
-        }
         // 2. 标签列表是否传过来
         if (Objects.isNull(articleContext.getCategoryIds())) {
-            throw new BlogException(ResultCode.CATEGORY_RECOVERY_ERROR.getCode(), "category ids is null");
+            throw new BlogException(ResultCode.CATEGORY_RECOVERY_ERROR.getCode(), "分类id列表为空");
         }
         return true;
     }

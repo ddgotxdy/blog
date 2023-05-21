@@ -63,19 +63,6 @@ public abstract class AbstractFileService implements FileBaseService {
     }
 
     /**
-     * 校验是否是管理员
-     * @param fileContext 上下文
-     * @return true 是管理员 false 否
-     */
-    protected boolean checkIsAdmin(FileContext fileContext) {
-        // TODO 代完善，目前只运行1通过
-        if (fileContext.getUserId() != 1) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * 校验名称唯一性
      * @param fileContext 上下文
      * @return true 唯一  false 不唯一

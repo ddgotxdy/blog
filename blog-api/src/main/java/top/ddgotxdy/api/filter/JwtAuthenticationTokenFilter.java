@@ -10,6 +10,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import top.ddgotxdy.common.constant.RedisPrefix;
 import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.common.model.LoginUser;
+import top.ddgotxdy.common.scope.ContextScope;
 import top.ddgotxdy.common.util.JwtUtil;
 import top.ddgotxdy.common.util.RedisCache;
 
@@ -54,6 +55,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         }
         // 从redis中获取用户信息
         log.info("userId [{}]", userId);
+        ContextScope.setUserId(Long.valueOf(userId));
         String redisKey = RedisPrefix.LOGIN + userId;
         LoginUser loginUser = redisCache.getCacheObject(redisKey);
         if(Objects.isNull(loginUser)) {

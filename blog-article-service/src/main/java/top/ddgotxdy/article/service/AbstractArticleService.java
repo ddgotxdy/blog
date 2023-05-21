@@ -66,19 +66,6 @@ public abstract class AbstractArticleService implements ArticleBaseService {
     }
 
     /**
-     * 校验是否是管理员
-     * @param articleContext 文章上下文
-     * @return true 是管理员 false 否
-     */
-    protected boolean checkIsAdmin(ArticleContext articleContext) {
-        // TODO 代完善，目前只运行1通过
-        if (articleContext.getUserId() != 1) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * 校验分类名称是否唯一
      * @param articleContext 文章上下文
      * @return true 唯一，false 不唯一

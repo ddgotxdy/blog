@@ -1,6 +1,5 @@
 package top.ddgotxdy.sms.service.impl;
 
-import com.github.houbb.sensitive.word.bs.SensitiveWordBs;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -35,21 +34,20 @@ public class SensitiveAddServiceImpl extends AbstractSmsService {
     @Override
     protected boolean filter(SmsContext smsContext) {
         // 1. 所有通用校验逻辑全部校验通过
-        boolean allCommonCheck = this.checkIsAdmin(smsContext)
-                && this.checkUniqueSensitiveName(smsContext);
+        boolean allCommonCheck = this.checkUniqueSensitiveName(smsContext);
         if (!allCommonCheck) {
-            throw new BlogException(ResultCode.SENSITIVE_ADD_ERROR.getCode(), "not admin");
+            throw new BlogException(ResultCode.SENSITIVE_ADD_ERROR.getCode(), "敏感词不唯一");
         }
         // 2. 敏感词长度<=50
         String word = smsContext.getWord();
         if (StringUtils.length(word) > MAX_WORD_LENGTH || StringUtils.length(word) < 1) {
-            throw new BlogException(ResultCode.SENSITIVE_ADD_ERROR.getCode(), "Over MAX_WORD_LENGTH or lower 1");
+            throw new BlogException(ResultCode.SENSITIVE_ADD_ERROR.getCode(), "敏感词长度错误");
         }
         // 3. 敏感词的类型是合法的
         Integer sensitiveType = smsContext.getSensitiveType();
         if (Objects.isNull(sensitiveType)
                 || SensitiveType.of(sensitiveType) == SensitiveType.SENSITIVE_UNKNOWN) {
-            throw new BlogException(ResultCode.SENSITIVE_ADD_ERROR.getCode(), "SensitiveType error");
+            throw new BlogException(ResultCode.SENSITIVE_ADD_ERROR.getCode(), "敏感词类型错误");
         }
         return true;
     }

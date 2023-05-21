@@ -32,15 +32,14 @@ public class TagAddServiceImpl extends AbstractArticleService {
     @Override
     protected boolean filter(ArticleContext articleContext) {
         // 1. 所有通用校验逻辑全部校验通过
-        boolean allCommonCheck = this.checkIsAdmin(articleContext)
-                && this.checkUniqueTagName(articleContext);
+        boolean allCommonCheck = this.checkUniqueTagName(articleContext);
         if (!allCommonCheck) {
-            throw new BlogException(ResultCode.TAG_ADD_ERROR.getCode(), "not admin or not unique name");
+            throw new BlogException(ResultCode.TAG_ADD_ERROR.getCode(), "标签名不唯一");
         }
         // 2. 标签的大小不超过最长的长度
         if (StringUtils.length(articleContext.getTagName()) > MAX_TAG_LENGTH
             || StringUtils.length(articleContext.getTagName()) < 1) {
-            throw new BlogException(ResultCode.TAG_ADD_ERROR.getCode(), "Over MAX_TAG_LENGTH or Lower 1");
+            throw new BlogException(ResultCode.TAG_ADD_ERROR.getCode(), "标签名长度错误");
         }
         return true;
     }

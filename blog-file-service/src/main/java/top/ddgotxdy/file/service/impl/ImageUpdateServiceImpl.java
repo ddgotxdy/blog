@@ -34,28 +34,27 @@ public class ImageUpdateServiceImpl extends AbstractFileService {
     @Override
     protected boolean filter(FileContext fileContext) {
         // 1. 所有通用校验逻辑全部校验通过
-        boolean allCommonCheck = this.checkIsAdmin(fileContext)
-                && this.checkUniqueImageName(fileContext);
+        boolean allCommonCheck = this.checkUniqueImageName(fileContext);
         if (!allCommonCheck) {
-            throw new BlogException(ResultCode.IMAGE_UPDATE_ERROR.getCode(), "not admin or not unique name");
+            throw new BlogException(ResultCode.IMAGE_UPDATE_ERROR.getCode(), "名称不唯一");
         }
         // 2. 图片名称长度
         String imageName = fileContext.getImageName();
         if (Objects.nonNull(imageName)
                 && (StringUtils.length(imageName) < 1
                 || StringUtils.length(imageName) > MAX_IMAGE_NAME_LENGTH)) {
-            throw new BlogException(ResultCode.IMAGE_UPDATE_ERROR.getCode(), "Over MAX_IMAGE_NAME_LENGTH or Lower 1");
+            throw new BlogException(ResultCode.IMAGE_UPDATE_ERROR.getCode(), "图片名称长度错误");
         }
         // 3. url的长度校验
         String imageUrl = fileContext.getImageUrl();
         if (Objects.nonNull(imageUrl)
                 && (StringUtils.length(imageUrl) < 1
                 || StringUtils.length(imageUrl) > MAX_IMAGE_URL_LENGTH)) {
-            throw new BlogException(ResultCode.IMAGE_UPDATE_ERROR.getCode(), "Over MAX_IMAGE_URL_LENGTH or Lower 1");
+            throw new BlogException(ResultCode.IMAGE_UPDATE_ERROR.getCode(), "图片链接长度错误");
         }
         // 4. 图片id必传
         if (Objects.isNull(fileContext.getImageId())) {
-            throw new BlogException(ResultCode.IMAGE_UPDATE_ERROR.getCode(), "image id is null");
+            throw new BlogException(ResultCode.IMAGE_UPDATE_ERROR.getCode(), "图片id为空");
         }
         return true;
     }

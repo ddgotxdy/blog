@@ -7,7 +7,6 @@ import top.ddgotxdy.common.scope.ContextScope;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Optional;
 
 /**
  * @author: ddgo
@@ -32,11 +31,8 @@ public class DataInitInterceptor implements HandlerInterceptor {
         // 3. ip地址
         String ip = this.getIpAddress(request);
         ContextScope.setIp(ip);
-        // 4. user id
-        Long userId = Long.valueOf(Optional.ofNullable(request.getHeader("USER-ID")).orElse("0"));
-        ContextScope.setUserId(userId);
-        log.info("uri [{}] method [{}] ip [{}] userid [{}]", uri, method, ip, userId);
-        // 5. trace id
+        log.info("uri [{}] method [{}] ip [{}]", uri, method, ip);
+        // 4. trace id
         TraceContext traceContext = (TraceContext)request.getAttribute(TraceContext.class.getName());
         String traceId = traceContext.traceId();
         ContextScope.setTraceId(traceId);

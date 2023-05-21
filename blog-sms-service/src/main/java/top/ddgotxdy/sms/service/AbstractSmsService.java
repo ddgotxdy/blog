@@ -68,19 +68,6 @@ public abstract class AbstractSmsService implements SmsBaseService {
     }
 
     /**
-     * 校验是否是管理员
-     * @param smsContext 上下文
-     * @return true 是管理员 false 否
-     */
-    protected boolean checkIsAdmin(SmsContext smsContext) {
-        // TODO 代完善，目前只运行1通过
-        if (smsContext.getUserId() != 1) {
-            return false;
-        }
-        return true;
-    }
-
-    /**
      * 校验标签的唯一性
      * @param smsContext 上下文
      * @return true 唯一  false 不唯一

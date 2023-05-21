@@ -31,15 +31,14 @@ public class CategoryAddServiceImpl extends AbstractArticleService {
     @Override
     protected boolean filter(ArticleContext articleContext) {
         // 1. 所有通用校验逻辑全部校验通过
-        boolean allCommonCheck = this.checkIsAdmin(articleContext)
-                && this.checkUniqueCategoryName(articleContext);
+        boolean allCommonCheck = this.checkUniqueCategoryName(articleContext);
         if (!allCommonCheck) {
-            throw new BlogException(ResultCode.CATEGORY_ADD_ERROR.getCode(), "not admin or not unique name");
+            throw new BlogException(ResultCode.CATEGORY_ADD_ERROR.getCode(), "名称重复");
         }
         // 2. 分类的大小不超过最长的长度
         if (StringUtils.length(articleContext.getCategoryName()) > MAX_CATEGORY_LENGTH
                 || StringUtils.length(articleContext.getCategoryName()) < 1) {
-            throw new BlogException(ResultCode.CATEGORY_ADD_ERROR.getCode(), "Over MAX_CATEGORY_LENGTH or Lower 1");
+            throw new BlogException(ResultCode.CATEGORY_ADD_ERROR.getCode(), "分类名长度错误");
         }
         return true;
     }
