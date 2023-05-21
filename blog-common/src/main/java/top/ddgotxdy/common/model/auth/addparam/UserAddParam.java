@@ -18,7 +18,15 @@ public class UserAddParam {
     @Length(min = 6, max = 50)
     private String password;
 
+    @ApiModelProperty("重复密码")
+    @Length(min = 6, max = 50)
+    private String rePassword;
+
     @ApiModelProperty("邮箱号")
     @Length(min = 6, max = 50)
     private String email;
+
+    @ApiModelProperty("验证码")
+    @Length(min = 6, max = 6)
+    private String captcha;
 }

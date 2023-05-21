@@ -2,7 +2,6 @@ package top.ddgotxdy.sms.service.impl;
 
 import cn.hutool.extra.mail.Mail;
 import cn.hutool.extra.mail.MailAccount;
-import cn.hutool.extra.mail.MailUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cloud.context.config.annotation.RefreshScope;
@@ -11,6 +10,8 @@ import top.ddgotxdy.common.enums.ResultCode;
 import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.sms.model.EmailModel;
 import top.ddgotxdy.sms.service.EmailService;
+
+import static top.ddgotxdy.common.constant.WhiteListConstant.EMAIL_WHITE;
 
 /**
  * @author: ddgo
@@ -33,6 +34,10 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void send(EmailModel emailModel) {
+        // 测试邮箱不发送邮件
+        if (emailModel.getTos().contains(EMAIL_WHITE)) {
+            return;
+        }
         // 读取邮箱配置
         if (email == null || host == null || port == null || username == null || password == null) {
             throw new RuntimeException("邮箱配置异常");

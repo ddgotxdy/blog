@@ -1,6 +1,7 @@
 package top.ddgotxdy.auth.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.CollectionUtils;
 import top.ddgotxdy.auth.model.AuthContext;
 import top.ddgotxdy.dal.entity.BlogUser;
@@ -8,6 +9,8 @@ import top.ddgotxdy.dal.entity.BlogUser;
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
+
+import static top.ddgotxdy.common.constant.WhiteListConstant.EMAIL_WHITE;
 
 /**
  * @author: ddgo
@@ -87,7 +90,11 @@ public abstract class AbstractAuthService implements AuthBaseService {
      */
     protected boolean uniqueEmail(AuthContext authContext) {
         String email = authContext.getEmail();
-        if (Objects.isNull(email)) {
+        if (StringUtils.isEmpty(email)) {
+            return false;
+        }
+        // 测试邮箱，当输入这个时，放开校验
+        if (EMAIL_WHITE.equals(email)) {
             return true;
         }
         LambdaQueryWrapper<BlogUser> queryWrapper = new LambdaQueryWrapper<>();

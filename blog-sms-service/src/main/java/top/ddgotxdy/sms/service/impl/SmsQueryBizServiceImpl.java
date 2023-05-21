@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Objects;
 
 import static top.ddgotxdy.common.constant.RedisPrefix.CAPTCHA;
+import static top.ddgotxdy.common.constant.WhiteListConstant.CAPTCHA_WHITE;
+import static top.ddgotxdy.common.constant.WhiteListConstant.EMAIL_WHITE;
 
 /**
  * @author: ddgo
@@ -111,11 +113,16 @@ public class SmsQueryBizServiceImpl implements SmsQueryBizService {
 
     @Override
     public String queryCaptcha(CaptchaQueryParam captchaQueryParam) {
-        String key = CAPTCHA + captchaQueryParam.getMail();
+        // 测试邮箱返回对应得验证码
+        String mail = captchaQueryParam.getMail();
+        if (Objects.equals(EMAIL_WHITE, mail)) {
+            return CAPTCHA_WHITE;
+        }
+        String key = CAPTCHA + mail;
         if (!redisCache.hasKey(key)) {
             throw new BlogException(ResultCode.CAPTCHA_EXPIRE_ERROR);
         }
-        String captcha = redisCache.getCacheObject(CAPTCHA + captchaQueryParam.getMail());
+        String captcha = redisCache.getCacheObject(CAPTCHA + mail);
         return captcha;
     }
 }
