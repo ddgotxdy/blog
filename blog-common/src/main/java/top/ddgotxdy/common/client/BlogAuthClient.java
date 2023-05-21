@@ -62,7 +62,7 @@ public interface BlogAuthClient {
      * @param userPasswordUpdateParam 更新密码参数
      * @return IdDTO
      */
-    @PostMapping("/updatePassword")
+    @PostMapping("openfeign/auth/updatePassword")
     ResultView<IdDTO> updatePassword(
             @Validated @RequestBody UserPasswordUpdateParam userPasswordUpdateParam
     );
@@ -72,7 +72,7 @@ public interface BlogAuthClient {
      * @param userEmailUpdateParam 更新邮箱参数
      * @return IdDTO
      */
-    @PostMapping("/updateEmail")
+    @PostMapping("openfeign/auth/updateEmail")
     ResultView<IdDTO> updateEmail(
             @Validated @RequestBody UserEmailUpdateParam userEmailUpdateParam
     );
@@ -82,7 +82,7 @@ public interface BlogAuthClient {
      * @param userInfoUpdateParam 更新用户信息参数
      * @return IdDTO
      */
-    @PostMapping("/updateUserInfo")
+    @PostMapping("openfeign/auth/updateUserInfo")
     ResultView<IdDTO> updateUserInfo(
             @Validated @RequestBody UserInfoUpdateParam userInfoUpdateParam
     );
@@ -92,7 +92,7 @@ public interface BlogAuthClient {
      * @param userRoleUpdateParam 更新用户角色参数
      * @return IdDTO
      */
-    @PostMapping("/updateRole")
+    @PostMapping("openfeign/auth/updateRole")
     ResultView<IdDTO> updateRole(
             @Validated @RequestBody UserRoleUpdateParam userRoleUpdateParam
     );

@@ -7,7 +7,7 @@ CREATE TABLE `blog_user` (
      `email` varchar(50) NOT NULL COMMENT '邮箱号',
      `nickname` varchar(50) NOT NULL DEFAULT '' COMMENT '用户真实昵称',
      `phone_number` varchar(32) DEFAULT NULL DEFAULT '' COMMENT '手机号',
-     `sex` tinyint(1) DEFAULT 2 COMMENT '用户性别（0男，1女，2未知）',
+     `sex` tinyint(1) DEFAULT 0 COMMENT '用户性别（0未知，1男，2女）',
      `avatar_url` varchar(128) DEFAULT '' COMMENT '头像',
      `role_id` bigint NOT NULL DEFAULT 0 COMMENT '角色ID',
      `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除，0否1是',

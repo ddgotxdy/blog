@@ -14,7 +14,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
         "top.ddgotxdy.*"
 })
 @EnableDiscoveryClient
-@EnableFeignClients(basePackages = "top.ddgotxdy.*")
+@EnableFeignClients(basePackages = "top.ddgotxdy.common.client")
 @MapperScan("top.ddgotxdy.dal.mapper")
 public class BlogApiApplication {
     public static void main(String[] args) {

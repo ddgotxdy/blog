@@ -64,7 +64,7 @@ public class UserInfoUpdateServiceImpl extends AbstractAuthService {
         }
         // 6. 用户性别校验
         Integer sex = authContext.getSex();
-        if (SexEnum.of(sex) == SexEnum.UNKNOWN) {
+        if (Objects.nonNull(sex) && SexEnum.of(sex) == SexEnum.UNKNOWN) {
             throw new BlogException(ResultCode.USER_INFO_UPDATE_ERROR.getCode(), "性别设置错误");
         }
         // 7. 头像链接长度校验
