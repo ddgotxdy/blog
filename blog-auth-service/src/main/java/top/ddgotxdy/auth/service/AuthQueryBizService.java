@@ -1,6 +1,10 @@
 package top.ddgotxdy.auth.service;
 
+import top.ddgotxdy.common.model.PageQry;
+import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
+import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
+import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
 
 /**
  * @author: ddgo
@@ -12,4 +16,11 @@ public interface AuthQueryBizService {
      * @return
      */
     UserInfoDTO getUserInfo();
+
+    /**
+     * 分页获取用户信息
+     * @param userInfoQueryParamPageQry 用户分页请求参数
+     * @return PageResult<UserInfoDTO>
+     */
+    PageResult<UserInfoPageListDTO> getUserInfoList(PageQry<UserInfoQueryParam> userInfoQueryParamPageQry);
 }

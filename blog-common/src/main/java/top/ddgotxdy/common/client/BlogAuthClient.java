@@ -7,10 +7,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import top.ddgotxdy.common.interceptor.FeignRequestInterceptor;
 import top.ddgotxdy.common.model.IdDTO;
+import top.ddgotxdy.common.model.PageQry;
+import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.ResultView;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
+import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserEmailUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserInfoUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserPasswordUpdateParam;
@@ -95,5 +99,15 @@ public interface BlogAuthClient {
     @PostMapping("openfeign/auth/updateRole")
     ResultView<IdDTO> updateRole(
             @Validated @RequestBody UserRoleUpdateParam userRoleUpdateParam
+    );
+
+    /**
+     * 分页查询用户基本信息
+     * @param userInfoQueryParamPageQry 分页查询参数
+     * @return PageResult<UserInfoPageListDTO>
+     */
+    @PostMapping("openfeign/auth/getUserInfoList")
+    ResultView<PageResult<UserInfoPageListDTO>> getUserInfoList(
+            @Validated @RequestBody PageQry<UserInfoQueryParam> userInfoQueryParamPageQry
     );
 }

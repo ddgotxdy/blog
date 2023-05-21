@@ -8,10 +8,14 @@ import org.springframework.web.bind.annotation.RestController;
 import top.ddgotxdy.auth.service.AuthCmdBizService;
 import top.ddgotxdy.auth.service.AuthQueryBizService;
 import top.ddgotxdy.common.model.IdDTO;
+import top.ddgotxdy.common.model.PageQry;
+import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.ResultView;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
+import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserEmailUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserInfoUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserPasswordUpdateParam;
@@ -90,5 +94,13 @@ public class AuthController {
     ) {
         IdDTO idDTO = authCmdBizService.updateRole(userRoleUpdateParam);
         return ResultView.success(idDTO);
+    }
+
+    @PostMapping("/getUserInfoList")
+    public ResultView<PageResult<UserInfoPageListDTO>> getUserInfoList(
+            @Validated @RequestBody PageQry<UserInfoQueryParam> userInfoQueryParamPageQry
+    ) {
+        PageResult<UserInfoPageListDTO> userInfoDTOPageResult = authQueryBizService.getUserInfoList(userInfoQueryParamPageQry);
+        return ResultView.success(userInfoDTOPageResult);
     }
 }

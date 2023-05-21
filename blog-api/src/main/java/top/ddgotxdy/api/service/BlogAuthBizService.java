@@ -2,12 +2,16 @@ package top.ddgotxdy.api.service;
 
 import top.ddgotxdy.api.model.UserLoginApiModel;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
+import top.ddgotxdy.api.model.queryparam.UserInfoQueryApiParam;
 import top.ddgotxdy.api.model.updateparam.UserEmailUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.UserInfoUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.UserPasswordUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.UserRoleUpdateApiParam;
+import top.ddgotxdy.api.model.view.UserInfoPageListView;
 import top.ddgotxdy.api.model.view.UserInfoView;
 import top.ddgotxdy.common.model.IdView;
+import top.ddgotxdy.common.model.PageQry;
+import top.ddgotxdy.common.model.PageResult;
 
 /**
  * @author: ddgo
@@ -66,4 +70,11 @@ public interface BlogAuthBizService {
      * @return IdView
      */
     IdView updateRole(UserRoleUpdateApiParam userRoleUpdateApiParam);
+
+    /**
+     * 分页获取用户登录列表
+     * @param userInfoQueryApiParamPageQry 分页查询参数
+     * @return UserInfoPageListView
+     */
+    PageResult<UserInfoPageListView> getUserInfoList(PageQry<UserInfoQueryApiParam> userInfoQueryApiParamPageQry);
 }

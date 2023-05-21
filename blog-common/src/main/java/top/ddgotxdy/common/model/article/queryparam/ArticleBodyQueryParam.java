@@ -1,6 +1,5 @@
 package top.ddgotxdy.common.model.article.queryparam;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import java.util.List;

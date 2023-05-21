@@ -2,12 +2,15 @@ package top.ddgotxdy.api.convert;
 
 import top.ddgotxdy.api.model.UserLoginApiModel;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
+import top.ddgotxdy.api.model.queryparam.UserInfoQueryApiParam;
 import top.ddgotxdy.api.model.updateparam.UserEmailUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.UserInfoUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.UserPasswordUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.UserRoleUpdateApiParam;
+import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserEmailUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserInfoUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserPasswordUpdateParam;
@@ -59,5 +62,20 @@ public class AuthApiParam2ClientParamConvert {
         UserRoleUpdateParam userRoleUpdateParam = new UserRoleUpdateParam();
         BeanCopyUtil.copyProperties(userRoleUpdateApiParam, userRoleUpdateParam);
         return userRoleUpdateParam;
+    }
+
+    public static PageQry<UserInfoQueryParam> queryApiParam2QueryParam(PageQry<UserInfoQueryApiParam> userInfoQueryApiParamPageQry) {
+        UserInfoQueryParam userInfoQueryParam = new UserInfoQueryParam();
+        // 范型复制
+        UserInfoQueryApiParam userInfoQueryApiParam = userInfoQueryApiParamPageQry.getQueryParam();
+        BeanCopyUtil.copyProperties(userInfoQueryApiParam, userInfoQueryParam);
+        if (Objects.nonNull(userInfoQueryApiParam.getSex())) {
+            userInfoQueryParam.setSex(userInfoQueryApiParam.getSex().getCode());
+        }
+        // 分页参数复制
+        PageQry<UserInfoQueryParam> userInfoQueryParamPageQry = new PageQry<>();
+        BeanCopyUtil.copyProperties(userInfoQueryApiParamPageQry, userInfoQueryParamPageQry);
+        userInfoQueryParamPageQry.setQueryParam(userInfoQueryParam);
+        return userInfoQueryParamPageQry;
     }
 }

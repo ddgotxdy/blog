@@ -9,13 +9,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.ddgotxdy.api.model.UserLoginApiModel;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
+import top.ddgotxdy.api.model.queryparam.UserInfoQueryApiParam;
 import top.ddgotxdy.api.model.updateparam.UserEmailUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.UserInfoUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.UserPasswordUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.UserRoleUpdateApiParam;
+import top.ddgotxdy.api.model.view.UserInfoPageListView;
 import top.ddgotxdy.api.model.view.UserInfoView;
 import top.ddgotxdy.api.service.BlogAuthBizService;
 import top.ddgotxdy.common.model.IdView;
+import top.ddgotxdy.common.model.PageQry;
+import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.ResultView;
 
 import javax.annotation.Resource;
@@ -91,11 +95,19 @@ public class AuthController {
     }
 
     @ApiOperation("更新角色")
-    @PostMapping("/updateRole")
+    @PostMapping("/admin/updateRole")
     public ResultView<IdView> updateRole(
             @Validated @RequestBody UserRoleUpdateApiParam userRoleUpdateApiParam
     ) {
         IdView idView = blogAuthBizService.updateRole(userRoleUpdateApiParam);
         return ResultView.success(idView);
+    }
+
+    @PostMapping("/admin/getUserInfoList")
+    public ResultView<PageResult<UserInfoPageListView>> getUserInfoList(
+            @Validated @RequestBody PageQry<UserInfoQueryApiParam> userInfoQueryApiParamPageQry
+    ) {
+        PageResult<UserInfoPageListView> userInfoViewPageResult = blogAuthBizService.getUserInfoList(userInfoQueryApiParamPageQry);
+        return ResultView.success(userInfoViewPageResult);
     }
 }

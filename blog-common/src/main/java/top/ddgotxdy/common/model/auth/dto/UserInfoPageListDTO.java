@@ -5,10 +5,10 @@ import lombok.Data;
 
 /**
  * @author: ddgo
- * @description: 个人信息
+ * @description:
  */
 @Data
-public class UserInfoDTO {
+public class UserInfoPageListDTO {
     @ApiModelProperty("用户ID")
     private Long userId;
 

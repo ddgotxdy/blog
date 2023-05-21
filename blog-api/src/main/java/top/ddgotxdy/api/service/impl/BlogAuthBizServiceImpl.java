@@ -2,28 +2,32 @@ package top.ddgotxdy.api.service.impl;
 
 import org.springframework.stereotype.Service;
 import top.ddgotxdy.api.convert.AuthApiParam2ClientParamConvert;
+import top.ddgotxdy.api.convert.AuthDTO2ViewConvert;
 import top.ddgotxdy.api.convert.SmsDTO2ViewConvert;
 import top.ddgotxdy.api.model.UserLoginApiModel;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
+import top.ddgotxdy.api.model.queryparam.UserInfoQueryApiParam;
 import top.ddgotxdy.api.model.updateparam.UserEmailUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.UserInfoUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.UserPasswordUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.UserRoleUpdateApiParam;
+import top.ddgotxdy.api.model.view.UserInfoPageListView;
 import top.ddgotxdy.api.model.view.UserInfoView;
 import top.ddgotxdy.api.service.BlogAuthBizService;
 import top.ddgotxdy.common.client.BlogAuthClient;
-import top.ddgotxdy.common.model.IdDTO;
-import top.ddgotxdy.common.model.IdView;
-import top.ddgotxdy.common.model.ResultView;
+import top.ddgotxdy.common.model.*;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
+import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserEmailUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserInfoUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserPasswordUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserRoleUpdateParam;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author: ddgo
@@ -103,5 +107,23 @@ public class BlogAuthBizServiceImpl implements BlogAuthBizService {
         return IdView.builder()
                 .id(response.checkAndGetData().getId())
                 .build();
+    }
+
+    @Override
+    public PageResult<UserInfoPageListView> getUserInfoList(PageQry<UserInfoQueryApiParam> userInfoQueryApiParamPageQry) {
+        PageQry<UserInfoQueryParam> userInfoQueryParamPageQry
+                = AuthApiParam2ClientParamConvert.queryApiParam2QueryParam(userInfoQueryApiParamPageQry);
+        ResultView<PageResult<UserInfoPageListDTO>> response = blogAuthClient.getUserInfoList(userInfoQueryParamPageQry);
+        PageResult<UserInfoPageListDTO> userInfoPageListDTOPageResult = response.checkAndGetData();
+        PageResult<UserInfoPageListView> userInfoPageListViewPageResult
+                = AuthDTO2ViewConvert.pageListDTO2View(userInfoPageListDTOPageResult);
+        // Role name 赋值
+        List<UserInfoPageListView> data = userInfoPageListViewPageResult.getData();
+        for (int i = 0; i < data.size(); i++) {
+            UserInfoPageListView userInfoPageListView = data.get(i);
+            // 根据角色id获取角色名称 TODO
+            userInfoPageListView.setRoleName("普通用户");
+        }
+        return userInfoPageListViewPageResult;
     }
 }
