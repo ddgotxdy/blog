@@ -37,7 +37,12 @@ public class UserInfoUpdateServiceImpl extends AbstractAuthService {
         if (Objects.isNull(userId)) {
             throw new BlogException(ResultCode.USER_INFO_UPDATE_ERROR.getCode(), "用户id为空");
         }
+        BlogUser blogUser = blogUserService.getById(userId);
         // 2. 用户名唯一
+        // 过滤为空
+        if (blogUser.getUsername().equals(authContext.getUsername())) {
+            authContext.setUsername(null);
+        }
         if (!uniqueUsername(authContext)) {
             throw new BlogException(ResultCode.USER_INFO_UPDATE_ERROR.getCode(), "用户名存在");
         }
@@ -50,6 +55,10 @@ public class UserInfoUpdateServiceImpl extends AbstractAuthService {
         }
         // 4. 用户真实名称长度校验
         String nickname = authContext.getNickname();
+        // 过滤为空
+        if (blogUser.getNickname().equals(nickname)) {
+            authContext.setNickname(null);
+        }
         if (StringUtils.isNotEmpty(nickname)
                 && (StringUtils.length(nickname) < NICKNAME_MIN_LENGTH
                 || StringUtils.length(nickname) > NICKNAME_MAX_LENGTH)) {
@@ -57,12 +66,20 @@ public class UserInfoUpdateServiceImpl extends AbstractAuthService {
         }
         // 5. 手机号合法性校验
         String phoneNumber = authContext.getPhoneNumber();
+        // 过滤为空
+        if (blogUser.getPhoneNumber().equals(phoneNumber)) {
+            authContext.setPhoneNumber(null);
+        }
         if (StringUtils.isNotEmpty(phoneNumber)
                 && StringUtils.length(phoneNumber) != PHONE_NUMBER_LENGTH) {
             throw new BlogException(ResultCode.USER_INFO_UPDATE_ERROR.getCode(), "手机号长度错误");
         }
         // 6. 头像链接长度校验
         String avatarUrl = authContext.getAvatarUrl();
+        // 过滤为空
+        if (blogUser.getAvatarUrl().equals(avatarUrl)) {
+            authContext.setAvatarUrl(null);
+        }
         if (StringUtils.isNotEmpty(avatarUrl)
                 && StringUtils.length(avatarUrl) > AVATAR_URL_MAX_LENGTH) {
             throw new BlogException(ResultCode.USER_INFO_UPDATE_ERROR.getCode(), "头像地址长度错误");

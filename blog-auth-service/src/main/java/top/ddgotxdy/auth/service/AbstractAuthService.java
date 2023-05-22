@@ -99,7 +99,7 @@ public abstract class AbstractAuthService implements AuthBaseService {
     protected boolean uniqueEmail(AuthContext authContext) {
         String email = authContext.getEmail();
         if (StringUtils.isEmpty(email)) {
-            return false;
+            return true;
         }
         // 测试邮箱，当输入这个时，放开校验
         if (EMAIL_WHITE.equals(email)) {
