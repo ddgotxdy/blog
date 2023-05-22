@@ -11,7 +11,6 @@ import top.ddgotxdy.auth.model.AuthEvent;
 import top.ddgotxdy.auth.service.AbstractAuthService;
 import top.ddgotxdy.auth.service.BlogUserService;
 import top.ddgotxdy.common.enums.ResultCode;
-import top.ddgotxdy.common.enums.auth.SexEnum;
 import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.dal.entity.BlogUser;
 
@@ -62,12 +61,7 @@ public class UserInfoUpdateServiceImpl extends AbstractAuthService {
                 && StringUtils.length(phoneNumber) != PHONE_NUMBER_LENGTH) {
             throw new BlogException(ResultCode.USER_INFO_UPDATE_ERROR.getCode(), "手机号长度错误");
         }
-        // 6. 用户性别校验
-        Integer sex = authContext.getSex();
-        if (Objects.nonNull(sex) && SexEnum.of(sex) == SexEnum.UNKNOWN) {
-            throw new BlogException(ResultCode.USER_INFO_UPDATE_ERROR.getCode(), "性别设置错误");
-        }
-        // 7. 头像链接长度校验
+        // 6. 头像链接长度校验
         String avatarUrl = authContext.getAvatarUrl();
         if (StringUtils.isNotEmpty(avatarUrl)
                 && StringUtils.length(avatarUrl) > AVATAR_URL_MAX_LENGTH) {
