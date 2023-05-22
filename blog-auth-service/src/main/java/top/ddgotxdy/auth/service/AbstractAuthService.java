@@ -2,8 +2,12 @@ package top.ddgotxdy.auth.service;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.util.CollectionUtils;
 import top.ddgotxdy.auth.model.AuthContext;
+import top.ddgotxdy.common.constant.RedisPrefix;
+import top.ddgotxdy.common.model.LoginUser;
+import top.ddgotxdy.common.util.RedisCache;
 import top.ddgotxdy.dal.entity.BlogUser;
 
 import javax.annotation.Resource;
@@ -20,6 +24,10 @@ public abstract class AbstractAuthService implements AuthBaseService {
 
     @Resource
     private BlogUserService blogUserService;
+    @Resource
+    private UserDetailsService userDetailsService;
+    @Resource
+    private RedisCache redisCache;
 
     @Override
     public void execute(AuthContext authContext) {
@@ -104,6 +112,18 @@ public abstract class AbstractAuthService implements AuthBaseService {
             return true;
         }
         return false;
+    }
+
+    /**
+     * 更新redis里面的信息
+     * @param authContext 上下文
+     */
+    protected void updateUserInfoFromRedis(AuthContext authContext) {
+        // 同时更新redis里面的值
+        BlogUser blogUserFromDB = blogUserService.getById(authContext.getUserId());
+        LoginUser loginUser = (LoginUser) userDetailsService.loadUserByUsername(blogUserFromDB.getUsername());
+        // 替换用户信息
+        redisCache.setCacheObject(RedisPrefix.LOGIN + authContext.getUserId(), loginUser);
     }
 
 }

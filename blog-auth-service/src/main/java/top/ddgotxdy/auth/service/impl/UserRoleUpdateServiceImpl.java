@@ -47,5 +47,7 @@ public class UserRoleUpdateServiceImpl extends AbstractAuthService {
     protected void doExecute(AuthContext authContext) {
         BlogUser blogUser = Context2EntityConvert.authContext2UserForUpdate(authContext);
         blogUserService.updateById(blogUser);
+        // 更新redis里面的信息
+        updateUserInfoFromRedis(authContext);
     }
 }

@@ -70,5 +70,7 @@ public class UserPasswordUpdateServiceImpl extends AbstractAuthService {
         // 密码加密
         blogUser.setPassword(passwordEncoder.encode(authContext.getPassword()));
         blogUserService.updateById(blogUser);
+        // 更新redis里面的信息
+        updateUserInfoFromRedis(authContext);
     }
 }
