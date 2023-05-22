@@ -14,9 +14,9 @@ import java.io.IOException;
 
 /**
  * @author: ddgo
- * @description:
+ * @description: 开启scope，需要保证优先执行
  */
-@Order(0)
+@Order(Integer.MIN_VALUE)
 @Component
 @Slf4j
 public class ScopeFilter extends OncePerRequestFilter {
@@ -27,6 +27,7 @@ public class ScopeFilter extends OncePerRequestFilter {
         // 开启Scope
         Scope.beginScope();
         try {
+            log.info("ScopeFilter execute");
             filterChain.doFilter(request, response);
         } finally {
             // 关闭Scope
