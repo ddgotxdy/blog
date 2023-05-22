@@ -15,6 +15,7 @@ import top.ddgotxdy.common.model.auth.updateparam.UserEmailUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserInfoUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserPasswordUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserRoleUpdateParam;
+import top.ddgotxdy.common.scope.ContextScope;
 import top.ddgotxdy.common.util.BeanCopyUtil;
 
 import java.util.Objects;
@@ -40,12 +41,16 @@ public class AuthApiParam2ClientParamConvert {
     public static UserPasswordUpdateParam apiParam2Param(UserPasswordUpdateApiParam userPasswordUpdateApiParam) {
         UserPasswordUpdateParam userPasswordUpdateParam = new UserPasswordUpdateParam();
         BeanCopyUtil.copyProperties(userPasswordUpdateApiParam, userPasswordUpdateParam);
+        Long userId = ContextScope.getUserId();
+        userPasswordUpdateParam.setUserId(userId);
         return userPasswordUpdateParam;
     }
 
     public static UserEmailUpdateParam apiParam2Param(UserEmailUpdateApiParam userEmailUpdateApiParam) {
         UserEmailUpdateParam userEmailUpdateParam = new UserEmailUpdateParam();
         BeanCopyUtil.copyProperties(userEmailUpdateApiParam, userEmailUpdateParam);
+        Long userId = ContextScope.getUserId();
+        userEmailUpdateParam.setUserId(userId);
         return userEmailUpdateParam;
     }
 
@@ -55,6 +60,8 @@ public class AuthApiParam2ClientParamConvert {
         if (Objects.nonNull(userInfoUpdateApiParam.getSex())) {
             userInfoUpdateParam.setSex(userInfoUpdateApiParam.getSex().getCode());
         }
+        Long userId = ContextScope.getUserId();
+        userInfoUpdateParam.setUserId(userId);
         return userInfoUpdateParam;
     }
 

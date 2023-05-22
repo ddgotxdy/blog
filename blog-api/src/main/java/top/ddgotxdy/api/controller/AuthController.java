@@ -3,10 +3,7 @@ package top.ddgotxdy.api.controller;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import top.ddgotxdy.api.model.UserLoginApiModel;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
 import top.ddgotxdy.api.model.queryparam.UserInfoQueryApiParam;
@@ -103,11 +100,30 @@ public class AuthController {
         return ResultView.success(idView);
     }
 
+    @ApiOperation("获取用户列表信息")
     @PostMapping("/admin/getUserInfoList")
     public ResultView<PageResult<UserInfoPageListView>> getUserInfoList(
             @Validated @RequestBody PageQry<UserInfoQueryApiParam> userInfoQueryApiParamPageQry
     ) {
         PageResult<UserInfoPageListView> userInfoViewPageResult = blogAuthBizService.getUserInfoList(userInfoQueryApiParamPageQry);
         return ResultView.success(userInfoViewPageResult);
+    }
+
+    @ApiOperation("判断用户名是否合法")
+    @GetMapping("/checkUsername")
+    public ResultView<Boolean> checkUsername(
+            @RequestParam("username") String username
+    ) {
+        Boolean ok = blogAuthBizService.checkUsername(username);
+        return ResultView.success(ok);
+    }
+
+    @ApiOperation("判断邮箱是否合法")
+    @GetMapping("/checkEmail")
+    public ResultView<Boolean> checkEmail(
+            @RequestParam("email") String email
+    ) {
+        Boolean ok = blogAuthBizService.checkEmail(email);
+        return ResultView.success(ok);
     }
 }

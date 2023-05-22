@@ -5,8 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import top.ddgotxdy.common.enums.auth.SexEnum;
 
-import javax.validation.constraints.NotNull;
-
 /**
  * @author: ddgo
  * @description:
@@ -14,9 +12,6 @@ import javax.validation.constraints.NotNull;
 @Data
 @ApiModel("用户信息更新参数")
 public class UserInfoUpdateApiParam {
-    @ApiModelProperty("用户ID")
-    @NotNull(message = "用户ID不允许为空")
-    private Long userId;
     @ApiModelProperty("用户名")
     private String username;
     @ApiModelProperty("用户真实昵称")

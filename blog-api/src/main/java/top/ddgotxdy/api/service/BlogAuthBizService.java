@@ -77,4 +77,18 @@ public interface BlogAuthBizService {
      * @return UserInfoPageListView
      */
     PageResult<UserInfoPageListView> getUserInfoList(PageQry<UserInfoQueryApiParam> userInfoQueryApiParamPageQry);
+
+    /**
+     * 校验用户名的合法性
+     * @param username 用户名
+     * @return 是否合法
+     */
+    Boolean checkUsername(String username);
+
+    /**
+     * 校验邮箱合法性
+     * @param email 邮箱
+     * @return 是否合法
+     */
+    Boolean checkEmail(String email);
 }

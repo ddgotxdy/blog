@@ -25,9 +25,11 @@ import top.ddgotxdy.common.model.auth.updateparam.UserEmailUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserInfoUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserPasswordUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserRoleUpdateParam;
+import top.ddgotxdy.common.scope.ContextScope;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author: ddgo
@@ -125,5 +127,47 @@ public class BlogAuthBizServiceImpl implements BlogAuthBizService {
             userInfoPageListView.setRoleName("普通用户");
         }
         return userInfoPageListViewPageResult;
+    }
+
+    @Override
+    public Boolean checkUsername(String username) {
+        // 1. 构建请求参数
+        PageQry<UserInfoQueryParam> userInfoQueryParamPageQry = new PageQry<>();
+        UserInfoQueryParam userInfoQueryParam = new UserInfoQueryParam();
+        userInfoQueryParamPageQry.setPageNum(1);
+        userInfoQueryParamPageQry.setPageSize(10);
+        userInfoQueryParam.setUsernameEq(username);
+        userInfoQueryParamPageQry.setQueryParam(userInfoQueryParam);
+        // 2. 调用接口
+        ResultView<PageResult<UserInfoPageListDTO>> response = blogAuthClient.getUserInfoList(userInfoQueryParamPageQry);
+        PageResult<UserInfoPageListDTO> userInfoPageListDTOPageResult = response.checkAndGetData();
+        List<UserInfoPageListDTO> userInfoPageListDTOList = userInfoPageListDTOPageResult.getData();
+        // 3. 获取当前用户的id
+        Long userId = ContextScope.getUserId();
+        // 4. 判断
+        boolean anyMatch = userInfoPageListDTOList.stream()
+                .anyMatch(userInfoPageListDTO -> !Objects.equals(userInfoPageListDTO.getUserId(), userId));
+        return !anyMatch;
+    }
+
+    @Override
+    public Boolean checkEmail(String email) {
+        // 1. 构建请求参数
+        PageQry<UserInfoQueryParam> userInfoQueryParamPageQry = new PageQry<>();
+        UserInfoQueryParam userInfoQueryParam = new UserInfoQueryParam();
+        userInfoQueryParamPageQry.setPageNum(1);
+        userInfoQueryParamPageQry.setPageSize(10);
+        userInfoQueryParam.setEmail(email);
+        userInfoQueryParamPageQry.setQueryParam(userInfoQueryParam);
+        // 2. 调用接口
+        ResultView<PageResult<UserInfoPageListDTO>> response = blogAuthClient.getUserInfoList(userInfoQueryParamPageQry);
+        PageResult<UserInfoPageListDTO> userInfoPageListDTOPageResult = response.checkAndGetData();
+        List<UserInfoPageListDTO> userInfoPageListDTOList = userInfoPageListDTOPageResult.getData();
+        // 3. 获取当前用户的id
+        Long userId = ContextScope.getUserId();
+        // 4. 判断
+        boolean anyMatch = userInfoPageListDTOList.stream()
+                .anyMatch(userInfoPageListDTO -> !Objects.equals(userInfoPageListDTO.getUserId(), userId));
+        return !anyMatch;
     }
 }
