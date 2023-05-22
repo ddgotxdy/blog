@@ -157,7 +157,7 @@ public class BlogAuthBizServiceImpl implements BlogAuthBizService {
         UserInfoQueryParam userInfoQueryParam = new UserInfoQueryParam();
         userInfoQueryParamPageQry.setPageNum(1);
         userInfoQueryParamPageQry.setPageSize(10);
-        userInfoQueryParam.setEmail(email);
+        userInfoQueryParam.setEmailEq(email);
         userInfoQueryParamPageQry.setQueryParam(userInfoQueryParam);
         // 2. 调用接口
         ResultView<PageResult<UserInfoPageListDTO>> response = blogAuthClient.getUserInfoList(userInfoQueryParamPageQry);
