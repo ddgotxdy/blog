@@ -17,10 +17,12 @@ import top.ddgotxdy.api.service.BlogAuthBizService;
 import top.ddgotxdy.common.client.BlogAuthClient;
 import top.ddgotxdy.common.model.*;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
+import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
 import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
+import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserEmailUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserInfoUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserPasswordUpdateParam;
@@ -169,5 +171,27 @@ public class BlogAuthBizServiceImpl implements BlogAuthBizService {
         boolean anyMatch = userInfoPageListDTOList.stream()
                 .anyMatch(userInfoPageListDTO -> !Objects.equals(userInfoPageListDTO.getUserId(), userId));
         return !anyMatch;
+    }
+
+    @Override
+    public IdsView deleteUser(List<Long> userIdList) {
+        UserDeleteParam userDeleteParam
+                = AuthApiParam2ClientParamConvert.deleteApiParam2DeleteParam(userIdList);
+        ResultView<IdsDTO> response = blogAuthClient.deleteUser(userDeleteParam);
+        IdsDTO idsDTO = response.checkAndGetData();
+        return IdsView.builder()
+                .ids(idsDTO.getIds())
+                .build();
+    }
+
+    @Override
+    public IdsView recoverUser(List<Long> userIdList) {
+        UserRecoverParam userRecoverParam
+                = AuthApiParam2ClientParamConvert.recoverApiParam2RecoverParam(userIdList);
+        ResultView<IdsDTO> response = blogAuthClient.recoverUser(userRecoverParam);
+        IdsDTO idsDTO = response.checkAndGetData();
+        return IdsView.builder()
+                .ids(idsDTO.getIds())
+                .build();
     }
 }

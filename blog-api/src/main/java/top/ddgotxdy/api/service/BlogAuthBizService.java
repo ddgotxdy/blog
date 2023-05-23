@@ -10,8 +10,11 @@ import top.ddgotxdy.api.model.updateparam.UserRoleUpdateApiParam;
 import top.ddgotxdy.api.model.view.UserInfoPageListView;
 import top.ddgotxdy.api.model.view.UserInfoView;
 import top.ddgotxdy.common.model.IdView;
+import top.ddgotxdy.common.model.IdsView;
 import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.PageResult;
+
+import java.util.List;
 
 /**
  * @author: ddgo
@@ -91,4 +94,18 @@ public interface BlogAuthBizService {
      * @return 是否合法
      */
     Boolean checkEmail(String email);
+
+    /**
+     * 删除用户
+     * @param userIdList 用户id列表
+     * @return IdsView
+     */
+    IdsView deleteUser(List<Long> userIdList);
+
+    /**
+     * 恢复用户
+     * @param userIdList 用户列表
+     * @return IdsView
+     */
+    IdsView recoverUser(List<Long> userIdList);
 }

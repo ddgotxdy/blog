@@ -14,12 +14,10 @@ import top.ddgotxdy.api.model.updateparam.UserRoleUpdateApiParam;
 import top.ddgotxdy.api.model.view.UserInfoPageListView;
 import top.ddgotxdy.api.model.view.UserInfoView;
 import top.ddgotxdy.api.service.BlogAuthBizService;
-import top.ddgotxdy.common.model.IdView;
-import top.ddgotxdy.common.model.PageQry;
-import top.ddgotxdy.common.model.PageResult;
-import top.ddgotxdy.common.model.ResultView;
+import top.ddgotxdy.common.model.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author: ddgo
@@ -125,5 +123,21 @@ public class AuthController {
     ) {
         Boolean ok = blogAuthBizService.checkEmail(email);
         return ResultView.success(ok);
+    }
+
+    @DeleteMapping("/deleteUser")
+    ResultView<IdsView> deleteUser(
+            @RequestBody List<Long> userIdList
+    ) {
+        IdsView idsView = blogAuthBizService.deleteUser(userIdList);
+        return ResultView.success(idsView);
+    }
+
+    @PostMapping("/recoverUser")
+    ResultView<IdsView> recoverUser(
+            @RequestBody List<Long> userIdList
+    ) {
+        IdsView idsView = blogAuthBizService.recoverUser(userIdList);
+        return ResultView.success(idsView);
     }
 }
