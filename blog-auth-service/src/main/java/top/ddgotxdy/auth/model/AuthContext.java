@@ -1,8 +1,8 @@
 package top.ddgotxdy.auth.model;
 
-import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import org.hibernate.validator.constraints.Length;
+
+import java.util.List;
 
 /**
  * @author: ddgo
@@ -77,4 +77,8 @@ public class AuthContext {
      * 验证码
      */
     private String captcha;
+    /**
+     * 用户 id 列表
+     */
+    private List<Long> userIds;
 }

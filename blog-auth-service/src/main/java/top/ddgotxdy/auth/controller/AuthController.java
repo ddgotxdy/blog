@@ -1,21 +1,17 @@
 package top.ddgotxdy.auth.controller;
 
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import top.ddgotxdy.auth.service.AuthCmdBizService;
 import top.ddgotxdy.auth.service.AuthQueryBizService;
-import top.ddgotxdy.common.model.IdDTO;
-import top.ddgotxdy.common.model.PageQry;
-import top.ddgotxdy.common.model.PageResult;
-import top.ddgotxdy.common.model.ResultView;
+import top.ddgotxdy.common.model.*;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
+import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
 import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
+import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserEmailUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserInfoUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserPasswordUpdateParam;
@@ -58,13 +54,13 @@ public class AuthController {
         return ResultView.success();
     }
 
-    @PostMapping("/getUserInfo")
+    @PostMapping("getUserInfo")
     public ResultView<UserInfoDTO> getUserInfo() {
         UserInfoDTO userInfoDTO = authQueryBizService.getUserInfo();
         return ResultView.success(userInfoDTO);
     }
 
-    @PostMapping("/updatePassword")
+    @PostMapping("updatePassword")
     public ResultView<IdDTO> updatePassword(
             @Validated @RequestBody UserPasswordUpdateParam userPasswordUpdateParam
     ) {
@@ -72,7 +68,7 @@ public class AuthController {
         return ResultView.success(idDTO);
     }
 
-    @PostMapping("/updateEmail")
+    @PostMapping("updateEmail")
     public ResultView<IdDTO> updateEmail(
             @Validated @RequestBody UserEmailUpdateParam userEmailUpdateParam
     ) {
@@ -80,7 +76,7 @@ public class AuthController {
         return ResultView.success(idDTO);
     }
 
-    @PostMapping("/updateUserInfo")
+    @PostMapping("updateUserInfo")
     public ResultView<IdDTO> updateUserInfo(
             @Validated @RequestBody UserInfoUpdateParam userInfoUpdateParam
     ) {
@@ -88,7 +84,7 @@ public class AuthController {
         return ResultView.success(idDTO);
     }
 
-    @PostMapping("/updateRole")
+    @PostMapping("updateRole")
     public ResultView<IdDTO> updateRole(
             @Validated @RequestBody UserRoleUpdateParam userRoleUpdateParam
     ) {
@@ -96,11 +92,27 @@ public class AuthController {
         return ResultView.success(idDTO);
     }
 
-    @PostMapping("/getUserInfoList")
+    @PostMapping("getUserInfoList")
     public ResultView<PageResult<UserInfoPageListDTO>> getUserInfoList(
             @Validated @RequestBody PageQry<UserInfoQueryParam> userInfoQueryParamPageQry
     ) {
         PageResult<UserInfoPageListDTO> userInfoDTOPageResult = authQueryBizService.getUserInfoList(userInfoQueryParamPageQry);
         return ResultView.success(userInfoDTOPageResult);
+    }
+
+    @DeleteMapping("deleteUser")
+    public ResultView<IdsDTO> deleteUser(
+            @Validated @RequestBody UserDeleteParam userDeleteParam
+    ) {
+        IdsDTO idsDTO = authCmdBizService.deleteUser(userDeleteParam);
+        return ResultView.success(idsDTO);
+    }
+
+    @PostMapping("recoverUser")
+    public ResultView<IdsDTO> recoverUser(
+            @Validated @RequestBody UserRecoverParam userRecoverParam
+    ) {
+        IdsDTO idsDTO = authCmdBizService.recoverUser(userRecoverParam);
+        return ResultView.success(idsDTO);
     }
 }

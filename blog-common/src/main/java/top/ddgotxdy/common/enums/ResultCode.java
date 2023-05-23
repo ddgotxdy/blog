@@ -56,6 +56,8 @@ public enum ResultCode {
     USER_PASSWORD_UPDATE_ERROR(1008, "用户密码修改错误"),
     USER_EMAIL_UPDATE_ERROR(1009, "用户邮箱修改错误"),
     USER_ROLE_UPDATE_ERROR(1010, "用户角色修改错误"),
+    USER_DELETE_ERROR(1011, "用户删除错误"),
+    USER_RECOVER_ERROR(1012, "用户恢复错误"),
     ;
     private final Integer code;
     private final String msg;

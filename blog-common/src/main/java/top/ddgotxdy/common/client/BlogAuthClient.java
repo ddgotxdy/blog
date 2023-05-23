@@ -3,18 +3,18 @@ package top.ddgotxdy.common.client;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import top.ddgotxdy.common.interceptor.FeignRequestInterceptor;
-import top.ddgotxdy.common.model.IdDTO;
-import top.ddgotxdy.common.model.PageQry;
-import top.ddgotxdy.common.model.PageResult;
-import top.ddgotxdy.common.model.ResultView;
+import top.ddgotxdy.common.model.*;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
+import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
 import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
+import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserEmailUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserInfoUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserPasswordUpdateParam;
@@ -109,5 +109,25 @@ public interface BlogAuthClient {
     @PostMapping("openfeign/auth/getUserInfoList")
     ResultView<PageResult<UserInfoPageListDTO>> getUserInfoList(
             @Validated @RequestBody PageQry<UserInfoQueryParam> userInfoQueryParamPageQry
+    );
+
+    /**
+     * 删除用户信息
+     * @param userDeleteParam 用户删除参数
+     * @return IdsDTO
+     */
+    @DeleteMapping("openfeign/auth/deleteUser")
+    ResultView<IdsDTO> deleteUser(
+            @Validated @RequestBody UserDeleteParam userDeleteParam
+    );
+
+    /**
+     * 恢复用户信息
+     * @param userRecoverParam 用户恢复参数
+     * @return IdsDTO
+     */
+    @PostMapping("openfeign/auth/recoverUser")
+    ResultView<IdsDTO> recoverUser(
+            @Validated @RequestBody UserRecoverParam userRecoverParam
     );
 }

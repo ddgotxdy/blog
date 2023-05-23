@@ -44,9 +44,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         LambdaQueryWrapper<BlogUser> queryWrapper = new LambdaQueryWrapper<>();
         // 可以根据用户名或者邮箱进行登录
         queryWrapper
-                .eq(BlogUser::getUsername, accountName)
-                .or()
-                .eq(BlogUser::getEmail, accountName);
+                .eq(BlogUser::getIsDelete, false)
+                .and(qw ->
+                        qw.eq(BlogUser::getUsername, accountName)
+                        .or()
+                        .eq(BlogUser::getEmail, accountName));
         BlogUser blogUser = blogUserMapper.selectOne(queryWrapper);
         // 如果没有查询到用户，就抛出异常
         if(Objects.isNull(blogUser)) {

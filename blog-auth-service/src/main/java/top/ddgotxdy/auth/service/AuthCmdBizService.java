@@ -1,8 +1,11 @@
 package top.ddgotxdy.auth.service;
 
 import top.ddgotxdy.common.model.IdDTO;
+import top.ddgotxdy.common.model.IdsDTO;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
+import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserEmailUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserInfoUpdateParam;
 import top.ddgotxdy.common.model.auth.updateparam.UserPasswordUpdateParam;
@@ -59,4 +62,18 @@ public interface AuthCmdBizService {
      * @return IdDTO
      */
     IdDTO updateRole(UserRoleUpdateParam userRoleUpdateParam);
+
+    /**
+     * 删除用户
+     * @param userDeleteParam 删除用户参数
+     * @return IdsDTO
+     */
+    IdsDTO deleteUser(UserDeleteParam userDeleteParam);
+
+    /**
+     * 恢复用户
+     * @param userRecoverParam 恢复用户参数
+     * @return IdsDTO
+     */
+    IdsDTO recoverUser(UserRecoverParam userRecoverParam);
 }
