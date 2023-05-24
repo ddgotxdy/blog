@@ -13,8 +13,10 @@ import top.ddgotxdy.auth.service.BlogUserService;
 import top.ddgotxdy.common.model.LoginUser;
 import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.PageResult;
+import top.ddgotxdy.common.model.auth.dto.RolePageListDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
+import top.ddgotxdy.common.model.auth.queryparam.RoleQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
 import top.ddgotxdy.dal.entity.BlogUser;
 
@@ -76,5 +78,10 @@ public class AuthQueryBizServiceImpl implements AuthQueryBizService {
         pageResult.setTotalPage(blogUserPage.getPages());
         pageResult.setData(userInfoPageListDTOList);
         return pageResult;
+    }
+
+    @Override
+    public PageResult<RolePageListDTO> queryRoleByPage(PageQry<RoleQueryParam> roleQueryParamPageQry) {
+        return null;
     }
 }

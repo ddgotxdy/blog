@@ -9,14 +9,14 @@ import top.ddgotxdy.auth.service.AuthCmdBizService;
 import top.ddgotxdy.auth.service.LoginService;
 import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.IdsDTO;
+import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
+import top.ddgotxdy.common.model.auth.deleteparam.RoleDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.recoverparam.RoleRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserEmailUpdateParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserInfoUpdateParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserPasswordUpdateParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserRoleUpdateParam;
+import top.ddgotxdy.common.model.auth.updateparam.*;
 
 import javax.annotation.Resource;
 
@@ -85,9 +85,9 @@ public class AuthCmdBizServiceImpl implements AuthCmdBizService {
     }
 
     @Override
-    public IdDTO updateRole(UserRoleUpdateParam userRoleUpdateParam) {
+    public IdDTO updateUserRole(UserRoleUpdateParam userRoleUpdateParam) {
         AuthContext authContext = Param2ContextConvert.updateParamConvert(userRoleUpdateParam);
-        log.info("AuthCmdBizServiceImpl updateRole request[{}]", toJSON(authContext));
+        log.info("AuthCmdBizServiceImpl updateUserRole request[{}]", toJSON(authContext));
         authManageAdaptor.execute(authContext);
         return IdDTO.builder()
                 .id(authContext.getUserId())
@@ -108,6 +108,46 @@ public class AuthCmdBizServiceImpl implements AuthCmdBizService {
     public IdsDTO recoverUser(UserRecoverParam userRecoverParam) {
         AuthContext authContext = Param2ContextConvert.recoverParamConvert(userRecoverParam);
         log.info("AuthCmdBizServiceImpl recoverUser request[{}]", toJSON(authContext));
+        authManageAdaptor.execute(authContext);
+        return IdsDTO.builder()
+                .ids(authContext.getUserIds())
+                .build();
+    }
+
+    @Override
+    public IdDTO addRole(RoleAddParam roleAddParam) {
+        AuthContext authContext = Param2ContextConvert.addParamConvert(roleAddParam);
+        log.info("AuthCmdBizServiceImpl addRole request[{}]", toJSON(authContext));
+        authManageAdaptor.execute(authContext);
+        return IdDTO.builder()
+                .id(authContext.getUserId())
+                .build();
+    }
+
+    @Override
+    public IdDTO updateRole(RoleUpdateParam roleUpdateParam) {
+        AuthContext authContext = Param2ContextConvert.updateParamConvert(roleUpdateParam);
+        log.info("AuthCmdBizServiceImpl updateRole request[{}]", toJSON(authContext));
+        authManageAdaptor.execute(authContext);
+        return IdDTO.builder()
+                .id(authContext.getUserId())
+                .build();
+    }
+
+    @Override
+    public IdsDTO deleteRole(RoleDeleteParam roleDeleteParam) {
+        AuthContext authContext = Param2ContextConvert.deleteParamConvert(roleDeleteParam);
+        log.info("AuthCmdBizServiceImpl deleteRole request[{}]", toJSON(authContext));
+        authManageAdaptor.execute(authContext);
+        return IdsDTO.builder()
+                .ids(authContext.getUserIds())
+                .build();
+    }
+
+    @Override
+    public IdsDTO recoverRole(RoleRecoverParam roleRecoverParam) {
+        AuthContext authContext = Param2ContextConvert.recoverParamConvert(roleRecoverParam);
+        log.info("AuthCmdBizServiceImpl recoverRole request[{}]", toJSON(authContext));
         authManageAdaptor.execute(authContext);
         return IdsDTO.builder()
                 .ids(authContext.getUserIds())

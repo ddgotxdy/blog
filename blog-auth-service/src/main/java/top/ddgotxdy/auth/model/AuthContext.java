@@ -81,4 +81,23 @@ public class AuthContext {
      * 用户 id 列表
      */
     private List<Long> userIds;
+    /**
+     * 角色 id 列表
+     */
+    private List<Long> roleIds;
+
+    /**
+     * 角色名称
+     */
+    private String roleName;
+
+    /**
+     * 包含的权限，例如[1001,1002,1003]
+     */
+    private String menuIds;
+
+    /**
+     * 角色描述
+     */
+    private String roleDesc;
 }

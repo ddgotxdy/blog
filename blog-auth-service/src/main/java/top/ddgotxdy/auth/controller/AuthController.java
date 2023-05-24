@@ -5,17 +5,19 @@ import org.springframework.web.bind.annotation.*;
 import top.ddgotxdy.auth.service.AuthCmdBizService;
 import top.ddgotxdy.auth.service.AuthQueryBizService;
 import top.ddgotxdy.common.model.*;
+import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
+import top.ddgotxdy.common.model.auth.deleteparam.RoleDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
+import top.ddgotxdy.common.model.auth.dto.RolePageListDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.queryparam.RoleQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
+import top.ddgotxdy.common.model.auth.recoverparam.RoleRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserEmailUpdateParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserInfoUpdateParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserPasswordUpdateParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserRoleUpdateParam;
+import top.ddgotxdy.common.model.auth.updateparam.*;
 
 import javax.annotation.Resource;
 
@@ -84,11 +86,11 @@ public class AuthController {
         return ResultView.success(idDTO);
     }
 
-    @PostMapping("updateRole")
-    public ResultView<IdDTO> updateRole(
+    @PostMapping("updateUserRole")
+    public ResultView<IdDTO> updateUserRole(
             @Validated @RequestBody UserRoleUpdateParam userRoleUpdateParam
     ) {
-        IdDTO idDTO = authCmdBizService.updateRole(userRoleUpdateParam);
+        IdDTO idDTO = authCmdBizService.updateUserRole(userRoleUpdateParam);
         return ResultView.success(idDTO);
     }
 
@@ -113,6 +115,46 @@ public class AuthController {
             @Validated @RequestBody UserRecoverParam userRecoverParam
     ) {
         IdsDTO idsDTO = authCmdBizService.recoverUser(userRecoverParam);
+        return ResultView.success(idsDTO);
+    }
+
+    @PostMapping("/role/add")
+    public ResultView<IdDTO> addRole(
+            @Validated @RequestBody RoleAddParam roleAddParam
+    ) {
+        IdDTO idDTO = authCmdBizService.addRole(roleAddParam);
+        return ResultView.success(idDTO);
+    }
+
+    @PostMapping("/role/queryByPage")
+    public ResultView<PageResult<RolePageListDTO>> queryRoleByPage(
+            @Validated @RequestBody PageQry<RoleQueryParam> roleQueryParamPageQry
+    ) {
+        PageResult<RolePageListDTO> rolePageListDTOPageResult = authQueryBizService.queryRoleByPage(roleQueryParamPageQry);
+        return ResultView.success(rolePageListDTOPageResult);
+    }
+
+    @PostMapping("/role/update")
+    public ResultView<IdDTO> updateRole(
+            @Validated @RequestBody RoleUpdateParam roleUpdateParam
+    ) {
+        IdDTO idDTO = authCmdBizService.updateRole(roleUpdateParam);
+        return ResultView.success(idDTO);
+    }
+
+    @DeleteMapping("role/delete")
+    public ResultView<IdsDTO> deleteRole(
+            @Validated @RequestBody RoleDeleteParam roleDeleteParam
+    ) {
+        IdsDTO idsDTO = authCmdBizService.deleteRole(roleDeleteParam);
+        return ResultView.success(idsDTO);
+    }
+
+    @PostMapping("role/recover")
+    public ResultView<IdsDTO> recoverRole(
+            @Validated @RequestBody RoleRecoverParam roleRecoverParam
+    ) {
+        IdsDTO idsDTO = authCmdBizService.recoverRole(roleRecoverParam);
         return ResultView.success(idsDTO);
     }
 }

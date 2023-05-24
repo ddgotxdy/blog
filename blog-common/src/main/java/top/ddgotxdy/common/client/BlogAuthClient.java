@@ -96,7 +96,7 @@ public interface BlogAuthClient {
      * @param userRoleUpdateParam 更新用户角色参数
      * @return IdDTO
      */
-    @PostMapping("openfeign/auth/updateRole")
+    @PostMapping("openfeign/auth/updateUserRole")
     ResultView<IdDTO> updateRole(
             @Validated @RequestBody UserRoleUpdateParam userRoleUpdateParam
     );

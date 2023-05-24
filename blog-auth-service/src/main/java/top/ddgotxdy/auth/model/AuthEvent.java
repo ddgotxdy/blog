@@ -38,6 +38,22 @@ public enum AuthEvent {
      * 用户恢复
      */
     USER_RECOVER(8),
+    /**
+     * 角色添加
+     */
+    ROLE_ADD(9),
+    /**
+     * 角色更新
+     */
+    ROLE_UPDATE(10),
+    /**
+     * 角色删除
+     */
+    ROLE_DELETE(11),
+    /**
+     * 角色恢复
+     */
+    ROLE_RECOVER(12),
     ;
     private final int code;
 }

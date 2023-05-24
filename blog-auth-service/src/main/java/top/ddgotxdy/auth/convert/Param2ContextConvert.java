@@ -2,13 +2,13 @@ package top.ddgotxdy.auth.convert;
 
 import top.ddgotxdy.auth.model.AuthContext;
 import top.ddgotxdy.auth.model.AuthEvent;
+import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
+import top.ddgotxdy.common.model.auth.deleteparam.RoleDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
+import top.ddgotxdy.common.model.auth.recoverparam.RoleRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserEmailUpdateParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserInfoUpdateParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserPasswordUpdateParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserRoleUpdateParam;
+import top.ddgotxdy.common.model.auth.updateparam.*;
 import top.ddgotxdy.common.util.BeanCopyUtil;
 
 /**
@@ -70,6 +70,38 @@ public class Param2ContextConvert {
         BeanCopyUtil.copyProperties(userRecoverParam, authContext);
         // 设置事件
         authContext.setAuthEvent(AuthEvent.USER_RECOVER);
+        return authContext;
+    }
+
+    public static AuthContext addParamConvert(RoleAddParam roleAddParam) {
+        AuthContext authContext = new AuthContext();
+        BeanCopyUtil.copyProperties(roleAddParam, authContext);
+        // 设置事件
+        authContext.setAuthEvent(AuthEvent.ROLE_ADD);
+        return authContext;
+    }
+
+    public static AuthContext updateParamConvert(RoleUpdateParam roleUpdateParam) {
+        AuthContext authContext = new AuthContext();
+        BeanCopyUtil.copyProperties(roleUpdateParam, authContext);
+        // 设置事件
+        authContext.setAuthEvent(AuthEvent.ROLE_UPDATE);
+        return authContext;
+    }
+
+    public static AuthContext deleteParamConvert(RoleDeleteParam roleDeleteParam) {
+        AuthContext authContext = new AuthContext();
+        BeanCopyUtil.copyProperties(roleDeleteParam, authContext);
+        // 设置事件
+        authContext.setAuthEvent(AuthEvent.ROLE_DELETE);
+        return authContext;
+    }
+
+    public static AuthContext recoverParamConvert(RoleRecoverParam roleRecoverParam) {
+        AuthContext authContext = new AuthContext();
+        BeanCopyUtil.copyProperties(roleRecoverParam, authContext);
+        // 设置事件
+        authContext.setAuthEvent(AuthEvent.ROLE_RECOVER);
         return authContext;
     }
 }
