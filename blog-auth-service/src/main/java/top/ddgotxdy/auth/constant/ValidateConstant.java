@@ -39,4 +39,16 @@ public class ValidateConstant {
      * 密码的最小长度
      */
     public static final Integer PASSWORD_MIN_LENGTH = 6;
+    /**
+     * 描述的最大长度
+     */
+    public static final Integer DESC_MAX_LENGTH = 512;
+    /**
+     * 角色名的最大长度
+     */
+    public static final Integer ROLE_NAME_MAX_LENGTH = 10;
+    /**
+     * 角色名的最小长度
+     */
+    public static final Integer ROLE_NAME_MIN_LENGTH = 2;
 }

@@ -25,7 +25,7 @@ CREATE TABLE `blog_role` (
     `menu_ids` varchar(1024) NOT NULL DEFAULT '[]' COMMENT '包含的权限，例如[1001,1002,1003]',
     `create_time` bigint NOT NULL COMMENT '创建时间',
     `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
-    `role_desc` varchar(500) DEFAULT NULL COMMENT '备注',
+    `role_desc` varchar(512) DEFAULT NULL COMMENT '备注',
     PRIMARY KEY (`role_id`)
 );
 

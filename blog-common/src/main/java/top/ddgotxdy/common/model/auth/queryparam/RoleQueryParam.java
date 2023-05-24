@@ -3,6 +3,8 @@ package top.ddgotxdy.common.model.auth.queryparam;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author: ddgo
  * @description:
@@ -19,5 +21,5 @@ public class RoleQueryParam {
     private Boolean isDelete;
 
     @ApiModelProperty("包含的权限，例如[1001,1002,1003]")
-    private String menuIds;
+    private List<Long> menuIds;
 }

@@ -25,4 +25,10 @@ public interface BlogUserService extends IService<BlogUser> {
      */
     boolean recoverBatchByIds(List<Long> userIds);
 
+    /**
+     * 根据角色id获取角色列表
+     * @param roleId 角色id
+     * @return List<BlogUser>
+     */
+    List<BlogUser> getByRoleId(Long roleId);
 }

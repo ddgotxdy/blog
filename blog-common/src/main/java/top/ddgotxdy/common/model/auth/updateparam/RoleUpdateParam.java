@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 /**
  * @author: ddgo
@@ -23,7 +24,7 @@ public class RoleUpdateParam {
     private String roleName;
 
     @ApiModelProperty("包含的权限，例如[1001,1002,1003]")
-    private String menuIds;
+    private List<Long> menuIds;
 
     @ApiModelProperty("备注")
     private String roleDesc;

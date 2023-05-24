@@ -9,6 +9,7 @@ import org.springframework.util.CollectionUtils;
 import top.ddgotxdy.auth.convert.Entity2DTOConvert;
 import top.ddgotxdy.auth.convert.FieldName2FunctionConvert;
 import top.ddgotxdy.auth.service.AuthQueryBizService;
+import top.ddgotxdy.auth.service.BlogRoleService;
 import top.ddgotxdy.auth.service.BlogUserService;
 import top.ddgotxdy.common.model.LoginUser;
 import top.ddgotxdy.common.model.PageQry;
@@ -18,6 +19,7 @@ import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
 import top.ddgotxdy.common.model.auth.queryparam.RoleQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
+import top.ddgotxdy.dal.entity.BlogRole;
 import top.ddgotxdy.dal.entity.BlogUser;
 
 import javax.annotation.Resource;
@@ -33,6 +35,8 @@ import java.util.Objects;
 public class AuthQueryBizServiceImpl implements AuthQueryBizService {
     @Resource
     private BlogUserService blogUserService;
+    @Resource
+    private BlogRoleService blogRoleService;
 
     @Override
     public UserInfoDTO getUserInfo() {
@@ -82,6 +86,40 @@ public class AuthQueryBizServiceImpl implements AuthQueryBizService {
 
     @Override
     public PageResult<RolePageListDTO> queryRoleByPage(PageQry<RoleQueryParam> roleQueryParamPageQry) {
-        return null;
+        // 分页参数组装
+        int pageNum = roleQueryParamPageQry.getPageNum();
+        int pageSize = roleQueryParamPageQry.getPageSize();
+        Page<BlogRole> page = new Page<>(pageNum, pageSize);
+        // 查询参数组装
+        LambdaQueryWrapper<BlogRole> queryWrapper = new LambdaQueryWrapper<>();
+        // 查询值
+        RoleQueryParam queryParam = roleQueryParamPageQry.getQueryParam();
+        queryWrapper
+                .eq(Objects.nonNull(queryParam.getRoleId()), BlogRole::getRoleId, queryParam.getRoleId())
+                .eq(Objects.nonNull(queryParam.getIsDelete()), BlogRole::getIsDelete, queryParam.getIsDelete())
+                .like(Objects.nonNull(queryParam.getRoleName()), BlogRole::getRoleName, queryParam.getRoleName());
+        // 特殊值处理
+        if (Objects.nonNull(queryParam.getMenuIds())) {
+            List<Long> menuIds = queryParam.getMenuIds();
+            menuIds.forEach(menuId -> queryWrapper
+                    .like(BlogRole::getMenuIds, menuId.toString()));
+        }
+        // 排序规则
+        LinkedHashMap<String, Boolean> orderByFields = roleQueryParamPageQry.getOrderByFields();
+        if (CollectionUtils.isEmpty(orderByFields)) {
+            orderByFields = new LinkedHashMap<>();
+            orderByFields.put("createTime", false);
+        }
+        orderByFields.forEach((name, asc) ->
+                queryWrapper.orderBy(true, asc, FieldName2FunctionConvert.RoleFiledName2Function(name))
+        );
+        Page<BlogRole> blogRolePage = blogRoleService.page(page, queryWrapper);
+        List<BlogRole> blogRoleList = blogRolePage.getRecords();
+        List<RolePageListDTO> rolePageListDTOList = Entity2DTOConvert.roleList2DTO(blogRoleList);
+        // 封装返回值
+        PageResult<RolePageListDTO> pageResult = new PageResult<>();
+        pageResult.setTotalPage(blogRolePage.getPages());
+        pageResult.setData(rolePageListDTOList);
+        return pageResult;
     }
 }

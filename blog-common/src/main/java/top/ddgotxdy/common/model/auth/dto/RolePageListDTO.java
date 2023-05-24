@@ -3,6 +3,8 @@ package top.ddgotxdy.common.model.auth.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author: ddgo
  * @description:
@@ -19,7 +21,7 @@ public class RolePageListDTO {
     private Boolean isDelete;
 
     @ApiModelProperty("包含的权限，例如[1001,1002,1003]")
-    private String menuIds;
+    private List<Long> menuIds;
 
     @ApiModelProperty("创建时间")
     private Long createTime;

@@ -1,5 +1,6 @@
 package top.ddgotxdy.auth.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,13 @@ public class BlogUserServiceImpl extends ServiceImpl<BlogUserMapper, BlogUser> i
                 .set(BlogUser::getIsDelete, false)
                 .in(BlogUser::getUserId, userIds);
         return this.update(updateWrapper);
+    }
+
+    @Override
+    public List<BlogUser> getByRoleId(Long roleId) {
+        LambdaQueryWrapper<BlogUser> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper
+                .eq(BlogUser::getRoleId, roleId);
+        return this.list(queryWrapper);
     }
 }

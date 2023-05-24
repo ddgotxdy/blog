@@ -94,7 +94,7 @@ public class AuthContext {
     /**
      * 包含的权限，例如[1001,1002,1003]
      */
-    private String menuIds;
+    private List<Long> menuIds;
 
     /**
      * 角色描述

@@ -58,6 +58,10 @@ public enum ResultCode {
     USER_ROLE_UPDATE_ERROR(1010, "用户角色修改错误"),
     USER_DELETE_ERROR(1011, "用户删除错误"),
     USER_RECOVER_ERROR(1012, "用户恢复错误"),
+    ROLE_ADD_ERROR(1013, "角色添加错误"),
+    ROLE_UPDATE_ERROR(1014, "角色更新错误"),
+    ROLE_DELETE_ERROR(1015, "角色删除错误"),
+    ROLE_RECOVER_ERROR(1016, "角色恢复错误"),
     ;
     private final Integer code;
     private final String msg;

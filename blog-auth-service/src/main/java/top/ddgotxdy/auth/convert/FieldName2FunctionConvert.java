@@ -1,6 +1,7 @@
 package top.ddgotxdy.auth.convert;
 
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import top.ddgotxdy.dal.entity.BlogRole;
 import top.ddgotxdy.dal.entity.BlogUser;
 
 /**
@@ -16,6 +17,15 @@ public class FieldName2FunctionConvert {
                 return BlogUser::getEmail;
             default:
                 return BlogUser::getCreateTime;
+        }
+    }
+
+    public static SFunction<BlogRole, ?> RoleFiledName2Function(String name) {
+        switch (name) {
+            case "roleName":
+                return BlogRole::getRoleName;
+            default:
+                return BlogRole::getCreateTime;
         }
     }
 }
