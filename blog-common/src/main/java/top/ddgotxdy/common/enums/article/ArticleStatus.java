@@ -24,10 +24,6 @@ public enum ArticleStatus {
      * 私密，管理员可见
      */
     AUDIT_ADMIN(2, "私密"),
-    /**
-     * 登录可见
-     */
-    ARTICLE_LOGIN(3, "登录可见"),
     ;
     private final Integer code;
     private final String msg;

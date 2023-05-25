@@ -7,12 +7,11 @@ import org.springframework.web.bind.annotation.*;
 import top.ddgotxdy.api.model.addparam.ArticleBodyAddApiParam;
 import top.ddgotxdy.api.model.addparam.CategoryAddApiParam;
 import top.ddgotxdy.api.model.addparam.TagAddApiParam;
-import top.ddgotxdy.api.model.queryparam.ArticleBodyQueryApiParam;
-import top.ddgotxdy.api.model.queryparam.CategoryQueryApiParam;
-import top.ddgotxdy.api.model.queryparam.TagQueryApiParam;
+import top.ddgotxdy.api.model.queryparam.*;
 import top.ddgotxdy.api.model.updateparam.ArticleBodyUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.CategoryUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.TagUpdateApiParam;
+import top.ddgotxdy.api.model.view.ArticleBodyPageListUserView;
 import top.ddgotxdy.api.model.view.ArticleBodyPageListView;
 import top.ddgotxdy.api.model.view.CategoryPageListView;
 import top.ddgotxdy.api.model.view.TagPageListView;
@@ -36,11 +35,22 @@ public class ArticleController {
     //--------------------文章相关接口---------------------------------------------
 
     @ApiOperation("文章分页获取")
-    @PostMapping("/body/queryByPage")
+    @PostMapping("/admin/body/queryByPage")
     public ResultView<PageResult<ArticleBodyPageListView>> queryArticleBodyByPage(
             @Validated @RequestBody PageQry<ArticleBodyQueryApiParam> articleBodyQueryApiParamPageQry
     ) {
-        PageResult<ArticleBodyPageListView> articleList = articleBizService.queryArticleBodyByPage(articleBodyQueryApiParamPageQry);
+        PageResult<ArticleBodyPageListView> articleList
+                = articleBizService.queryArticleBodyByPage(articleBodyQueryApiParamPageQry);
+        return ResultView.success(articleList);
+    }
+
+    @ApiOperation("文章分页获取（用户接口）")
+    @PostMapping("/user/body/queryByPage")
+    public ResultView<PageResult<ArticleBodyPageListUserView>> queryArticleBodyByPageUser(
+            @Validated @RequestBody PageQry<ArticleBodyQueryApiUserParam> articleBodyQueryApiUserParamPageQry
+    ) {
+        PageResult<ArticleBodyPageListUserView> articleList
+                = articleBizService.queryArticleBodyByPageUser(articleBodyQueryApiUserParamPageQry);
         return ResultView.success(articleList);
     }
 
@@ -72,7 +82,7 @@ public class ArticleController {
     }
 
     @ApiOperation("文章恢复接口")
-    @PostMapping("admin/body/recover")
+    @PostMapping("/admin/body/recover")
     public ResultView<IdsView> recoverArticleBody(
             @RequestBody List<Long> articleIdList
     ) {
@@ -101,7 +111,7 @@ public class ArticleController {
     }
 
     @ApiOperation("标签分页查询")
-    @PostMapping("admin/tag/queryByPage")
+    @PostMapping("/admin/tag/queryByPage")
     public ResultView<PageResult<TagPageListView>> queryTagByPage(
             @Validated @RequestBody PageQry<TagQueryApiParam> tagQueryParamPageQry
     ) {
@@ -109,8 +119,17 @@ public class ArticleController {
         return ResultView.success(result);
     }
 
+    @ApiOperation("标签分页查询（用户）")
+    @PostMapping("/user/tag/queryByPage")
+    public ResultView<PageResult<TagPageListView>> queryTagByPageUser(
+            @Validated @RequestBody PageQry<TagQueryApiUserParam> tagQueryApiUserParamPageQry
+    ) {
+        PageResult<TagPageListView> result = articleBizService.queryTagByPageUser(tagQueryApiUserParamPageQry);
+        return ResultView.success(result);
+    }
+
     @ApiOperation("标签删除接口")
-    @DeleteMapping("admin/tag/delete")
+    @DeleteMapping("/admin/tag/delete")
     public ResultView<IdsView> deleteTag(
             @RequestBody List<Long> tagList
     ) {
@@ -119,7 +138,7 @@ public class ArticleController {
     }
 
     @ApiOperation("标签恢复接口")
-    @PostMapping("admin/tag/recover")
+    @PostMapping("/admin/tag/recover")
     public ResultView<IdsView> recoverTag(
             @RequestBody List<Long> tagList
     ) {
@@ -148,7 +167,7 @@ public class ArticleController {
     }
 
     @ApiOperation("分类删除接口")
-    @DeleteMapping("admin/category/delete")
+    @DeleteMapping("/admin/category/delete")
     public ResultView<IdsView> deleteCategory(
             @RequestBody List<Long> categoryList
     ) {
@@ -157,7 +176,7 @@ public class ArticleController {
     }
 
     @ApiOperation("分类恢复接口")
-    @PostMapping("admin/category/recover")
+    @PostMapping("/admin/category/recover")
     public ResultView<IdsView> recoverCategory(
             @RequestBody List<Long> categoryList
     ) {
@@ -166,7 +185,7 @@ public class ArticleController {
     }
 
     @ApiOperation("分类分页查询")
-    @PostMapping("admin/category/queryByPage")
+    @PostMapping("/admin/category/queryByPage")
     public ResultView<PageResult<CategoryPageListView>> queryCategoryByPage(
             @Validated @RequestBody PageQry<CategoryQueryApiParam> categoryQueryApiParamPageQry
     ) {
@@ -174,4 +193,12 @@ public class ArticleController {
         return ResultView.success(result);
     }
 
+    @ApiOperation("分类分页查询（用户）")
+    @PostMapping("/user/category/queryByPage")
+    public ResultView<PageResult<CategoryPageListView>> queryCategoryByPageUser(
+            @Validated @RequestBody PageQry<CategoryQueryApiUserParam> categoryQueryApiUserParamPageQry
+    ) {
+        PageResult<CategoryPageListView> result = articleBizService.queryCategoryByPageUser(categoryQueryApiUserParamPageQry);
+        return ResultView.success(result);
+    }
 }

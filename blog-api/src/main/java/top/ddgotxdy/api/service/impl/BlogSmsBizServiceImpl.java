@@ -7,9 +7,11 @@ import top.ddgotxdy.api.model.addparam.CaptchaSendApiParam;
 import top.ddgotxdy.api.model.addparam.MessageAddApiParam;
 import top.ddgotxdy.api.model.addparam.SensitiveAddApiParam;
 import top.ddgotxdy.api.model.queryparam.MessageQueryApiParam;
+import top.ddgotxdy.api.model.queryparam.MessageQueryApiUserParam;
 import top.ddgotxdy.api.model.queryparam.SensitiveQueryApiParam;
 import top.ddgotxdy.api.model.updateparam.MessageUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.SensitiveUpdateApiParam;
+import top.ddgotxdy.api.model.view.MessagePageListUserView;
 import top.ddgotxdy.api.model.view.MessagePageListView;
 import top.ddgotxdy.api.model.view.SensitivePageListView;
 import top.ddgotxdy.api.service.BlogSmsBizService;
@@ -108,10 +110,15 @@ public class BlogSmsBizServiceImpl implements BlogSmsBizService {
     }
 
     @Override
-    public PageResult<MessagePageListView> queryMessageByPage(PageQry<MessageQueryApiParam> messageQueryApiParamPageQry) {
-        PageQry<MessageQueryParam> messageQueryParamPageQry = SmsApiParam2ClientParamConvert.messageQueryApiParam2Param(messageQueryApiParamPageQry);
-        ResultView<PageResult<MessagePageListDTO>> response = blogSmsClient.queryMessageByPage(messageQueryParamPageQry);
-        PageResult<MessagePageListView> sensitivePageListViewPageResult = SmsDTO2ViewConvert.messagePageListDTO2View(response.checkAndGetData());
+    public PageResult<MessagePageListView> queryMessageByPage(
+            PageQry<MessageQueryApiParam> messageQueryApiParamPageQry
+    ) {
+        PageQry<MessageQueryParam> messageQueryParamPageQry
+                = SmsApiParam2ClientParamConvert.messageQueryApiParam2Param(messageQueryApiParamPageQry);
+        ResultView<PageResult<MessagePageListDTO>> response
+                = blogSmsClient.queryMessageByPage(messageQueryParamPageQry);
+        PageResult<MessagePageListView> sensitivePageListViewPageResult
+                = SmsDTO2ViewConvert.messagePageListDTO2View(response.checkAndGetData());
         return sensitivePageListViewPageResult;
     }
 
@@ -122,5 +129,18 @@ public class BlogSmsBizServiceImpl implements BlogSmsBizService {
         captchaSendParam.setMail(captchaSendApiParam.getMail());
         ResultView response = blogSmsClient.sendCaptcha(captchaSendParam);
         response.checkAndGetData();
+    }
+
+    @Override
+    public PageResult<MessagePageListUserView> queryMessageByPageUser(
+            PageQry<MessageQueryApiUserParam> messageQueryApiUserParamPageQry
+    ) {
+        PageQry<MessageQueryParam> messageQueryParamPageQry
+                = SmsApiParam2ClientParamConvert.messageQueryApiUserParam2Param(messageQueryApiUserParamPageQry);
+        ResultView<PageResult<MessagePageListDTO>> response
+                = blogSmsClient.queryMessageByPage(messageQueryParamPageQry);
+        PageResult<MessagePageListUserView> sensitivePageListViewPageResult
+                = SmsDTO2ViewConvert.messagePageListDTO2UserView(response.checkAndGetData());
+        return sensitivePageListViewPageResult;
     }
 }

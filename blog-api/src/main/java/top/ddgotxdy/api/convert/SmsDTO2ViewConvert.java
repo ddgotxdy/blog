@@ -1,5 +1,6 @@
 package top.ddgotxdy.api.convert;
 
+import top.ddgotxdy.api.model.view.MessagePageListUserView;
 import top.ddgotxdy.api.model.view.MessagePageListView;
 import top.ddgotxdy.api.model.view.SensitivePageListView;
 import top.ddgotxdy.api.model.view.UserInfoView;
@@ -39,7 +40,9 @@ public class SmsDTO2ViewConvert {
         return sensitivePageListViewPageResult;
     }
 
-    public static PageResult<MessagePageListView> messagePageListDTO2View(PageResult<MessagePageListDTO> messagePageListDTOPageResult) {
+    public static PageResult<MessagePageListView> messagePageListDTO2View(
+            PageResult<MessagePageListDTO> messagePageListDTOPageResult
+    ) {
         // 范型赋值
         List<MessagePageListDTO> data = messagePageListDTOPageResult.getData();
         List<MessagePageListView> messagePageListViews = BeanCopyUtil.copyListProperties(data, MessagePageListView::new);
@@ -62,5 +65,20 @@ public class SmsDTO2ViewConvert {
         BeanCopyUtil.copyProperties(userInfoDTO, userInfoView);
         userInfoView.setSexEnum(SexEnum.of(userInfoDTO.getSex()));
         return userInfoView;
+    }
+
+    public static PageResult<MessagePageListUserView> messagePageListDTO2UserView(
+            PageResult<MessagePageListDTO> messagePageListDTOPageResult
+    ) {
+        // 范型赋值
+        List<MessagePageListDTO> data = messagePageListDTOPageResult.getData();
+        List<MessagePageListUserView> messagePageListUserViews
+                = BeanCopyUtil.copyListProperties(data, MessagePageListUserView::new);
+        // 分页结果赋值
+        PageResult<MessagePageListUserView> messagePageListViewPageResult = new PageResult<>();
+        BeanCopyUtil.copyProperties(messagePageListDTOPageResult, messagePageListViewPageResult);
+        // 赋值
+        messagePageListViewPageResult.setData(messagePageListUserViews);
+        return messagePageListViewPageResult;
     }
 }

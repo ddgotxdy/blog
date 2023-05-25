@@ -4,12 +4,11 @@ import org.springframework.beans.BeanUtils;
 import top.ddgotxdy.api.model.addparam.ArticleBodyAddApiParam;
 import top.ddgotxdy.api.model.addparam.CategoryAddApiParam;
 import top.ddgotxdy.api.model.addparam.TagAddApiParam;
-import top.ddgotxdy.api.model.queryparam.ArticleBodyQueryApiParam;
-import top.ddgotxdy.api.model.queryparam.CategoryQueryApiParam;
-import top.ddgotxdy.api.model.queryparam.TagQueryApiParam;
+import top.ddgotxdy.api.model.queryparam.*;
 import top.ddgotxdy.api.model.updateparam.ArticleBodyUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.CategoryUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.TagUpdateApiParam;
+import top.ddgotxdy.common.enums.article.ArticleStatus;
 import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.article.addparam.ArticleBodyAddParam;
 import top.ddgotxdy.common.model.article.addparam.CategoryAddParam;
@@ -140,9 +139,9 @@ public class ArticleApiParam2ClientParamConvert {
         return categoryRecoverParam;
     }
 
-    //--------------------------------------查询---------------------------------------
-
-    public static PageQry<TagQueryParam> tagQueryApiParam2QueryParam(PageQry<TagQueryApiParam> tagQueryApiParamPageQry) {
+    public static PageQry<TagQueryParam> tagQueryApiParam2QueryParam(
+            PageQry<TagQueryApiParam> tagQueryApiParamPageQry
+    ) {
         TagQueryParam tagQueryParam = new TagQueryParam();
         // 范型复制
         TagQueryApiParam tagQueryApiParam = tagQueryApiParamPageQry.getQueryParam();
@@ -155,7 +154,9 @@ public class ArticleApiParam2ClientParamConvert {
         return tagQueryParamPageQry;
     }
 
-    public static PageQry<CategoryQueryParam> categoryQueryApiParam2QueryParam(PageQry<CategoryQueryApiParam> categoryQueryApiParamPageQry) {
+    public static PageQry<CategoryQueryParam> categoryQueryApiParam2QueryParam(
+            PageQry<CategoryQueryApiParam> categoryQueryApiParamPageQry
+    ) {
         CategoryQueryParam categoryQueryParam = new CategoryQueryParam();
         // 范型复制
         CategoryQueryApiParam categoryQueryApiParam = categoryQueryApiParamPageQry.getQueryParam();
@@ -168,7 +169,9 @@ public class ArticleApiParam2ClientParamConvert {
         return categoryQueryParamPageQry;
     }
 
-    public static PageQry<ArticleBodyQueryParam> articleBodyQueryApiParam2QueryParam(PageQry<ArticleBodyQueryApiParam> articleBodyQueryApiParamPageQry) {
+    public static PageQry<ArticleBodyQueryParam> articleBodyQueryApiParam2QueryParam(
+            PageQry<ArticleBodyQueryApiParam> articleBodyQueryApiParamPageQry
+    ) {
         ArticleBodyQueryParam articleBodyQueryParam = new ArticleBodyQueryParam();
         // 范型复制
         ArticleBodyQueryApiParam articleBodyQueryApiParam = articleBodyQueryApiParamPageQry.getQueryParam();
@@ -181,5 +184,56 @@ public class ArticleApiParam2ClientParamConvert {
         BeanCopyUtil.copyProperties(articleBodyQueryApiParamPageQry, articleBodyQueryParamPageQry);
         articleBodyQueryParamPageQry.setQueryParam(articleBodyQueryParam);
         return articleBodyQueryParamPageQry;
+    }
+
+    public static PageQry<ArticleBodyQueryParam> articleBodyQueryApiUserParam2QueryParam(
+            PageQry<ArticleBodyQueryApiUserParam> articleBodyQueryApiUserParamPageQry
+    ) {
+        ArticleBodyQueryParam articleBodyQueryParam = new ArticleBodyQueryParam();
+        // 范型复制
+        ArticleBodyQueryApiUserParam articleBodyQueryApiUserParam = articleBodyQueryApiUserParamPageQry.getQueryParam();
+        BeanCopyUtil.copyProperties(articleBodyQueryApiUserParam, articleBodyQueryParam);
+        // 默认值填充
+        articleBodyQueryParam.setIsDelete(false);
+        articleBodyQueryParam.setArticleStatus(ArticleStatus.ARTICLE_ALL.getCode());
+        // 分页参数复制
+        PageQry<ArticleBodyQueryParam> articleBodyQueryParamPageQry = new PageQry<>();
+        BeanCopyUtil.copyProperties(articleBodyQueryApiUserParamPageQry, articleBodyQueryParamPageQry);
+        articleBodyQueryParamPageQry.setQueryParam(articleBodyQueryParam);
+        return articleBodyQueryParamPageQry;
+    }
+
+    public static PageQry<TagQueryParam> tagQueryApiUserParam2QueryParam(
+            PageQry<TagQueryApiUserParam> tagQueryApiUserParamPageQry
+    ) {
+        TagQueryParam tagQueryParam = new TagQueryParam();
+        // 范型复制
+        TagQueryApiUserParam tagQueryApiUserParam = tagQueryApiUserParamPageQry.getQueryParam();
+        BeanCopyUtil.copyProperties(tagQueryApiUserParam, tagQueryParam);
+        // 默认值填充
+        tagQueryParam.setIsDelete(false);
+        // 分页参数复制
+        PageQry<TagQueryParam> tagQueryParamPageQry = new PageQry<>();
+        BeanCopyUtil.copyProperties(tagQueryApiUserParamPageQry, tagQueryParamPageQry);
+        // 范型赋值进去
+        tagQueryParamPageQry.setQueryParam(tagQueryParam);
+        return tagQueryParamPageQry;
+    }
+
+    public static PageQry<CategoryQueryParam> categoryQueryApiUserParam2QueryParam(
+            PageQry<CategoryQueryApiUserParam> categoryQueryApiUserParamPageQry
+    ) {
+        CategoryQueryParam categoryQueryParam = new CategoryQueryParam();
+        // 范型复制
+        CategoryQueryApiUserParam categoryQueryApiUserParam = categoryQueryApiUserParamPageQry.getQueryParam();
+        BeanCopyUtil.copyProperties(categoryQueryApiUserParam, categoryQueryParam);
+        // 默认值填充
+        categoryQueryParam.setIsDelete(false);
+        // 分页参数复制
+        PageQry<CategoryQueryParam> categoryQueryParamPageQry = new PageQry<>();
+        BeanCopyUtil.copyProperties(categoryQueryApiUserParamPageQry, categoryQueryParamPageQry);
+        // 范型赋值进去
+        categoryQueryParamPageQry.setQueryParam(categoryQueryParam);
+        return categoryQueryParamPageQry;
     }
 }

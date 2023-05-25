@@ -6,12 +6,11 @@ import top.ddgotxdy.api.convert.ArticleDTO2ViewConvert;
 import top.ddgotxdy.api.model.addparam.ArticleBodyAddApiParam;
 import top.ddgotxdy.api.model.addparam.CategoryAddApiParam;
 import top.ddgotxdy.api.model.addparam.TagAddApiParam;
-import top.ddgotxdy.api.model.queryparam.ArticleBodyQueryApiParam;
-import top.ddgotxdy.api.model.queryparam.CategoryQueryApiParam;
-import top.ddgotxdy.api.model.queryparam.TagQueryApiParam;
+import top.ddgotxdy.api.model.queryparam.*;
 import top.ddgotxdy.api.model.updateparam.ArticleBodyUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.CategoryUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.TagUpdateApiParam;
+import top.ddgotxdy.api.model.view.ArticleBodyPageListUserView;
 import top.ddgotxdy.api.model.view.ArticleBodyPageListView;
 import top.ddgotxdy.api.model.view.CategoryPageListView;
 import top.ddgotxdy.api.model.view.TagPageListView;
@@ -51,7 +50,8 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
 
     @Override
     public IdView addArticleBody(ArticleBodyAddApiParam articleBodyAddApiParam) {
-        ArticleBodyAddParam articleBodyAddParam = ArticleApiParam2ClientParamConvert.addApiParam2AddParam(articleBodyAddApiParam);
+        ArticleBodyAddParam articleBodyAddParam
+                = ArticleApiParam2ClientParamConvert.addApiParam2AddParam(articleBodyAddApiParam);
         ResultView<IdDTO> response = articleClient.addArticleBody(articleBodyAddParam);
         IdDTO idDTO = response.checkAndGetData();
         return IdView.builder()
@@ -61,7 +61,8 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
 
     @Override
     public IdView updateArticleBody(ArticleBodyUpdateApiParam articleBodyUpdateApiParam) {
-        ArticleBodyUpdateParam articleBodyUpdateParam = ArticleApiParam2ClientParamConvert.updateApiParam2UpdateParam(articleBodyUpdateApiParam);
+        ArticleBodyUpdateParam articleBodyUpdateParam
+                = ArticleApiParam2ClientParamConvert.updateApiParam2UpdateParam(articleBodyUpdateApiParam);
         ResultView<IdDTO> response = articleClient.updateArticleBody(articleBodyUpdateParam);
         IdDTO idDTO = response.checkAndGetData();
         return IdView.builder()
@@ -103,7 +104,8 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
 
     @Override
     public IdView addTag(TagAddApiParam tagAddApiParam) {
-        TagAddParam tagAddParam = ArticleApiParam2ClientParamConvert.addApiParam2AddParam(tagAddApiParam);
+        TagAddParam tagAddParam
+                = ArticleApiParam2ClientParamConvert.addApiParam2AddParam(tagAddApiParam);
         ResultView<IdDTO> response = articleClient.addTag(tagAddParam);
         IdDTO idDTO = response.checkAndGetData();
         return IdView.builder()
@@ -113,7 +115,8 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
 
     @Override
     public IdView updateTag(TagUpdateApiParam tagUpdateApiParam) {
-        TagUpdateParam tagUpdateParam = ArticleApiParam2ClientParamConvert.updateApiParam2UpdateParam(tagUpdateApiParam);
+        TagUpdateParam tagUpdateParam
+                = ArticleApiParam2ClientParamConvert.updateApiParam2UpdateParam(tagUpdateApiParam);
         ResultView<IdDTO> response = articleClient.updateTag(tagUpdateParam);
         IdDTO idDTO = response.checkAndGetData();
         return IdView.builder()
@@ -123,7 +126,8 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
 
     @Override
     public IdsView deleteTag(List<Long> tagList) {
-        TagDeleteParam tagDeleteParam = ArticleApiParam2ClientParamConvert.tagDeleteApiParam2deleteParam(tagList);
+        TagDeleteParam tagDeleteParam
+                = ArticleApiParam2ClientParamConvert.tagDeleteApiParam2deleteParam(tagList);
         ResultView<IdsDTO> response = articleClient.deleteTag(tagDeleteParam);
         IdsDTO idsDTO = response.checkAndGetData();
         return IdsView.builder()
@@ -133,7 +137,8 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
 
     @Override
     public IdsView recoverTag(List<Long> tagList) {
-        TagRecoverParam tagRecoverParam = ArticleApiParam2ClientParamConvert.tagRecoverApiParam2recoverParam(tagList);
+        TagRecoverParam tagRecoverParam
+                = ArticleApiParam2ClientParamConvert.tagRecoverApiParam2recoverParam(tagList);
         ResultView<IdsDTO> response = articleClient.recoverTag(tagRecoverParam);
         IdsDTO idsDTO = response.checkAndGetData();
         return IdsView.builder()
@@ -142,8 +147,9 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
     }
 
     @Override
-    public PageResult<TagPageListView> queryTagByPage(PageQry<TagQueryApiParam> tagQueryParamPageQry) {
-        PageQry<TagQueryParam> tagQueryParam = ArticleApiParam2ClientParamConvert.tagQueryApiParam2QueryParam(tagQueryParamPageQry);
+    public PageResult<TagPageListView> queryTagByPage(PageQry<TagQueryApiParam> tagQueryApiParamPageQry) {
+        PageQry<TagQueryParam> tagQueryParam
+                = ArticleApiParam2ClientParamConvert.tagQueryApiParam2QueryParam(tagQueryApiParamPageQry);
         ResultView<PageResult<TagPageListDTO>> response = articleClient.queryTagByPage(tagQueryParam);
         PageResult<TagPageListView> tagPageListViewPageResult = ArticleDTO2ViewConvert.tagPageListDTO2View(response.checkAndGetData());
         return tagPageListViewPageResult;
@@ -151,7 +157,8 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
 
     @Override
     public IdView addCategory(CategoryAddApiParam categoryAddApiParam) {
-        CategoryAddParam categoryAddParam = ArticleApiParam2ClientParamConvert.addApiParam2AddParam(categoryAddApiParam);
+        CategoryAddParam categoryAddParam
+                = ArticleApiParam2ClientParamConvert.addApiParam2AddParam(categoryAddApiParam);
         ResultView<IdDTO> response = articleClient.addCategory(categoryAddParam);
         IdDTO idDTO = response.checkAndGetData();
         return IdView.builder()
@@ -161,7 +168,8 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
 
     @Override
     public IdView updateCategory(CategoryUpdateApiParam categoryUpdateApiParam) {
-        CategoryUpdateParam categoryUpdateParam = ArticleApiParam2ClientParamConvert.updateApiParam2UpdateParam(categoryUpdateApiParam);
+        CategoryUpdateParam categoryUpdateParam
+                = ArticleApiParam2ClientParamConvert.updateApiParam2UpdateParam(categoryUpdateApiParam);
         ResultView<IdDTO> response = articleClient.updateCategory(categoryUpdateParam);
         IdDTO idDTO = response.checkAndGetData();
         return IdView.builder()
@@ -171,7 +179,8 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
 
     @Override
     public IdsView deleteCategory(List<Long> categoryList) {
-        CategoryDeleteParam categoryDeleteParam = ArticleApiParam2ClientParamConvert.categoryDeleteApiParam2deleteParam(categoryList);
+        CategoryDeleteParam categoryDeleteParam
+                = ArticleApiParam2ClientParamConvert.categoryDeleteApiParam2deleteParam(categoryList);
         ResultView<IdsDTO> response = articleClient.deleteCategory(categoryDeleteParam);
         IdsDTO idsDTO = response.checkAndGetData();
         return IdsView.builder()
@@ -181,7 +190,8 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
 
     @Override
     public IdsView recoverCategory(List<Long> categoryList) {
-        CategoryRecoverParam categoryRecoverParam = ArticleApiParam2ClientParamConvert.categoryRecoverApiParam2recoverParam(categoryList);
+        CategoryRecoverParam categoryRecoverParam
+                = ArticleApiParam2ClientParamConvert.categoryRecoverApiParam2recoverParam(categoryList);
         ResultView<IdsDTO> response = articleClient.recoverCategory(categoryRecoverParam);
         IdsDTO idsDTO = response.checkAndGetData();
         return IdsView.builder()
@@ -190,10 +200,51 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
     }
 
     @Override
-    public PageResult<CategoryPageListView> queryCategoryByPage(PageQry<CategoryQueryApiParam> categoryQueryApiParamPageQry) {
-        PageQry<CategoryQueryParam> categoryQueryParam = ArticleApiParam2ClientParamConvert.categoryQueryApiParam2QueryParam(categoryQueryApiParamPageQry);
-        ResultView<PageResult<CategoryPageListDTO>> response = articleClient.queryCategoryByPage(categoryQueryParam);
-        PageResult<CategoryPageListView> categoryPageListViewPageResult = ArticleDTO2ViewConvert.categoryPageListDTO2View(response.checkAndGetData());
+    public PageResult<CategoryPageListView> queryCategoryByPage(
+            PageQry<CategoryQueryApiParam> categoryQueryApiParamPageQry
+    ) {
+        PageQry<CategoryQueryParam> categoryQueryParam
+                = ArticleApiParam2ClientParamConvert.categoryQueryApiParam2QueryParam(categoryQueryApiParamPageQry);
+        ResultView<PageResult<CategoryPageListDTO>> response
+                = articleClient.queryCategoryByPage(categoryQueryParam);
+        PageResult<CategoryPageListView> categoryPageListViewPageResult
+                = ArticleDTO2ViewConvert.categoryPageListDTO2View(response.checkAndGetData());
+        return categoryPageListViewPageResult;
+    }
+
+    @Override
+    public PageResult<ArticleBodyPageListUserView> queryArticleBodyByPageUser(
+            PageQry<ArticleBodyQueryApiUserParam> articleBodyQueryApiUserParamPageQry
+    ) {
+        PageQry<ArticleBodyQueryParam> articleBodyQueryParamPageQry
+                = ArticleApiParam2ClientParamConvert.articleBodyQueryApiUserParam2QueryParam(articleBodyQueryApiUserParamPageQry);
+        ResultView<PageResult<ArticleBodyPageListDTO>> response
+                = articleClient.queryArticleBodyByPage(articleBodyQueryParamPageQry);
+        PageResult<ArticleBodyPageListUserView> articleBodyPageListUserViewPageResult
+                = ArticleDTO2ViewConvert.articleBodyPageListDTO2UserView(response.checkAndGetData());
+        return articleBodyPageListUserViewPageResult;
+    }
+
+    @Override
+    public PageResult<TagPageListView> queryTagByPageUser(PageQry<TagQueryApiUserParam> tagQueryApiUserParamPageQry) {
+        PageQry<TagQueryParam> tagQueryParam
+                = ArticleApiParam2ClientParamConvert.tagQueryApiUserParam2QueryParam(tagQueryApiUserParamPageQry);
+        ResultView<PageResult<TagPageListDTO>> response = articleClient.queryTagByPage(tagQueryParam);
+        PageResult<TagPageListView> tagPageListViewPageResult
+                = ArticleDTO2ViewConvert.tagPageListDTO2View(response.checkAndGetData());
+        return tagPageListViewPageResult;
+    }
+
+    @Override
+    public PageResult<CategoryPageListView> queryCategoryByPageUser(
+            PageQry<CategoryQueryApiUserParam> categoryQueryApiUserParamPageQry
+    ) {
+        PageQry<CategoryQueryParam> categoryQueryParam
+                = ArticleApiParam2ClientParamConvert.categoryQueryApiUserParam2QueryParam(categoryQueryApiUserParamPageQry);
+        ResultView<PageResult<CategoryPageListDTO>> response
+                = articleClient.queryCategoryByPage(categoryQueryParam);
+        PageResult<CategoryPageListView> categoryPageListViewPageResult
+                = ArticleDTO2ViewConvert.categoryPageListDTO2View(response.checkAndGetData());
         return categoryPageListViewPageResult;
     }
 }

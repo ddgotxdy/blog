@@ -1,5 +1,6 @@
 package top.ddgotxdy.api.convert;
 
+import top.ddgotxdy.api.model.view.ArticleBodyPageListUserView;
 import top.ddgotxdy.api.model.view.ArticleBodyPageListView;
 import top.ddgotxdy.api.model.view.CategoryPageListView;
 import top.ddgotxdy.api.model.view.TagPageListView;
@@ -18,7 +19,9 @@ import java.util.List;
  */
 public class ArticleDTO2ViewConvert {
 
-    public static PageResult<TagPageListView> tagPageListDTO2View(PageResult<TagPageListDTO> tagPageListDTOPageResult) {
+    public static PageResult<TagPageListView> tagPageListDTO2View(
+            PageResult<TagPageListDTO> tagPageListDTOPageResult
+    ) {
         // 范型赋值
         List<TagPageListDTO> data = tagPageListDTOPageResult.getData();
         List<TagPageListView> tagPageListViews = BeanCopyUtil.copyListProperties(data, TagPageListView::new);
@@ -29,7 +32,9 @@ public class ArticleDTO2ViewConvert {
         return tagPageListViewPageResult;
     }
 
-    public static PageResult<CategoryPageListView> categoryPageListDTO2View(PageResult<CategoryPageListDTO> categoryPageListDTOPageResult) {
+    public static PageResult<CategoryPageListView> categoryPageListDTO2View(
+            PageResult<CategoryPageListDTO> categoryPageListDTOPageResult
+    ) {
         // 范型赋值
         List<CategoryPageListDTO> data = categoryPageListDTOPageResult.getData();
         List<CategoryPageListView> categoryPageListViews = BeanCopyUtil.copyListProperties(data, CategoryPageListView::new);
@@ -40,7 +45,9 @@ public class ArticleDTO2ViewConvert {
         return categoryPageListViewPageResult;
     }
 
-    public static PageResult<ArticleBodyPageListView> articleBodyPageListDTO2View(PageResult<ArticleBodyPageListDTO> articleBodyPageListDTOPageResult) {
+    public static PageResult<ArticleBodyPageListView> articleBodyPageListDTO2View(
+            PageResult<ArticleBodyPageListDTO> articleBodyPageListDTOPageResult
+    ) {
         // 范型赋值
         List<ArticleBodyPageListDTO> data = articleBodyPageListDTOPageResult.getData();
         List<ArticleBodyPageListView> articleBodyPageListViews = BeanCopyUtil.copyListProperties(data, ArticleBodyPageListView::new);
@@ -55,5 +62,19 @@ public class ArticleDTO2ViewConvert {
         BeanCopyUtil.copyProperties(articleBodyPageListDTOPageResult, articleBodyPageListViewPageResult);
         articleBodyPageListViewPageResult.setData(articleBodyPageListViews);
         return articleBodyPageListViewPageResult;
+    }
+
+    public static PageResult<ArticleBodyPageListUserView> articleBodyPageListDTO2UserView(
+            PageResult<ArticleBodyPageListDTO> articleBodyPageListDTOPageResult
+    ) {
+        // 范型赋值
+        List<ArticleBodyPageListDTO> data = articleBodyPageListDTOPageResult.getData();
+        List<ArticleBodyPageListUserView> articleBodyPageListUserViews
+                = BeanCopyUtil.copyListProperties(data, ArticleBodyPageListUserView::new);
+        // 分页结果赋值
+        PageResult<ArticleBodyPageListUserView> articleBodyPageListUserViewPageResult = new PageResult<>();
+        BeanCopyUtil.copyProperties(articleBodyPageListDTOPageResult, articleBodyPageListUserViewPageResult);
+        articleBodyPageListUserViewPageResult.setData(articleBodyPageListUserViews);
+        return articleBodyPageListUserViewPageResult;
     }
 }

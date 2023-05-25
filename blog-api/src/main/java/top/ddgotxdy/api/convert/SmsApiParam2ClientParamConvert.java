@@ -3,9 +3,11 @@ package top.ddgotxdy.api.convert;
 import top.ddgotxdy.api.model.addparam.MessageAddApiParam;
 import top.ddgotxdy.api.model.addparam.SensitiveAddApiParam;
 import top.ddgotxdy.api.model.queryparam.MessageQueryApiParam;
+import top.ddgotxdy.api.model.queryparam.MessageQueryApiUserParam;
 import top.ddgotxdy.api.model.queryparam.SensitiveQueryApiParam;
 import top.ddgotxdy.api.model.updateparam.MessageUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.SensitiveUpdateApiParam;
+import top.ddgotxdy.common.enums.sms.AuditType;
 import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.sms.addparam.MessageAddParam;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
@@ -101,7 +103,9 @@ public class SmsApiParam2ClientParamConvert {
         return messageUpdateParam;
     }
 
-    public static PageQry<MessageQueryParam> messageQueryApiParam2Param(PageQry<MessageQueryApiParam> messageQueryApiParamPageQry) {
+    public static PageQry<MessageQueryParam> messageQueryApiParam2Param(
+            PageQry<MessageQueryApiParam> messageQueryApiParamPageQry
+    ) {
         MessageQueryParam messageQueryParam = new MessageQueryParam();
         // 范型复制
         MessageQueryApiParam messageQueryApiParam = messageQueryApiParamPageQry.getQueryParam();
@@ -113,6 +117,23 @@ public class SmsApiParam2ClientParamConvert {
         // 分页参数复制
         PageQry<MessageQueryParam> messageQueryParamPageQry = new PageQry<>();
         BeanCopyUtil.copyProperties(messageQueryApiParamPageQry, messageQueryParamPageQry);
+        // 范型赋值进去
+        messageQueryParamPageQry.setQueryParam(messageQueryParam);
+        return messageQueryParamPageQry;
+    }
+
+    public static PageQry<MessageQueryParam> messageQueryApiUserParam2Param(
+            PageQry<MessageQueryApiUserParam> messageQueryApiUserParamPageQry
+    ) {
+        MessageQueryParam messageQueryParam = new MessageQueryParam();
+        // 范型复制
+        MessageQueryApiUserParam messageQueryApiUserParam = messageQueryApiUserParamPageQry.getQueryParam();
+        BeanCopyUtil.copyProperties(messageQueryApiUserParam, messageQueryParam);
+        // 默认值处理
+        messageQueryParam.setAuditType(AuditType.AUDIT_PASS.getCode());
+        // 分页参数复制
+        PageQry<MessageQueryParam> messageQueryParamPageQry = new PageQry<>();
+        BeanCopyUtil.copyProperties(messageQueryApiUserParamPageQry, messageQueryParamPageQry);
         // 范型赋值进去
         messageQueryParamPageQry.setQueryParam(messageQueryParam);
         return messageQueryParamPageQry;

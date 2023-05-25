@@ -4,9 +4,11 @@ import top.ddgotxdy.api.model.addparam.CaptchaSendApiParam;
 import top.ddgotxdy.api.model.addparam.MessageAddApiParam;
 import top.ddgotxdy.api.model.addparam.SensitiveAddApiParam;
 import top.ddgotxdy.api.model.queryparam.MessageQueryApiParam;
+import top.ddgotxdy.api.model.queryparam.MessageQueryApiUserParam;
 import top.ddgotxdy.api.model.queryparam.SensitiveQueryApiParam;
 import top.ddgotxdy.api.model.updateparam.MessageUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.SensitiveUpdateApiParam;
+import top.ddgotxdy.api.model.view.MessagePageListUserView;
 import top.ddgotxdy.api.model.view.MessagePageListView;
 import top.ddgotxdy.api.model.view.SensitivePageListView;
 import top.ddgotxdy.common.model.IdView;
@@ -82,5 +84,12 @@ public interface BlogSmsBizService {
      * @param captchaSendApiParam 验证码发送参数
      */
     void sendCaptcha(CaptchaSendApiParam captchaSendApiParam);
+
+    /**
+     * 用户分页请求留言
+     * @param messageQueryApiUserParamPageQry 分页请求参数
+     * @return PageResult<MessagePageListUserView>
+     */
+    PageResult<MessagePageListUserView> queryMessageByPageUser(PageQry<MessageQueryApiUserParam> messageQueryApiUserParamPageQry);
 }
 

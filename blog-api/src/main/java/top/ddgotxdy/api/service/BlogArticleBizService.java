@@ -3,12 +3,11 @@ package top.ddgotxdy.api.service;
 import top.ddgotxdy.api.model.addparam.ArticleBodyAddApiParam;
 import top.ddgotxdy.api.model.addparam.CategoryAddApiParam;
 import top.ddgotxdy.api.model.addparam.TagAddApiParam;
-import top.ddgotxdy.api.model.queryparam.ArticleBodyQueryApiParam;
-import top.ddgotxdy.api.model.queryparam.CategoryQueryApiParam;
-import top.ddgotxdy.api.model.queryparam.TagQueryApiParam;
+import top.ddgotxdy.api.model.queryparam.*;
 import top.ddgotxdy.api.model.updateparam.ArticleBodyUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.CategoryUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.TagUpdateApiParam;
+import top.ddgotxdy.api.model.view.ArticleBodyPageListUserView;
 import top.ddgotxdy.api.model.view.ArticleBodyPageListView;
 import top.ddgotxdy.api.model.view.CategoryPageListView;
 import top.ddgotxdy.api.model.view.TagPageListView;
@@ -128,4 +127,25 @@ public interface BlogArticleBizService {
      * @return PageResult<CategoryPageListView>
      */
     PageResult<CategoryPageListView> queryCategoryByPage(PageQry<CategoryQueryApiParam> categoryQueryApiParamPageQry);
+
+    /**
+     * 【用户】文章分页查询
+     * @param articleBodyQueryApiUserParamPageQry 文章分页查询参数
+     * @return PageResult<ArticleBodyPageListUserView>
+     */
+    PageResult<ArticleBodyPageListUserView> queryArticleBodyByPageUser(PageQry<ArticleBodyQueryApiUserParam> articleBodyQueryApiUserParamPageQry);
+
+    /**
+     * 【用户】标签分页查询
+     * @param tagQueryApiUserParamPageQry 标签分页查询参数
+     * @return PageResult<TagPageListView>
+     */
+    PageResult<TagPageListView> queryTagByPageUser(PageQry<TagQueryApiUserParam> tagQueryApiUserParamPageQry);
+
+    /**
+     * 【用户】分类分页查询
+     * @param categoryQueryApiUserParamPageQry 分类分页查询参数
+     * @return PageResult<CategoryPageListView>
+     */
+    PageResult<CategoryPageListView> queryCategoryByPageUser(PageQry<CategoryQueryApiUserParam> categoryQueryApiUserParamPageQry);
 }

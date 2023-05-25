@@ -3,7 +3,6 @@ package top.ddgotxdy.api.model.queryparam;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
-import top.ddgotxdy.common.enums.article.ArticleStatus;
 
 import java.util.List;
 
@@ -12,8 +11,8 @@ import java.util.List;
  * @description:
  */
 @Data
-@ApiModel("文章查询参数")
-public class ArticleBodyQueryApiParam {
+@ApiModel("文章查询参数（用户）")
+public class ArticleBodyQueryApiUserParam {
     @ApiModelProperty("文章id")
     private Long articleId;
     @ApiModelProperty("标题")
@@ -24,8 +23,4 @@ public class ArticleBodyQueryApiParam {
     private List<Long> tagIds;
     @ApiModelProperty("分类id")
     private Long categoryId;
-    @ApiModelProperty("是否删除")
-    private Boolean isDelete;
-    @ApiModelProperty("文章状态值 1公开 2私密")
-    private ArticleStatus articleStatus;
 }

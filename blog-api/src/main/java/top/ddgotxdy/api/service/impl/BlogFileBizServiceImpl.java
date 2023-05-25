@@ -45,7 +45,9 @@ public class BlogFileBizServiceImpl implements BlogFileBizService {
     }
 
     @Override
-    public PageResult<ImagePageListView> queryImageByPage(PageQry<ImageQueryApiParam> imageQueryApiParamPageQry) {
+    public PageResult<ImagePageListView> queryImageByPage(
+            PageQry<ImageQueryApiParam> imageQueryApiParamPageQry
+    ) {
         PageQry<ImageQueryParam> imageQueryParamPageQry = FileApiParam2ClientParamConvert.imageQueryApiParam2QueryParam(imageQueryApiParamPageQry);
         ResultView<PageResult<ImagePageListDTO>> response = blogFileClient.queryImageByPage(imageQueryParamPageQry);
         PageResult<ImagePageListView> imagePageListViewPageResult = FileDTO2ViewConvert.imagePageListDTO2View(response.checkAndGetData());

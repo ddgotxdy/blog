@@ -8,9 +8,11 @@ import top.ddgotxdy.api.model.addparam.CaptchaSendApiParam;
 import top.ddgotxdy.api.model.addparam.MessageAddApiParam;
 import top.ddgotxdy.api.model.addparam.SensitiveAddApiParam;
 import top.ddgotxdy.api.model.queryparam.MessageQueryApiParam;
+import top.ddgotxdy.api.model.queryparam.MessageQueryApiUserParam;
 import top.ddgotxdy.api.model.queryparam.SensitiveQueryApiParam;
 import top.ddgotxdy.api.model.updateparam.MessageUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.SensitiveUpdateApiParam;
+import top.ddgotxdy.api.model.view.MessagePageListUserView;
 import top.ddgotxdy.api.model.view.MessagePageListView;
 import top.ddgotxdy.api.model.view.SensitivePageListView;
 import top.ddgotxdy.api.service.BlogSmsBizService;
@@ -81,7 +83,7 @@ public class SmsController {
      * @return ResultView<IdView>
      */
     @ApiOperation("留言添加")
-    @PostMapping("user/message/add")
+    @PostMapping("/user/message/add")
     ResultView<IdView> addMessage(
             @Validated @RequestBody MessageAddApiParam messageAddApiParam
     ) {
@@ -95,7 +97,7 @@ public class SmsController {
      * @return ResultView<IdView>
      */
     @ApiOperation("留言更新")
-    @PostMapping("admin/message/update")
+    @PostMapping("/admin/message/update")
     ResultView<IdView> updateMessage(
             @RequestBody MessageUpdateApiParam messageUpdateApiParam
     ) {
@@ -103,17 +105,22 @@ public class SmsController {
         return ResultView.success(idView);
     }
 
-    /**
-     * 留言查询接口
-     * @param messageQueryApiParamPageQry 查询参数
-     * @return ResultView<PageResult<MessagePageListView>>
-     */
     @ApiOperation("留言分页查询")
-    @PostMapping("/message/queryByPage")
+    @PostMapping("/admin/message/queryByPage")
     ResultView<PageResult<MessagePageListView>> queryMessageByPage(
             @Validated @RequestBody PageQry<MessageQueryApiParam> messageQueryApiParamPageQry
     ) {
         PageResult<MessagePageListView> result = blogSmsBizService.queryMessageByPage(messageQueryApiParamPageQry);
+        return ResultView.success(result);
+    }
+
+    @ApiOperation("留言分页查询（用户）")
+    @PostMapping("/user/message/queryByPage")
+    ResultView<PageResult<MessagePageListUserView>> queryMessageByPageUser(
+            @Validated @RequestBody PageQry<MessageQueryApiUserParam> messageQueryApiUserParamPageQry
+    ) {
+        PageResult<MessagePageListUserView> result
+                = blogSmsBizService.queryMessageByPageUser(messageQueryApiUserParamPageQry);
         return ResultView.success(result);
     }
 

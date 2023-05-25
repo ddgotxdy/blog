@@ -33,8 +33,8 @@ public class UserInfoPageListView {
     @ApiModelProperty("头像")
     private String avatarUrl;
 
-    @ApiModelProperty("角色名称")
-    private String roleName;
+    @ApiModelProperty("角色id")
+    private Long roleId;
 
     @ApiModelProperty("创建时间")
     private Long createTime;

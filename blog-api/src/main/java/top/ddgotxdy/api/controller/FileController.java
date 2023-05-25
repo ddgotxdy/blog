@@ -32,7 +32,7 @@ public class FileController {
      * @return 返回 url
      */
     @ApiOperation("上传图片")
-    @PostMapping("admin/image/upload")
+    @PostMapping("/admin/image/upload")
     public ResultView<String> uploadImage(
             @RequestParam("image") MultipartFile imageFile
     ) {
@@ -59,7 +59,7 @@ public class FileController {
     }
 
     @ApiOperation("图片分页查询")
-    @PostMapping("admin/image/queryByPage")
+    @PostMapping("/admin/image/queryByPage")
     public ResultView<PageResult<ImagePageListView>> queryImageByPage(
             @Validated @RequestBody PageQry<ImageQueryApiParam> imageQueryApiParamPageQry
     ) {
@@ -68,7 +68,7 @@ public class FileController {
     }
 
     @ApiOperation("图片删除接口")
-    @DeleteMapping("admin/image/delete")
+    @DeleteMapping("/admin/image/delete")
     public ResultView<IdsView> deleteImage(
             @RequestBody List<Long> imageList
     ) {
@@ -76,8 +76,8 @@ public class FileController {
         return ResultView.success(idView);
     }
 
-    @ApiOperation("标签恢复接口")
-    @PostMapping("admin/image/recover")
+    @ApiOperation("图片恢复接口")
+    @PostMapping("/admin/image/recover")
     public ResultView<IdsView> recoverImage(
             @RequestBody List<Long> imageList
     ) {

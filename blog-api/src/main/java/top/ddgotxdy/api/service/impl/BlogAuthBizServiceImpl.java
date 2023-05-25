@@ -70,8 +70,6 @@ public class BlogAuthBizServiceImpl implements BlogAuthBizService {
     public UserInfoView getUserInfo() {
         ResultView<UserInfoDTO> response = blogAuthClient.getUserInfo();
         UserInfoView userInfoView = SmsDTO2ViewConvert.userInfoDTO2View(response.checkAndGetData());
-        // 根据角色id获取角色名称 TODO
-        userInfoView.setRoleName("普通用户");
         return userInfoView;
     }
 
@@ -123,13 +121,6 @@ public class BlogAuthBizServiceImpl implements BlogAuthBizService {
         PageResult<UserInfoPageListDTO> userInfoPageListDTOPageResult = response.checkAndGetData();
         PageResult<UserInfoPageListView> userInfoPageListViewPageResult
                 = AuthDTO2ViewConvert.pageListDTO2View(userInfoPageListDTOPageResult);
-        // Role name 赋值
-        List<UserInfoPageListView> data = userInfoPageListViewPageResult.getData();
-        for (int i = 0; i < data.size(); i++) {
-            UserInfoPageListView userInfoPageListView = data.get(i);
-            // 根据角色id获取角色名称 TODO
-            userInfoPageListView.setRoleName("普通用户");
-        }
         return userInfoPageListViewPageResult;
     }
 

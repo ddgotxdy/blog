@@ -9,12 +9,10 @@ import lombok.Data;
  * @description:
  */
 @Data
-@ApiModel("分类分页查询参数api")
-public class CategoryQueryApiParam {
+@ApiModel("分类分页查询参数api（用户）")
+public class CategoryQueryApiUserParam {
     @ApiModelProperty("分类id")
     private Long categoryId;
     @ApiModelProperty("分类名称")
     private String categoryName;
-    @ApiModelProperty(value = "是否删除", required = true)
-    private Boolean isDelete;
 }
