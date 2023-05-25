@@ -187,4 +187,14 @@ public class AuthController {
         IdsView idsView = blogAuthBizService.recoverRole(roleIdList);
         return ResultView.success(idsView);
     }
+
+    @ApiOperation("查询单个角色名称")
+    @GetMapping("/role/query/{roleId}")
+    public ResultView<String> queryRoleById(
+            @PathVariable("roleId") Long roleId
+    ) {
+        String roleName = blogAuthBizService.queryRoleById(roleId);
+        return ResultView.success(roleName);
+    }
+
 }

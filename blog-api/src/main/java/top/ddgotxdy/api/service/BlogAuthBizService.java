@@ -143,4 +143,11 @@ public interface BlogAuthBizService {
      * @return IdsView
      */
     IdsView recoverRole(List<Long> roleIdList);
+
+    /**
+     * 获取角色名称
+     * @param roleId 角色id
+     * @return String
+     */
+    String queryRoleById(Long roleId);
 }

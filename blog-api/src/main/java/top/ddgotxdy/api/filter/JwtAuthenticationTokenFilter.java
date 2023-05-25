@@ -58,6 +58,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             claims = JwtUtil.parseJWT(token);
             userId = claims.getSubject();
         } catch (ExpiredJwtException expiredJwtException) {
+            // 过期了，得重新登录
             throw new BlogException(LOGIN_EXPIRE_ERROR);
         } catch (Exception e) {
             e.printStackTrace();

@@ -1,6 +1,7 @@
 package top.ddgotxdy.api.service.impl;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import top.ddgotxdy.api.convert.AuthApiParam2ClientParamConvert;
 import top.ddgotxdy.api.convert.AuthDTO2ViewConvert;
 import top.ddgotxdy.api.convert.SmsDTO2ViewConvert;
@@ -241,5 +242,22 @@ public class BlogAuthBizServiceImpl implements BlogAuthBizService {
         return IdsView.builder()
                 .ids(idsDTO.getIds())
                 .build();
+    }
+
+    @Override
+    public String queryRoleById(Long roleId) {
+        PageQry<RoleQueryParam> roleQueryParamPageQry = new PageQry<>();
+        roleQueryParamPageQry.setPageNum(1);
+        roleQueryParamPageQry.setPageSize(1);
+        RoleQueryParam roleQueryParam = new RoleQueryParam();
+        roleQueryParam.setRoleId(roleId);
+        roleQueryParamPageQry.setQueryParam(roleQueryParam);
+        ResultView<PageResult<RolePageListDTO>> response = blogAuthClient.queryRoleByPage(roleQueryParamPageQry);
+        PageResult<RolePageListDTO> rolePageListDTOPageResult = response.checkAndGetData();
+        List<RolePageListDTO> rolePageListDTOList = rolePageListDTOPageResult.getData();
+        if (CollectionUtils.isEmpty(rolePageListDTOList)) {
+            return "游客";
+        }
+        return rolePageListDTOList.get(0).getRoleName();
     }
 }
