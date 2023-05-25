@@ -12,10 +12,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
  * @description:
  */
 @SpringBootApplication(
-        scanBasePackages = "top.ddgotxdy.*"
-//        exclude = {
-//                SecurityAutoConfiguration.class
-//        }
+        scanBasePackages = "top.ddgotxdy.*",
+        exclude = {
+                SecurityAutoConfiguration.class
+        }
 )
 @EnableDiscoveryClient
 @EnableFeignClients(basePackages = "top.ddgotxdy.common.client")
