@@ -1,22 +1,22 @@
 package top.ddgotxdy.api.convert;
 
 import top.ddgotxdy.api.model.UserLoginApiModel;
+import top.ddgotxdy.api.model.addparam.RoleAddApiParam;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
+import top.ddgotxdy.api.model.queryparam.RoleQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.UserInfoQueryApiParam;
-import top.ddgotxdy.api.model.updateparam.UserEmailUpdateApiParam;
-import top.ddgotxdy.api.model.updateparam.UserInfoUpdateApiParam;
-import top.ddgotxdy.api.model.updateparam.UserPasswordUpdateApiParam;
-import top.ddgotxdy.api.model.updateparam.UserRoleUpdateApiParam;
+import top.ddgotxdy.api.model.updateparam.*;
 import top.ddgotxdy.common.model.PageQry;
+import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
+import top.ddgotxdy.common.model.auth.deleteparam.RoleDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.queryparam.RoleQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
+import top.ddgotxdy.common.model.auth.recoverparam.RoleRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserEmailUpdateParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserInfoUpdateParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserPasswordUpdateParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserRoleUpdateParam;
+import top.ddgotxdy.common.model.auth.updateparam.*;
 import top.ddgotxdy.common.scope.ContextScope;
 import top.ddgotxdy.common.util.BeanCopyUtil;
 
@@ -103,5 +103,49 @@ public class AuthApiParam2ClientParamConvert {
         Long userId = ContextScope.getUserId();
         userRecoverParam.setUserId(userId);
         return userRecoverParam;
+    }
+
+    public static RoleAddParam addApiParam2AddParam(RoleAddApiParam roleAddApiParam) {
+        RoleAddParam roleAddParam = new RoleAddParam();
+        BeanCopyUtil.copyProperties(roleAddApiParam, roleAddParam);
+        Long userId = ContextScope.getUserId();
+        roleAddParam.setUserId(userId);
+        return roleAddParam;
+    }
+
+    public static RoleUpdateParam apiParam2Param(RoleUpdateApiParam roleUpdateApiParam) {
+        RoleUpdateParam roleUpdateParam = new RoleUpdateParam();
+        BeanCopyUtil.copyProperties(roleUpdateApiParam, roleUpdateParam);
+        Long userId = ContextScope.getUserId();
+        roleUpdateParam.setUserId(userId);
+        return roleUpdateParam;
+    }
+
+    public static RoleDeleteParam deleteApiParam2RoleDeleteParam(List<Long> roleIdList) {
+        RoleDeleteParam roleDeleteParam = new RoleDeleteParam();
+        roleDeleteParam.setRoleIds(roleIdList);
+        Long userId = ContextScope.getUserId();
+        roleDeleteParam.setUserId(userId);
+        return roleDeleteParam;
+    }
+
+    public static RoleRecoverParam recoverApiParam2RoleRecoverParam(List<Long> roleIdList) {
+        RoleRecoverParam roleRecoverParam = new RoleRecoverParam();
+        roleRecoverParam.setRoleIds(roleIdList);
+        Long userId = ContextScope.getUserId();
+        roleRecoverParam.setUserId(userId);
+        return roleRecoverParam;
+    }
+
+    public static PageQry<RoleQueryParam> queryApiParam2RoleQueryParam(PageQry<RoleQueryApiParam> roleQueryApiParamPageQry) {
+        RoleQueryParam roleQueryParam = new RoleQueryParam();
+        // 范型复制
+        RoleQueryApiParam roleQueryApiParam = roleQueryApiParamPageQry.getQueryParam();
+        BeanCopyUtil.copyProperties(roleQueryApiParam, roleQueryParam);
+        // 分页参数复制
+        PageQry<RoleQueryParam> roleQueryParamPageQry = new PageQry<>();
+        BeanCopyUtil.copyProperties(roleQueryApiParamPageQry, roleQueryParamPageQry);
+        roleQueryParamPageQry.setQueryParam(roleQueryParam);
+        return roleQueryParamPageQry;
     }
 }

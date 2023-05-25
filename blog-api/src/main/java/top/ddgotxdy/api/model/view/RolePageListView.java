@@ -1,5 +1,6 @@
-package top.ddgotxdy.common.model.auth.dto;
+package top.ddgotxdy.api.model.view;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -10,7 +11,8 @@ import java.util.List;
  * @description:
  */
 @Data
-public class RolePageListDTO {
+@ApiModel("角色分页列表")
+public class RolePageListView {
     @ApiModelProperty("角色ID")
     private Long roleId;
 

@@ -8,17 +8,19 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import top.ddgotxdy.common.interceptor.FeignRequestInterceptor;
 import top.ddgotxdy.common.model.*;
+import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
+import top.ddgotxdy.common.model.auth.deleteparam.RoleDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
+import top.ddgotxdy.common.model.auth.dto.RolePageListDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.queryparam.RoleQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
+import top.ddgotxdy.common.model.auth.recoverparam.RoleRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserEmailUpdateParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserInfoUpdateParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserPasswordUpdateParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserRoleUpdateParam;
+import top.ddgotxdy.common.model.auth.updateparam.*;
 
 /**
  * @author: ddgo
@@ -97,7 +99,7 @@ public interface BlogAuthClient {
      * @return IdDTO
      */
     @PostMapping("openfeign/auth/updateUserRole")
-    ResultView<IdDTO> updateRole(
+    ResultView<IdDTO> updateUserRole(
             @Validated @RequestBody UserRoleUpdateParam userRoleUpdateParam
     );
 
@@ -129,5 +131,55 @@ public interface BlogAuthClient {
     @PostMapping("openfeign/auth/recoverUser")
     ResultView<IdsDTO> recoverUser(
             @Validated @RequestBody UserRecoverParam userRecoverParam
+    );
+
+    /**
+     * 添加角色
+     * @param roleAddParam 角色添加参数
+     * @return IdDTO
+     */
+    @PostMapping("openfeign/auth/role/add")
+    ResultView<IdDTO> addRole(
+            @Validated @RequestBody RoleAddParam roleAddParam
+    );
+
+    /**
+     * 分页查询角色
+     * @param roleQueryParamPageQry 分页查询角色参数
+     * @return PageResult<RolePageListDTO>
+     */
+    @PostMapping("openfeign/auth/role/queryByPage")
+    ResultView<PageResult<RolePageListDTO>> queryRoleByPage(
+            @Validated @RequestBody PageQry<RoleQueryParam> roleQueryParamPageQry
+    );
+
+    /**
+     * 更新角色
+     * @param roleUpdateParam 角色更新参数
+     * @return IdDTO
+     */
+    @PostMapping("openfeign/auth/role/update")
+    ResultView<IdDTO> updateUserRole(
+            @Validated @RequestBody RoleUpdateParam roleUpdateParam
+    );
+
+    /**
+     * 删除角色
+     * @param roleDeleteParam 角色删除参数
+     * @return IdsDTO
+     */
+    @DeleteMapping("openfeign/auth/role/delete")
+    ResultView<IdsDTO> deleteRole(
+            @Validated @RequestBody RoleDeleteParam roleDeleteParam
+    );
+
+    /**
+     * 恢复角色
+     * @param roleRecoverParam 角色恢复参数
+     * @return IdsDTO
+     */
+    @PostMapping("openfeign/auth/role/recover")
+    ResultView<IdsDTO> recoverRole(
+            @Validated @RequestBody RoleRecoverParam roleRecoverParam
     );
 }

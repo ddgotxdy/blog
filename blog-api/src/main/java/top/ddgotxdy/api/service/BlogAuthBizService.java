@@ -1,12 +1,12 @@
 package top.ddgotxdy.api.service;
 
 import top.ddgotxdy.api.model.UserLoginApiModel;
+import top.ddgotxdy.api.model.addparam.RoleAddApiParam;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
+import top.ddgotxdy.api.model.queryparam.RoleQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.UserInfoQueryApiParam;
-import top.ddgotxdy.api.model.updateparam.UserEmailUpdateApiParam;
-import top.ddgotxdy.api.model.updateparam.UserInfoUpdateApiParam;
-import top.ddgotxdy.api.model.updateparam.UserPasswordUpdateApiParam;
-import top.ddgotxdy.api.model.updateparam.UserRoleUpdateApiParam;
+import top.ddgotxdy.api.model.updateparam.*;
+import top.ddgotxdy.api.model.view.RolePageListView;
 import top.ddgotxdy.api.model.view.UserInfoPageListView;
 import top.ddgotxdy.api.model.view.UserInfoView;
 import top.ddgotxdy.common.model.IdView;
@@ -72,7 +72,7 @@ public interface BlogAuthBizService {
      * @param userRoleUpdateApiParam 更新角色参数
      * @return IdView
      */
-    IdView updateRole(UserRoleUpdateApiParam userRoleUpdateApiParam);
+    IdView updateUserRole(UserRoleUpdateApiParam userRoleUpdateApiParam);
 
     /**
      * 分页获取用户登录列表
@@ -108,4 +108,39 @@ public interface BlogAuthBizService {
      * @return IdsView
      */
     IdsView recoverUser(List<Long> userIdList);
+
+    /**
+     * 添加角色
+     * @param roleAddApiParam 角色请求参数
+     * @return IdView
+     */
+    IdView addRole(RoleAddApiParam roleAddApiParam);
+
+    /**
+     * 角色分页查询
+     * @param roleQueryApiParamPageQry 分页查询参数
+     * @return PageResult<RolePageListView>
+     */
+    PageResult<RolePageListView> queryRoleByPage(PageQry<RoleQueryApiParam> roleQueryApiParamPageQry);
+
+    /**
+     * 更新角色
+     * @param roleUpdateApiParam 角色更新参数
+     * @return IdView
+     */
+    IdView updateRole(RoleUpdateApiParam roleUpdateApiParam);
+
+    /**
+     * 删除角色
+     * @param roleIdList 角色列表
+     * @return IdsView
+     */
+    IdsView deleteRole(List<Long> roleIdList);
+
+    /**
+     * 恢复角色
+     * @param roleIdList 角色 id 列表
+     * @return IdsView
+     */
+    IdsView recoverRole(List<Long> roleIdList);
 }

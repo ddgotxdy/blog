@@ -5,12 +5,12 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.ddgotxdy.api.model.UserLoginApiModel;
+import top.ddgotxdy.api.model.addparam.RoleAddApiParam;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
+import top.ddgotxdy.api.model.queryparam.RoleQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.UserInfoQueryApiParam;
-import top.ddgotxdy.api.model.updateparam.UserEmailUpdateApiParam;
-import top.ddgotxdy.api.model.updateparam.UserInfoUpdateApiParam;
-import top.ddgotxdy.api.model.updateparam.UserPasswordUpdateApiParam;
-import top.ddgotxdy.api.model.updateparam.UserRoleUpdateApiParam;
+import top.ddgotxdy.api.model.updateparam.*;
+import top.ddgotxdy.api.model.view.RolePageListView;
 import top.ddgotxdy.api.model.view.UserInfoPageListView;
 import top.ddgotxdy.api.model.view.UserInfoView;
 import top.ddgotxdy.api.service.BlogAuthBizService;
@@ -89,12 +89,12 @@ public class AuthController {
         return ResultView.success(idView);
     }
 
-    @ApiOperation("更新角色")
-    @PostMapping("/admin/updateRole")
-    public ResultView<IdView> updateRole(
+    @ApiOperation("更新用户的角色")
+    @PostMapping("/admin/updateUserRole")
+    public ResultView<IdView> updateUserRole(
             @Validated @RequestBody UserRoleUpdateApiParam userRoleUpdateApiParam
     ) {
-        IdView idView = blogAuthBizService.updateRole(userRoleUpdateApiParam);
+        IdView idView = blogAuthBizService.updateUserRole(userRoleUpdateApiParam);
         return ResultView.success(idView);
     }
 
@@ -125,7 +125,8 @@ public class AuthController {
         return ResultView.success(ok);
     }
 
-    @DeleteMapping("/deleteUser")
+    @ApiOperation("删除用户")
+    @DeleteMapping("/admin/deleteUser")
     ResultView<IdsView> deleteUser(
             @RequestBody List<Long> userIdList
     ) {
@@ -133,11 +134,57 @@ public class AuthController {
         return ResultView.success(idsView);
     }
 
-    @PostMapping("/recoverUser")
+    @ApiOperation("恢复用户")
+    @PostMapping("/admin/recoverUser")
     ResultView<IdsView> recoverUser(
             @RequestBody List<Long> userIdList
     ) {
         IdsView idsView = blogAuthBizService.recoverUser(userIdList);
+        return ResultView.success(idsView);
+    }
+
+    @ApiOperation("添加角色")
+    @PostMapping("/admin/role/add")
+    public ResultView<IdView> addRole(
+            @Validated @RequestBody RoleAddApiParam roleAddApiParam
+    ) {
+        IdView idView = blogAuthBizService.addRole(roleAddApiParam);
+        return ResultView.success(idView);
+    }
+
+    @ApiOperation("分页查询角色")
+    @PostMapping("/admin/role/queryByPage")
+    public ResultView<PageResult<RolePageListView>> queryRoleByPage(
+            @Validated @RequestBody PageQry<RoleQueryApiParam> roleQueryApiParamPageQry
+    ) {
+        PageResult<RolePageListView> rolePageListViewPageResult = blogAuthBizService.queryRoleByPage(roleQueryApiParamPageQry);
+        return ResultView.success(rolePageListViewPageResult);
+    }
+
+    @ApiOperation("修改角色")
+    @PostMapping("/admin/role/update")
+    public ResultView<IdView> updateRole(
+            @Validated @RequestBody RoleUpdateApiParam roleUpdateApiParam
+    ) {
+        IdView idView = blogAuthBizService.updateRole(roleUpdateApiParam);
+        return ResultView.success(idView);
+    }
+
+    @ApiOperation("删除角色")
+    @DeleteMapping("/admin/role/delete")
+    public ResultView<IdsView> deleteRole(
+            @RequestBody List<Long> roleIdList
+    ) {
+        IdsView idsView = blogAuthBizService.deleteRole(roleIdList);
+        return ResultView.success(idsView);
+    }
+
+    @ApiOperation("恢复角色")
+    @PostMapping("/admin/role/recover")
+    public ResultView<IdsView> recoverRole(
+            @RequestBody List<Long> roleIdList
+    ) {
+        IdsView idsView = blogAuthBizService.recoverRole(roleIdList);
         return ResultView.success(idsView);
     }
 }

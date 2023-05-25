@@ -5,28 +5,30 @@ import top.ddgotxdy.api.convert.AuthApiParam2ClientParamConvert;
 import top.ddgotxdy.api.convert.AuthDTO2ViewConvert;
 import top.ddgotxdy.api.convert.SmsDTO2ViewConvert;
 import top.ddgotxdy.api.model.UserLoginApiModel;
+import top.ddgotxdy.api.model.addparam.RoleAddApiParam;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
+import top.ddgotxdy.api.model.queryparam.RoleQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.UserInfoQueryApiParam;
-import top.ddgotxdy.api.model.updateparam.UserEmailUpdateApiParam;
-import top.ddgotxdy.api.model.updateparam.UserInfoUpdateApiParam;
-import top.ddgotxdy.api.model.updateparam.UserPasswordUpdateApiParam;
-import top.ddgotxdy.api.model.updateparam.UserRoleUpdateApiParam;
+import top.ddgotxdy.api.model.updateparam.*;
+import top.ddgotxdy.api.model.view.RolePageListView;
 import top.ddgotxdy.api.model.view.UserInfoPageListView;
 import top.ddgotxdy.api.model.view.UserInfoView;
 import top.ddgotxdy.api.service.BlogAuthBizService;
 import top.ddgotxdy.common.client.BlogAuthClient;
 import top.ddgotxdy.common.model.*;
+import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
+import top.ddgotxdy.common.model.auth.deleteparam.RoleDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
+import top.ddgotxdy.common.model.auth.dto.RolePageListDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.queryparam.RoleQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
+import top.ddgotxdy.common.model.auth.recoverparam.RoleRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserEmailUpdateParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserInfoUpdateParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserPasswordUpdateParam;
-import top.ddgotxdy.common.model.auth.updateparam.UserRoleUpdateParam;
+import top.ddgotxdy.common.model.auth.updateparam.*;
 import top.ddgotxdy.common.scope.ContextScope;
 
 import javax.annotation.Resource;
@@ -104,10 +106,10 @@ public class BlogAuthBizServiceImpl implements BlogAuthBizService {
     }
 
     @Override
-    public IdView updateRole(UserRoleUpdateApiParam userRoleUpdateApiParam) {
+    public IdView updateUserRole(UserRoleUpdateApiParam userRoleUpdateApiParam) {
         UserRoleUpdateParam userRoleUpdateParam
                 = AuthApiParam2ClientParamConvert.apiParam2Param(userRoleUpdateApiParam);
-        ResultView<IdDTO> response = blogAuthClient.updateRole(userRoleUpdateParam);
+        ResultView<IdDTO> response = blogAuthClient.updateUserRole(userRoleUpdateParam);
         return IdView.builder()
                 .id(response.checkAndGetData().getId())
                 .build();
@@ -189,6 +191,61 @@ public class BlogAuthBizServiceImpl implements BlogAuthBizService {
         UserRecoverParam userRecoverParam
                 = AuthApiParam2ClientParamConvert.recoverApiParam2RecoverParam(userIdList);
         ResultView<IdsDTO> response = blogAuthClient.recoverUser(userRecoverParam);
+        IdsDTO idsDTO = response.checkAndGetData();
+        return IdsView.builder()
+                .ids(idsDTO.getIds())
+                .build();
+    }
+
+    @Override
+    public IdView addRole(RoleAddApiParam roleAddApiParam) {
+        RoleAddParam roleAddParam
+                = AuthApiParam2ClientParamConvert.addApiParam2AddParam(roleAddApiParam);
+        ResultView<IdDTO> response = blogAuthClient.addRole(roleAddParam);
+        IdDTO idDTO = response.checkAndGetData();
+        return IdView.builder()
+                .id(idDTO.getId())
+                .build();
+    }
+
+    @Override
+    public PageResult<RolePageListView> queryRoleByPage(PageQry<RoleQueryApiParam> roleQueryApiParamPageQry) {
+        PageQry<RoleQueryParam> roleQueryParamPageQry
+                = AuthApiParam2ClientParamConvert.queryApiParam2RoleQueryParam(roleQueryApiParamPageQry);
+        ResultView<PageResult<RolePageListDTO>> response = blogAuthClient.queryRoleByPage(roleQueryParamPageQry);
+        PageResult<RolePageListDTO> rolePageListDTOPageResult = response.checkAndGetData();
+        PageResult<RolePageListView> rolePageListViewPageResult
+                = AuthDTO2ViewConvert.rolePageListDTO2View(rolePageListDTOPageResult);
+        return rolePageListViewPageResult;
+    }
+
+    @Override
+    public IdView updateRole(RoleUpdateApiParam roleUpdateApiParam) {
+        RoleUpdateParam roleUpdateParam
+                = AuthApiParam2ClientParamConvert.apiParam2Param(roleUpdateApiParam);
+        ResultView<IdDTO> response = blogAuthClient.updateUserRole(roleUpdateParam);
+        IdDTO idDTO = response.checkAndGetData();
+        return IdView.builder()
+                .id(idDTO.getId())
+                .build();
+    }
+
+    @Override
+    public IdsView deleteRole(List<Long> roleIdList) {
+        RoleDeleteParam roleDeleteParam
+                = AuthApiParam2ClientParamConvert.deleteApiParam2RoleDeleteParam(roleIdList);
+        ResultView<IdsDTO> response = blogAuthClient.deleteRole(roleDeleteParam);
+        IdsDTO idsDTO = response.checkAndGetData();
+        return IdsView.builder()
+                .ids(idsDTO.getIds())
+                .build();
+    }
+
+    @Override
+    public IdsView recoverRole(List<Long> roleIdList) {
+        RoleRecoverParam roleRecoverParam
+                = AuthApiParam2ClientParamConvert.recoverApiParam2RoleRecoverParam(roleIdList);
+        ResultView<IdsDTO> response = blogAuthClient.recoverRole(roleRecoverParam);
         IdsDTO idsDTO = response.checkAndGetData();
         return IdsView.builder()
                 .ids(idsDTO.getIds())
