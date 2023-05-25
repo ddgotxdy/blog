@@ -17,6 +17,9 @@ import top.ddgotxdy.common.util.RedisCache;
 
 import javax.annotation.Resource;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+
+import static top.ddgotxdy.common.constant.RedisExpireTime.TOKEN_EXPIRE_SECOND;
 
 /**
  * @author: ddgo
@@ -45,7 +48,11 @@ public class LoginServiceImpl implements LoginService {
         String userId = loginUser.getUser().getUserId().toString();
         String jwt = JwtUtil.createJWT(userId);
         // 把完整的用户信息存入redis  userid作为key
-        redisCache.setCacheObject(RedisPrefix.LOGIN + userId, loginUser);
+        redisCache.setCacheObject(
+                RedisPrefix.LOGIN + userId,
+                loginUser,
+                TOKEN_EXPIRE_SECOND,
+                TimeUnit.SECONDS);
         return jwt;
     }
 

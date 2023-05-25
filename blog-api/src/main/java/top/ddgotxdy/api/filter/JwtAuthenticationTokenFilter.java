@@ -1,6 +1,7 @@
 package top.ddgotxdy.api.filter;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,7 +21,11 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
 import java.util.Objects;
+
+import static top.ddgotxdy.common.enums.ResultCode.LOGIN_ERROR;
+import static top.ddgotxdy.common.enums.ResultCode.LOGIN_EXPIRE_ERROR;
 
 /**
  * @author ddgo
@@ -32,6 +37,8 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Resource
     private RedisCache redisCache;
+
+    public static final Long REFRESH_TIME = 15L * 60 * 1000;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,
@@ -46,9 +53,12 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         }
         // 解析token
         String userId;
+        Claims claims;
         try {
-            Claims claims = JwtUtil.parseJWT(token);
+            claims = JwtUtil.parseJWT(token);
             userId = claims.getSubject();
+        } catch (ExpiredJwtException expiredJwtException) {
+            throw new BlogException(LOGIN_EXPIRE_ERROR);
         } catch (Exception e) {
             e.printStackTrace();
             throw new BlogException(500, "token非法");
@@ -59,8 +69,17 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         String redisKey = RedisPrefix.LOGIN + userId;
         LoginUser loginUser = redisCache.getCacheObject(redisKey);
         if(Objects.isNull(loginUser)) {
-            throw new BlogException(500, "用户未登录");
+            throw new BlogException(LOGIN_ERROR.getCode(), "用户未登录");
         }
+        // 如果时间小于15分钟，则重新生成token
+        Date expiration = claims.getExpiration();
+        long time = expiration.getTime();
+        long nowTime = System.currentTimeMillis();
+        if (time - nowTime <= REFRESH_TIME) {
+            String jwt = JwtUtil.createJWT(userId);
+            response.addHeader("token", jwt);
+        }
+
         // 存入SecurityContextHolder
         // 获取权限信息封装到Authentication中
         UsernamePasswordAuthenticationToken authenticationToken =

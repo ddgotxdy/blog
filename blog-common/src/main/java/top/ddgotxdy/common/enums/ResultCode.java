@@ -62,6 +62,7 @@ public enum ResultCode {
     ROLE_UPDATE_ERROR(1014, "角色更新错误"),
     ROLE_DELETE_ERROR(1015, "角色删除错误"),
     ROLE_RECOVER_ERROR(1016, "角色恢复错误"),
+    LOGIN_EXPIRE_ERROR(1017, "登录过期"),
     ;
     private final Integer code;
     private final String msg;
