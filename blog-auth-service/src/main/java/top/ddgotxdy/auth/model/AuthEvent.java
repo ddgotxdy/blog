@@ -54,6 +54,22 @@ public enum AuthEvent {
      * 角色恢复
      */
     ROLE_RECOVER(12),
+    /**
+     * 菜单添加
+     */
+    MENU_ADD(13),
+    /**
+     * 菜单更新
+     */
+    MENU_UPDATE(14),
+    /**
+     * 菜单删除
+     */
+    MENU_DELETE(15),
+    /**
+     * 菜单恢复
+     */
+    MENU_RECOVER(16),
     ;
     private final int code;
 }

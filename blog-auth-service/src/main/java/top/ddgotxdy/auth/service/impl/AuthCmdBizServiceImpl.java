@@ -9,11 +9,14 @@ import top.ddgotxdy.auth.service.AuthCmdBizService;
 import top.ddgotxdy.auth.service.LoginService;
 import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.IdsDTO;
+import top.ddgotxdy.common.model.auth.addparam.MenuAddParam;
 import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
+import top.ddgotxdy.common.model.auth.deleteparam.MenuDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.RoleDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.recoverparam.MenuRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.RoleRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
 import top.ddgotxdy.common.model.auth.updateparam.*;
@@ -120,7 +123,7 @@ public class AuthCmdBizServiceImpl implements AuthCmdBizService {
         log.info("AuthCmdBizServiceImpl addRole request[{}]", toJSON(authContext));
         authManageAdaptor.execute(authContext);
         return IdDTO.builder()
-                .id(authContext.getUserId())
+                .id(authContext.getRoleId())
                 .build();
     }
 
@@ -130,7 +133,7 @@ public class AuthCmdBizServiceImpl implements AuthCmdBizService {
         log.info("AuthCmdBizServiceImpl updateRole request[{}]", toJSON(authContext));
         authManageAdaptor.execute(authContext);
         return IdDTO.builder()
-                .id(authContext.getUserId())
+                .id(authContext.getRoleId())
                 .build();
     }
 
@@ -140,7 +143,7 @@ public class AuthCmdBizServiceImpl implements AuthCmdBizService {
         log.info("AuthCmdBizServiceImpl deleteRole request[{}]", toJSON(authContext));
         authManageAdaptor.execute(authContext);
         return IdsDTO.builder()
-                .ids(authContext.getUserIds())
+                .ids(authContext.getRoleIds())
                 .build();
     }
 
@@ -150,7 +153,47 @@ public class AuthCmdBizServiceImpl implements AuthCmdBizService {
         log.info("AuthCmdBizServiceImpl recoverRole request[{}]", toJSON(authContext));
         authManageAdaptor.execute(authContext);
         return IdsDTO.builder()
-                .ids(authContext.getUserIds())
+                .ids(authContext.getRoleIds())
+                .build();
+    }
+
+    @Override
+    public IdDTO addMenu(MenuAddParam menuAddParam) {
+        AuthContext authContext = Param2ContextConvert.addParamConvert(menuAddParam);
+        log.info("AuthCmdBizServiceImpl addMenu request[{}]", toJSON(authContext));
+        authManageAdaptor.execute(authContext);
+        return IdDTO.builder()
+                .id(authContext.getMenuId())
+                .build();
+    }
+
+    @Override
+    public IdDTO updateMenu(MenuUpdateParam menuUpdateParam) {
+        AuthContext authContext = Param2ContextConvert.updateParamConvert(menuUpdateParam);
+        log.info("AuthCmdBizServiceImpl updateMenu request[{}]", toJSON(authContext));
+        authManageAdaptor.execute(authContext);
+        return IdDTO.builder()
+                .id(authContext.getMenuId())
+                .build();
+    }
+
+    @Override
+    public IdsDTO deleteMenu(MenuDeleteParam menuDeleteParam) {
+        AuthContext authContext = Param2ContextConvert.deleteParamConvert(menuDeleteParam);
+        log.info("AuthCmdBizServiceImpl deleteMenu request[{}]", toJSON(authContext));
+        authManageAdaptor.execute(authContext);
+        return IdsDTO.builder()
+                .ids(authContext.getMenuIds())
+                .build();
+    }
+
+    @Override
+    public IdsDTO recoverMenu(MenuRecoverParam menuRecoverParam) {
+        AuthContext authContext = Param2ContextConvert.recoverParamConvert(menuRecoverParam);
+        log.info("AuthCmdBizServiceImpl recoverMenu request[{}]", toJSON(authContext));
+        authManageAdaptor.execute(authContext);
+        return IdsDTO.builder()
+                .ids(authContext.getMenuIds())
                 .build();
     }
 }

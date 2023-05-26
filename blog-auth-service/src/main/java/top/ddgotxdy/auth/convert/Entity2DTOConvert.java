@@ -1,10 +1,12 @@
 package top.ddgotxdy.auth.convert;
 
 import com.alibaba.fastjson.JSON;
+import top.ddgotxdy.common.model.auth.dto.MenuPageListDTO;
 import top.ddgotxdy.common.model.auth.dto.RolePageListDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
 import top.ddgotxdy.common.util.BeanCopyUtil;
+import top.ddgotxdy.dal.entity.BlogMenu;
 import top.ddgotxdy.dal.entity.BlogRole;
 import top.ddgotxdy.dal.entity.BlogUser;
 
@@ -41,5 +43,11 @@ public class Entity2DTOConvert {
             rolePageListDTO.setMenuIds(menuIdList);
         }
         return rolePageListDTOList;
+    }
+
+    public static List<MenuPageListDTO> menuList2DTO(List<BlogMenu> blogMenuList) {
+        List<MenuPageListDTO> menuPageListDTOList
+                = BeanCopyUtil.copyListProperties(blogMenuList, MenuPageListDTO::new);
+        return menuPageListDTOList;
     }
 }

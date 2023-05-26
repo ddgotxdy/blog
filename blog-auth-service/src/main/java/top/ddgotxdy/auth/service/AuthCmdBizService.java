@@ -2,11 +2,14 @@ package top.ddgotxdy.auth.service;
 
 import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.IdsDTO;
+import top.ddgotxdy.common.model.auth.addparam.MenuAddParam;
 import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
+import top.ddgotxdy.common.model.auth.deleteparam.MenuDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.RoleDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.recoverparam.MenuRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.RoleRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
 import top.ddgotxdy.common.model.auth.updateparam.*;
@@ -104,4 +107,32 @@ public interface AuthCmdBizService {
      * @return IdsDTO
      */
     IdsDTO recoverRole(RoleRecoverParam roleRecoverParam);
+
+    /**
+     * 添加菜单
+     * @param menuAddParam 菜单添加参数
+     * @return IdDTO
+     */
+    IdDTO addMenu(MenuAddParam menuAddParam);
+
+    /**
+     * 更新菜单
+     * @param menuUpdateParam 更新菜单参数
+     * @return IdDTO
+     */
+    IdDTO updateMenu(MenuUpdateParam menuUpdateParam);
+
+    /**
+     * 删除菜单
+     * @param menuDeleteParam 删除菜单参数
+     * @return IdsDTO
+     */
+    IdsDTO deleteMenu(MenuDeleteParam menuDeleteParam);
+
+    /**
+     * 恢复菜单
+     * @param menuRecoverParam 菜单恢复参数
+     * @return IdsDTO
+     */
+    IdsDTO recoverMenu(MenuRecoverParam menuRecoverParam);
 }

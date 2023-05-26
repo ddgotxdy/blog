@@ -100,4 +100,34 @@ public class AuthContext {
      * 角色描述
      */
     private String roleDesc;
+
+    /**
+     * 菜单ID
+     */
+    private Long menuId;
+
+    /**
+     * 菜单名
+     */
+    private String menuName;
+
+    /**
+     * 路由地址
+     */
+    private String path;
+
+    /**
+     * 组件路径
+     */
+    private String component;
+
+    /**
+     * 权限标识
+     */
+    private String perms;
+
+    /**
+     * 菜单备注
+     */
+    private String menuDesc;
 }

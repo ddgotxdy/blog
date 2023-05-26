@@ -5,16 +5,21 @@ import org.springframework.web.bind.annotation.*;
 import top.ddgotxdy.auth.service.AuthCmdBizService;
 import top.ddgotxdy.auth.service.AuthQueryBizService;
 import top.ddgotxdy.common.model.*;
+import top.ddgotxdy.common.model.auth.addparam.MenuAddParam;
 import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
+import top.ddgotxdy.common.model.auth.deleteparam.MenuDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.RoleDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
+import top.ddgotxdy.common.model.auth.dto.MenuPageListDTO;
 import top.ddgotxdy.common.model.auth.dto.RolePageListDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.queryparam.MenuQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.RoleQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
+import top.ddgotxdy.common.model.auth.recoverparam.MenuRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.RoleRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
 import top.ddgotxdy.common.model.auth.updateparam.*;
@@ -157,6 +162,47 @@ public class AuthController {
             @Validated @RequestBody RoleRecoverParam roleRecoverParam
     ) {
         IdsDTO idsDTO = authCmdBizService.recoverRole(roleRecoverParam);
+        return ResultView.success(idsDTO);
+    }
+
+    @PostMapping("/menu/add")
+    public ResultView<IdDTO> addMenu(
+            @Validated @RequestBody MenuAddParam menuAddParam
+    ) {
+        IdDTO idDTO = authCmdBizService.addMenu(menuAddParam);
+        return ResultView.success(idDTO);
+    }
+
+    @PostMapping("/menu/queryByPage")
+    public ResultView<PageResult<MenuPageListDTO>> queryMenuByPage(
+            @Validated @RequestBody PageQry<MenuQueryParam> menuQueryParamPageQry
+    ) {
+        PageResult<MenuPageListDTO> menuPageListDTOPageResult
+                = authQueryBizService.queryMenuByPage(menuQueryParamPageQry);
+        return ResultView.success(menuPageListDTOPageResult);
+    }
+
+    @PostMapping("/menu/update")
+    public ResultView<IdDTO> updateMenu(
+            @Validated @RequestBody MenuUpdateParam menuUpdateParam
+    ) {
+        IdDTO idDTO = authCmdBizService.updateMenu(menuUpdateParam);
+        return ResultView.success(idDTO);
+    }
+
+    @DeleteMapping("/menu/delete")
+    public ResultView<IdsDTO> deleteMenu(
+            @Validated @RequestBody MenuDeleteParam menuDeleteParam
+    ) {
+        IdsDTO idsDTO = authCmdBizService.deleteMenu(menuDeleteParam);
+        return ResultView.success(idsDTO);
+    }
+
+    @PostMapping("/menu/recover")
+    public ResultView<IdsDTO> recoverMenu(
+            @Validated @RequestBody MenuRecoverParam menuRecoverParam
+    ) {
+        IdsDTO idsDTO = authCmdBizService.recoverMenu(menuRecoverParam);
         return ResultView.success(idsDTO);
     }
 }

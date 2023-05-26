@@ -2,10 +2,13 @@ package top.ddgotxdy.auth.convert;
 
 import top.ddgotxdy.auth.model.AuthContext;
 import top.ddgotxdy.auth.model.AuthEvent;
+import top.ddgotxdy.common.model.auth.addparam.MenuAddParam;
 import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
+import top.ddgotxdy.common.model.auth.deleteparam.MenuDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.RoleDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
+import top.ddgotxdy.common.model.auth.recoverparam.MenuRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.RoleRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
 import top.ddgotxdy.common.model.auth.updateparam.*;
@@ -102,6 +105,38 @@ public class Param2ContextConvert {
         BeanCopyUtil.copyProperties(roleRecoverParam, authContext);
         // 设置事件
         authContext.setAuthEvent(AuthEvent.ROLE_RECOVER);
+        return authContext;
+    }
+
+    public static AuthContext addParamConvert(MenuAddParam menuAddParam) {
+        AuthContext authContext = new AuthContext();
+        BeanCopyUtil.copyProperties(menuAddParam, authContext);
+        // 设置事件
+        authContext.setAuthEvent(AuthEvent.MENU_ADD);
+        return authContext;
+    }
+
+    public static AuthContext updateParamConvert(MenuUpdateParam menuUpdateParam) {
+        AuthContext authContext = new AuthContext();
+        BeanCopyUtil.copyProperties(menuUpdateParam, authContext);
+        // 设置事件
+        authContext.setAuthEvent(AuthEvent.MENU_UPDATE);
+        return authContext;
+    }
+
+    public static AuthContext deleteParamConvert(MenuDeleteParam menuDeleteParam) {
+        AuthContext authContext = new AuthContext();
+        BeanCopyUtil.copyProperties(menuDeleteParam, authContext);
+        // 设置事件
+        authContext.setAuthEvent(AuthEvent.MENU_DELETE);
+        return authContext;
+    }
+
+    public static AuthContext recoverParamConvert(MenuRecoverParam menuRecoverParam) {
+        AuthContext authContext = new AuthContext();
+        BeanCopyUtil.copyProperties(menuRecoverParam, authContext);
+        // 设置事件
+        authContext.setAuthEvent(AuthEvent.MENU_RECOVER);
         return authContext;
     }
 }
