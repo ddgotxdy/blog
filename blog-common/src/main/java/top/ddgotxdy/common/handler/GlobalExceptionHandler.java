@@ -12,7 +12,7 @@ import top.ddgotxdy.common.model.ResultView;
  */
 @Slf4j
 @RestControllerAdvice
-public class AllExceptionHandler {
+public class GlobalExceptionHandler {
 
     /**
      * 进行自定义异常处理

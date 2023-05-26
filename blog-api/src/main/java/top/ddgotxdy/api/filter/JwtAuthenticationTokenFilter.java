@@ -3,11 +3,14 @@ package top.ddgotxdy.api.filter;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 import top.ddgotxdy.common.constant.RedisPrefix;
 import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.common.model.LoginUser;
@@ -37,6 +40,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Resource
     private RedisCache redisCache;
+    @Autowired
+    @Qualifier("handlerExceptionResolver")
+    private HandlerExceptionResolver resolver;
 
     public static final Long REFRESH_TIME = 15L * 60 * 1000;
 
@@ -59,10 +65,13 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             userId = claims.getSubject();
         } catch (ExpiredJwtException expiredJwtException) {
             // 过期了，得重新登录
-            throw new BlogException(LOGIN_EXPIRE_ERROR);
+            BlogException exception = new BlogException(LOGIN_EXPIRE_ERROR);
+            resolver.resolveException(request, response, null, exception);
+            return;
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new BlogException(500, "token非法");
+            BlogException exception = new BlogException(LOGIN_ERROR.getCode(), "token非法");
+            resolver.resolveException(request, response, null, exception);
+            return;
         }
         // 从redis中获取用户信息
         log.info("userId [{}]", userId);
@@ -70,7 +79,9 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         String redisKey = RedisPrefix.LOGIN + userId;
         LoginUser loginUser = redisCache.getCacheObject(redisKey);
         if(Objects.isNull(loginUser)) {
-            throw new BlogException(LOGIN_ERROR.getCode(), "用户未登录");
+            BlogException exception = new BlogException(LOGIN_ERROR.getCode(), "用户未登录");
+            resolver.resolveException(request, response, null, exception);
+            return;
         }
         // 如果时间小于15分钟，则重新生成token
         Date expiration = claims.getExpiration();
