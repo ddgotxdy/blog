@@ -59,7 +59,7 @@ public interface BlogAuthClient {
      * @param userId 用户id
      * @return UserInfoDTO
      */
-    @GetMapping("/getUserInfo/{userId}")
+    @GetMapping("openfeign/auth/getUserInfo/{userId}")
     ResultView<UserInfoDTO> getUserInfo(
             @PathVariable("userId") Long userId
     );
