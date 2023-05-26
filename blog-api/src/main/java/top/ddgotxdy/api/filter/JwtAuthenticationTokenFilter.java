@@ -3,8 +3,6 @@ package top.ddgotxdy.api.filter;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -40,8 +38,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
     @Resource
     private RedisCache redisCache;
-    @Autowired
-    @Qualifier("handlerExceptionResolver")
+    @Resource(name = "handlerExceptionResolver")
     private HandlerExceptionResolver resolver;
 
     public static final Long REFRESH_TIME = 15L * 60 * 1000;
