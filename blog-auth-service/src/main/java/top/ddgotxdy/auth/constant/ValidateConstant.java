@@ -51,4 +51,36 @@ public class ValidateConstant {
      * 角色名的最小长度
      */
     public static final Integer ROLE_NAME_MIN_LENGTH = 2;
+    /**
+     * 菜单名的最大长度
+     */
+    public static final Integer MENU_NAME_MAX_LENGTH = 64;
+    /**
+     * 菜单名的最小长度
+     */
+    public static final Integer MENU_NAME_MIN_LENGTH = 2;
+    /**
+     * 路由的最大长度
+     */
+    public static final Integer PATH_NAME_MAX_LENGTH = 256;
+    /**
+     * 路由的最小长度
+     */
+    public static final Integer PATH_NAME_MIN_LENGTH = 1;
+    /**
+     * 组件的最大长度
+     */
+    public static final Integer COMPONENT_NAME_MAX_LENGTH = 256;
+    /**
+     * 组件的最小长度
+     */
+    public static final Integer COMPONENT_NAME_MIN_LENGTH = 1;
+    /**
+     * 权限标识的最大长度
+     */
+    public static final Integer PERMS_NAME_MAX_LENGTH = 128;
+    /**
+     * 权限标识的最小长度
+     */
+    public static final Integer PERMS_NAME_MIN_LENGTH = 1;
 }

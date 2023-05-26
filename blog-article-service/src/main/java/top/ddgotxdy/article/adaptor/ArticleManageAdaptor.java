@@ -5,9 +5,9 @@ import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Service;
 import top.ddgotxdy.article.annotation.ArticleEventSelector;
-import top.ddgotxdy.article.service.ArticleBaseService;
 import top.ddgotxdy.article.model.ArticleContext;
 import top.ddgotxdy.article.model.ArticleEvent;
+import top.ddgotxdy.article.service.ArticleBaseService;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

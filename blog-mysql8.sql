@@ -34,13 +34,13 @@ DROP TABLE IF EXISTS `blog_menu`;
 CREATE TABLE `blog_menu` (
     `menu_id` bigint NOT NULL COMMENT '菜单ID',
     `menu_name` varchar(64) NOT NULL DEFAULT 'NULL' COMMENT '菜单名',
-    `path` varchar(200) DEFAULT NULL COMMENT 'uri地址',
-    `component` varchar(255) DEFAULT NULL COMMENT '组件路径',
-    `perms` varchar(100) DEFAULT NULL COMMENT '权限标识',
+    `path` varchar(256) DEFAULT NULL COMMENT 'uri地址',
+    `component` varchar(256) DEFAULT NULL COMMENT '组件路径',
+    `perms` varchar(128) DEFAULT NULL COMMENT '权限标识',
     `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除，0否1是',
     `create_time` bigint NOT NULL COMMENT '创建时间',
     `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
-    `menu_desc` varchar(500) DEFAULT NULL COMMENT '备注',
+    `menu_desc` varchar(512) DEFAULT NULL COMMENT '备注',
     PRIMARY KEY (`menu_id`)
 );
 

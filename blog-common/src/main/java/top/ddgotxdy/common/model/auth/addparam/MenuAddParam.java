@@ -9,10 +9,10 @@ import lombok.Data;
  */
 @Data
 public class MenuAddParam {
-    @ApiModelProperty("用户ID")
+    @ApiModelProperty(value = "用户ID", required = true)
     private Long userId;
 
-    @ApiModelProperty("菜单名")
+    @ApiModelProperty(value = "菜单名", required = true)
     private String menuName;
 
     @ApiModelProperty("路由地址")
@@ -21,7 +21,7 @@ public class MenuAddParam {
     @ApiModelProperty("组件路径")
     private String component;
 
-    @ApiModelProperty("权限标识")
+    @ApiModelProperty(value = "权限标识",required = true)
     private String perms;
 
     @ApiModelProperty("备注")

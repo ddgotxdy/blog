@@ -15,6 +15,7 @@ import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.dal.entity.BlogRole;
 
 import javax.annotation.Resource;
+import java.util.Objects;
 
 import static top.ddgotxdy.auth.constant.ValidateConstant.*;
 
@@ -31,13 +32,18 @@ public class RoleAddServiceImpl extends AbstractAuthService {
 
     @Override
     protected boolean filter(AuthContext authContext) {
-        // 1. 角色名称
+        // 1. user id 校验
+        Long userId = authContext.getUserId();
+        if (Objects.isNull(userId)) {
+            throw new BlogException(ResultCode.ROLE_ADD_ERROR.getCode(), "用户id为空");
+        }
+        // 2. 角色名称
         String roleName = authContext.getRoleName();
         if (StringUtils.length(roleName) < ROLE_NAME_MIN_LENGTH
                 || StringUtils.length(roleName) > ROLE_NAME_MAX_LENGTH) {
             throw new BlogException(ResultCode.ROLE_ADD_ERROR.getCode(), "角色名长度错误");
         }
-        // 2. 描述长度
+        // 3. 描述长度
         String roleDesc = authContext.getRoleDesc();
         if (StringUtils.length(roleDesc) > DESC_MAX_LENGTH) {
             throw new BlogException(ResultCode.ROLE_ADD_ERROR.getCode(), "描述长度错误");

@@ -3,6 +3,7 @@ package top.ddgotxdy.auth.convert;
 import com.alibaba.fastjson.JSON;
 import top.ddgotxdy.auth.model.AuthContext;
 import top.ddgotxdy.common.util.BeanCopyUtil;
+import top.ddgotxdy.dal.entity.BlogMenu;
 import top.ddgotxdy.dal.entity.BlogRole;
 import top.ddgotxdy.dal.entity.BlogUser;
 
@@ -50,5 +51,11 @@ public class Context2EntityConvert {
             blogRole.setMenuIds(tagIdsString);
         }
         return blogRole;
+    }
+
+    public static BlogMenu authContext2MenuForAdd(AuthContext authContext) {
+        BlogMenu blogMenu = new BlogMenu();
+        BeanCopyUtil.copyProperties(authContext, blogMenu);
+        return blogMenu;
     }
 }

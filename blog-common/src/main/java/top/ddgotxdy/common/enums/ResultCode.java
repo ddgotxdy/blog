@@ -63,6 +63,10 @@ public enum ResultCode {
     ROLE_DELETE_ERROR(1015, "角色删除错误"),
     ROLE_RECOVER_ERROR(1016, "角色恢复错误"),
     LOGIN_EXPIRE_ERROR(1017, "登录过期"),
+    MENU_ADD_ERROR(1018, "菜单添加错误"),
+    MENU_UPDATE_ERROR(1019, "菜单更新错误"),
+    MENU_DELETE_ERROR(1020, "菜单删除错误"),
+    MENU_RECOVER_ERROR(1021, "菜单恢复错误"),
     ;
     private final Integer code;
     private final String msg;
