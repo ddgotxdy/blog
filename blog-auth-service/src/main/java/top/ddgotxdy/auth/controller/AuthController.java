@@ -56,13 +56,15 @@ public class AuthController {
         return ResultView.success();
     }
 
-    @PostMapping("getUserInfo")
-    public ResultView<UserInfoDTO> getUserInfo() {
-        UserInfoDTO userInfoDTO = authQueryBizService.getUserInfo();
+    @GetMapping("/getUserInfo/{userId}")
+    public ResultView<UserInfoDTO> getUserInfo(
+            @PathVariable("userId") Long userId
+    ) {
+        UserInfoDTO userInfoDTO = authQueryBizService.getUserInfo(userId);
         return ResultView.success(userInfoDTO);
     }
 
-    @PostMapping("updatePassword")
+    @PostMapping("/updatePassword")
     public ResultView<IdDTO> updatePassword(
             @Validated @RequestBody UserPasswordUpdateParam userPasswordUpdateParam
     ) {
@@ -70,7 +72,7 @@ public class AuthController {
         return ResultView.success(idDTO);
     }
 
-    @PostMapping("updateEmail")
+    @PostMapping("/updateEmail")
     public ResultView<IdDTO> updateEmail(
             @Validated @RequestBody UserEmailUpdateParam userEmailUpdateParam
     ) {
@@ -78,7 +80,7 @@ public class AuthController {
         return ResultView.success(idDTO);
     }
 
-    @PostMapping("updateUserInfo")
+    @PostMapping("/updateUserInfo")
     public ResultView<IdDTO> updateUserInfo(
             @Validated @RequestBody UserInfoUpdateParam userInfoUpdateParam
     ) {
@@ -86,7 +88,7 @@ public class AuthController {
         return ResultView.success(idDTO);
     }
 
-    @PostMapping("updateUserRole")
+    @PostMapping("/updateUserRole")
     public ResultView<IdDTO> updateUserRole(
             @Validated @RequestBody UserRoleUpdateParam userRoleUpdateParam
     ) {
@@ -94,7 +96,7 @@ public class AuthController {
         return ResultView.success(idDTO);
     }
 
-    @PostMapping("getUserInfoList")
+    @PostMapping("/getUserInfoList")
     public ResultView<PageResult<UserInfoPageListDTO>> getUserInfoList(
             @Validated @RequestBody PageQry<UserInfoQueryParam> userInfoQueryParamPageQry
     ) {
@@ -102,7 +104,7 @@ public class AuthController {
         return ResultView.success(userInfoDTOPageResult);
     }
 
-    @DeleteMapping("deleteUser")
+    @DeleteMapping("/deleteUser")
     public ResultView<IdsDTO> deleteUser(
             @Validated @RequestBody UserDeleteParam userDeleteParam
     ) {
@@ -110,7 +112,7 @@ public class AuthController {
         return ResultView.success(idsDTO);
     }
 
-    @PostMapping("recoverUser")
+    @PostMapping("/recoverUser")
     public ResultView<IdsDTO> recoverUser(
             @Validated @RequestBody UserRecoverParam userRecoverParam
     ) {

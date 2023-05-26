@@ -69,7 +69,8 @@ public class BlogAuthBizServiceImpl implements BlogAuthBizService {
 
     @Override
     public UserInfoView getUserInfo() {
-        ResultView<UserInfoDTO> response = blogAuthClient.getUserInfo();
+        Long userId = ContextScope.getUserId();
+        ResultView<UserInfoDTO> response = blogAuthClient.getUserInfo(userId);
         UserInfoView userInfoView = SmsDTO2ViewConvert.userInfoDTO2View(response.checkAndGetData());
         return userInfoView;
     }

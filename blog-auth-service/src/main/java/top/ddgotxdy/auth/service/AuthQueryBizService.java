@@ -15,9 +15,10 @@ import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
 public interface AuthQueryBizService {
     /**
      * 获取用户信息
-     * @return
+     * @param userId 用户 id
+     * @return UserInfoDTO
      */
-    UserInfoDTO getUserInfo();
+    UserInfoDTO getUserInfo(Long userId);
 
     /**
      * 分页获取用户信息

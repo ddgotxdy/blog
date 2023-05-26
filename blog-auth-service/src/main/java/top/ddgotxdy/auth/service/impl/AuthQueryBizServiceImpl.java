@@ -2,8 +2,6 @@ package top.ddgotxdy.auth.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import top.ddgotxdy.auth.convert.Entity2DTOConvert;
@@ -11,7 +9,6 @@ import top.ddgotxdy.auth.convert.FieldName2FunctionConvert;
 import top.ddgotxdy.auth.service.AuthQueryBizService;
 import top.ddgotxdy.auth.service.BlogRoleService;
 import top.ddgotxdy.auth.service.BlogUserService;
-import top.ddgotxdy.common.model.LoginUser;
 import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.auth.dto.RolePageListDTO;
@@ -39,11 +36,9 @@ public class AuthQueryBizServiceImpl implements AuthQueryBizService {
     private BlogRoleService blogRoleService;
 
     @Override
-    public UserInfoDTO getUserInfo() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        BlogUser user = loginUser.getUser();
-        UserInfoDTO userInfoDTO = Entity2DTOConvert.user2DTO(user);
+    public UserInfoDTO getUserInfo(Long userId) {
+        BlogUser blogUser = blogUserService.getById(userId);
+        UserInfoDTO userInfoDTO = Entity2DTOConvert.user2DTO(blogUser);
         return userInfoDTO;
     }
 

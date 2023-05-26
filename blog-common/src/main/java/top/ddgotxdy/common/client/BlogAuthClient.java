@@ -3,9 +3,7 @@ package top.ddgotxdy.common.client;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 import top.ddgotxdy.common.interceptor.FeignRequestInterceptor;
 import top.ddgotxdy.common.model.*;
 import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
@@ -58,10 +56,13 @@ public interface BlogAuthClient {
 
     /**
      * 获取用户信息接口
+     * @param userId 用户id
      * @return UserInfoDTO
      */
-    @PostMapping("openfeign/auth/getUserInfo")
-    ResultView<UserInfoDTO> getUserInfo();
+    @GetMapping("/getUserInfo/{userId}")
+    ResultView<UserInfoDTO> getUserInfo(
+            @PathVariable("userId") Long userId
+    );
 
     /**
      * 更新密码
