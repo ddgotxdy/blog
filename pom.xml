@@ -17,6 +17,7 @@
         <module>blog-dal</module>
         <module>blog-gateway</module>
         <module>blog-auth-service</module>
+        <module>blog-actuator</module>
     </modules>
 
     <properties>
@@ -36,6 +37,7 @@
         <druid.version>1.2.8</druid.version>
         <swagger.version>2.9.2</swagger.version>
         <knife4j.version>2.0.9</knife4j.version>
+        <admin.version>3.0.4</admin.version>
     </properties>
 
     <dependencyManagement>
@@ -195,6 +197,17 @@
                 <groupId>javax.mail</groupId>
                 <artifactId>mail</artifactId>
                 <version>1.4.7</version>
+            </dependency>
+            <!-- actuator 监控 admin可视化界面依赖 -->
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-server</artifactId>
+                <version>${admin.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>de.codecentric</groupId>
+                <artifactId>spring-boot-admin-starter-client</artifactId>
+                <version>${admin.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
