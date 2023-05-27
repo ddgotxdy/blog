@@ -1,4 +1,4 @@
-package top.ddgotxdy.sms.conf;
+package top.ddgotxdy.sms.config;
 
 import com.github.houbb.sensitive.word.bs.SensitiveWordBs;
 import com.github.houbb.sensitive.word.support.allow.WordAllows;

@@ -10,6 +10,7 @@ import top.ddgotxdy.auth.model.AuthContext;
 import top.ddgotxdy.auth.model.AuthEvent;
 import top.ddgotxdy.auth.service.AbstractAuthService;
 import top.ddgotxdy.auth.service.BlogUserService;
+import top.ddgotxdy.auth.service.LoginService;
 import top.ddgotxdy.common.client.BlogSmsClient;
 import top.ddgotxdy.common.enums.ResultCode;
 import top.ddgotxdy.common.exception.BlogException;
@@ -34,6 +35,8 @@ public class UserEmailUpdateServiceImpl extends AbstractAuthService {
     private PasswordEncoder passwordEncoder;
     @Resource
     private BlogSmsClient blogSmsClient;
+    @Resource
+    private LoginService loginService;
 
     @Override
     protected boolean filter(AuthContext authContext) {
@@ -68,6 +71,6 @@ public class UserEmailUpdateServiceImpl extends AbstractAuthService {
         BlogUser blogUser = Context2EntityConvert.authContext2UserForUpdate(authContext);
         blogUserService.updateById(blogUser);
         // 更新redis里面的信息
-        updateUserInfoFromRedis(authContext);
+        loginService.refreshById(blogUser.getUserId());
     }
 }

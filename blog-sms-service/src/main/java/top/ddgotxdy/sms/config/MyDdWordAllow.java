@@ -1,4 +1,4 @@
-package top.ddgotxdy.sms.conf;
+package top.ddgotxdy.sms.config;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.github.houbb.sensitive.word.api.IWordAllow;

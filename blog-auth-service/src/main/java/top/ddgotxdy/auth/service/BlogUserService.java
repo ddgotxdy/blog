@@ -48,6 +48,13 @@ public interface BlogUserService extends IService<BlogUser> {
     LoginUser loadUserByUserId(Long userId);
 
     /**
+     * 加载 LoginUser
+     * @param username 用户名
+     * @return LoginUser
+     */
+    LoginUser loadUserByUsername(String username);
+
+    /**
      * 根据菜单id获取对应的用户列表
      * @param menuId 菜单id
      * @return List<BlogUser>

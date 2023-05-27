@@ -1,7 +1,6 @@
 package top.ddgotxdy.auth.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import top.ddgotxdy.auth.service.BlogUserService;
@@ -30,15 +29,13 @@ public class LoginServiceImpl implements LoginService {
     @Resource
     private RedisCache redisCache;
     @Resource
-    private UserDetailsService userDetailsService;
-    @Resource
     private PasswordEncoder passwordEncoder;
     @Resource
     private BlogUserService blogUserService;
 
     @Override
     public String login(UserLoginModel userLoginModel) {
-        LoginUser loginUser = (LoginUser) userDetailsService.loadUserByUsername(userLoginModel.getUsername());
+        LoginUser loginUser = blogUserService.loadUserByUsername(userLoginModel.getUsername());
         // 判断账号密码是否正确
         String password = loginUser.getUser().getPassword();
         if (!passwordEncoder.matches(userLoginModel.getPassword(), password)) {
