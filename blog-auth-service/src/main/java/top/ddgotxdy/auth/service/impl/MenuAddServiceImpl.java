@@ -76,6 +76,6 @@ public class MenuAddServiceImpl extends AbstractAuthService {
     protected void doExecute(AuthContext authContext) {
         BlogMenu blogMenu = Context2EntityConvert.authContext2MenuForAdd(authContext);
         blogMenuService.save(blogMenu);
-        authContext.setRoleId(blogMenu.getMenuId());
+        authContext.setMenuId(blogMenu.getMenuId());
     }
 }
