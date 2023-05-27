@@ -2,7 +2,6 @@ package top.ddgotxdy.auth.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.ddgotxdy.auth.annotation.AuthEventSelector;
@@ -12,18 +11,16 @@ import top.ddgotxdy.auth.model.AuthEvent;
 import top.ddgotxdy.auth.service.AbstractAuthService;
 import top.ddgotxdy.auth.service.BlogRoleService;
 import top.ddgotxdy.auth.service.BlogUserService;
-import top.ddgotxdy.common.constant.RedisPrefix;
+import top.ddgotxdy.auth.service.LoginService;
 import top.ddgotxdy.common.enums.ResultCode;
 import top.ddgotxdy.common.exception.BlogException;
-import top.ddgotxdy.common.model.LoginUser;
-import top.ddgotxdy.common.util.JwtUtil;
-import top.ddgotxdy.common.util.RedisCache;
 import top.ddgotxdy.dal.entity.BlogRole;
 import top.ddgotxdy.dal.entity.BlogUser;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 import static top.ddgotxdy.auth.constant.ValidateConstant.*;
 
@@ -40,9 +37,7 @@ public class RoleUpdateServiceImpl extends AbstractAuthService {
     @Resource
     private BlogUserService blogUserService;
     @Resource
-    private UserDetailsService userDetailsService;
-    @Resource
-    private RedisCache redisCache;
+    private LoginService loginService;
 
     @Override
     protected boolean filter(AuthContext authContext) {
@@ -80,13 +75,10 @@ public class RoleUpdateServiceImpl extends AbstractAuthService {
         // 同步更新用户的redis信息
         if (Objects.nonNull(authContext.getMenuIds())) {
             List<BlogUser> blogUserList = blogUserService.getByRoleId(authContext.getRoleId());
-            blogUserList.forEach(blogUser -> {
-                LoginUser loginUser = (LoginUser) userDetailsService.loadUserByUsername(blogUser.getUsername());
-                String userId = loginUser.getUser().getUserId().toString();
-                String jwt = JwtUtil.createJWT(userId);
-                // 把完整的用户信息存入redis  userid作为key
-                redisCache.setCacheObject(RedisPrefix.LOGIN + userId, loginUser);
-            });
+            List<Long> userIdList = blogUserList.stream()
+                    .map(BlogUser::getUserId)
+                    .collect(Collectors.toList());
+            loginService.refreshByBatchIds(userIdList);
         }
     }
 }

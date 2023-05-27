@@ -34,7 +34,7 @@ DROP TABLE IF EXISTS `blog_menu`;
 CREATE TABLE `blog_menu` (
     `menu_id` bigint NOT NULL COMMENT '菜单ID',
     `menu_name` varchar(64) NOT NULL DEFAULT 'NULL' COMMENT '菜单名',
-    `path` varchar(256) DEFAULT NULL COMMENT 'uri地址',
+    `path` varchar(256) DEFAULT NULL COMMENT '路由地址',
     `component` varchar(256) DEFAULT NULL COMMENT '组件路径',
     `perms` varchar(128) DEFAULT NULL COMMENT '权限标识',
     `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除，0否1是',

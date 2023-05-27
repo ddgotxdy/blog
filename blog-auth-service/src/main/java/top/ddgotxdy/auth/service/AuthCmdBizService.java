@@ -35,8 +35,9 @@ public interface AuthCmdBizService {
 
     /**
      * 登出
+     * @param userId 用户id
      */
-    void logout();
+    void logout(Long userId);
 
     /**
      * 修改用户密码

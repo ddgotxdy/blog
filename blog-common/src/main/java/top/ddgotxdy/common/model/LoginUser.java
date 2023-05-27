@@ -22,13 +22,25 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class LoginUser implements UserDetails {
 
+    /**
+     * 用户的基本信息
+     */
     private BlogUser user;
 
+    /**
+     * 当前用户所得到的权限
+     */
     private List<String> permissions;
 
-    public LoginUser(BlogUser user, List<String> permissions) {
+    /**
+     * 当前用户允许分配的路由
+     */
+    private List<String> paths;
+
+    public LoginUser(BlogUser user, List<String> permissions, List<String> paths) {
         this.user = user;
         this.permissions = permissions;
+        this.paths = paths;
     }
 
     @JSONField(serialize = false)

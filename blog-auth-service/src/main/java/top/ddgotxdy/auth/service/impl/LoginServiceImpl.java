@@ -1,11 +1,10 @@
 package top.ddgotxdy.auth.service.impl;
 
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import top.ddgotxdy.auth.service.BlogUserService;
 import top.ddgotxdy.auth.service.LoginService;
 import top.ddgotxdy.common.constant.RedisPrefix;
 import top.ddgotxdy.common.enums.ResultCode;
@@ -16,6 +15,7 @@ import top.ddgotxdy.common.util.JwtUtil;
 import top.ddgotxdy.common.util.RedisCache;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import static top.ddgotxdy.common.constant.RedisExpireTime.TOKEN_EXPIRE_SECOND;
@@ -33,6 +33,8 @@ public class LoginServiceImpl implements LoginService {
     private UserDetailsService userDetailsService;
     @Resource
     private PasswordEncoder passwordEncoder;
+    @Resource
+    private BlogUserService blogUserService;
 
     @Override
     public String login(UserLoginModel userLoginModel) {
@@ -55,13 +57,24 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public void logout() {
-        // 获取SecurityContextHolder中的用户id
-        UsernamePasswordAuthenticationToken authentication =
-                (UsernamePasswordAuthenticationToken) SecurityContextHolder.getContext().getAuthentication();
-        LoginUser loginUser = (LoginUser) authentication.getPrincipal();
-        Long userId = loginUser.getUser().getUserId();
+    public void logout(Long userId) {
         // 删除redis中的值
         redisCache.deleteObject(RedisPrefix.LOGIN + userId);
+    }
+
+    @Override
+    public void refreshById(Long userId) {
+        LoginUser loginUser = blogUserService.loadUserByUserId(userId);
+        // 把完整的用户信息存入redis  userid作为key
+        redisCache.setCacheObject(
+                RedisPrefix.LOGIN + userId,
+                loginUser,
+                TOKEN_EXPIRE_SECOND,
+                TimeUnit.SECONDS);
+    }
+
+    @Override
+    public void refreshByBatchIds(List<Long> userIdList) {
+        userIdList.forEach(this::refreshById);
     }
 }

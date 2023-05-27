@@ -24,4 +24,11 @@ public interface BlogRoleService extends IService<BlogRole> {
      * @return 是否恢复成功
      */
     boolean recoverBatchByIds(List<Long> roleIds);
+
+    /**
+     * 根据菜单id获取对应的角色列表
+     * @param menuId 菜单id
+     * @return List<BlogRole>
+     */
+    List<BlogRole> getByMenuId(Long menuId);
 }

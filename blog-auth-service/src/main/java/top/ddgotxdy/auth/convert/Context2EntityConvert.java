@@ -58,4 +58,10 @@ public class Context2EntityConvert {
         BeanCopyUtil.copyProperties(authContext, blogMenu);
         return blogMenu;
     }
+
+    public static BlogMenu authContext2MenuForUpdate(AuthContext authContext) {
+        BlogMenu blogMenu = new BlogMenu();
+        BeanCopyUtil.copyProperties(authContext, blogMenu);
+        return blogMenu;
+    }
 }

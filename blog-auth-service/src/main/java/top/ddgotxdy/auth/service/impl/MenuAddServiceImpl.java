@@ -43,7 +43,7 @@ public class MenuAddServiceImpl extends AbstractAuthService {
                 || StringUtils.length(menuName) > MENU_NAME_MAX_LENGTH) {
             throw new BlogException(ResultCode.MENU_ADD_ERROR.getCode(), "菜单名长度错误");
         }
-        // 3. 路由(uri)地址校验【可选】
+        // 3. 路由地址校验【可选】
         String path = authContext.getPath();
         if (StringUtils.isNotEmpty(path)
                 && (StringUtils.length(path) < PATH_NAME_MIN_LENGTH

@@ -63,7 +63,8 @@ public class BlogAuthBizServiceImpl implements BlogAuthBizService {
 
     @Override
     public void logout() {
-        ResultView response = blogAuthClient.logout();
+        Long userId = ContextScope.getUserId();
+        ResultView response = blogAuthClient.logout(userId);
         response.checkAndGetData();
     }
 

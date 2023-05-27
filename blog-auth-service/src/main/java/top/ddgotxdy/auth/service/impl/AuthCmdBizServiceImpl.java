@@ -53,8 +53,8 @@ public class AuthCmdBizServiceImpl implements AuthCmdBizService {
     }
 
     @Override
-    public void logout() {
-        loginService.logout();
+    public void logout(Long userId) {
+        loginService.logout(userId);
     }
 
     @Override

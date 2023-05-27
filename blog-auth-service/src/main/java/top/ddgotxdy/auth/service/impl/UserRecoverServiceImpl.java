@@ -11,9 +11,10 @@ import top.ddgotxdy.auth.service.AbstractAuthService;
 import top.ddgotxdy.auth.service.BlogUserService;
 import top.ddgotxdy.common.enums.ResultCode;
 import top.ddgotxdy.common.exception.BlogException;
+import top.ddgotxdy.dal.entity.BlogUser;
 
 import javax.annotation.Resource;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -51,9 +52,19 @@ public class UserRecoverServiceImpl extends AbstractAuthService {
     @Transactional(rollbackFor = Exception.class)
     protected void doExecute(AuthContext authContext) {
         List<Long> userIds = authContext.getUserIds();
-        boolean isOk = blogUserService.recoverBatchByIds(userIds);
-        if (isOk) {
-            authContext.setUserIds(Collections.emptyList());
-        }
+        List<Long> userIdsRemain = new ArrayList<>();
+        // 判断是否分配了角色
+        userIds.forEach(userId -> {
+            BlogUser blogUser = blogUserService.getById(userId);
+            if (blogUser.getRoleId() == 0) {
+                userIdsRemain.add(userId);
+            } else {
+                boolean isOk = blogUserService.recoverById(userId);
+                if (!isOk) {
+                    userIdsRemain.add(userId);
+                }
+            }
+        });
+        authContext.setUserIds(userIdsRemain);
     }
 }

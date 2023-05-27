@@ -6,16 +6,21 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.ddgotxdy.common.interceptor.FeignRequestInterceptor;
 import top.ddgotxdy.common.model.*;
+import top.ddgotxdy.common.model.auth.addparam.MenuAddParam;
 import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
+import top.ddgotxdy.common.model.auth.deleteparam.MenuDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.RoleDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
+import top.ddgotxdy.common.model.auth.dto.MenuPageListDTO;
 import top.ddgotxdy.common.model.auth.dto.RolePageListDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.queryparam.MenuQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.RoleQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
+import top.ddgotxdy.common.model.auth.recoverparam.MenuRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.RoleRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
 import top.ddgotxdy.common.model.auth.updateparam.*;
@@ -49,10 +54,11 @@ public interface BlogAuthClient {
 
     /**
      * 登出
+     * @param userId 用户id
      * @return void
      */
-    @PostMapping("openfeign/auth/logout")
-    ResultView logout();
+    @GetMapping("openfeign/auth/logout/{userId}")
+    ResultView logout(@PathVariable("userId") Long userId);
 
     /**
      * 获取用户信息接口
@@ -182,5 +188,55 @@ public interface BlogAuthClient {
     @PostMapping("openfeign/auth/role/recover")
     ResultView<IdsDTO> recoverRole(
             @Validated @RequestBody RoleRecoverParam roleRecoverParam
+    );
+
+    /**
+     * 添加菜单
+     * @param menuAddParam 菜单添加参数
+     * @return IdDTO
+     */
+    @PostMapping("openfeign/auth/menu/add")
+    ResultView<IdDTO> addMenu(
+            @Validated @RequestBody MenuAddParam menuAddParam
+    );
+
+    /**
+     * 菜单分页查询
+     * @param menuQueryParamPageQry 菜单分页查询参数
+     * @return PageResult<MenuPageListDTO>
+     */
+    @PostMapping("openfeign/auth/menu/queryByPage")
+    ResultView<PageResult<MenuPageListDTO>> queryMenuByPage(
+            @Validated @RequestBody PageQry<MenuQueryParam> menuQueryParamPageQry
+    );
+
+    /**
+     * 菜单更新
+     * @param menuUpdateParam 菜单更新参数
+     * @return IdDTO
+     */
+    @PostMapping("openfeign/auth/menu/update")
+    ResultView<IdDTO> updateMenu(
+            @Validated @RequestBody MenuUpdateParam menuUpdateParam
+    );
+
+    /**
+     * 菜单删除
+     * @param menuDeleteParam 菜单删除参数
+     * @return IdsDTO
+     */
+    @DeleteMapping("openfeign/auth/menu/delete")
+    ResultView<IdsDTO> deleteMenu(
+            @Validated @RequestBody MenuDeleteParam menuDeleteParam
+    );
+
+    /**
+     * 菜单恢复
+     * @param menuRecoverParam 菜单恢复参数
+     * @return IdsDTO
+     */
+    @PostMapping("openfeign/auth/menu/recover")
+    ResultView<IdsDTO> recoverMenu(
+            @Validated @RequestBody MenuRecoverParam menuRecoverParam
     );
 }

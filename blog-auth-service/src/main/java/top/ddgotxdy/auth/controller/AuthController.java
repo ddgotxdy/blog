@@ -55,9 +55,9 @@ public class AuthController {
         return ResultView.success(token);
     }
 
-    @PostMapping("/logout")
-    public ResultView logout() {
-        authCmdBizService.logout();
+    @GetMapping("/logout/{userId}")
+    public ResultView logout(@PathVariable("userId") Long userId) {
+        authCmdBizService.logout(userId);
         return ResultView.success();
     }
 

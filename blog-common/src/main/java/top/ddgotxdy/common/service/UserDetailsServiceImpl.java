@@ -57,21 +57,28 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         // 获取角色表
         Long roleId = blogUser.getRoleId();
         BlogRole blogRole = blogRoleMapper.selectById(roleId);
-        // 如果没有查询到角色，就返回默认角色权限
-        if(Objects.isNull(blogRole)) {
-            List<String> permissionDefault = Collections.singletonList("user");
-            return new LoginUser(blogUser, permissionDefault);
+        // 如果没有查询到角色，就返回默认角色权限 TODO
+        if(Objects.isNull(blogRole) || blogRole.getIsDelete()) {
+            List<String> permissionDefault = Collections.emptyList();
+            return new LoginUser(blogUser, permissionDefault, permissionDefault);
         }
         // 查询对应的权限信息
         String menuIds = blogRole.getMenuIds();
         List<Long> menuIdList = JSON.parseArray(menuIds, Long.class);
         List<BlogMenu> blogMenus = blogMenuMapper.selectBatchIds(menuIdList);
-        // 去重
+        // 权限去重
         List<String> permissions = blogMenus.stream()
+                .filter(blogMenu -> !blogMenu.getIsDelete())
                 .map(BlogMenu::getPerms)
                 .distinct()
                 .collect(Collectors.toList());
+        // 路由去重
+        List<String> paths = blogMenus.stream()
+                .filter(blogMenu -> !blogMenu.getIsDelete())
+                .map(BlogMenu::getPath)
+                .distinct()
+                .collect(Collectors.toList());
         // 封装成UserDetails
-        return new LoginUser(blogUser, permissions);
+        return new LoginUser(blogUser, permissions, paths);
     }
 }
