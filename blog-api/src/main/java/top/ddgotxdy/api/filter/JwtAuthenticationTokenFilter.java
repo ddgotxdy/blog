@@ -25,7 +25,6 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.Objects;
 
-import static top.ddgotxdy.common.enums.ResultCode.LOGIN_ERROR;
 import static top.ddgotxdy.common.enums.ResultCode.LOGIN_EXPIRE_ERROR;
 
 /**
@@ -66,7 +65,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
             resolver.resolveException(request, response, null, exception);
             return;
         } catch (Exception e) {
-            BlogException exception = new BlogException(LOGIN_ERROR.getCode(), "token非法");
+            BlogException exception = new BlogException(LOGIN_EXPIRE_ERROR.getCode(), "token非法");
             resolver.resolveException(request, response, null, exception);
             return;
         }
@@ -76,7 +75,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         String redisKey = RedisPrefix.LOGIN + userId;
         LoginUser loginUser = redisCache.getCacheObject(redisKey);
         if(Objects.isNull(loginUser)) {
-            BlogException exception = new BlogException(LOGIN_ERROR.getCode(), "用户未登录");
+            BlogException exception = new BlogException(LOGIN_EXPIRE_ERROR.getCode(), "用户未登录");
             resolver.resolveException(request, response, null, exception);
             return;
         }

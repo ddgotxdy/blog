@@ -1,19 +1,25 @@
 package top.ddgotxdy.api.convert;
 
 import top.ddgotxdy.api.model.UserLoginApiModel;
+import top.ddgotxdy.api.model.addparam.MenuAddApiParam;
 import top.ddgotxdy.api.model.addparam.RoleAddApiParam;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
+import top.ddgotxdy.api.model.queryparam.MenuQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.RoleQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.UserInfoQueryApiParam;
 import top.ddgotxdy.api.model.updateparam.*;
 import top.ddgotxdy.common.model.PageQry;
+import top.ddgotxdy.common.model.auth.addparam.MenuAddParam;
 import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
+import top.ddgotxdy.common.model.auth.deleteparam.MenuDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.RoleDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.queryparam.MenuQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.RoleQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
+import top.ddgotxdy.common.model.auth.recoverparam.MenuRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.RoleRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
 import top.ddgotxdy.common.model.auth.updateparam.*;
@@ -147,5 +153,51 @@ public class AuthApiParam2ClientParamConvert {
         BeanCopyUtil.copyProperties(roleQueryApiParamPageQry, roleQueryParamPageQry);
         roleQueryParamPageQry.setQueryParam(roleQueryParam);
         return roleQueryParamPageQry;
+    }
+
+    public static MenuAddParam addApiParam2AddParam(MenuAddApiParam menuAddApiParam) {
+        MenuAddParam menuAddParam = new MenuAddParam();
+        BeanCopyUtil.copyProperties(menuAddApiParam, menuAddParam);
+        Long userId = ContextScope.getUserId();
+        menuAddParam.setUserId(userId);
+        return menuAddParam;
+    }
+
+    public static PageQry<MenuQueryParam> queryApiParam2MenuQueryParam(
+            PageQry<MenuQueryApiParam> menuQueryApiParamPageQry
+    ) {
+        MenuQueryParam menuQueryParam = new MenuQueryParam();
+        // 范型复制
+        MenuQueryApiParam menuQueryApiParam = menuQueryApiParamPageQry.getQueryParam();
+        BeanCopyUtil.copyProperties(menuQueryApiParam, menuQueryParam);
+        // 分页参数复制
+        PageQry<MenuQueryParam> menuQueryParamPageQry = new PageQry<>();
+        BeanCopyUtil.copyProperties(menuQueryApiParamPageQry, menuQueryParamPageQry);
+        menuQueryParamPageQry.setQueryParam(menuQueryParam);
+        return menuQueryParamPageQry;
+    }
+
+    public static MenuUpdateParam apiParam2Param(MenuUpdateApiParam menuUpdateApiParam) {
+        MenuUpdateParam menuUpdateParam = new MenuUpdateParam();
+        BeanCopyUtil.copyProperties(menuUpdateApiParam, menuUpdateParam);
+        Long userId = ContextScope.getUserId();
+        menuUpdateParam.setUserId(userId);
+        return menuUpdateParam;
+    }
+
+    public static MenuDeleteParam deleteApiParam2MenuDeleteParam(List<Long> menuIdList) {
+        MenuDeleteParam menuDeleteParam = new MenuDeleteParam();
+        menuDeleteParam.setMenuIds(menuIdList);
+        Long userId = ContextScope.getUserId();
+        menuDeleteParam.setUserId(userId);
+        return menuDeleteParam;
+    }
+
+    public static MenuRecoverParam recoverApiParam2MenuRecoverParam(List<Long> menuIdList) {
+        MenuRecoverParam menuRecoverParam = new MenuRecoverParam();
+        menuRecoverParam.setMenuIds(menuIdList);
+        Long userId = ContextScope.getUserId();
+        menuRecoverParam.setUserId(userId);
+        return menuRecoverParam;
     }
 }

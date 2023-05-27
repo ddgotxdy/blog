@@ -1,11 +1,14 @@
 package top.ddgotxdy.api.service;
 
 import top.ddgotxdy.api.model.UserLoginApiModel;
+import top.ddgotxdy.api.model.addparam.MenuAddApiParam;
 import top.ddgotxdy.api.model.addparam.RoleAddApiParam;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
+import top.ddgotxdy.api.model.queryparam.MenuQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.RoleQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.UserInfoQueryApiParam;
 import top.ddgotxdy.api.model.updateparam.*;
+import top.ddgotxdy.api.model.view.MenuPageListView;
 import top.ddgotxdy.api.model.view.RolePageListView;
 import top.ddgotxdy.api.model.view.UserInfoPageListView;
 import top.ddgotxdy.api.model.view.UserInfoView;
@@ -150,4 +153,39 @@ public interface BlogAuthBizService {
      * @return String
      */
     String queryRoleById(Long roleId);
+
+    /**
+     * 菜单添加
+     * @param menuAddApiParam 菜单添加参数
+     * @return IdView
+     */
+    IdView addMenu(MenuAddApiParam menuAddApiParam);
+
+    /**
+     * 菜单分页查询
+     * @param menuQueryApiParamPageQry 菜单分页查询参数
+     * @return PageResult<MenuPageListView>
+     */
+    PageResult<MenuPageListView> queryMenuByPage(PageQry<MenuQueryApiParam> menuQueryApiParamPageQry);
+
+    /**
+     * 菜单更新
+     * @param menuUpdateApiParam 菜单更新参数
+     * @return IdView
+     */
+    IdView updateMenu(MenuUpdateApiParam menuUpdateApiParam);
+
+    /**
+     * 菜单删除
+     * @param menuIdList 菜单id列表
+     * @return IdsView
+     */
+    IdsView deleteMenu(List<Long> menuIdList);
+
+    /**
+     * 菜单恢复
+     * @param menuIdList 菜单id列表
+     * @return IdsView
+     */
+    IdsView recoverMenu(List<Long> menuIdList);
 }

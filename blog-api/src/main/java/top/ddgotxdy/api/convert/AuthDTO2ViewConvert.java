@@ -1,9 +1,11 @@
 package top.ddgotxdy.api.convert;
 
+import top.ddgotxdy.api.model.view.MenuPageListView;
 import top.ddgotxdy.api.model.view.RolePageListView;
 import top.ddgotxdy.api.model.view.UserInfoPageListView;
 import top.ddgotxdy.common.enums.auth.SexEnum;
 import top.ddgotxdy.common.model.PageResult;
+import top.ddgotxdy.common.model.auth.dto.MenuPageListDTO;
 import top.ddgotxdy.common.model.auth.dto.RolePageListDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
 import top.ddgotxdy.common.util.BeanCopyUtil;
@@ -43,5 +45,18 @@ public class AuthDTO2ViewConvert {
         BeanCopyUtil.copyProperties(rolePageListDTOPageResult, rolePageListViewPageResult);
         rolePageListViewPageResult.setData(rolePageListViews);
         return rolePageListViewPageResult;
+    }
+
+    public static PageResult<MenuPageListView> menuPageListDTO2View(
+            PageResult<MenuPageListDTO> menuPageListDTOPageResult
+    ) {
+        // 范型赋值
+        List<MenuPageListDTO> data = menuPageListDTOPageResult.getData();
+        List<MenuPageListView> menuPageListViews = BeanCopyUtil.copyListProperties(data, MenuPageListView::new);
+        // 分页结果赋值
+        PageResult<MenuPageListView> menuPageListViewPageResult = new PageResult<>();
+        BeanCopyUtil.copyProperties(menuPageListDTOPageResult, menuPageListViewPageResult);
+        menuPageListViewPageResult.setData(menuPageListViews);
+        return menuPageListViewPageResult;
     }
 }

@@ -6,27 +6,35 @@ import top.ddgotxdy.api.convert.AuthApiParam2ClientParamConvert;
 import top.ddgotxdy.api.convert.AuthDTO2ViewConvert;
 import top.ddgotxdy.api.convert.SmsDTO2ViewConvert;
 import top.ddgotxdy.api.model.UserLoginApiModel;
+import top.ddgotxdy.api.model.addparam.MenuAddApiParam;
 import top.ddgotxdy.api.model.addparam.RoleAddApiParam;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
+import top.ddgotxdy.api.model.queryparam.MenuQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.RoleQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.UserInfoQueryApiParam;
 import top.ddgotxdy.api.model.updateparam.*;
+import top.ddgotxdy.api.model.view.MenuPageListView;
 import top.ddgotxdy.api.model.view.RolePageListView;
 import top.ddgotxdy.api.model.view.UserInfoPageListView;
 import top.ddgotxdy.api.model.view.UserInfoView;
 import top.ddgotxdy.api.service.BlogAuthBizService;
 import top.ddgotxdy.common.client.BlogAuthClient;
 import top.ddgotxdy.common.model.*;
+import top.ddgotxdy.common.model.auth.addparam.MenuAddParam;
 import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
+import top.ddgotxdy.common.model.auth.deleteparam.MenuDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.RoleDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
+import top.ddgotxdy.common.model.auth.dto.MenuPageListDTO;
 import top.ddgotxdy.common.model.auth.dto.RolePageListDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
+import top.ddgotxdy.common.model.auth.queryparam.MenuQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.RoleQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
+import top.ddgotxdy.common.model.auth.recoverparam.MenuRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.RoleRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
 import top.ddgotxdy.common.model.auth.updateparam.*;
@@ -261,5 +269,60 @@ public class BlogAuthBizServiceImpl implements BlogAuthBizService {
             return "游客";
         }
         return rolePageListDTOList.get(0).getRoleName();
+    }
+
+    @Override
+    public IdView addMenu(MenuAddApiParam menuAddApiParam) {
+        MenuAddParam menuAddParam
+                = AuthApiParam2ClientParamConvert.addApiParam2AddParam(menuAddApiParam);
+        ResultView<IdDTO> response = blogAuthClient.addMenu(menuAddParam);
+        IdDTO idDTO = response.checkAndGetData();
+        return IdView.builder()
+                .id(idDTO.getId())
+                .build();
+    }
+
+    @Override
+    public PageResult<MenuPageListView> queryMenuByPage(PageQry<MenuQueryApiParam> menuQueryApiParamPageQry) {
+        PageQry<MenuQueryParam> menuQueryParamPageQry
+                = AuthApiParam2ClientParamConvert.queryApiParam2MenuQueryParam(menuQueryApiParamPageQry);
+        ResultView<PageResult<MenuPageListDTO>> response = blogAuthClient.queryMenuByPage(menuQueryParamPageQry);
+        PageResult<MenuPageListDTO> menuPageListDTOPageResult = response.checkAndGetData();
+        PageResult<MenuPageListView> menuPageListViewPageResult
+                = AuthDTO2ViewConvert.menuPageListDTO2View(menuPageListDTOPageResult);
+        return menuPageListViewPageResult;
+    }
+
+    @Override
+    public IdView updateMenu(MenuUpdateApiParam menuUpdateApiParam) {
+        MenuUpdateParam menuUpdateParam
+                = AuthApiParam2ClientParamConvert.apiParam2Param(menuUpdateApiParam);
+        ResultView<IdDTO> response = blogAuthClient.updateMenu(menuUpdateParam);
+        IdDTO idDTO = response.checkAndGetData();
+        return IdView.builder()
+                .id(idDTO.getId())
+                .build();
+    }
+
+    @Override
+    public IdsView deleteMenu(List<Long> menuIdList) {
+        MenuDeleteParam menuDeleteParam
+                = AuthApiParam2ClientParamConvert.deleteApiParam2MenuDeleteParam(menuIdList);
+        ResultView<IdsDTO> response = blogAuthClient.deleteMenu(menuDeleteParam);
+        IdsDTO idsDTO = response.checkAndGetData();
+        return IdsView.builder()
+                .ids(idsDTO.getIds())
+                .build();
+    }
+
+    @Override
+    public IdsView recoverMenu(List<Long> menuIdList) {
+        MenuRecoverParam menuRecoverParam
+                = AuthApiParam2ClientParamConvert.recoverApiParam2MenuRecoverParam(menuIdList);
+        ResultView<IdsDTO> response = blogAuthClient.recoverMenu(menuRecoverParam);
+        IdsDTO idsDTO = response.checkAndGetData();
+        return IdsView.builder()
+                .ids(idsDTO.getIds())
+                .build();
     }
 }

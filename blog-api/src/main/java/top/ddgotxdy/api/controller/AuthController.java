@@ -5,11 +5,14 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.ddgotxdy.api.model.UserLoginApiModel;
+import top.ddgotxdy.api.model.addparam.MenuAddApiParam;
 import top.ddgotxdy.api.model.addparam.RoleAddApiParam;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
+import top.ddgotxdy.api.model.queryparam.MenuQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.RoleQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.UserInfoQueryApiParam;
 import top.ddgotxdy.api.model.updateparam.*;
+import top.ddgotxdy.api.model.view.MenuPageListView;
 import top.ddgotxdy.api.model.view.RolePageListView;
 import top.ddgotxdy.api.model.view.UserInfoPageListView;
 import top.ddgotxdy.api.model.view.UserInfoView;
@@ -189,7 +192,7 @@ public class AuthController {
     }
 
     @ApiOperation("查询单个角色名称")
-    @GetMapping("/role/query/{roleId}")
+    @GetMapping("/user/role/query/{roleId}")
     public ResultView<String> queryRoleById(
             @PathVariable("roleId") Long roleId
     ) {
@@ -197,4 +200,49 @@ public class AuthController {
         return ResultView.success(roleName);
     }
 
+    @ApiOperation("菜单添加接口")
+    @PostMapping("/admin/menu/add")
+    ResultView<IdView> addMenu(
+            @Validated @RequestBody MenuAddApiParam menuAddApiParam
+    ) {
+        IdView idView = blogAuthBizService.addMenu(menuAddApiParam);
+        return ResultView.success(idView);
+    }
+
+    @ApiOperation("菜单分页获取接口")
+    @PostMapping("/admin/menu/queryByPage")
+    ResultView<PageResult<MenuPageListView>> queryMenuByPage(
+            @Validated @RequestBody PageQry<MenuQueryApiParam> menuQueryApiParamPageQry
+    ) {
+        PageResult<MenuPageListView> menuPageListViewPageResult
+                = blogAuthBizService.queryMenuByPage(menuQueryApiParamPageQry);
+        return ResultView.success(menuPageListViewPageResult);
+    }
+
+    @ApiOperation("菜单更新接口")
+    @PostMapping("/admin/menu/update")
+    ResultView<IdView> updateMenu(
+            @Validated @RequestBody MenuUpdateApiParam menuUpdateApiParam
+    ) {
+        IdView idView = blogAuthBizService.updateMenu(menuUpdateApiParam);
+        return ResultView.success(idView);
+    }
+
+    @ApiOperation("菜单删除接口")
+    @DeleteMapping("/admin/menu/delete")
+    ResultView<IdsView> deleteMenu(
+            @RequestBody List<Long> menuIdList
+    ) {
+        IdsView idsView = blogAuthBizService.deleteMenu(menuIdList);
+        return ResultView.success(idsView);
+    }
+
+    @ApiOperation("菜单恢复接口")
+    @PostMapping("/admin/menu/recover")
+    ResultView<IdsView> recoverMenu(
+            @RequestBody List<Long> menuIdList
+    ) {
+        IdsView idsView = blogAuthBizService.recoverMenu(menuIdList);
+        return ResultView.success(idsView);
+    }
 }
