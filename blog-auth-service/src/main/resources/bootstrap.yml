@@ -1,7 +1,5 @@
 server:
   port: 28086
-  servlet:
-    context-path: /auth-service
 
 spring:
   # spring 基础配置
@@ -38,7 +36,5 @@ spring:
         server-addr: 101.43.175.25:8848
         # -Dspring.cloud.nacos.discovery.namespace=xxx
         namespace: 89e0b3c7-a725-407f-a4a2-80f4e9ced5b1
-        metadata:
-          management.context-path: ${server.servlet.context-path}/actuator
         ip: 59.110.143.1
         port: 28086
