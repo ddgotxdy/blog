@@ -1,7 +1,7 @@
 server:
   port: 28080
   servlet:
-    context-path: blog-gateway
+    context-path: /blog-gateway
 
 spring:
   # spring 基础配置

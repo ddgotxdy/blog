@@ -1,7 +1,7 @@
 server:
   port: 28086
   servlet:
-    context-path: auth-service
+    context-path: /auth-service
 
 spring:
   # spring 基础配置

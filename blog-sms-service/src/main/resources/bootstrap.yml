@@ -1,7 +1,7 @@
 server:
   port: 28085
   servlet:
-    context-path: sms-service
+    context-path: /sms-service
 
 spring:
   # spring 基础配置

@@ -1,7 +1,7 @@
 server:
   port: 28087
   servlet:
-    context-path: blog-actuator
+    context-path: /blog-actuator
 
 spring:
   # spring 基础配置

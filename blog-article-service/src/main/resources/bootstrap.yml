@@ -1,7 +1,7 @@
 server:
   port: 28082
   servlet:
-    context-path: article-service
+    context-path: /article-service
 
 spring:
   # spring 基础配置
