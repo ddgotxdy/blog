@@ -8,7 +8,9 @@ import top.ddgotxdy.auth.service.BlogRoleService;
 import top.ddgotxdy.dal.entity.BlogRole;
 import top.ddgotxdy.dal.mapper.BlogRoleMapper;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author: ddgo
@@ -38,6 +40,9 @@ public class BlogRoleServiceImpl extends ServiceImpl<BlogRoleMapper, BlogRole> i
     @Override
     public List<BlogRole> getByMenuId(Long menuId) {
         LambdaQueryWrapper<BlogRole> queryWrapper = new LambdaQueryWrapper<>();
+        if (Objects.isNull(menuId)) {
+            return Collections.emptyList();
+        }
         queryWrapper
                 .eq(BlogRole::getIsDelete, false)
                 .like(BlogRole::getMenuIds, menuId);

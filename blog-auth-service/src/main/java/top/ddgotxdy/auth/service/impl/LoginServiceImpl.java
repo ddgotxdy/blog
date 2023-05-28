@@ -3,6 +3,7 @@ package top.ddgotxdy.auth.service.impl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import top.ddgotxdy.auth.service.BlogUserService;
 import top.ddgotxdy.auth.service.LoginService;
 import top.ddgotxdy.common.constant.RedisPrefix;
@@ -72,6 +73,9 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public void refreshByBatchIds(List<Long> userIdList) {
+        if (CollectionUtils.isEmpty(userIdList)) {
+            return;
+        }
         userIdList.forEach(this::refreshById);
     }
 }

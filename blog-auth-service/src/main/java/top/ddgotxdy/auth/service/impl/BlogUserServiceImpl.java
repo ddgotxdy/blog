@@ -160,6 +160,9 @@ public class BlogUserServiceImpl extends ServiceImpl<BlogUserMapper, BlogUser> i
     public List<BlogUser> getByMenuId(Long menuId) {
         List<BlogRole> blogRoleList = blogRoleService.getByMenuId(menuId);
         LambdaQueryWrapper<BlogUser> queryWrapper = new LambdaQueryWrapper<>();
+        if (CollectionUtils.isEmpty(blogRoleList)) {
+            return Collections.emptyList();
+        }
         queryWrapper
                 .eq(BlogUser::getIsDelete, false)
                 .in(BlogUser::getRoleId, blogRoleList);
