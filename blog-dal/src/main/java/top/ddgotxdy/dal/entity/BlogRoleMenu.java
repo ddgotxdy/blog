@@ -1,6 +1,8 @@
 package top.ddgotxdy.dal.entity;
 
-import com.baomidou.mybatisplus.annotation.*;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
@@ -14,28 +16,15 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("blog_menu")
-@ApiModel(value = "BlogMenu对象", description = "")
-public class BlogMenu {
+@TableName("blog_role_menu")
+@ApiModel(value = "BlogRoleMenu对象", description = "")
+public class BlogRoleMenu {
+
+    @ApiModelProperty("角色ID")
+    private Long roleId;
 
     @ApiModelProperty("菜单ID")
-    @TableId(type = IdType.ASSIGN_ID)
     private Long menuId;
-
-    @ApiModelProperty("菜单名")
-    private String menuName;
-
-    @ApiModelProperty("路由地址")
-    private String path;
-
-    @ApiModelProperty("组件路径")
-    private String component;
-
-    @ApiModelProperty("标签")
-    private String icon;
-
-    @ApiModelProperty("父菜单ID")
-    private Long parentId;
 
     @ApiModelProperty("是否删除，0否1是")
     private Boolean isDelete;
@@ -47,7 +36,4 @@ public class BlogMenu {
     @ApiModelProperty("更新时间")
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private Long updateTime;
-
-    @ApiModelProperty("备注")
-    private String menuDesc;
 }

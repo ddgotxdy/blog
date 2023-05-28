@@ -21,8 +21,11 @@ public class MenuAddParam {
     @ApiModelProperty("组件路径")
     private String component;
 
-    @ApiModelProperty(value = "权限标识",required = true)
-    private String perms;
+    @ApiModelProperty(value = "图标",required = true)
+    private String icon;
+
+    @ApiModelProperty(value = "父菜单ID")
+    private Long parentId;
 
     @ApiModelProperty("备注")
     private String menuDesc;

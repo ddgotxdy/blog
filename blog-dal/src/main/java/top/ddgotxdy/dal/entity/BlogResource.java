@@ -14,28 +14,19 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("blog_menu")
-@ApiModel(value = "BlogMenu对象", description = "")
-public class BlogMenu {
+@TableName("blog_resource")
+@ApiModel(value = "BlogResource对象", description = "")
+public class BlogResource {
 
-    @ApiModelProperty("菜单ID")
+    @ApiModelProperty("资源ID")
     @TableId(type = IdType.ASSIGN_ID)
-    private Long menuId;
+    private Long resourceId;
 
-    @ApiModelProperty("菜单名")
-    private String menuName;
+    @ApiModelProperty("资源名")
+    private String resourceName;
 
-    @ApiModelProperty("路由地址")
-    private String path;
-
-    @ApiModelProperty("组件路径")
-    private String component;
-
-    @ApiModelProperty("标签")
-    private String icon;
-
-    @ApiModelProperty("父菜单ID")
-    private Long parentId;
+    @ApiModelProperty("请求uri地址")
+    private String uri;
 
     @ApiModelProperty("是否删除，0否1是")
     private Boolean isDelete;
@@ -49,5 +40,5 @@ public class BlogMenu {
     private Long updateTime;
 
     @ApiModelProperty("备注")
-    private String menuDesc;
+    private String resourceDesc;
 }

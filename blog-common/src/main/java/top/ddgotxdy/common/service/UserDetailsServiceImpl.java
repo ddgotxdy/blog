@@ -1,6 +1,5 @@
 package top.ddgotxdy.common.service;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -11,9 +10,11 @@ import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.common.model.LoginUser;
 import top.ddgotxdy.dal.entity.BlogMenu;
 import top.ddgotxdy.dal.entity.BlogRole;
+import top.ddgotxdy.dal.entity.BlogRoleMenu;
 import top.ddgotxdy.dal.entity.BlogUser;
 import top.ddgotxdy.dal.mapper.BlogMenuMapper;
 import top.ddgotxdy.dal.mapper.BlogRoleMapper;
+import top.ddgotxdy.dal.mapper.BlogRoleMenuMapper;
 import top.ddgotxdy.dal.mapper.BlogUserMapper;
 
 import javax.annotation.Resource;
@@ -28,15 +29,14 @@ import java.util.stream.Collectors;
  */
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-
     @Resource
     private BlogUserMapper blogUserMapper;
-
     @Resource
     private BlogRoleMapper blogRoleMapper;
-
     @Resource
     private BlogMenuMapper blogMenuMapper;
+    @Resource
+    private BlogRoleMenuMapper blogRoleMenuMapper;
 
     @Override
     public UserDetails loadUserByUsername(String accountName) throws UsernameNotFoundException {
@@ -63,15 +63,20 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             return new LoginUser(blogUser, permissionDefault, permissionDefault);
         }
         // 查询对应的权限信息
-        String menuIds = blogRole.getMenuIds();
-        List<Long> menuIdList = JSON.parseArray(menuIds, Long.class);
+        LambdaQueryWrapper<BlogRoleMenu> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper
+                .eq(BlogRoleMenu::getRoleId, roleId);
+        List<BlogRoleMenu> roleMenuList = blogRoleMenuMapper.selectList(lambdaQueryWrapper);
+        List<Long> menuIdList = roleMenuList.stream()
+                .map(BlogRoleMenu::getMenuId)
+                .collect(Collectors.toList());
         List<BlogMenu> blogMenus = blogMenuMapper.selectBatchIds(menuIdList);
         // 权限去重
-        List<String> permissions = blogMenus.stream()
-                .filter(blogMenu -> !blogMenu.getIsDelete())
-                .map(BlogMenu::getPerms)
-                .distinct()
-                .collect(Collectors.toList());
+//        List<String> permissions = blogMenus.stream()
+//                .filter(blogMenu -> !blogMenu.getIsDelete())
+//                .map(BlogMenu::getPerms)
+//                .distinct()
+//                .collect(Collectors.toList());
         // 路由去重
         List<String> paths = blogMenus.stream()
                 .filter(blogMenu -> !blogMenu.getIsDelete())
@@ -79,6 +84,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 .distinct()
                 .collect(Collectors.toList());
         // 封装成UserDetails
-        return new LoginUser(blogUser, permissions, paths);
+        return new LoginUser(blogUser, null, paths);
     }
 }

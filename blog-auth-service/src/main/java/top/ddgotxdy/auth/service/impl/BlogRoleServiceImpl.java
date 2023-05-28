@@ -36,16 +36,4 @@ public class BlogRoleServiceImpl extends ServiceImpl<BlogRoleMapper, BlogRole> i
                 .in(BlogRole::getRoleId, roleIds);
         return this.update(updateWrapper);
     }
-
-    @Override
-    public List<BlogRole> getByMenuId(Long menuId) {
-        LambdaQueryWrapper<BlogRole> queryWrapper = new LambdaQueryWrapper<>();
-        if (Objects.isNull(menuId)) {
-            return Collections.emptyList();
-        }
-        queryWrapper
-                .eq(BlogRole::getIsDelete, false)
-                .like(BlogRole::getMenuIds, menuId);
-        return this.list(queryWrapper);
-    }
 }

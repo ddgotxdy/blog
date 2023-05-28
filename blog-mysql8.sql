@@ -22,26 +22,61 @@ CREATE TABLE `blog_role` (
     `role_id` bigint NOT NULL COMMENT '角色ID',
     `role_name` varchar(128) DEFAULT NULL COMMENT '角色名称',
     `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除，0否1是',
-    `menu_ids` varchar(1024) NOT NULL DEFAULT '[]' COMMENT '包含的权限，例如[1001,1002,1003]',
     `create_time` bigint NOT NULL COMMENT '创建时间',
     `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
     `role_desc` varchar(512) DEFAULT NULL COMMENT '备注',
     PRIMARY KEY (`role_id`)
 );
 
--- 菜单表
+-- 角色菜单关系表（逻辑删除）
+DROP TABLE IF EXISTS `blog_role_menu`;
+CREATE TABLE `blog_role_menu` (
+    `role_id` bigint NOT NULL COMMENT '角色ID',
+    `menu_id` bigint NOT NULL COMMENT '菜单ID',
+    `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除，0否1是',
+    `create_time` bigint NOT NULL COMMENT '创建时间',
+    `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
+    PRIMARY KEY (`role_id`, `menu_id`)
+);
+
+-- 菜单表（页面表）
 DROP TABLE IF EXISTS `blog_menu`;
 CREATE TABLE `blog_menu` (
     `menu_id` bigint NOT NULL COMMENT '菜单ID',
-    `menu_name` varchar(64) NOT NULL DEFAULT 'NULL' COMMENT '菜单名',
+    `menu_name` varchar(64) NOT NULL COMMENT '菜单名',
     `path` varchar(256) DEFAULT NULL COMMENT '路由地址',
     `component` varchar(256) DEFAULT NULL COMMENT '组件路径',
-    `perms` varchar(128) DEFAULT NULL COMMENT '权限标识',
+    `icon` varchar(128) DEFAULT NULL COMMENT '图标',
+    `parent_id` bigint DEFAULT NULL COMMENT '菜单父亲ID',
     `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除，0否1是',
     `create_time` bigint NOT NULL COMMENT '创建时间',
     `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
     `menu_desc` varchar(512) DEFAULT NULL COMMENT '备注',
     PRIMARY KEY (`menu_id`)
+);
+
+-- 角色资源关系表（逻辑删除）
+DROP TABLE IF EXISTS `blog_role_resource`;
+CREATE TABLE `blog_role_resource` (
+    `role_id` bigint NOT NULL COMMENT '角色ID',
+    `resource_id` bigint NOT NULL COMMENT '资源ID',
+    `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除，0否1是',
+    `create_time` bigint NOT NULL COMMENT '创建时间',
+    `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
+    PRIMARY KEY (`role_id`, `resource_id`)
+);
+
+-- 资源表（接口表）
+DROP TABLE IF EXISTS `blog_resource`;
+CREATE TABLE `blog_resource` (
+    `resource_id` bigint NOT NULL COMMENT '资源ID',
+    `resource_name` varchar(64) NOT NULL COMMENT '资源名',
+    `uri` varchar(256) DEFAULT NULL COMMENT '请求uri地址',
+    `is_delete` tinyint(1) NOT NULL DEFAULT 0 COMMENT '是否删除，0否1是',
+    `create_time` bigint NOT NULL COMMENT '创建时间',
+    `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
+    `resource_desc` varchar(512) DEFAULT NULL COMMENT '备注',
+    PRIMARY KEY (`resource_id`)
 );
 
 -- 文章表

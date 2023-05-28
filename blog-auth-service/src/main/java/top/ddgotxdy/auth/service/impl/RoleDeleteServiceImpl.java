@@ -8,6 +8,7 @@ import top.ddgotxdy.auth.annotation.AuthEventSelector;
 import top.ddgotxdy.auth.model.AuthContext;
 import top.ddgotxdy.auth.model.AuthEvent;
 import top.ddgotxdy.auth.service.AbstractAuthService;
+import top.ddgotxdy.auth.service.BlogRoleMenuService;
 import top.ddgotxdy.auth.service.BlogRoleService;
 import top.ddgotxdy.auth.service.BlogUserService;
 import top.ddgotxdy.common.enums.ResultCode;
@@ -31,6 +32,8 @@ public class RoleDeleteServiceImpl extends AbstractAuthService {
     private BlogRoleService blogRoleService;
     @Resource
     private BlogUserService blogUserService;
+    @Resource
+    private BlogRoleMenuService blogRoleMenuService;
 
     @Override
     protected boolean filter(AuthContext authContext) {
@@ -54,13 +57,16 @@ public class RoleDeleteServiceImpl extends AbstractAuthService {
         List<Long> roleIdsRemain = new ArrayList<>();
         roleIds.forEach(roleId -> {
             // 判断当前用户是否被用户使用
-            List<BlogUser> blogUserList = blogUserService.getByRoleId(roleId);
+            List<BlogUser> blogUserList = blogUserService.getByRoleIdAll(roleId);
             boolean anyMatch = blogUserList.stream()
                     .anyMatch(blogUser -> !blogUser.getIsDelete());
             if (anyMatch) {
                 roleIdsRemain.add(roleId);
             } else {
+                // 删除role表
                 blogRoleService.deleteById(roleId);
+                // 删除role_menu表
+                blogRoleMenuService.deleteByRoleId(roleId);
                 blogUserList.forEach(blogUser -> {
                     // 删除当前用户对此角色的依赖
                     BlogUser blogUserUpdate = new BlogUser();

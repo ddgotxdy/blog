@@ -41,6 +41,20 @@ public interface BlogUserService extends IService<BlogUser> {
     List<BlogUser> getByRoleId(Long roleId);
 
     /**
+     * 根据角色id获取角色列表，包括删除了的
+     * @param roleId 角色id
+     * @return List<BlogUser>
+     */
+    List<BlogUser> getByRoleIdAll(Long roleId);
+
+    /**
+     * 根据角色id获取角色id列表
+     * @param roleIdList 角色id列表
+     * @return List<BlogUser>
+     */
+    List<Long> queryByRoleIdList(List<Long> roleIdList);
+
+    /**
      * 加载 LoginUser
      * @param userId 用户id
      * @return LoginUser

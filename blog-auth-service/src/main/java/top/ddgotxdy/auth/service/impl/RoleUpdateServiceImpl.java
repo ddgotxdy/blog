@@ -8,10 +8,7 @@ import top.ddgotxdy.auth.annotation.AuthEventSelector;
 import top.ddgotxdy.auth.convert.Context2EntityConvert;
 import top.ddgotxdy.auth.model.AuthContext;
 import top.ddgotxdy.auth.model.AuthEvent;
-import top.ddgotxdy.auth.service.AbstractAuthService;
-import top.ddgotxdy.auth.service.BlogRoleService;
-import top.ddgotxdy.auth.service.BlogUserService;
-import top.ddgotxdy.auth.service.LoginService;
+import top.ddgotxdy.auth.service.*;
 import top.ddgotxdy.common.enums.ResultCode;
 import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.dal.entity.BlogRole;
@@ -38,6 +35,8 @@ public class RoleUpdateServiceImpl extends AbstractAuthService {
     private BlogUserService blogUserService;
     @Resource
     private LoginService loginService;
+    @Resource
+    private BlogRoleMenuService blogRoleMenuService;
 
     @Override
     protected boolean filter(AuthContext authContext) {
@@ -71,7 +70,10 @@ public class RoleUpdateServiceImpl extends AbstractAuthService {
     @Transactional(rollbackFor = Exception.class)
     protected void doExecute(AuthContext authContext) {
         BlogRole blogRole = Context2EntityConvert.authContext2RoleForUpdate(authContext);
+        // 角色更新
         blogRoleService.updateById(blogRole);
+        // role_menu关系表同步更新
+        blogRoleMenuService.saveOrUpdateByRoleAndMenuIdList(authContext.getRoleId(), authContext.getMenuIds());
         // 同步更新用户的redis信息
         if (Objects.nonNull(authContext.getMenuIds())) {
             List<BlogUser> blogUserList = blogUserService.getByRoleId(authContext.getRoleId());

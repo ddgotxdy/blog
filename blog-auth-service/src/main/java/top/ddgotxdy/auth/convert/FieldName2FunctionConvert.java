@@ -38,8 +38,8 @@ public class FieldName2FunctionConvert {
                 return BlogMenu::getPath;
             case "component":
                 return BlogMenu::getComponent;
-            case "perms":
-                return BlogMenu::getPerms;
+            case "icon":
+                return BlogMenu::getIcon;
             default:
                 return BlogMenu::getCreateTime;
         }

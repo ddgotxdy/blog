@@ -9,6 +9,7 @@ import top.ddgotxdy.auth.convert.Context2EntityConvert;
 import top.ddgotxdy.auth.model.AuthContext;
 import top.ddgotxdy.auth.model.AuthEvent;
 import top.ddgotxdy.auth.service.AbstractAuthService;
+import top.ddgotxdy.auth.service.BlogRoleMenuService;
 import top.ddgotxdy.auth.service.BlogRoleService;
 import top.ddgotxdy.common.enums.ResultCode;
 import top.ddgotxdy.common.exception.BlogException;
@@ -29,6 +30,8 @@ import static top.ddgotxdy.auth.constant.ValidateConstant.*;
 public class RoleAddServiceImpl extends AbstractAuthService {
     @Resource
     private BlogRoleService blogRoleService;
+    @Resource
+    private BlogRoleMenuService blogRoleMenuService;
 
     @Override
     protected boolean filter(AuthContext authContext) {
@@ -56,6 +59,7 @@ public class RoleAddServiceImpl extends AbstractAuthService {
     protected void doExecute(AuthContext authContext) {
         BlogRole blogRole = Context2EntityConvert.authContext2RoleForAdd(authContext);
         blogRoleService.save(blogRole);
+        blogRoleMenuService.saveOrUpdateByRoleAndMenuIdList(blogRole.getRoleId(), authContext.getMenuIds());
         authContext.setRoleId(blogRole.getRoleId());
     }
 }

@@ -73,16 +73,16 @@ public class MenuUpdateServiceImpl extends AbstractAuthService {
             throw new BlogException(ResultCode.MENU_UPDATE_ERROR.getCode(), "组件长度错误");
         }
         // 5. 权限标识【可选】
-        String perms = authContext.getPerms();
+        String icon = authContext.getIcon();
         if (StringUtils.isNotEmpty(component)
-                && (StringUtils.length(perms) < PERMS_NAME_MIN_LENGTH
-                || StringUtils.length(perms) > PERMS_NAME_MAX_LENGTH)) {
-            throw new BlogException(ResultCode.MENU_UPDATE_ERROR.getCode(), "权限标识长度错误");
+                && (StringUtils.length(icon) < ICON_NAME_MIN_LENGTH
+                || StringUtils.length(icon) > ICON_NAME_MAX_LENGTH)) {
+            throw new BlogException(ResultCode.MENU_UPDATE_ERROR.getCode(), "图标长度错误");
         }
-        // 6. 权限描述【可选】
+        // 6. 菜单描述【可选】
         String menuDesc = authContext.getMenuDesc();
         if (StringUtils.length(menuDesc) > DESC_MAX_LENGTH) {
-            throw new BlogException(ResultCode.MENU_UPDATE_ERROR.getCode(), "权限描述长度错误");
+            throw new BlogException(ResultCode.MENU_UPDATE_ERROR.getCode(), "菜单描述长度错误");
         }
         return true;
     }

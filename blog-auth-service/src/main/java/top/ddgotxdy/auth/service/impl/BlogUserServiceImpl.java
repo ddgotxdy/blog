@@ -1,12 +1,13 @@
 package top.ddgotxdy.auth.service.impl;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import top.ddgotxdy.auth.service.BlogMenuService;
+import top.ddgotxdy.auth.service.BlogRoleMenuService;
 import top.ddgotxdy.auth.service.BlogRoleService;
 import top.ddgotxdy.auth.service.BlogUserService;
 import top.ddgotxdy.common.enums.ResultCode;
@@ -33,6 +34,10 @@ public class BlogUserServiceImpl extends ServiceImpl<BlogUserMapper, BlogUser> i
     private BlogRoleService blogRoleService;
     @Resource
     private BlogMenuService blogMenuService;
+    @Resource
+    private UserDetailsService userDetailsService;
+    @Resource
+    private BlogRoleMenuService blogRoleMenuService;
 
     @Override
     public boolean deleteById(Long userId) {
@@ -65,8 +70,31 @@ public class BlogUserServiceImpl extends ServiceImpl<BlogUserMapper, BlogUser> i
     public List<BlogUser> getByRoleId(Long roleId) {
         LambdaQueryWrapper<BlogUser> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper
+                .eq(BlogUser::getIsDelete, false)
                 .eq(BlogUser::getRoleId, roleId);
         return this.list(queryWrapper);
+    }
+
+    @Override
+    public List<BlogUser> getByRoleIdAll(Long roleId) {
+        LambdaQueryWrapper<BlogUser> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper
+                .eq(BlogUser::getRoleId, roleId);
+        return this.list(queryWrapper);
+    }
+
+    @Override
+    public List<Long> queryByRoleIdList(List<Long> roleIdList) {
+        LambdaQueryWrapper<BlogUser> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper
+                .eq(BlogUser::getIsDelete, false)
+                .in(BlogUser::getRoleId, roleIdList);
+        List<BlogUser> blogUserList = this.list(queryWrapper);
+        // 获取得到userId list
+        List<Long> userIdList = blogUserList.stream()
+                .map(BlogUser::getUserId)
+                .collect(Collectors.toList());
+        return userIdList;
     }
 
     @Override
@@ -92,15 +120,8 @@ public class BlogUserServiceImpl extends ServiceImpl<BlogUserMapper, BlogUser> i
             return new LoginUser(blogUser, permissionDefault, permissionDefault);
         }
         // 查询对应的权限信息
-        String menuIds = blogRole.getMenuIds();
-        List<Long> menuIdList = JSON.parseArray(menuIds, Long.class);
+        List<Long> menuIdList = blogRoleMenuService.queryMenuIdListByRoleId(roleId);
         List<BlogMenu> blogMenus = blogMenuService.listByIds(menuIdList);
-        // 去重且过滤删除了的
-        List<String> permissions = blogMenus.stream()
-                .filter(blogMenu -> !blogMenu.getIsDelete())
-                .map(BlogMenu::getPerms)
-                .distinct()
-                .collect(Collectors.toList());
         // 路由去重
         List<String> paths = blogMenus.stream()
                 .filter(blogMenu -> !blogMenu.getIsDelete())
@@ -108,64 +129,24 @@ public class BlogUserServiceImpl extends ServiceImpl<BlogUserMapper, BlogUser> i
                 .distinct()
                 .collect(Collectors.toList());
         // 封装成UserDetails
-        return new LoginUser(blogUser, permissions, paths);
+        return new LoginUser(blogUser, null, paths);
     }
 
     @Override
     public LoginUser loadUserByUsername(String username) {
-        // 查询用户信息
-        LambdaQueryWrapper<BlogUser> queryWrapper = new LambdaQueryWrapper<>();
-        // 可以根据用户名或者邮箱进行登录
-        queryWrapper
-                .eq(BlogUser::getIsDelete, false)
-                .and(qw ->
-                        qw.eq(BlogUser::getUsername, username)
-                                .or()
-                                .eq(BlogUser::getEmail, username));
-        List<BlogUser> blogUserList = this.list(queryWrapper);
-        // 如果没有查询到用户，就抛出异常
-        if(CollectionUtils.isEmpty(blogUserList)) {
-            throw new BlogException(ResultCode.LOGIN_ERROR);
-        }
-        BlogUser blogUser = blogUserList.get(0);
-        // 获取角色表
-        Long roleId = blogUser.getRoleId();
-        BlogRole blogRole = blogRoleService.getById(roleId);
-        // 如果没有查询到角色，就返回默认角色权限 TODO
-        if(Objects.isNull(blogRole) || blogRole.getIsDelete()) {
-            List<String> permissionDefault = Collections.emptyList();
-            return new LoginUser(blogUser, permissionDefault, permissionDefault);
-        }
-        // 查询对应的权限信息
-        String menuIds = blogRole.getMenuIds();
-        List<Long> menuIdList = JSON.parseArray(menuIds, Long.class);
-        List<BlogMenu> blogMenus = blogMenuService.listByIds(menuIdList);
-        // 去重且过滤删除了的
-        List<String> permissions = blogMenus.stream()
-                .filter(blogMenu -> !blogMenu.getIsDelete())
-                .map(BlogMenu::getPerms)
-                .distinct()
-                .collect(Collectors.toList());
-        // 路由去重
-        List<String> paths = blogMenus.stream()
-                .filter(blogMenu -> !blogMenu.getIsDelete())
-                .map(BlogMenu::getPath)
-                .distinct()
-                .collect(Collectors.toList());
-        // 封装成UserDetails
-        return new LoginUser(blogUser, permissions, paths);
+        return (LoginUser) userDetailsService.loadUserByUsername(username);
     }
 
     @Override
     public List<BlogUser> getByMenuId(Long menuId) {
-        List<BlogRole> blogRoleList = blogRoleService.getByMenuId(menuId);
+        List<Long> roleIdList = blogRoleMenuService.queryRoleIdListByMenuId(menuId);
         LambdaQueryWrapper<BlogUser> queryWrapper = new LambdaQueryWrapper<>();
-        if (CollectionUtils.isEmpty(blogRoleList)) {
+        if (CollectionUtils.isEmpty(roleIdList)) {
             return Collections.emptyList();
         }
         queryWrapper
                 .eq(BlogUser::getIsDelete, false)
-                .in(BlogUser::getRoleId, blogRoleList);
+                .in(BlogUser::getRoleId, roleIdList);
         return this.list(queryWrapper);
     }
 }

@@ -76,11 +76,11 @@ public class ValidateConstant {
      */
     public static final Integer COMPONENT_NAME_MIN_LENGTH = 1;
     /**
-     * 权限标识的最大长度
+     * 图标标识的最大长度
      */
-    public static final Integer PERMS_NAME_MAX_LENGTH = 128;
+    public static final Integer ICON_NAME_MAX_LENGTH = 128;
     /**
-     * 权限标识的最小长度
+     * 图标标识的最小长度
      */
-    public static final Integer PERMS_NAME_MIN_LENGTH = 1;
+    public static final Integer ICON_NAME_MIN_LENGTH = 1;
 }

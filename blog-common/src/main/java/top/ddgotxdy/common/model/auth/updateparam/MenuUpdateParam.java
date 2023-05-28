@@ -28,8 +28,8 @@ public class MenuUpdateParam {
     @ApiModelProperty("组件路径")
     private String component;
 
-    @ApiModelProperty("权限标识")
-    private String perms;
+    @ApiModelProperty("图标")
+    private String icon;
 
     @ApiModelProperty("备注")
     private String menuDesc;

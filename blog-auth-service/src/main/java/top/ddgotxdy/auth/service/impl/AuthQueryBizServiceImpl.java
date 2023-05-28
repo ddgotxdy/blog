@@ -99,12 +99,6 @@ public class AuthQueryBizServiceImpl implements AuthQueryBizService {
                 .eq(Objects.nonNull(queryParam.getRoleId()), BlogRole::getRoleId, queryParam.getRoleId())
                 .eq(Objects.nonNull(queryParam.getIsDelete()), BlogRole::getIsDelete, queryParam.getIsDelete())
                 .like(Objects.nonNull(queryParam.getRoleName()), BlogRole::getRoleName, queryParam.getRoleName());
-        // 特殊值处理
-        if (Objects.nonNull(queryParam.getMenuIds())) {
-            List<Long> menuIds = queryParam.getMenuIds();
-            menuIds.forEach(menuId -> queryWrapper
-                    .like(BlogRole::getMenuIds, menuId.toString()));
-        }
         // 排序规则
         LinkedHashMap<String, Boolean> orderByFields = roleQueryParamPageQry.getOrderByFields();
         if (CollectionUtils.isEmpty(orderByFields)) {
@@ -142,7 +136,7 @@ public class AuthQueryBizServiceImpl implements AuthQueryBizService {
                 .like(Objects.nonNull(queryParam.getMenuName()), BlogMenu::getMenuName, queryParam.getMenuName())
                 .like(Objects.nonNull(queryParam.getPath()), BlogMenu::getPath, queryParam.getPath())
                 .like(Objects.nonNull(queryParam.getComponent()), BlogMenu::getComponent, queryParam.getComponent())
-                .like(Objects.nonNull(queryParam.getPerms()), BlogMenu::getPerms, queryParam.getPerms());
+                .like(Objects.nonNull(queryParam.getIcon()), BlogMenu::getIcon, queryParam.getIcon());
         // 排序规则
         LinkedHashMap<String, Boolean> orderByFields = menuQueryParamPageQry.getOrderByFields();
         if (CollectionUtils.isEmpty(orderByFields)) {

@@ -122,9 +122,14 @@ public class AuthContext {
     private String component;
 
     /**
-     * 权限标识
+     * 图标
      */
-    private String perms;
+    private String icon;
+
+    /**
+     * 父亲id
+     */
+    private Long parentId;
 
     /**
      * 菜单备注
