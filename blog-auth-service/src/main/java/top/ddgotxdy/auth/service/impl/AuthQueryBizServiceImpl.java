@@ -156,7 +156,14 @@ public class AuthQueryBizServiceImpl implements AuthQueryBizService {
         List<BlogMenu> blogMenuList = blogMenuPage.getRecords();
         // 非起始节点
         LambdaQueryWrapper<BlogMenu> queryWrapperChildren = new LambdaQueryWrapper<>();
-        queryWrapperChildren.isNotNull(BlogMenu::getParentId);
+        queryWrapperChildren
+                .isNotNull(BlogMenu::getParentId)
+                .eq(Objects.nonNull(queryParam.getMenuId()), BlogMenu::getMenuId, queryParam.getMenuId())
+                .eq(Objects.nonNull(queryParam.getIsDelete()), BlogMenu::getIsDelete, queryParam.getIsDelete())
+                .like(Objects.nonNull(queryParam.getMenuName()), BlogMenu::getMenuName, queryParam.getMenuName())
+                .like(Objects.nonNull(queryParam.getPath()), BlogMenu::getPath, queryParam.getPath())
+                .like(Objects.nonNull(queryParam.getComponent()), BlogMenu::getComponent, queryParam.getComponent())
+                .like(Objects.nonNull(queryParam.getIcon()), BlogMenu::getIcon, queryParam.getIcon());
         List<BlogMenu> blogMenuListChildren = blogMenuService.list(queryWrapperChildren);
         List<MenuPageListDTO> rolePageListDTOList
                 = Entity2DTOConvert.menuList2DTO(blogMenuList, blogMenuListChildren);
