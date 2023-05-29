@@ -12,8 +12,10 @@ import top.ddgotxdy.api.service.BlogFileBizService;
 import top.ddgotxdy.common.client.BlogFileClient;
 import top.ddgotxdy.common.model.*;
 import top.ddgotxdy.common.model.file.addparam.ImageAddParam;
+import top.ddgotxdy.common.model.file.deleteparam.ImageDeleteParam;
 import top.ddgotxdy.common.model.file.dto.ImagePageListDTO;
 import top.ddgotxdy.common.model.file.queryparam.ImageQueryParam;
+import top.ddgotxdy.common.model.file.recoverparam.ImageRecoverParam;
 import top.ddgotxdy.common.model.file.updateparam.ImageUpdateParam;
 
 import javax.annotation.Resource;
@@ -56,12 +58,24 @@ public class BlogFileBizServiceImpl implements BlogFileBizService {
 
     @Override
     public IdsView deleteImage(List<Long> imageList) {
-        return null;
+        ImageDeleteParam imageDeleteParam
+                = FileApiParam2ClientParamConvert.imageDeleteApiParam2Param(imageList);
+        ResultView<IdsDTO> response = blogFileClient.deleteImage(imageDeleteParam);
+        IdsDTO idsDTO = response.checkAndGetData();
+        return IdsView.builder()
+                .ids(idsDTO.getIds())
+                .build();
     }
 
     @Override
     public IdsView recoverImage(List<Long> imageList) {
-        return null;
+        ImageRecoverParam imageRecoverParam
+                = FileApiParam2ClientParamConvert.imageRecoverApiParam2Param(imageList);
+        ResultView<IdsDTO> response = blogFileClient.recoverImage(imageRecoverParam);
+        IdsDTO idsDTO = response.checkAndGetData();
+        return IdsView.builder()
+                .ids(idsDTO.getIds())
+                .build();
     }
 
     @Override

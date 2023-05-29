@@ -1,6 +1,8 @@
 package top.ddgotxdy.file.convert;
 
 import top.ddgotxdy.common.model.file.addparam.ImageAddParam;
+import top.ddgotxdy.common.model.file.deleteparam.ImageDeleteParam;
+import top.ddgotxdy.common.model.file.recoverparam.ImageRecoverParam;
 import top.ddgotxdy.common.model.file.updateparam.ImageUpdateParam;
 import top.ddgotxdy.common.util.BeanCopyUtil;
 import top.ddgotxdy.file.model.FileContext;
@@ -36,6 +38,24 @@ public class Param2ContextConvert {
         BeanCopyUtil.copyProperties(imageUpdateParam, fileContext);
         // 设置为添加事件
         fileContext.setFileEvent(FileEvent.IMAGE_UPDATE);
+        return fileContext;
+    }
+
+    public static FileContext deleteParamConvert(ImageDeleteParam imageDeleteParam) {
+        FileContext fileContext = new FileContext();
+        // 先对无需处理的值复制一份
+        BeanCopyUtil.copyProperties(imageDeleteParam, fileContext);
+        // 设置为添加事件
+        fileContext.setFileEvent(FileEvent.IMAGE_DELETE);
+        return fileContext;
+    }
+
+    public static FileContext recoverParamConvert(ImageRecoverParam imageRecoverParam) {
+        FileContext fileContext = new FileContext();
+        // 先对无需处理的值复制一份
+        BeanCopyUtil.copyProperties(imageRecoverParam, fileContext);
+        // 设置为添加事件
+        fileContext.setFileEvent(FileEvent.IMAGE_RECOVER);
         return fileContext;
     }
 }

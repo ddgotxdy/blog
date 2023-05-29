@@ -4,17 +4,17 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
-import top.ddgotxdy.common.model.IdDTO;
-import top.ddgotxdy.common.model.PageQry;
-import top.ddgotxdy.common.model.PageResult;
-import top.ddgotxdy.common.model.ResultView;
+import top.ddgotxdy.common.model.*;
 import top.ddgotxdy.common.model.file.addparam.ImageAddParam;
+import top.ddgotxdy.common.model.file.deleteparam.ImageDeleteParam;
 import top.ddgotxdy.common.model.file.dto.ImagePageListDTO;
 import top.ddgotxdy.common.model.file.queryparam.ImageQueryParam;
+import top.ddgotxdy.common.model.file.recoverparam.ImageRecoverParam;
 import top.ddgotxdy.common.model.file.updateparam.ImageUpdateParam;
 
 /**
@@ -62,6 +62,26 @@ public interface BlogFileClient {
     @PostMapping("openfeign/file/image/queryByPage")
     ResultView<PageResult<ImagePageListDTO>> queryImageByPage(
             @Validated @RequestBody PageQry<ImageQueryParam> imageQueryParamPageQry
+    );
+
+    /**
+     * 图片删除接口
+     * @param imageDeleteParam 图片删除参数
+     * @return IdsDTO
+     */
+    @DeleteMapping("openfeign/file/image/delete")
+    ResultView<IdsDTO> deleteImage(
+            @Validated @RequestBody ImageDeleteParam imageDeleteParam
+    );
+
+    /**
+     * 图片恢复接口
+     * @param imageRecoverParam 图片恢复参数
+     * @return IdsDTO
+     */
+    @PostMapping("openfeign/file/image/recover")
+    ResultView<IdsDTO> recoverImage(
+            @Validated @RequestBody ImageRecoverParam imageRecoverParam
     );
 
 }

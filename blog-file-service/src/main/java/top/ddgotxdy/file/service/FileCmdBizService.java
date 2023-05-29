@@ -1,7 +1,10 @@
 package top.ddgotxdy.file.service;
 
 import top.ddgotxdy.common.model.IdDTO;
+import top.ddgotxdy.common.model.IdsDTO;
 import top.ddgotxdy.common.model.file.addparam.ImageAddParam;
+import top.ddgotxdy.common.model.file.deleteparam.ImageDeleteParam;
+import top.ddgotxdy.common.model.file.recoverparam.ImageRecoverParam;
 import top.ddgotxdy.common.model.file.updateparam.ImageUpdateParam;
 
 /**
@@ -22,4 +25,8 @@ public interface FileCmdBizService {
      * @return idDTO
      */
     IdDTO updateImage(ImageUpdateParam imageUpdateParam);
+
+    IdsDTO deleteImage(ImageDeleteParam imageDeleteParam);
+
+    IdsDTO recoverImage(ImageRecoverParam imageRecoverParam);
 }

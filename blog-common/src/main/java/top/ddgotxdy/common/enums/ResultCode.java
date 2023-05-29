@@ -36,6 +36,8 @@ public enum ResultCode {
     IMAGE_ADD_ERROR(801, "图片新增失败"),
     IMAGE_UPDATE_ERROR(802, "图片修改失败"),
     IMAGE_QUERY_ERROR(803, "图片查询失败"),
+    IMAGE_DELETE_ERROR(804, "图片删除失败"),
+    IMAGE_RECOVER_ERROR(805, "图片恢复失败"),
     // 901 - 1000 消息异常
     SENSITIVE_ADD_ERROR(901, "敏感词新增失败"),
     SENSITIVE_DELETE_ERROR(902, "敏感词删除失败"),

@@ -3,13 +3,12 @@ package top.ddgotxdy.file.controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import top.ddgotxdy.common.model.IdDTO;
-import top.ddgotxdy.common.model.PageQry;
-import top.ddgotxdy.common.model.PageResult;
-import top.ddgotxdy.common.model.ResultView;
+import top.ddgotxdy.common.model.*;
 import top.ddgotxdy.common.model.file.addparam.ImageAddParam;
+import top.ddgotxdy.common.model.file.deleteparam.ImageDeleteParam;
 import top.ddgotxdy.common.model.file.dto.ImagePageListDTO;
 import top.ddgotxdy.common.model.file.queryparam.ImageQueryParam;
+import top.ddgotxdy.common.model.file.recoverparam.ImageRecoverParam;
 import top.ddgotxdy.common.model.file.updateparam.ImageUpdateParam;
 import top.ddgotxdy.file.service.FileCmdBizService;
 import top.ddgotxdy.file.service.FileQueryBizService;
@@ -63,4 +62,19 @@ public class FileController {
         return ResultView.success(result);
     }
 
+    @DeleteMapping("/image/delete")
+    public ResultView<IdsDTO> deleteImage(
+            @Validated @RequestBody ImageDeleteParam imageDeleteParam
+    ) {
+        IdsDTO idsDTO = fileCmdBizService.deleteImage(imageDeleteParam);
+        return ResultView.success(idsDTO);
+    }
+
+    @PostMapping("/image/recover")
+    public ResultView<IdsDTO> recoverImage(
+            @Validated @RequestBody ImageRecoverParam imageRecoverParam
+    ) {
+        IdsDTO idsDTO = fileCmdBizService.recoverImage(imageRecoverParam);
+        return ResultView.success(idsDTO);
+    }
 }

@@ -2,6 +2,8 @@ package top.ddgotxdy.file.model;
 
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author: ddgo
  * @description: file 上下文
@@ -28,4 +30,8 @@ public class FileContext {
      * 图片url
      */
     private String imageUrl;
+    /**
+     * image id列表
+     */
+    private List<Long> imageIds;
 }

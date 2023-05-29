@@ -23,8 +23,8 @@ public class MenuQueryApiParam {
     @ApiModelProperty("组件路径")
     private String component;
 
-    @ApiModelProperty("权限标识")
-    private String perms;
+    @ApiModelProperty("图标")
+    private String icon;
 
     @ApiModelProperty("是否删除，0否1是")
     private Boolean isDelete;
