@@ -56,15 +56,10 @@ public class MenuDeleteServiceImpl extends AbstractAuthService {
         // 删除角色中对当前菜单的引用
         menuIds.forEach(menuId -> {
             // 关系表删除
-            boolean ok = blogRoleMenuService.deleteByMenuId(menuId);
+            blogRoleMenuService.deleteByMenuId(menuId);
+            boolean ok = blogMenuService.deleteById(menuId);
             if (!ok) {
                 menuIdsRemain.add(menuId);
-            } else {
-                // 菜单表删除
-                ok = blogMenuService.deleteById(menuId);
-                if (!ok) {
-                    menuIdsRemain.add(menuId);
-                }
             }
         });
         // 去掉没有被清空的
