@@ -2,16 +2,15 @@ package top.ddgotxdy.api.service;
 
 import top.ddgotxdy.api.model.UserLoginApiModel;
 import top.ddgotxdy.api.model.addparam.MenuAddApiParam;
+import top.ddgotxdy.api.model.addparam.ResourceAddApiParam;
 import top.ddgotxdy.api.model.addparam.RoleAddApiParam;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
 import top.ddgotxdy.api.model.queryparam.MenuQueryApiParam;
+import top.ddgotxdy.api.model.queryparam.ResourceQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.RoleQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.UserInfoQueryApiParam;
 import top.ddgotxdy.api.model.updateparam.*;
-import top.ddgotxdy.api.model.view.MenuPageListView;
-import top.ddgotxdy.api.model.view.RolePageListView;
-import top.ddgotxdy.api.model.view.UserInfoPageListView;
-import top.ddgotxdy.api.model.view.UserInfoView;
+import top.ddgotxdy.api.model.view.*;
 import top.ddgotxdy.common.model.IdView;
 import top.ddgotxdy.common.model.IdsView;
 import top.ddgotxdy.common.model.PageQry;
@@ -26,15 +25,15 @@ import java.util.List;
 public interface BlogAuthBizService {
     /**
      * 注册
-     * @param userAddApiParam
-     * @return
+     * @param userAddApiParam 用户新增参数
+     * @return IdView
      */
     IdView register(UserAddApiParam userAddApiParam);
 
     /**
      * 登录
-     * @param userLoginApiModel
-     * @return
+     * @param userLoginApiModel 登录参数
+     * @return token
      */
     String login(UserLoginApiModel userLoginApiModel);
 
@@ -188,4 +187,39 @@ public interface BlogAuthBizService {
      * @return IdsView
      */
     IdsView recoverMenu(List<Long> menuIdList);
+
+    /**
+     * 添加资源
+     * @param resourceAddApiParam 添加资源参数
+     * @return IdView
+     */
+    IdView addResource(ResourceAddApiParam resourceAddApiParam);
+
+    /**
+     * 分页查询资源
+     * @param resourceQueryApiParamPageQry 分页查询资源参数
+     * @return PageResult<ResourcePageListView>
+     */
+    PageResult<ResourcePageListView> queryResourceByPage(PageQry<ResourceQueryApiParam> resourceQueryApiParamPageQry);
+
+    /**
+     * 更新资源
+     * @param resourceUpdateApiParam 更新资源参数
+     * @return IdView
+     */
+    IdView updateResource(ResourceUpdateApiParam resourceUpdateApiParam);
+
+    /**
+     * 删除资源
+     * @param resourceIdList 资源列表
+     * @return IdView
+     */
+    IdsView deleteResource(List<Long> resourceIdList);
+
+    /**
+     * 恢复资源
+     * @param resourceIdList 资源列表
+     * @return IdView
+     */
+    IdsView recoverResource(List<Long> resourceIdList);
 }

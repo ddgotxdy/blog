@@ -87,4 +87,20 @@ public class ValidateConstant {
      * 菜单树形结构最长深度+1
      */
     public static final Integer MAX_DEEP = 4;
+    /**
+     * 资源名的最大长度
+     */
+    public static final Integer RESOURCE_NAME_MAX_LENGTH = 64;
+    /**
+     * 资源名的最小长度
+     */
+    public static final Integer RESOURCE_NAME_MIN_LENGTH = 2;
+    /**
+     * uri的最大长度
+     */
+    public static final Integer URI_NAME_MAX_LENGTH = 256;
+    /**
+     * uri的最小长度
+     */
+    public static final Integer URI_NAME_MIN_LENGTH = 1;
 }

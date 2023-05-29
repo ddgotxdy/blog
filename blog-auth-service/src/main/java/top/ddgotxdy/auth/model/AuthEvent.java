@@ -70,6 +70,22 @@ public enum AuthEvent {
      * 菜单恢复
      */
     MENU_RECOVER(16),
+    /**
+     * 资源添加
+     */
+    RESOURCE_ADD(17),
+    /**
+     * 资源更新
+     */
+    RESOURCE_UPDATE(18),
+    /**
+     * 资源删除
+     */
+    RESOURCE_DELETE(19),
+    /**
+     * 资源恢复
+     */
+    RESOURCE_RECOVER(20),
     ;
     private final int code;
 }

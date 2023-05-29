@@ -3,6 +3,7 @@ package top.ddgotxdy.auth.convert;
 import top.ddgotxdy.auth.model.AuthContext;
 import top.ddgotxdy.common.util.BeanCopyUtil;
 import top.ddgotxdy.dal.entity.BlogMenu;
+import top.ddgotxdy.dal.entity.BlogResource;
 import top.ddgotxdy.dal.entity.BlogRole;
 import top.ddgotxdy.dal.entity.BlogUser;
 
@@ -46,5 +47,17 @@ public class Context2EntityConvert {
         BlogMenu blogMenu = new BlogMenu();
         BeanCopyUtil.copyProperties(authContext, blogMenu);
         return blogMenu;
+    }
+
+    public static BlogResource authContext2resourceForAdd(AuthContext authContext) {
+        BlogResource blogResource = new BlogResource();
+        BeanCopyUtil.copyProperties(authContext, blogResource);
+        return blogResource;
+    }
+
+    public static BlogResource authContext2ResourceForUpdate(AuthContext authContext) {
+        BlogResource blogResource = new BlogResource();
+        BeanCopyUtil.copyProperties(authContext, blogResource);
+        return blogResource;
     }
 }

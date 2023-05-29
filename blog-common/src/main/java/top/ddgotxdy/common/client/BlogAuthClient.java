@@ -7,20 +7,21 @@ import org.springframework.web.bind.annotation.*;
 import top.ddgotxdy.common.interceptor.FeignRequestInterceptor;
 import top.ddgotxdy.common.model.*;
 import top.ddgotxdy.common.model.auth.addparam.MenuAddParam;
+import top.ddgotxdy.common.model.auth.addparam.ResourceAddParam;
 import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
 import top.ddgotxdy.common.model.auth.deleteparam.MenuDeleteParam;
+import top.ddgotxdy.common.model.auth.deleteparam.ResourceDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.RoleDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
-import top.ddgotxdy.common.model.auth.dto.MenuPageListDTO;
-import top.ddgotxdy.common.model.auth.dto.RolePageListDTO;
-import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
-import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
+import top.ddgotxdy.common.model.auth.dto.*;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
 import top.ddgotxdy.common.model.auth.queryparam.MenuQueryParam;
+import top.ddgotxdy.common.model.auth.queryparam.ResourceQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.RoleQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
 import top.ddgotxdy.common.model.auth.recoverparam.MenuRecoverParam;
+import top.ddgotxdy.common.model.auth.recoverparam.ResourceRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.RoleRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
 import top.ddgotxdy.common.model.auth.updateparam.*;
@@ -238,5 +239,55 @@ public interface BlogAuthClient {
     @PostMapping("openfeign/auth/menu/recover")
     ResultView<IdsDTO> recoverMenu(
             @Validated @RequestBody MenuRecoverParam menuRecoverParam
+    );
+
+    /**
+     * 添加资源
+     * @param resourceAddParam 添加资源参数
+     * @return IdDTO
+     */
+    @PostMapping("openfeign/auth/resource/add")
+    ResultView<IdDTO> addResource(
+            @Validated @RequestBody ResourceAddParam resourceAddParam
+    );
+
+    /**
+     * 分页查询资源
+     * @param resourceQueryParamPageQry 分页查询资源参数
+     * @return PageResult<ResourcePageListDTO>
+     */
+    @PostMapping("openfeign/auth/resource/queryByPage")
+    ResultView<PageResult<ResourcePageListDTO>> queryResourceByPage(
+            @Validated @RequestBody PageQry<ResourceQueryParam> resourceQueryParamPageQry
+    );
+
+    /**
+     * 更新资源
+     * @param resourceUpdateParam 更新资源参数
+     * @return IdDTO
+     */
+    @PostMapping("openfeign/auth/resource/update")
+    ResultView<IdDTO> updateResource(
+            @Validated @RequestBody ResourceUpdateParam resourceUpdateParam
+    );
+
+    /**
+     * 删除资源
+     * @param resourceDeleteParam 删除资源参数
+     * @return IdsDTO
+     */
+    @DeleteMapping("openfeign/auth/resource/delete")
+    ResultView<IdsDTO> deleteResource(
+            @Validated @RequestBody ResourceDeleteParam resourceDeleteParam
+    );
+
+    /**
+     * 恢复资源
+     * @param resourceRecoverParam 恢复资源参数
+     * @return IdsDTO
+     */
+    @PostMapping("openfeign/auth/resource/recover")
+    ResultView<IdsDTO> recoverResource(
+            @Validated @RequestBody ResourceRecoverParam resourceRecoverParam
     );
 }

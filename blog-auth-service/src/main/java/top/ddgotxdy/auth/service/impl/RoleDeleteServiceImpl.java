@@ -7,10 +7,7 @@ import org.springframework.util.CollectionUtils;
 import top.ddgotxdy.auth.annotation.AuthEventSelector;
 import top.ddgotxdy.auth.model.AuthContext;
 import top.ddgotxdy.auth.model.AuthEvent;
-import top.ddgotxdy.auth.service.AbstractAuthService;
-import top.ddgotxdy.auth.service.BlogRoleMenuService;
-import top.ddgotxdy.auth.service.BlogRoleService;
-import top.ddgotxdy.auth.service.BlogUserService;
+import top.ddgotxdy.auth.service.*;
 import top.ddgotxdy.common.enums.ResultCode;
 import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.dal.entity.BlogUser;
@@ -34,6 +31,8 @@ public class RoleDeleteServiceImpl extends AbstractAuthService {
     private BlogUserService blogUserService;
     @Resource
     private BlogRoleMenuService blogRoleMenuService;
+    @Resource
+    private BlogRoleResourceService blogRoleResourceService;
 
     @Override
     protected boolean filter(AuthContext authContext) {
@@ -67,6 +66,8 @@ public class RoleDeleteServiceImpl extends AbstractAuthService {
                 blogRoleService.deleteById(roleId);
                 // 删除role_menu表
                 blogRoleMenuService.deleteByRoleId(roleId);
+                // 删除role_resource表
+                blogRoleResourceService.deleteByRoleId(roleId);
                 blogUserList.forEach(blogUser -> {
                     // 删除当前用户对此角色的依赖
                     BlogUser blogUserUpdate = new BlogUser();

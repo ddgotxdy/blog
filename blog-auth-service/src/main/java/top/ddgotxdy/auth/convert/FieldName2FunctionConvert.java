@@ -2,6 +2,7 @@ package top.ddgotxdy.auth.convert;
 
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import top.ddgotxdy.dal.entity.BlogMenu;
+import top.ddgotxdy.dal.entity.BlogResource;
 import top.ddgotxdy.dal.entity.BlogRole;
 import top.ddgotxdy.dal.entity.BlogUser;
 
@@ -42,6 +43,17 @@ public class FieldName2FunctionConvert {
                 return BlogMenu::getIcon;
             default:
                 return BlogMenu::getCreateTime;
+        }
+    }
+
+    public static SFunction<BlogResource, ?> resourceFiledName2Function(String name) {
+        switch (name) {
+            case "resourceName":
+                return BlogResource::getResourceName;
+            case "uri":
+                return BlogResource::getUri;
+            default:
+                return BlogResource::getCreateTime;
         }
     }
 }

@@ -37,6 +37,8 @@ public class RoleUpdateServiceImpl extends AbstractAuthService {
     private LoginService loginService;
     @Resource
     private BlogRoleMenuService blogRoleMenuService;
+    @Resource
+    private BlogRoleResourceService blogRoleResourceService;
 
     @Override
     protected boolean filter(AuthContext authContext) {
@@ -72,8 +74,11 @@ public class RoleUpdateServiceImpl extends AbstractAuthService {
         BlogRole blogRole = Context2EntityConvert.authContext2RoleForUpdate(authContext);
         // 角色更新
         blogRoleService.updateById(blogRole);
-        // role_menu关系表同步更新
-        blogRoleMenuService.saveOrUpdateByRoleAndMenuIdList(authContext.getRoleId(), authContext.getMenuIds());
+        Long roleId = authContext.getRoleId();
+        // 角色-菜单关系表
+        blogRoleMenuService.saveOrUpdateByRoleAndMenuIdList(roleId, authContext.getMenuIds());
+        // 角色-资源关系表
+        blogRoleResourceService.saveOrUpdateByRoleAndResourceIdList(roleId, authContext.getResourceIds());
         // 同步更新用户的redis信息
         if (Objects.nonNull(authContext.getMenuIds())) {
             List<BlogUser> blogUserList = blogUserService.getByRoleId(authContext.getRoleId());

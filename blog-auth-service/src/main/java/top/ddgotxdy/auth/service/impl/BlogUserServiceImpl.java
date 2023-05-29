@@ -6,10 +6,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
-import top.ddgotxdy.auth.service.BlogMenuService;
-import top.ddgotxdy.auth.service.BlogRoleMenuService;
-import top.ddgotxdy.auth.service.BlogRoleService;
-import top.ddgotxdy.auth.service.BlogUserService;
+import top.ddgotxdy.auth.service.*;
 import top.ddgotxdy.common.enums.ResultCode;
 import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.common.model.LoginUser;
@@ -38,6 +35,8 @@ public class BlogUserServiceImpl extends ServiceImpl<BlogUserMapper, BlogUser> i
     private UserDetailsService userDetailsService;
     @Resource
     private BlogRoleMenuService blogRoleMenuService;
+    @Resource
+    private BlogRoleResourceService blogRoleResourceService;
 
     @Override
     public boolean deleteById(Long userId) {
@@ -146,6 +145,19 @@ public class BlogUserServiceImpl extends ServiceImpl<BlogUserMapper, BlogUser> i
     @Override
     public List<BlogUser> getByMenuId(Long menuId) {
         List<Long> roleIdList = blogRoleMenuService.queryRoleIdListByMenuId(menuId);
+        LambdaQueryWrapper<BlogUser> queryWrapper = new LambdaQueryWrapper<>();
+        if (CollectionUtils.isEmpty(roleIdList)) {
+            return Collections.emptyList();
+        }
+        queryWrapper
+                .eq(BlogUser::getIsDelete, false)
+                .in(BlogUser::getRoleId, roleIdList);
+        return this.list(queryWrapper);
+    }
+
+    @Override
+    public List<BlogUser> getByResourceId(Long resourceId) {
+        List<Long> roleIdList = blogRoleResourceService.queryRoleIdListByResourceId(resourceId);
         LambdaQueryWrapper<BlogUser> queryWrapper = new LambdaQueryWrapper<>();
         if (CollectionUtils.isEmpty(roleIdList)) {
             return Collections.emptyList();

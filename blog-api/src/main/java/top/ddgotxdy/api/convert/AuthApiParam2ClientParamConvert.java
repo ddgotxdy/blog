@@ -2,24 +2,30 @@ package top.ddgotxdy.api.convert;
 
 import top.ddgotxdy.api.model.UserLoginApiModel;
 import top.ddgotxdy.api.model.addparam.MenuAddApiParam;
+import top.ddgotxdy.api.model.addparam.ResourceAddApiParam;
 import top.ddgotxdy.api.model.addparam.RoleAddApiParam;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
 import top.ddgotxdy.api.model.queryparam.MenuQueryApiParam;
+import top.ddgotxdy.api.model.queryparam.ResourceQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.RoleQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.UserInfoQueryApiParam;
 import top.ddgotxdy.api.model.updateparam.*;
 import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.auth.addparam.MenuAddParam;
+import top.ddgotxdy.common.model.auth.addparam.ResourceAddParam;
 import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
 import top.ddgotxdy.common.model.auth.deleteparam.MenuDeleteParam;
+import top.ddgotxdy.common.model.auth.deleteparam.ResourceDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.RoleDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
 import top.ddgotxdy.common.model.auth.queryparam.MenuQueryParam;
+import top.ddgotxdy.common.model.auth.queryparam.ResourceQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.RoleQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
 import top.ddgotxdy.common.model.auth.recoverparam.MenuRecoverParam;
+import top.ddgotxdy.common.model.auth.recoverparam.ResourceRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.RoleRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
 import top.ddgotxdy.common.model.auth.updateparam.*;
@@ -199,5 +205,51 @@ public class AuthApiParam2ClientParamConvert {
         Long userId = ContextScope.getUserId();
         menuRecoverParam.setUserId(userId);
         return menuRecoverParam;
+    }
+
+    public static ResourceAddParam addApiParam2AddParam(ResourceAddApiParam resourceAddApiParam) {
+        ResourceAddParam resourceAddParam = new ResourceAddParam();
+        BeanCopyUtil.copyProperties(resourceAddApiParam, resourceAddParam);
+        Long userId = ContextScope.getUserId();
+        resourceAddParam.setUserId(userId);
+        return resourceAddParam;
+    }
+
+    public static PageQry<ResourceQueryParam> queryApiParam2ResourceQueryParam(
+            PageQry<ResourceQueryApiParam> resourceQueryApiParamPageQry
+    ) {
+        ResourceQueryParam resourceQueryParam = new ResourceQueryParam();
+        // 范型复制
+        ResourceQueryApiParam resourceQueryApiParam = resourceQueryApiParamPageQry.getQueryParam();
+        BeanCopyUtil.copyProperties(resourceQueryApiParam, resourceQueryParam);
+        // 分页参数复制
+        PageQry<ResourceQueryParam> resourceQueryParamPageQry = new PageQry<>();
+        BeanCopyUtil.copyProperties(resourceQueryApiParamPageQry, resourceQueryParamPageQry);
+        resourceQueryParamPageQry.setQueryParam(resourceQueryParam);
+        return resourceQueryParamPageQry;
+    }
+
+    public static ResourceUpdateParam apiParam2Param(ResourceUpdateApiParam resourceUpdateApiParam) {
+        ResourceUpdateParam resourceUpdateParam = new ResourceUpdateParam();
+        BeanCopyUtil.copyProperties(resourceUpdateApiParam, resourceUpdateParam);
+        Long userId = ContextScope.getUserId();
+        resourceUpdateParam.setUserId(userId);
+        return resourceUpdateParam;
+    }
+
+    public static ResourceDeleteParam deleteApiParam2ResourceParam(List<Long> resourceIdList) {
+        ResourceDeleteParam resourceDeleteParam = new ResourceDeleteParam();
+        resourceDeleteParam.setResourceIds(resourceIdList);
+        Long userId = ContextScope.getUserId();
+        resourceDeleteParam.setUserId(userId);
+        return resourceDeleteParam;
+    }
+
+    public static ResourceRecoverParam recoverApiParam2ResourceParam(List<Long> resourceIdList) {
+        ResourceRecoverParam resourceRecoverParam = new ResourceRecoverParam();
+        resourceRecoverParam.setResourceIds(resourceIdList);
+        Long userId = ContextScope.getUserId();
+        resourceRecoverParam.setUserId(userId);
+        return resourceRecoverParam;
     }
 }

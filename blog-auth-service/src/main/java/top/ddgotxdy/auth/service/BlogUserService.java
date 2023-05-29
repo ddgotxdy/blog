@@ -74,4 +74,11 @@ public interface BlogUserService extends IService<BlogUser> {
      * @return List<BlogUser>
      */
     List<BlogUser> getByMenuId(Long menuId);
+
+    /**
+     * 根据资源id获取对应的用户列表
+     * @param resourceId 资源id
+     * @return List<BlogUser>
+     */
+    List<BlogUser> getByResourceId(Long resourceId);
 }

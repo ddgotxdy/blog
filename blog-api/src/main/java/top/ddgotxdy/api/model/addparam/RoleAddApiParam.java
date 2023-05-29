@@ -21,6 +21,9 @@ public class RoleAddApiParam {
     @ApiModelProperty("包含的权限，例如[1001,1002,1003]")
     private List<Long> menuIds;
 
+    @ApiModelProperty("包含的资源，例如[1001,1002,1003]")
+    private List<Long> resourceIds;
+
     @ApiModelProperty("备注")
     @Length(max = 512, message = "描述长度超过512")
     private String roleDesc;

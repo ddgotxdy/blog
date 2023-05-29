@@ -24,4 +24,7 @@ public class RoleQueryApiParam {
 
     @ApiModelProperty("包含的权限，例如[1001,1002,1003]")
     private List<Long> menuIds;
+
+    @ApiModelProperty("包含的资源，例如[1001,1002,1003]")
+    private List<Long> resourceIds;
 }

@@ -135,4 +135,29 @@ public class AuthContext {
      * 菜单备注
      */
     private String menuDesc;
+
+    /**
+     * 资源ID
+     */
+    private Long resourceId;
+
+    /**
+     * 资源ID列表
+     */
+    private List<Long> resourceIds;
+
+    /**
+     * 资源名
+     */
+    private String resourceName;
+
+    /**
+     * 请求uri地址
+     */
+    private String uri;
+
+    /**
+     * 备注
+     */
+    private String resourceDesc;
 }

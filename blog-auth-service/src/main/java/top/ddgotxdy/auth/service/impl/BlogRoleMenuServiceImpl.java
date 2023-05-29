@@ -141,16 +141,7 @@ public class BlogRoleMenuServiceImpl extends ServiceImpl<BlogRoleMenuMapper, Blo
                 this.saveByRoleIdAndMenuId(roleId, menuId);
             }
         });
-        List<BlogRoleMenu> blogRoleMenuList = menuIdList.stream()
-                .map(menuId -> {
-                    BlogRoleMenu blogRoleMenu = new BlogRoleMenu();
-                    blogRoleMenu.setRoleId(roleId);
-                    blogRoleMenu.setMenuId(menuId);
-                    return blogRoleMenu;
-                })
-                .filter(Objects::nonNull)
-                .collect(Collectors.toList());
-        return this.saveBatch(blogRoleMenuList);
+        return true;
     }
 
     /**

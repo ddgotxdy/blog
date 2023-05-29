@@ -7,34 +7,34 @@ import top.ddgotxdy.api.convert.AuthDTO2ViewConvert;
 import top.ddgotxdy.api.convert.SmsDTO2ViewConvert;
 import top.ddgotxdy.api.model.UserLoginApiModel;
 import top.ddgotxdy.api.model.addparam.MenuAddApiParam;
+import top.ddgotxdy.api.model.addparam.ResourceAddApiParam;
 import top.ddgotxdy.api.model.addparam.RoleAddApiParam;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
 import top.ddgotxdy.api.model.queryparam.MenuQueryApiParam;
+import top.ddgotxdy.api.model.queryparam.ResourceQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.RoleQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.UserInfoQueryApiParam;
 import top.ddgotxdy.api.model.updateparam.*;
-import top.ddgotxdy.api.model.view.MenuPageListView;
-import top.ddgotxdy.api.model.view.RolePageListView;
-import top.ddgotxdy.api.model.view.UserInfoPageListView;
-import top.ddgotxdy.api.model.view.UserInfoView;
+import top.ddgotxdy.api.model.view.*;
 import top.ddgotxdy.api.service.BlogAuthBizService;
 import top.ddgotxdy.common.client.BlogAuthClient;
 import top.ddgotxdy.common.model.*;
 import top.ddgotxdy.common.model.auth.addparam.MenuAddParam;
+import top.ddgotxdy.common.model.auth.addparam.ResourceAddParam;
 import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
 import top.ddgotxdy.common.model.auth.deleteparam.MenuDeleteParam;
+import top.ddgotxdy.common.model.auth.deleteparam.ResourceDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.RoleDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
-import top.ddgotxdy.common.model.auth.dto.MenuPageListDTO;
-import top.ddgotxdy.common.model.auth.dto.RolePageListDTO;
-import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
-import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
+import top.ddgotxdy.common.model.auth.dto.*;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
 import top.ddgotxdy.common.model.auth.queryparam.MenuQueryParam;
+import top.ddgotxdy.common.model.auth.queryparam.ResourceQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.RoleQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
 import top.ddgotxdy.common.model.auth.recoverparam.MenuRecoverParam;
+import top.ddgotxdy.common.model.auth.recoverparam.ResourceRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.RoleRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
 import top.ddgotxdy.common.model.auth.updateparam.*;
@@ -320,6 +320,63 @@ public class BlogAuthBizServiceImpl implements BlogAuthBizService {
         MenuRecoverParam menuRecoverParam
                 = AuthApiParam2ClientParamConvert.recoverApiParam2MenuRecoverParam(menuIdList);
         ResultView<IdsDTO> response = blogAuthClient.recoverMenu(menuRecoverParam);
+        IdsDTO idsDTO = response.checkAndGetData();
+        return IdsView.builder()
+                .ids(idsDTO.getIds())
+                .build();
+    }
+
+    @Override
+    public IdView addResource(ResourceAddApiParam resourceAddApiParam) {
+        ResourceAddParam resourceAddParam
+                = AuthApiParam2ClientParamConvert.addApiParam2AddParam(resourceAddApiParam);
+        ResultView<IdDTO> response = blogAuthClient.addResource(resourceAddParam);
+        IdDTO idDTO = response.checkAndGetData();
+        return IdView.builder()
+                .id(idDTO.getId())
+                .build();
+    }
+
+    @Override
+    public PageResult<ResourcePageListView> queryResourceByPage(
+            PageQry<ResourceQueryApiParam> resourceQueryApiParamPageQry
+    ) {
+        PageQry<ResourceQueryParam> resourceQueryParamPageQry
+                = AuthApiParam2ClientParamConvert.queryApiParam2ResourceQueryParam(resourceQueryApiParamPageQry);
+        ResultView<PageResult<ResourcePageListDTO>> response = blogAuthClient.queryResourceByPage(resourceQueryParamPageQry);
+        PageResult<ResourcePageListDTO> resourcePageListDTOPageResult = response.checkAndGetData();
+        PageResult<ResourcePageListView> resourcePageListViewPageResult
+                = AuthDTO2ViewConvert.resourcePageListDTO2View(resourcePageListDTOPageResult);
+        return resourcePageListViewPageResult;
+    }
+
+    @Override
+    public IdView updateResource(ResourceUpdateApiParam resourceUpdateApiParam) {
+        ResourceUpdateParam resourceUpdateParam
+                = AuthApiParam2ClientParamConvert.apiParam2Param(resourceUpdateApiParam);
+        ResultView<IdDTO> response = blogAuthClient.updateResource(resourceUpdateParam);
+        IdDTO idDTO = response.checkAndGetData();
+        return IdView.builder()
+                .id(idDTO.getId())
+                .build();
+    }
+
+    @Override
+    public IdsView deleteResource(List<Long> resourceIdList) {
+        ResourceDeleteParam resourceDeleteParam
+                = AuthApiParam2ClientParamConvert.deleteApiParam2ResourceParam(resourceIdList);
+        ResultView<IdsDTO> response = blogAuthClient.deleteResource(resourceDeleteParam);
+        IdsDTO idsDTO = response.checkAndGetData();
+        return IdsView.builder()
+                .ids(idsDTO.getIds())
+                .build();
+    }
+
+    @Override
+    public IdsView recoverResource(List<Long> resourceIdList) {
+        ResourceRecoverParam resourceRecoverParam
+                = AuthApiParam2ClientParamConvert.recoverApiParam2ResourceParam(resourceIdList);
+        ResultView<IdsDTO> response = blogAuthClient.recoverResource(resourceRecoverParam);
         IdsDTO idsDTO = response.checkAndGetData();
         return IdsView.builder()
                 .ids(idsDTO.getIds())

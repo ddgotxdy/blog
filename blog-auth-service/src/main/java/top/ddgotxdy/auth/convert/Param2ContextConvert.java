@@ -3,12 +3,15 @@ package top.ddgotxdy.auth.convert;
 import top.ddgotxdy.auth.model.AuthContext;
 import top.ddgotxdy.auth.model.AuthEvent;
 import top.ddgotxdy.common.model.auth.addparam.MenuAddParam;
+import top.ddgotxdy.common.model.auth.addparam.ResourceAddParam;
 import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
 import top.ddgotxdy.common.model.auth.deleteparam.MenuDeleteParam;
+import top.ddgotxdy.common.model.auth.deleteparam.ResourceDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.RoleDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.MenuRecoverParam;
+import top.ddgotxdy.common.model.auth.recoverparam.ResourceRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.RoleRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
 import top.ddgotxdy.common.model.auth.updateparam.*;
@@ -137,6 +140,38 @@ public class Param2ContextConvert {
         BeanCopyUtil.copyProperties(menuRecoverParam, authContext);
         // 设置事件
         authContext.setAuthEvent(AuthEvent.MENU_RECOVER);
+        return authContext;
+    }
+
+    public static AuthContext addParamConvert(ResourceAddParam resourceAddParam) {
+        AuthContext authContext = new AuthContext();
+        BeanCopyUtil.copyProperties(resourceAddParam, authContext);
+        // 设置事件
+        authContext.setAuthEvent(AuthEvent.RESOURCE_ADD);
+        return authContext;
+    }
+
+    public static AuthContext updateParamConvert(ResourceUpdateParam resourceUpdateParam) {
+        AuthContext authContext = new AuthContext();
+        BeanCopyUtil.copyProperties(resourceUpdateParam, authContext);
+        // 设置事件
+        authContext.setAuthEvent(AuthEvent.RESOURCE_UPDATE);
+        return authContext;
+    }
+
+    public static AuthContext deleteParamConvert(ResourceDeleteParam resourceDeleteParam) {
+        AuthContext authContext = new AuthContext();
+        BeanCopyUtil.copyProperties(resourceDeleteParam, authContext);
+        // 设置事件
+        authContext.setAuthEvent(AuthEvent.RESOURCE_DELETE);
+        return authContext;
+    }
+
+    public static AuthContext recoverParamConvert(ResourceRecoverParam resourceRecoverParam) {
+        AuthContext authContext = new AuthContext();
+        BeanCopyUtil.copyProperties(resourceRecoverParam, authContext);
+        // 设置事件
+        authContext.setAuthEvent(AuthEvent.RESOURCE_RECOVER);
         return authContext;
     }
 }

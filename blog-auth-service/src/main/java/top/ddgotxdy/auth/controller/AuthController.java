@@ -6,20 +6,21 @@ import top.ddgotxdy.auth.service.AuthCmdBizService;
 import top.ddgotxdy.auth.service.AuthQueryBizService;
 import top.ddgotxdy.common.model.*;
 import top.ddgotxdy.common.model.auth.addparam.MenuAddParam;
+import top.ddgotxdy.common.model.auth.addparam.ResourceAddParam;
 import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
 import top.ddgotxdy.common.model.auth.deleteparam.MenuDeleteParam;
+import top.ddgotxdy.common.model.auth.deleteparam.ResourceDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.RoleDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
-import top.ddgotxdy.common.model.auth.dto.MenuPageListDTO;
-import top.ddgotxdy.common.model.auth.dto.RolePageListDTO;
-import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
-import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
+import top.ddgotxdy.common.model.auth.dto.*;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
 import top.ddgotxdy.common.model.auth.queryparam.MenuQueryParam;
+import top.ddgotxdy.common.model.auth.queryparam.ResourceQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.RoleQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
 import top.ddgotxdy.common.model.auth.recoverparam.MenuRecoverParam;
+import top.ddgotxdy.common.model.auth.recoverparam.ResourceRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.RoleRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
 import top.ddgotxdy.common.model.auth.updateparam.*;
@@ -203,6 +204,47 @@ public class AuthController {
             @Validated @RequestBody MenuRecoverParam menuRecoverParam
     ) {
         IdsDTO idsDTO = authCmdBizService.recoverMenu(menuRecoverParam);
+        return ResultView.success(idsDTO);
+    }
+
+    @PostMapping("/resource/add")
+    public ResultView<IdDTO> addResource(
+            @Validated @RequestBody ResourceAddParam resourceAddParam
+    ) {
+        IdDTO idDTO = authCmdBizService.addResource(resourceAddParam);
+        return ResultView.success(idDTO);
+    }
+
+    @PostMapping("/resource/queryByPage")
+    public ResultView<PageResult<ResourcePageListDTO>> queryResourceByPage(
+            @Validated @RequestBody PageQry<ResourceQueryParam> resourceQueryParamPageQry
+    ) {
+        PageResult<ResourcePageListDTO> resourcePageListDTOPageResult
+                = authQueryBizService.queryResourceByPage(resourceQueryParamPageQry);
+        return ResultView.success(resourcePageListDTOPageResult);
+    }
+
+    @PostMapping("/resource/update")
+    public ResultView<IdDTO> updateResource(
+            @Validated @RequestBody ResourceUpdateParam resourceUpdateParam
+    ) {
+        IdDTO idDTO = authCmdBizService.updateResource(resourceUpdateParam);
+        return ResultView.success(idDTO);
+    }
+
+    @DeleteMapping("/resource/delete")
+    public ResultView<IdsDTO> deleteResource(
+            @Validated @RequestBody ResourceDeleteParam resourceDeleteParam
+    ) {
+        IdsDTO idsDTO = authCmdBizService.deleteResource(resourceDeleteParam);
+        return ResultView.success(idsDTO);
+    }
+
+    @PostMapping("/resource/recover")
+    public ResultView<IdsDTO> recoverResource(
+            @Validated @RequestBody ResourceRecoverParam resourceRecoverParam
+    ) {
+        IdsDTO idsDTO = authCmdBizService.recoverResource(resourceRecoverParam);
         return ResultView.success(idsDTO);
     }
 }

@@ -10,13 +10,16 @@ import top.ddgotxdy.auth.service.LoginService;
 import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.IdsDTO;
 import top.ddgotxdy.common.model.auth.addparam.MenuAddParam;
+import top.ddgotxdy.common.model.auth.addparam.ResourceAddParam;
 import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
 import top.ddgotxdy.common.model.auth.deleteparam.MenuDeleteParam;
+import top.ddgotxdy.common.model.auth.deleteparam.ResourceDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.RoleDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
 import top.ddgotxdy.common.model.auth.recoverparam.MenuRecoverParam;
+import top.ddgotxdy.common.model.auth.recoverparam.ResourceRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.RoleRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
 import top.ddgotxdy.common.model.auth.updateparam.*;
@@ -194,6 +197,46 @@ public class AuthCmdBizServiceImpl implements AuthCmdBizService {
         authManageAdaptor.execute(authContext);
         return IdsDTO.builder()
                 .ids(authContext.getMenuIds())
+                .build();
+    }
+
+    @Override
+    public IdDTO addResource(ResourceAddParam resourceAddParam) {
+        AuthContext authContext = Param2ContextConvert.addParamConvert(resourceAddParam);
+        log.info("AuthCmdBizServiceImpl addResource request[{}]", toJSON(authContext));
+        authManageAdaptor.execute(authContext);
+        return IdDTO.builder()
+                .id(authContext.getResourceId())
+                .build();
+    }
+
+    @Override
+    public IdDTO updateResource(ResourceUpdateParam resourceUpdateParam) {
+        AuthContext authContext = Param2ContextConvert.updateParamConvert(resourceUpdateParam);
+        log.info("AuthCmdBizServiceImpl updateResource request[{}]", toJSON(authContext));
+        authManageAdaptor.execute(authContext);
+        return IdDTO.builder()
+                .id(authContext.getResourceId())
+                .build();
+    }
+
+    @Override
+    public IdsDTO deleteResource(ResourceDeleteParam resourceDeleteParam) {
+        AuthContext authContext = Param2ContextConvert.deleteParamConvert(resourceDeleteParam);
+        log.info("AuthCmdBizServiceImpl deleteResource request[{}]", toJSON(authContext));
+        authManageAdaptor.execute(authContext);
+        return IdsDTO.builder()
+                .ids(authContext.getResourceIds())
+                .build();
+    }
+
+    @Override
+    public IdsDTO recoverResource(ResourceRecoverParam resourceRecoverParam) {
+        AuthContext authContext = Param2ContextConvert.recoverParamConvert(resourceRecoverParam);
+        log.info("AuthCmdBizServiceImpl recoverResource request[{}]", toJSON(authContext));
+        authManageAdaptor.execute(authContext);
+        return IdsDTO.builder()
+                .ids(authContext.getResourceIds())
                 .build();
     }
 }

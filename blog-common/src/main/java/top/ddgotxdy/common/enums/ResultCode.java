@@ -69,6 +69,10 @@ public enum ResultCode {
     MENU_UPDATE_ERROR(1019, "菜单更新错误"),
     MENU_DELETE_ERROR(1020, "菜单删除错误"),
     MENU_RECOVER_ERROR(1021, "菜单恢复错误"),
+    RESOURCE_ADD_ERROR(1022, "资源添加错误"),
+    RESOURCE_UPDATE_ERROR(1023, "资源更新错误"),
+    RESOURCE_DELETE_ERROR(1024, "资源删除错误"),
+    RESOURCE_RECOVER_ERROR(1025, "资源恢复错误"),
     ;
     private final Integer code;
     private final String msg;

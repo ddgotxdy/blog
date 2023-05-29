@@ -10,6 +10,7 @@ import top.ddgotxdy.auth.model.AuthContext;
 import top.ddgotxdy.auth.model.AuthEvent;
 import top.ddgotxdy.auth.service.AbstractAuthService;
 import top.ddgotxdy.auth.service.BlogRoleMenuService;
+import top.ddgotxdy.auth.service.BlogRoleResourceService;
 import top.ddgotxdy.auth.service.BlogRoleService;
 import top.ddgotxdy.common.enums.ResultCode;
 import top.ddgotxdy.common.exception.BlogException;
@@ -32,6 +33,8 @@ public class RoleAddServiceImpl extends AbstractAuthService {
     private BlogRoleService blogRoleService;
     @Resource
     private BlogRoleMenuService blogRoleMenuService;
+    @Resource
+    private BlogRoleResourceService blogRoleResourceService;
 
     @Override
     protected boolean filter(AuthContext authContext) {
@@ -59,7 +62,11 @@ public class RoleAddServiceImpl extends AbstractAuthService {
     protected void doExecute(AuthContext authContext) {
         BlogRole blogRole = Context2EntityConvert.authContext2RoleForAdd(authContext);
         blogRoleService.save(blogRole);
-        blogRoleMenuService.saveOrUpdateByRoleAndMenuIdList(blogRole.getRoleId(), authContext.getMenuIds());
-        authContext.setRoleId(blogRole.getRoleId());
+        Long roleId = blogRole.getRoleId();
+        // 角色-菜单关系表
+        blogRoleMenuService.saveOrUpdateByRoleAndMenuIdList(roleId, authContext.getMenuIds());
+        // 角色-资源关系表
+        blogRoleResourceService.saveOrUpdateByRoleAndResourceIdList(roleId, authContext.getResourceIds());
+        authContext.setRoleId(roleId);
     }
 }

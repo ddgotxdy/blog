@@ -2,11 +2,13 @@ package top.ddgotxdy.api.convert;
 
 import org.springframework.util.CollectionUtils;
 import top.ddgotxdy.api.model.view.MenuPageListView;
+import top.ddgotxdy.api.model.view.ResourcePageListView;
 import top.ddgotxdy.api.model.view.RolePageListView;
 import top.ddgotxdy.api.model.view.UserInfoPageListView;
 import top.ddgotxdy.common.enums.auth.SexEnum;
 import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.auth.dto.MenuPageListDTO;
+import top.ddgotxdy.common.model.auth.dto.ResourcePageListDTO;
 import top.ddgotxdy.common.model.auth.dto.RolePageListDTO;
 import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
 import top.ddgotxdy.common.util.BeanCopyUtil;
@@ -83,5 +85,18 @@ public class AuthDTO2ViewConvert {
         });
         menuPageListView.setChildren(childrenView);
         return menuPageListView;
+    }
+
+    public static PageResult<ResourcePageListView> resourcePageListDTO2View(
+            PageResult<ResourcePageListDTO> resourcePageListDTOPageResult
+    ) {
+        // 范型赋值
+        List<ResourcePageListDTO> data = resourcePageListDTOPageResult.getData();
+        List<ResourcePageListView> resourcePageListViews = BeanCopyUtil.copyListProperties(data, ResourcePageListView::new);
+        // 分页结果赋值
+        PageResult<ResourcePageListView> resourcePageListViewPageResult = new PageResult<>();
+        BeanCopyUtil.copyProperties(resourcePageListDTOPageResult, resourcePageListViewPageResult);
+        resourcePageListViewPageResult.setData(resourcePageListViews);
+        return resourcePageListViewPageResult;
     }
 }

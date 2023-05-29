@@ -3,13 +3,16 @@ package top.ddgotxdy.auth.service;
 import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.IdsDTO;
 import top.ddgotxdy.common.model.auth.addparam.MenuAddParam;
+import top.ddgotxdy.common.model.auth.addparam.ResourceAddParam;
 import top.ddgotxdy.common.model.auth.addparam.RoleAddParam;
 import top.ddgotxdy.common.model.auth.addparam.UserAddParam;
 import top.ddgotxdy.common.model.auth.deleteparam.MenuDeleteParam;
+import top.ddgotxdy.common.model.auth.deleteparam.ResourceDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.RoleDeleteParam;
 import top.ddgotxdy.common.model.auth.deleteparam.UserRecoverParam;
 import top.ddgotxdy.common.model.auth.model.UserLoginModel;
 import top.ddgotxdy.common.model.auth.recoverparam.MenuRecoverParam;
+import top.ddgotxdy.common.model.auth.recoverparam.ResourceRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.RoleRecoverParam;
 import top.ddgotxdy.common.model.auth.recoverparam.UserDeleteParam;
 import top.ddgotxdy.common.model.auth.updateparam.*;
@@ -136,4 +139,12 @@ public interface AuthCmdBizService {
      * @return IdsDTO
      */
     IdsDTO recoverMenu(MenuRecoverParam menuRecoverParam);
+
+    IdDTO addResource(ResourceAddParam resourceAddParam);
+
+    IdDTO updateResource(ResourceUpdateParam resourceUpdateParam);
+
+    IdsDTO deleteResource(ResourceDeleteParam resourceDeleteParam);
+
+    IdsDTO recoverResource(ResourceRecoverParam resourceRecoverParam);
 }

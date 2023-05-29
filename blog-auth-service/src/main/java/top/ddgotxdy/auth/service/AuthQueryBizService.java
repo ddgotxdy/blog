@@ -2,11 +2,9 @@ package top.ddgotxdy.auth.service;
 
 import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.PageResult;
-import top.ddgotxdy.common.model.auth.dto.MenuPageListDTO;
-import top.ddgotxdy.common.model.auth.dto.RolePageListDTO;
-import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
-import top.ddgotxdy.common.model.auth.dto.UserInfoPageListDTO;
+import top.ddgotxdy.common.model.auth.dto.*;
 import top.ddgotxdy.common.model.auth.queryparam.MenuQueryParam;
+import top.ddgotxdy.common.model.auth.queryparam.ResourceQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.RoleQueryParam;
 import top.ddgotxdy.common.model.auth.queryparam.UserInfoQueryParam;
 
@@ -42,4 +40,6 @@ public interface AuthQueryBizService {
      * @return PageResult<MenuPageListDTO>
      */
     PageResult<MenuPageListDTO> queryMenuByPage(PageQry<MenuQueryParam> menuQueryParamPageQry);
+
+    PageResult<ResourcePageListDTO> queryResourceByPage(PageQry<ResourceQueryParam> resourceQueryParamPageQry);
 }

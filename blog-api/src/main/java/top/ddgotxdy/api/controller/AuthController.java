@@ -6,16 +6,15 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.ddgotxdy.api.model.UserLoginApiModel;
 import top.ddgotxdy.api.model.addparam.MenuAddApiParam;
+import top.ddgotxdy.api.model.addparam.ResourceAddApiParam;
 import top.ddgotxdy.api.model.addparam.RoleAddApiParam;
 import top.ddgotxdy.api.model.addparam.UserAddApiParam;
 import top.ddgotxdy.api.model.queryparam.MenuQueryApiParam;
+import top.ddgotxdy.api.model.queryparam.ResourceQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.RoleQueryApiParam;
 import top.ddgotxdy.api.model.queryparam.UserInfoQueryApiParam;
 import top.ddgotxdy.api.model.updateparam.*;
-import top.ddgotxdy.api.model.view.MenuPageListView;
-import top.ddgotxdy.api.model.view.RolePageListView;
-import top.ddgotxdy.api.model.view.UserInfoPageListView;
-import top.ddgotxdy.api.model.view.UserInfoView;
+import top.ddgotxdy.api.model.view.*;
 import top.ddgotxdy.api.service.BlogAuthBizService;
 import top.ddgotxdy.common.model.*;
 
@@ -243,6 +242,52 @@ public class AuthController {
             @RequestBody List<Long> menuIdList
     ) {
         IdsView idsView = blogAuthBizService.recoverMenu(menuIdList);
+        return ResultView.success(idsView);
+    }
+
+    @ApiOperation("资源添加接口")
+    @PostMapping("/admin/resource/add")
+    ResultView<IdView> addResource(
+            @Validated @RequestBody ResourceAddApiParam resourceAddApiParam
+    ) {
+        IdView idView = blogAuthBizService.addResource(resourceAddApiParam);
+        return ResultView.success(idView);
+    }
+
+    @ApiOperation("资源分页查询接口")
+    @PostMapping("/admin/resource/queryByPage")
+    ResultView<PageResult<ResourcePageListView>> queryResourceByPage(
+            @Validated @RequestBody PageQry<ResourceQueryApiParam> resourceQueryApiParamPageQry
+    ) {
+        PageResult<ResourcePageListView> resourcePageListViewPageResult
+                = blogAuthBizService.queryResourceByPage(resourceQueryApiParamPageQry);
+        return ResultView.success(resourcePageListViewPageResult);
+    }
+
+    @ApiOperation("资源更新接口")
+    @PostMapping("/admin/resource/update")
+    ResultView<IdView> updateResource(
+            @Validated @RequestBody ResourceUpdateApiParam resourceUpdateApiParam
+    ) {
+        IdView idView = blogAuthBizService.updateResource(resourceUpdateApiParam);
+        return ResultView.success(idView);
+    }
+
+    @ApiOperation("资源删除接口")
+    @DeleteMapping("/admin/resource/delete")
+    ResultView<IdsView> deleteResource(
+            @RequestBody List<Long> resourceIdList
+    ) {
+        IdsView idsView = blogAuthBizService.deleteResource(resourceIdList);
+        return ResultView.success(idsView);
+    }
+
+    @ApiOperation("资源恢复接口")
+    @PostMapping("/admin/resource/recover")
+    ResultView<IdsView> recoverResource(
+            @RequestBody List<Long> resourceIdList
+    ) {
+        IdsView idsView = blogAuthBizService.recoverResource(resourceIdList);
         return ResultView.success(idsView);
     }
 }
