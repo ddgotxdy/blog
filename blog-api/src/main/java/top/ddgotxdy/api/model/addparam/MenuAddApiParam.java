@@ -22,9 +22,12 @@ public class MenuAddApiParam {
     @ApiModelProperty("组件路径")
     private String component;
 
-    @ApiModelProperty(value = "权限标识",required = true)
-    @Length(min = 1, max = 128, message = "权限长度在1-28之间")
-    private String perms;
+    @ApiModelProperty(value = "图标",required = true)
+    @Length(min = 1, max = 128, message = "图标长度在1-128之间")
+    private String icon;
+
+    @ApiModelProperty(value = "父菜单Id，没有默认为null")
+    private Long parentId;
 
     @ApiModelProperty("备注")
     private String menuDesc;

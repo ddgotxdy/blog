@@ -6,10 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import top.ddgotxdy.auth.convert.Entity2DTOConvert;
 import top.ddgotxdy.auth.convert.FieldName2FunctionConvert;
-import top.ddgotxdy.auth.service.AuthQueryBizService;
-import top.ddgotxdy.auth.service.BlogMenuService;
-import top.ddgotxdy.auth.service.BlogRoleService;
-import top.ddgotxdy.auth.service.BlogUserService;
+import top.ddgotxdy.auth.service.*;
 import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.auth.dto.MenuPageListDTO;
@@ -40,6 +37,8 @@ public class AuthQueryBizServiceImpl implements AuthQueryBizService {
     private BlogRoleService blogRoleService;
     @Resource
     private BlogMenuService blogMenuService;
+    @Resource
+    private BlogRoleMenuService blogRoleMenuService;
 
     @Override
     public UserInfoDTO getUserInfo(Long userId) {
@@ -111,6 +110,12 @@ public class AuthQueryBizServiceImpl implements AuthQueryBizService {
         Page<BlogRole> blogRolePage = blogRoleService.page(page, queryWrapper);
         List<BlogRole> blogRoleList = blogRolePage.getRecords();
         List<RolePageListDTO> rolePageListDTOList = Entity2DTOConvert.roleList2DTO(blogRoleList);
+        // 去获取当前角色对应的菜单
+        rolePageListDTOList.forEach(rolePageListDTO -> {
+            Long roleId = rolePageListDTO.getRoleId();
+            List<Long> menuIdList = blogRoleMenuService.queryMenuIdListByRoleId(roleId);
+            rolePageListDTO.setMenuIds(menuIdList);
+        });
         // 封装返回值
         PageResult<RolePageListDTO> pageResult = new PageResult<>();
         pageResult.setTotalPage(blogRolePage.getPages());
@@ -122,7 +127,7 @@ public class AuthQueryBizServiceImpl implements AuthQueryBizService {
     public PageResult<MenuPageListDTO> queryMenuByPage(
             PageQry<MenuQueryParam> menuQueryParamPageQry
     ) {
-        // 分页参数组装
+        // 分页参数组装【只对起始节点】
         int pageNum = menuQueryParamPageQry.getPageNum();
         int pageSize = menuQueryParamPageQry.getPageSize();
         Page<BlogMenu> page = new Page<>(pageNum, pageSize);
@@ -131,6 +136,7 @@ public class AuthQueryBizServiceImpl implements AuthQueryBizService {
         // 查询值
         MenuQueryParam queryParam = menuQueryParamPageQry.getQueryParam();
         queryWrapper
+                .isNull(BlogMenu::getParentId)
                 .eq(Objects.nonNull(queryParam.getMenuId()), BlogMenu::getMenuId, queryParam.getMenuId())
                 .eq(Objects.nonNull(queryParam.getIsDelete()), BlogMenu::getIsDelete, queryParam.getIsDelete())
                 .like(Objects.nonNull(queryParam.getMenuName()), BlogMenu::getMenuName, queryParam.getMenuName())
@@ -148,7 +154,12 @@ public class AuthQueryBizServiceImpl implements AuthQueryBizService {
         );
         Page<BlogMenu> blogMenuPage = blogMenuService.page(page, queryWrapper);
         List<BlogMenu> blogMenuList = blogMenuPage.getRecords();
-        List<MenuPageListDTO> rolePageListDTOList = Entity2DTOConvert.menuList2DTO(blogMenuList);
+        // 非起始节点
+        LambdaQueryWrapper<BlogMenu> queryWrapperChildren = new LambdaQueryWrapper<>();
+        queryWrapperChildren.isNotNull(BlogMenu::getParentId);
+        List<BlogMenu> blogMenuListChildren = blogMenuService.list(queryWrapperChildren);
+        List<MenuPageListDTO> rolePageListDTOList
+                = Entity2DTOConvert.menuList2DTO(blogMenuList, blogMenuListChildren);
         // 封装返回值
         PageResult<MenuPageListDTO> pageResult = new PageResult<>();
         pageResult.setTotalPage(blogMenuPage.getPages());

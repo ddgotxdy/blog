@@ -83,4 +83,8 @@ public class ValidateConstant {
      * 图标标识的最小长度
      */
     public static final Integer ICON_NAME_MIN_LENGTH = 1;
+    /**
+     * 菜单树形结构最长深度+1
+     */
+    public static final Integer MAX_DEEP = 4;
 }

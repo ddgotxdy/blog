@@ -67,8 +67,6 @@ public class MenuDeleteServiceImpl extends AbstractAuthService {
                 }
             }
         });
-        // 同时，对删除了的菜单，需要重新加载redis
-        List<Long> userIds = new ArrayList<>();
         // 去掉没有被清空的
         menuIds.removeAll(menuIdsRemain);
         List<Long> roleIdList = blogRoleMenuService.queryRoleIdListByMenuIdList(menuIds);

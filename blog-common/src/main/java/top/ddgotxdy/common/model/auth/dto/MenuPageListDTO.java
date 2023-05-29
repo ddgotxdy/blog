@@ -3,6 +3,8 @@ package top.ddgotxdy.common.model.auth.dto;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author: ddgo
  * @description:
@@ -21,12 +23,15 @@ public class MenuPageListDTO {
     @ApiModelProperty("组件路径")
     private String component;
 
-    @ApiModelProperty("权限标识")
-    private String perms;
+    @ApiModelProperty("图标")
+    private String icon;
 
     @ApiModelProperty("创建时间")
     private Long createTime;
 
     @ApiModelProperty("备注")
     private String menuDesc;
+
+    @ApiModelProperty("当前菜单的子节点")
+    private List<MenuPageListDTO> children;
 }
