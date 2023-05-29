@@ -77,6 +77,9 @@ public class BlogUserServiceImpl extends ServiceImpl<BlogUserMapper, BlogUser> i
 
     @Override
     public List<BlogUser> getByRoleIdAll(Long roleId) {
+        if (Objects.isNull(roleId)) {
+            return Collections.emptyList();
+        }
         LambdaQueryWrapper<BlogUser> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper
                 .eq(BlogUser::getRoleId, roleId);
@@ -85,6 +88,9 @@ public class BlogUserServiceImpl extends ServiceImpl<BlogUserMapper, BlogUser> i
 
     @Override
     public List<Long> queryByRoleIdList(List<Long> roleIdList) {
+        if (CollectionUtils.isEmpty(roleIdList)) {
+            return Collections.emptyList();
+        }
         LambdaQueryWrapper<BlogUser> queryWrapper = new LambdaQueryWrapper<>();
         queryWrapper
                 .eq(BlogUser::getIsDelete, false)
