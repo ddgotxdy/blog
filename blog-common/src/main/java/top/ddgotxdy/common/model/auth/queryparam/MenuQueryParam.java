@@ -3,6 +3,8 @@ package top.ddgotxdy.common.model.auth.queryparam;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author: ddgo
  * @description:
@@ -26,4 +28,7 @@ public class MenuQueryParam {
 
     @ApiModelProperty("是否删除，0否1是")
     private Boolean isDelete;
+
+    @ApiModelProperty("菜单ID列表")
+    private List<Long> menuIds;
 }

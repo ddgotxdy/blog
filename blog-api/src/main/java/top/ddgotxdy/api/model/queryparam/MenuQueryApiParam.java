@@ -4,6 +4,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.util.List;
+
 /**
  * @author: ddgo
  * @description:
@@ -28,4 +30,7 @@ public class MenuQueryApiParam {
 
     @ApiModelProperty("是否删除，0否1是")
     private Boolean isDelete;
+
+    @ApiModelProperty("菜单ID列表")
+    private List<Long> menuIds;
 }
