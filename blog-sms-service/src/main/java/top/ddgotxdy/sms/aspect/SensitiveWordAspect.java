@@ -53,6 +53,9 @@ public class SensitiveWordAspect {
                 }
                 declaredField.setAccessible(true);
                 String fieldValue = (String) declaredField.get(arg);
+                if (Objects.isNull(fieldValue)) {
+                    continue;
+                }
                 log.info("【敏感词过滤之前】[{}]", fieldValue);
                 // 敏感词过滤
                 fieldValue = sensitiveWordBs.replace(fieldValue);

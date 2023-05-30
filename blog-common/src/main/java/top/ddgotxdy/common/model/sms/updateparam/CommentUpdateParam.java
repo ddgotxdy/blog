@@ -4,16 +4,20 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import top.ddgotxdy.common.annotation.SensitiveWordProperty;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * @author: ddgo
  * @description:
  */
 @Data
 public class CommentUpdateParam {
-    @ApiModelProperty("评论ID")
+    @ApiModelProperty(value = "评论ID", required = true)
+    @NotNull
     private Long commentId;
 
-    @ApiModelProperty("评论用户ID")
+    @ApiModelProperty(value = "评论用户ID", required = true)
+    @NotNull
     private Long userId;
 
     @ApiModelProperty("评论内容")

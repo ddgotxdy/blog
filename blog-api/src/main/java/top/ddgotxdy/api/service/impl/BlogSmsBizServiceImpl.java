@@ -4,28 +4,32 @@ import org.springframework.stereotype.Service;
 import top.ddgotxdy.api.convert.SmsApiParam2ClientParamConvert;
 import top.ddgotxdy.api.convert.SmsDTO2ViewConvert;
 import top.ddgotxdy.api.model.addparam.CaptchaSendApiParam;
+import top.ddgotxdy.api.model.addparam.CommentAddApiParam;
 import top.ddgotxdy.api.model.addparam.MessageAddApiParam;
 import top.ddgotxdy.api.model.addparam.SensitiveAddApiParam;
-import top.ddgotxdy.api.model.queryparam.MessageQueryApiParam;
-import top.ddgotxdy.api.model.queryparam.MessageQueryApiUserParam;
-import top.ddgotxdy.api.model.queryparam.SensitiveQueryApiParam;
+import top.ddgotxdy.api.model.queryparam.*;
+import top.ddgotxdy.api.model.updateparam.CommentAuditApiParam;
+import top.ddgotxdy.api.model.updateparam.CommentUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.MessageUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.SensitiveUpdateApiParam;
-import top.ddgotxdy.api.model.view.MessagePageListUserView;
-import top.ddgotxdy.api.model.view.MessagePageListView;
-import top.ddgotxdy.api.model.view.SensitivePageListView;
+import top.ddgotxdy.api.model.view.*;
 import top.ddgotxdy.api.service.BlogSmsBizService;
 import top.ddgotxdy.common.client.BlogSmsClient;
 import top.ddgotxdy.common.model.*;
 import top.ddgotxdy.common.model.sms.addparam.CaptchaSendParam;
+import top.ddgotxdy.common.model.sms.addparam.CommentAddParam;
 import top.ddgotxdy.common.model.sms.addparam.MessageAddParam;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
+import top.ddgotxdy.common.model.sms.deleteparam.CommentDeleteParam;
 import top.ddgotxdy.common.model.sms.deleteparam.SensitiveDeleteParam;
+import top.ddgotxdy.common.model.sms.dto.CommentPageListDTO;
 import top.ddgotxdy.common.model.sms.dto.MessagePageListDTO;
 import top.ddgotxdy.common.model.sms.dto.SensitivePageListDTO;
+import top.ddgotxdy.common.model.sms.queryparam.CommentQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.MessageQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.SensitiveQueryParam;
 import top.ddgotxdy.common.model.sms.recoverparam.SensitiveRecoverParam;
+import top.ddgotxdy.common.model.sms.updateparam.CommentUpdateParam;
 import top.ddgotxdy.common.model.sms.updateparam.MessageUpdateParam;
 import top.ddgotxdy.common.model.sms.updateparam.SensitiveUpdateParam;
 
@@ -142,5 +146,80 @@ public class BlogSmsBizServiceImpl implements BlogSmsBizService {
         PageResult<MessagePageListUserView> sensitivePageListViewPageResult
                 = SmsDTO2ViewConvert.messagePageListDTO2UserView(response.checkAndGetData());
         return sensitivePageListViewPageResult;
+    }
+
+    @Override
+    public IdView addComment(CommentAddApiParam commentAddApiParam) {
+        CommentAddParam commentAddParam
+                = SmsApiParam2ClientParamConvert.addApiParam2Param(commentAddApiParam);
+        ResultView<IdDTO> response = blogSmsClient.addComment(commentAddParam);
+        IdDTO idDTO = response.checkAndGetData();
+        return IdView.builder()
+                .id(idDTO.getId())
+                .build();
+    }
+
+    @Override
+    public IdView updateComment(CommentUpdateApiParam commentUpdateApiParam) {
+        CommentUpdateParam commentUpdateParam
+                = SmsApiParam2ClientParamConvert.updateApiParam2Param(commentUpdateApiParam);
+        ResultView<IdDTO> response = blogSmsClient.updateComment(commentUpdateParam);
+        IdDTO idDTO = response.checkAndGetData();
+        return IdView.builder()
+                .id(idDTO.getId())
+                .build();
+    }
+
+    @Override
+    public IdView auditComment(CommentAuditApiParam commentAuditApiParam) {
+        CommentUpdateParam commentUpdateParam
+                = SmsApiParam2ClientParamConvert.updateApiParam2Param(commentAuditApiParam);
+        ResultView<IdDTO> response = blogSmsClient.updateComment(commentUpdateParam);
+        IdDTO idDTO = response.checkAndGetData();
+        return IdView.builder()
+                .id(idDTO.getId())
+                .build();
+    }
+
+    @Override
+    public IdsView deleteComment(List<Long> commentIdList) {
+        CommentDeleteParam commentDeleteParam
+                = SmsApiParam2ClientParamConvert.commentDeleteApiParam2Param(commentIdList);
+        ResultView<IdsDTO> response = blogSmsClient.deleteComment(commentDeleteParam);
+        IdsDTO idsDTO = response.checkAndGetData();
+        return IdsView.builder()
+                .ids(idsDTO.getIds())
+                .build();
+    }
+
+    @Override
+    public IdsView recoverComment(List<Long> commentIdList) {
+        return IdsView.builder().build();
+    }
+
+    @Override
+    public PageResult<CommentPageListView> queryCommentByPage(
+            PageQry<CommentQueryApiParam> commentQueryApiParamPageQry
+    ) {
+        PageQry<CommentQueryParam> commentQueryParamPageQry
+                = SmsApiParam2ClientParamConvert.commentQueryApiParam2Param(commentQueryApiParamPageQry);
+        ResultView<PageResult<CommentPageListDTO>> response
+                = blogSmsClient.queryCommentByPage(commentQueryParamPageQry);
+        PageResult<CommentPageListView> commentPageListViewPageResult
+                = SmsDTO2ViewConvert.commentPageListDTO2View(response.checkAndGetData());
+        return commentPageListViewPageResult;
+    }
+
+    @Override
+    public PageResult<CommentPageTreeListView> queryCommentTreeByPage(
+            PageQry<CommentQueryApiUserParam> commentQueryApiUserParamPageQry
+    ) {
+        PageQry<CommentQueryParam> commentQueryParamPageQry
+                = SmsApiParam2ClientParamConvert.commentTreeQueryApiParam2Param(commentQueryApiUserParamPageQry);
+        ResultView<PageResult<CommentPageListDTO>> response
+                = blogSmsClient.queryCommentByPage(commentQueryParamPageQry);
+        PageResult<CommentPageTreeListView> commentPageTreeListViewPageResult
+                = SmsDTO2ViewConvert.commentPageListDTO2TreeView(response.checkAndGetData());
+        return commentPageTreeListViewPageResult;
     }
 }

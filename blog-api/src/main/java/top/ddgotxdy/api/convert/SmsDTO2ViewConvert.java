@@ -1,18 +1,18 @@
 package top.ddgotxdy.api.convert;
 
-import top.ddgotxdy.api.model.view.MessagePageListUserView;
-import top.ddgotxdy.api.model.view.MessagePageListView;
-import top.ddgotxdy.api.model.view.SensitivePageListView;
-import top.ddgotxdy.api.model.view.UserInfoView;
+import org.springframework.util.CollectionUtils;
+import top.ddgotxdy.api.model.view.*;
 import top.ddgotxdy.common.enums.auth.SexEnum;
 import top.ddgotxdy.common.enums.sms.AuditType;
 import top.ddgotxdy.common.enums.sms.SensitiveType;
 import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.auth.dto.UserInfoDTO;
+import top.ddgotxdy.common.model.sms.dto.CommentPageListDTO;
 import top.ddgotxdy.common.model.sms.dto.MessagePageListDTO;
 import top.ddgotxdy.common.model.sms.dto.SensitivePageListDTO;
 import top.ddgotxdy.common.util.BeanCopyUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -80,5 +80,62 @@ public class SmsDTO2ViewConvert {
         // 赋值
         messagePageListViewPageResult.setData(messagePageListUserViews);
         return messagePageListViewPageResult;
+    }
+
+    /**
+     * 没有树形结构
+     */
+    public static PageResult<CommentPageListView> commentPageListDTO2View(
+            PageResult<CommentPageListDTO> commentPageListDTOPageResult
+    ) {
+        // 范型赋值
+        List<CommentPageListDTO> data = commentPageListDTOPageResult.getData();
+        List<CommentPageListView> commentPageListViews
+                = BeanCopyUtil.copyListProperties(data, CommentPageListView::new);
+        // 特殊字段处理
+        for (int i = 0; i < commentPageListViews.size(); i++) {
+            CommentPageListView commentPageListView = commentPageListViews.get(i);
+            CommentPageListDTO commentPageListDTO = data.get(i);
+            commentPageListView.setAuditType(AuditType.of(commentPageListDTO.getAuditType()));
+        }
+        // 分页结果赋值
+        PageResult<CommentPageListView> commentPageListViewPageResult = new PageResult<>();
+        BeanCopyUtil.copyProperties(commentPageListDTOPageResult, commentPageListViewPageResult);
+        // 赋值
+        commentPageListViewPageResult.setData(commentPageListViews);
+        return commentPageListViewPageResult;
+    }
+
+    /**
+     * 有树形结构
+     */
+    public static PageResult<CommentPageTreeListView> commentPageListDTO2TreeView(
+            PageResult<CommentPageListDTO> commentPageListDTOPageResult
+    ) {
+        // 范型赋值
+        List<CommentPageListDTO> data = commentPageListDTOPageResult.getData();
+        List<CommentPageTreeListView> commentPageTreeListViews
+                = BeanCopyUtil.copyListProperties(data, CommentPageTreeListView::new);
+        // 层次复制
+        for (int i = 0; i < commentPageTreeListViews.size(); i++) {
+            CommentPageTreeListView commentPageTreeListView = commentPageTreeListViews.get(i);
+            CommentPageListDTO commentPageListDTO = data.get(i);
+            List<CommentPageListDTO> children = commentPageListDTO.getChildren();
+            if (!CollectionUtils.isEmpty(children)) {
+                List<CommentPageTreeListView> childrenView = new ArrayList<>();
+                children.forEach(child -> {
+                    CommentPageTreeListView commentPageTreeListViewChild = new CommentPageTreeListView();
+                    BeanCopyUtil.copyProperties(child, commentPageTreeListViewChild);
+                    childrenView.add(commentPageTreeListViewChild);
+                });
+                commentPageTreeListView.setChildren(childrenView);
+            }
+        }
+        // 分页结果赋值
+        PageResult<CommentPageTreeListView> commentPageTreeListViewPageResult = new PageResult<>();
+        BeanCopyUtil.copyProperties(commentPageListDTOPageResult, commentPageTreeListViewPageResult);
+        // 赋值
+        commentPageTreeListViewPageResult.setData(commentPageTreeListViews);
+        return commentPageTreeListViewPageResult;
     }
 }

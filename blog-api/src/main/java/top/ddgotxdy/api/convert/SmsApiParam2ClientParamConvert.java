@@ -1,20 +1,25 @@
 package top.ddgotxdy.api.convert;
 
+import top.ddgotxdy.api.model.addparam.CommentAddApiParam;
 import top.ddgotxdy.api.model.addparam.MessageAddApiParam;
 import top.ddgotxdy.api.model.addparam.SensitiveAddApiParam;
-import top.ddgotxdy.api.model.queryparam.MessageQueryApiParam;
-import top.ddgotxdy.api.model.queryparam.MessageQueryApiUserParam;
-import top.ddgotxdy.api.model.queryparam.SensitiveQueryApiParam;
+import top.ddgotxdy.api.model.queryparam.*;
+import top.ddgotxdy.api.model.updateparam.CommentAuditApiParam;
+import top.ddgotxdy.api.model.updateparam.CommentUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.MessageUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.SensitiveUpdateApiParam;
 import top.ddgotxdy.common.enums.sms.AuditType;
 import top.ddgotxdy.common.model.PageQry;
+import top.ddgotxdy.common.model.sms.addparam.CommentAddParam;
 import top.ddgotxdy.common.model.sms.addparam.MessageAddParam;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
+import top.ddgotxdy.common.model.sms.deleteparam.CommentDeleteParam;
 import top.ddgotxdy.common.model.sms.deleteparam.SensitiveDeleteParam;
+import top.ddgotxdy.common.model.sms.queryparam.CommentQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.MessageQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.SensitiveQueryParam;
 import top.ddgotxdy.common.model.sms.recoverparam.SensitiveRecoverParam;
+import top.ddgotxdy.common.model.sms.updateparam.CommentUpdateParam;
 import top.ddgotxdy.common.model.sms.updateparam.MessageUpdateParam;
 import top.ddgotxdy.common.model.sms.updateparam.SensitiveUpdateParam;
 import top.ddgotxdy.common.scope.ContextScope;
@@ -137,5 +142,73 @@ public class SmsApiParam2ClientParamConvert {
         // 范型赋值进去
         messageQueryParamPageQry.setQueryParam(messageQueryParam);
         return messageQueryParamPageQry;
+    }
+
+    public static CommentAddParam addApiParam2Param(CommentAddApiParam commentAddApiParam) {
+        CommentAddParam commentAddParam = new CommentAddParam();
+        BeanCopyUtil.copyProperties(commentAddApiParam, commentAddParam);
+        Long userId = ContextScope.getUserId();
+        commentAddParam.setUserId(userId);
+        return commentAddParam;
+    }
+
+    public static CommentUpdateParam updateApiParam2Param(CommentUpdateApiParam commentUpdateApiParam) {
+        CommentUpdateParam commentUpdateParam = new CommentUpdateParam();
+        BeanCopyUtil.copyProperties(commentUpdateApiParam, commentUpdateParam);
+        Long userId = ContextScope.getUserId();
+        commentUpdateParam.setUserId(userId);
+        return commentUpdateParam;
+    }
+
+    public static CommentUpdateParam updateApiParam2Param(CommentAuditApiParam commentAuditApiParam) {
+        CommentUpdateParam commentUpdateParam = new CommentUpdateParam();
+        BeanCopyUtil.copyProperties(commentAuditApiParam, commentUpdateParam);
+        // 枚举值处理
+        commentUpdateParam.setAuditType(commentAuditApiParam.getAuditType().getCode());
+        Long userId = ContextScope.getUserId();
+        commentUpdateParam.setUserId(userId);
+        return commentUpdateParam;
+    }
+
+    public static CommentDeleteParam commentDeleteApiParam2Param(List<Long> commentIdList) {
+        CommentDeleteParam commentDeleteParam = new CommentDeleteParam();
+        commentDeleteParam.setCommentIds(commentIdList);
+        Long userId = ContextScope.getUserId();
+        commentDeleteParam.setUserId(userId);
+        return commentDeleteParam;
+    }
+
+    public static PageQry<CommentQueryParam> commentQueryApiParam2Param(
+            PageQry<CommentQueryApiParam> commentQueryApiParamPageQry
+    ) {
+        CommentQueryParam commentQueryParam = new CommentQueryParam();
+        // 范型复制
+        CommentQueryApiParam commentQueryApiParam = commentQueryApiParamPageQry.getQueryParam();
+        BeanCopyUtil.copyProperties(commentQueryApiParam, commentQueryParam);
+        // 特殊值处理
+        if (Objects.nonNull(commentQueryApiParam.getAuditType())) {
+            commentQueryParam.setAuditType(commentQueryApiParam.getAuditType().getCode());
+        }
+        // 分页参数复制
+        PageQry<CommentQueryParam> commentQueryParamPageQry = new PageQry<>();
+        BeanCopyUtil.copyProperties(commentQueryApiParamPageQry, commentQueryParamPageQry);
+        // 范型赋值进去
+        commentQueryParamPageQry.setQueryParam(commentQueryParam);
+        return commentQueryParamPageQry;
+    }
+
+    public static PageQry<CommentQueryParam> commentTreeQueryApiParam2Param(
+            PageQry<CommentQueryApiUserParam> commentQueryApiUserParamPageQry
+    ) {
+        CommentQueryParam commentQueryParam = new CommentQueryParam();
+        // 范型复制
+        CommentQueryApiUserParam commentQueryApiUserParam = commentQueryApiUserParamPageQry.getQueryParam();
+        BeanCopyUtil.copyProperties(commentQueryApiUserParam, commentQueryParam);
+        // 分页参数复制
+        PageQry<CommentQueryParam> commentQueryParamPageQry = new PageQry<>();
+        BeanCopyUtil.copyProperties(commentQueryApiUserParamPageQry, commentQueryParamPageQry);
+        // 范型赋值进去
+        commentQueryParamPageQry.setQueryParam(commentQueryParam);
+        return commentQueryParamPageQry;
     }
 }

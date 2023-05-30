@@ -32,7 +32,10 @@ public class BlogComment {
     private String commentContent;
 
     @ApiModelProperty("父评论id")
-    private Integer parentId;
+    private Long parentId;
+
+    @ApiModelProperty("回复的用户ID")
+    private Long replyUserId;
 
     @ApiModelProperty("是否删除  0否 1是")
     private Integer isDelete;

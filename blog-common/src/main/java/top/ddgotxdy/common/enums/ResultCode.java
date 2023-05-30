@@ -47,6 +47,11 @@ public enum ResultCode {
     MESSAGE_ADD_ERROR(906, "留言添加失败"),
     MESSAGE_UPDATE_ERROR(906, "留言更新失败"),
     SEND_MAIL_ERROR(907, "发送邮件失败"),
+    COMMENT_ADD_ERROR(908, "评论新增失败"),
+    COMMENT_DELETE_ERROR(909, "评论删除失败"),
+    COMMENT_UPDATE_ERROR(910, "评论修改失败"),
+    COMMENT_QUERY_ERROR(911, "评论查询失败"),
+    COMMENT_RECOVERY_ERROR(912, "评论恢复失败"),
     // 1001 - 1100 授权认证异常
     LOGIN_ERROR(1001, "账户或密码错误"),
     ROLE_ERROR(1002, "角色异常"),

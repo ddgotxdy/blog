@@ -132,7 +132,7 @@ public class SmsController {
     @PostMapping("/comment/update")
     @SensitiveWord
     public ResultView<IdDTO> updateComment(
-            @RequestBody CommentUpdateParam commentUpdateParam
+            @Validated @RequestBody CommentUpdateParam commentUpdateParam
     ) {
         IdDTO idDTO = smsCmdBizService.updateComment(commentUpdateParam);
         return ResultView.success(idDTO);
@@ -140,7 +140,7 @@ public class SmsController {
 
     @DeleteMapping("/comment/delete")
     public ResultView<IdsDTO> deleteComment(
-            @RequestBody CommentDeleteParam commentDeleteParam
+            @Validated @RequestBody CommentDeleteParam commentDeleteParam
     ) {
         IdsDTO idsDTO = smsCmdBizService.deleteComment(commentDeleteParam);
         return ResultView.success(idsDTO);
@@ -148,7 +148,7 @@ public class SmsController {
 
     @DeleteMapping("/comment/recover")
     public ResultView<IdsDTO> recoverComment(
-            @RequestBody CommentRecoverParam commentRecoverParam
+            @Validated @RequestBody CommentRecoverParam commentRecoverParam
     ) {
         IdsDTO idsDTO = smsCmdBizService.recoverComment(commentRecoverParam);
         return ResultView.success(idsDTO);
@@ -156,7 +156,7 @@ public class SmsController {
 
     @PostMapping("/comment/queryByPage")
     public ResultView<PageResult<CommentPageListDTO>> queryCommentByPage(
-            @RequestBody PageQry<CommentQueryParam> commentQueryParamPageQry
+            @Validated @RequestBody PageQry<CommentQueryParam> commentQueryParamPageQry
     ) {
         PageResult<CommentPageListDTO> result
                 = smsQueryBizService.queryCommentByPage(commentQueryParamPageQry);
@@ -165,7 +165,7 @@ public class SmsController {
 
     @PostMapping("/comment/queryTreeByPage")
     public ResultView<PageResult<CommentPageListDTO>> queryCommentTreeByPage(
-            @RequestBody PageQry<CommentQueryParam> commentQueryParamPageQry
+            @Validated @RequestBody PageQry<CommentQueryParam> commentQueryParamPageQry
     ) {
         PageResult<CommentPageListDTO> result
                 = smsQueryBizService.queryCommentTreeByPage(commentQueryParamPageQry);

@@ -1,6 +1,7 @@
 package top.ddgotxdy.sms.convert;
 
 import top.ddgotxdy.common.util.BeanCopyUtil;
+import top.ddgotxdy.dal.entity.BlogComment;
 import top.ddgotxdy.dal.entity.BlogMessage;
 import top.ddgotxdy.dal.entity.BlogSensitive;
 import top.ddgotxdy.sms.model.SmsContext;
@@ -33,5 +34,17 @@ public class Context2EntityConvert {
         BlogMessage blogMessage = new BlogMessage();
         BeanCopyUtil.copyProperties(smsContext, blogMessage);
         return blogMessage;
+    }
+
+    public static BlogComment context2CommentForAdd(SmsContext smsContext) {
+        BlogComment blogComment = new BlogComment();
+        BeanCopyUtil.copyProperties(smsContext, blogComment);
+        return blogComment;
+    }
+
+    public static BlogComment context2CommentForUpdate(SmsContext smsContext) {
+        BlogComment blogComment = new BlogComment();
+        BeanCopyUtil.copyProperties(smsContext, blogComment);
+        return blogComment;
     }
 }

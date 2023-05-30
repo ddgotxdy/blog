@@ -17,4 +17,14 @@ public class ValidateConstant {
      */
     public static final Integer MAX_MESSAGE_LENGTH = 50;
 
+    /**
+     * 评论最大值
+     */
+    public static final Integer MAX_COMMENT_LENGTH = 1024;
+
+    /**
+     * 评论最小值
+     */
+    public static final Integer MIN_COMMENT_LENGTH = 1;
+
 }

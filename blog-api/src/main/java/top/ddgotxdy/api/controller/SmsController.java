@@ -5,16 +5,15 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import top.ddgotxdy.api.model.addparam.CaptchaSendApiParam;
+import top.ddgotxdy.api.model.addparam.CommentAddApiParam;
 import top.ddgotxdy.api.model.addparam.MessageAddApiParam;
 import top.ddgotxdy.api.model.addparam.SensitiveAddApiParam;
-import top.ddgotxdy.api.model.queryparam.MessageQueryApiParam;
-import top.ddgotxdy.api.model.queryparam.MessageQueryApiUserParam;
-import top.ddgotxdy.api.model.queryparam.SensitiveQueryApiParam;
+import top.ddgotxdy.api.model.queryparam.*;
+import top.ddgotxdy.api.model.updateparam.CommentAuditApiParam;
+import top.ddgotxdy.api.model.updateparam.CommentUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.MessageUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.SensitiveUpdateApiParam;
-import top.ddgotxdy.api.model.view.MessagePageListUserView;
-import top.ddgotxdy.api.model.view.MessagePageListView;
-import top.ddgotxdy.api.model.view.SensitivePageListView;
+import top.ddgotxdy.api.model.view.*;
 import top.ddgotxdy.api.service.BlogSmsBizService;
 import top.ddgotxdy.common.model.*;
 
@@ -124,11 +123,6 @@ public class SmsController {
         return ResultView.success(result);
     }
 
-    /**
-     * 发送验证码
-     * @param captchaSendApiParam 发送验证码参数
-     * @return ResultView
-     */
     @ApiOperation("发送验证码")
     @PostMapping("/captcha/send")
     ResultView sendCaptcha(
@@ -138,4 +132,68 @@ public class SmsController {
         return ResultView.success();
     }
 
+    @ApiOperation("用户添加评论")
+    @PostMapping("/user/comment/add")
+    ResultView<IdView> addComment(
+            @Validated @RequestBody CommentAddApiParam commentAddApiParam
+    ) {
+        IdView idView = blogSmsBizService.addComment(commentAddApiParam);
+        return ResultView.success(idView);
+    }
+
+    @ApiOperation("用户更新评论")
+    @PostMapping("/user/comment/update")
+    ResultView<IdView> updateComment(
+            @Validated @RequestBody CommentUpdateApiParam commentUpdateApiParam
+    ) {
+        IdView idView = blogSmsBizService.updateComment(commentUpdateApiParam);
+        return ResultView.success(idView);
+    }
+
+    @ApiOperation("审核评论")
+    @PostMapping("/admin/comment/audit")
+    ResultView<IdView> auditComment(
+            @Validated @RequestBody CommentAuditApiParam commentAuditApiParam
+    ) {
+        IdView idView = blogSmsBizService.auditComment(commentAuditApiParam);
+        return ResultView.success(idView);
+    }
+
+    @ApiOperation("用户删除评论")
+    @DeleteMapping("/user/comment/delete")
+    ResultView<IdsView> deleteComment(
+            @RequestBody List<Long> commentIdList
+    ) {
+        IdsView idsView = blogSmsBizService.deleteComment(commentIdList);
+        return ResultView.success(idsView);
+    }
+
+    @ApiOperation("管理恢复评论【暂时留着】")
+    @DeleteMapping("/admin/comment/recover")
+    ResultView<IdsView> recoverComment(
+            @RequestBody List<Long> commentIdList
+    ) {
+        IdsView idsView = blogSmsBizService.recoverComment(commentIdList);
+        return ResultView.success(idsView);
+    }
+
+    @ApiOperation("管理查询所有的评论")
+    @PostMapping("/admin/comment/queryByPage")
+    ResultView<PageResult<CommentPageListView>> queryCommentByPage(
+            @Validated @RequestBody PageQry<CommentQueryApiParam> commentQueryApiParamPageQry
+    ) {
+        PageResult<CommentPageListView> result
+                = blogSmsBizService.queryCommentByPage(commentQueryApiParamPageQry);
+        return ResultView.success(result);
+    }
+
+    @ApiOperation("用户查询文章评论")
+    @PostMapping("/user/comment/queryTreeByPage")
+    ResultView<PageResult<CommentPageTreeListView>> queryCommentTreeByPage(
+            @Validated @RequestBody PageQry<CommentQueryApiUserParam> commentQueryApiUserParamPageQry
+    ) {
+        PageResult<CommentPageTreeListView> result
+                = blogSmsBizService.queryCommentTreeByPage(commentQueryApiUserParamPageQry);
+        return ResultView.success(result);
+    }
 }

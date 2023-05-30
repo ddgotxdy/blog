@@ -68,7 +68,12 @@ public class SmsContext {
     /**
      * 父评论id
      */
-    private Integer parentId;
+    private Long parentId;
+
+    /**
+     * 回复的用户ID
+     */
+    private Long replyUserId;
 
     /**
      * 评论id列表

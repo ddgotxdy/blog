@@ -9,15 +9,21 @@ import org.springframework.web.bind.annotation.RequestBody;
 import top.ddgotxdy.common.annotation.SensitiveWord;
 import top.ddgotxdy.common.model.*;
 import top.ddgotxdy.common.model.sms.addparam.CaptchaSendParam;
+import top.ddgotxdy.common.model.sms.addparam.CommentAddParam;
 import top.ddgotxdy.common.model.sms.addparam.MessageAddParam;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
+import top.ddgotxdy.common.model.sms.deleteparam.CommentDeleteParam;
 import top.ddgotxdy.common.model.sms.deleteparam.SensitiveDeleteParam;
+import top.ddgotxdy.common.model.sms.dto.CommentPageListDTO;
 import top.ddgotxdy.common.model.sms.dto.MessagePageListDTO;
 import top.ddgotxdy.common.model.sms.dto.SensitivePageListDTO;
 import top.ddgotxdy.common.model.sms.queryparam.CaptchaQueryParam;
+import top.ddgotxdy.common.model.sms.queryparam.CommentQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.MessageQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.SensitiveQueryParam;
+import top.ddgotxdy.common.model.sms.recoverparam.CommentRecoverParam;
 import top.ddgotxdy.common.model.sms.recoverparam.SensitiveRecoverParam;
+import top.ddgotxdy.common.model.sms.updateparam.CommentUpdateParam;
 import top.ddgotxdy.common.model.sms.updateparam.MessageUpdateParam;
 import top.ddgotxdy.common.model.sms.updateparam.SensitiveUpdateParam;
 
@@ -127,5 +133,37 @@ public interface BlogSmsClient {
     @PostMapping("openfeign/sms/captcha/query")
     ResultView<String> queryCaptcha(
             @Validated @RequestBody CaptchaQueryParam captchaQueryParam
+    );
+
+    @PostMapping("openfeign/sms/comment/add")
+    @SensitiveWord
+    ResultView<IdDTO> addComment(
+            @Validated @RequestBody CommentAddParam commentAddParam
+    );
+
+    @PostMapping("openfeign/sms/comment/update")
+    @SensitiveWord
+    ResultView<IdDTO> updateComment(
+            @Validated @RequestBody CommentUpdateParam commentUpdateParam
+    );
+
+    @DeleteMapping("openfeign/sms/comment/delete")
+    ResultView<IdsDTO> deleteComment(
+            @Validated @RequestBody CommentDeleteParam commentDeleteParam
+    );
+
+    @DeleteMapping("openfeign/sms/comment/recover")
+    ResultView<IdsDTO> recoverComment(
+            @Validated @RequestBody CommentRecoverParam commentRecoverParam
+    );
+
+    @PostMapping("openfeign/sms/comment/queryByPage")
+    ResultView<PageResult<CommentPageListDTO>> queryCommentByPage(
+            @Validated @RequestBody PageQry<CommentQueryParam> commentQueryParamPageQry
+    );
+
+    @PostMapping("openfeign/sms/comment/queryTreeByPage")
+    ResultView<PageResult<CommentPageListDTO>> queryCommentTreeByPage(
+            @Validated @RequestBody PageQry<CommentQueryParam> commentQueryParamPageQry
     );
 }

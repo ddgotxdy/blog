@@ -136,7 +136,37 @@ public class SmsQueryBizServiceImpl implements SmsQueryBizService {
     public PageResult<CommentPageListDTO> queryCommentByPage(
             PageQry<CommentQueryParam> commentQueryParamPageQry
     ) {
-        return null;
+        // 分页参数组装
+        int pageNum = commentQueryParamPageQry.getPageNum();
+        int pageSize = commentQueryParamPageQry.getPageSize();
+        Page<BlogComment> page = new Page<>(pageNum, pageSize);
+        // 查询参数组装
+        LambdaQueryWrapper<BlogComment> queryWrapper = new LambdaQueryWrapper<>();
+        // 查询值
+        CommentQueryParam queryParam = commentQueryParamPageQry.getQueryParam();
+        queryWrapper
+                .eq(Objects.nonNull(queryParam.getArticleId()), BlogComment::getArticleId, queryParam.getArticleId())
+                .eq(Objects.nonNull(queryParam.getAuditType()), BlogComment::getAuditType, queryParam.getAuditType())
+                .eq(Objects.nonNull(queryParam.getCommentId()), BlogComment::getCommentId, queryParam.getCommentId())
+                .eq(Objects.nonNull(queryParam.getUserId()), BlogComment::getUserId, queryParam.getUserId())
+                .like(Objects.nonNull(queryParam.getCommentContent()), BlogComment::getCommentContent, queryParam.getCommentContent());
+        // 排序规则
+        LinkedHashMap<String, Boolean> orderByFields = commentQueryParamPageQry.getOrderByFields();
+        if (CollectionUtils.isEmpty(orderByFields)) {
+            orderByFields = new LinkedHashMap<>();
+            orderByFields.put("createTime", false);
+        }
+        orderByFields.forEach((name, asc) ->
+                queryWrapper.orderBy(true, asc, FieldName2FunctionConvert.commentFiledName2Function(name))
+        );
+        Page<BlogComment> blogCommentPage = blogCommentService.page(page, queryWrapper);
+        List<BlogComment> blogCommentList = blogCommentPage.getRecords();
+        List<CommentPageListDTO> commentPageListDTOList = Entity2DTOConvert.commentList2DTO(blogCommentList);
+        // 封装返回值
+        PageResult<CommentPageListDTO> pageResult = new PageResult<>();
+        pageResult.setTotalPage(blogCommentPage.getPages());
+        pageResult.setData(commentPageListDTOList);
+        return pageResult;
     }
 
     @Override
@@ -154,10 +184,8 @@ public class SmsQueryBizServiceImpl implements SmsQueryBizService {
         queryWrapper
                 .isNull(BlogComment::getParentId)
                 .eq(Objects.nonNull(queryParam.getArticleId()), BlogComment::getArticleId, queryParam.getArticleId())
-                .eq(Objects.nonNull(queryParam.getAuditType()), BlogComment::getAuditType, queryParam.getAuditType())
-                .eq(Objects.nonNull(queryParam.getCommentId()), BlogComment::getCommentId, queryParam.getCommentId())
-                .eq(Objects.nonNull(queryParam.getUserId()), BlogComment::getUserId, queryParam.getUserId())
-                .like(Objects.nonNull(queryParam.getCommentContent()), BlogComment::getCommentContent, queryParam.getCommentContent());
+                .eq(Objects.nonNull(queryParam.getAuditType()), BlogComment::getAuditType, queryParam.getAuditType());
+
         // 排序规则
         LinkedHashMap<String, Boolean> orderByFields = commentQueryParamPageQry.getOrderByFields();
         if (CollectionUtils.isEmpty(orderByFields)) {
@@ -169,7 +197,16 @@ public class SmsQueryBizServiceImpl implements SmsQueryBizService {
         );
         Page<BlogComment> blogCommentPage = blogCommentService.page(page, queryWrapper);
         List<BlogComment> blogCommentList = blogCommentPage.getRecords();
-        List<CommentPageListDTO> commentPageListDTOList = Entity2DTOConvert.commentList2TreeDTO(blogCommentList);
+        // 非起始节点
+        LambdaQueryWrapper<BlogComment> queryWrapperChildren = new LambdaQueryWrapper<>();
+        queryWrapperChildren
+                .isNotNull(BlogComment::getParentId)
+                .eq(Objects.nonNull(queryParam.getArticleId()), BlogComment::getArticleId, queryParam.getArticleId())
+                .eq(Objects.nonNull(queryParam.getAuditType()), BlogComment::getAuditType, queryParam.getAuditType());
+        queryWrapperChildren.orderBy(true, true, BlogComment::getCreateTime);
+        List<BlogComment> blogCommentListChildren = blogCommentService.list(queryWrapperChildren);
+        List<CommentPageListDTO> commentPageListDTOList
+                = Entity2DTOConvert.commentList2TreeDTO(blogCommentList, blogCommentListChildren);
         // 封装返回值
         PageResult<CommentPageListDTO> pageResult = new PageResult<>();
         pageResult.setTotalPage(blogCommentPage.getPages());

@@ -1,16 +1,15 @@
 package top.ddgotxdy.api.service;
 
 import top.ddgotxdy.api.model.addparam.CaptchaSendApiParam;
+import top.ddgotxdy.api.model.addparam.CommentAddApiParam;
 import top.ddgotxdy.api.model.addparam.MessageAddApiParam;
 import top.ddgotxdy.api.model.addparam.SensitiveAddApiParam;
-import top.ddgotxdy.api.model.queryparam.MessageQueryApiParam;
-import top.ddgotxdy.api.model.queryparam.MessageQueryApiUserParam;
-import top.ddgotxdy.api.model.queryparam.SensitiveQueryApiParam;
+import top.ddgotxdy.api.model.queryparam.*;
+import top.ddgotxdy.api.model.updateparam.CommentAuditApiParam;
+import top.ddgotxdy.api.model.updateparam.CommentUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.MessageUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.SensitiveUpdateApiParam;
-import top.ddgotxdy.api.model.view.MessagePageListUserView;
-import top.ddgotxdy.api.model.view.MessagePageListView;
-import top.ddgotxdy.api.model.view.SensitivePageListView;
+import top.ddgotxdy.api.model.view.*;
 import top.ddgotxdy.common.model.IdView;
 import top.ddgotxdy.common.model.IdsView;
 import top.ddgotxdy.common.model.PageQry;
@@ -91,5 +90,19 @@ public interface BlogSmsBizService {
      * @return PageResult<MessagePageListUserView>
      */
     PageResult<MessagePageListUserView> queryMessageByPageUser(PageQry<MessageQueryApiUserParam> messageQueryApiUserParamPageQry);
+
+    IdView addComment(CommentAddApiParam commentAddApiParam);
+
+    IdView updateComment(CommentUpdateApiParam commentUpdateApiParam);
+
+    IdView auditComment(CommentAuditApiParam commentAuditApiParam);
+
+    IdsView deleteComment(List<Long> commentIdList);
+
+    IdsView recoverComment(List<Long> commentIdList);
+
+    PageResult<CommentPageListView> queryCommentByPage(PageQry<CommentQueryApiParam> commentQueryApiParamPageQry);
+
+    PageResult<CommentPageTreeListView> queryCommentTreeByPage(PageQry<CommentQueryApiUserParam> commentQueryApiUserParamPageQry);
 }
 
