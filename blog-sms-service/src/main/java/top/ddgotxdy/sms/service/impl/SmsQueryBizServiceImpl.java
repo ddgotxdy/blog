@@ -8,16 +8,20 @@ import top.ddgotxdy.common.enums.ResultCode;
 import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.PageResult;
+import top.ddgotxdy.common.model.sms.dto.CommentPageListDTO;
 import top.ddgotxdy.common.model.sms.dto.MessagePageListDTO;
 import top.ddgotxdy.common.model.sms.dto.SensitivePageListDTO;
 import top.ddgotxdy.common.model.sms.queryparam.CaptchaQueryParam;
+import top.ddgotxdy.common.model.sms.queryparam.CommentQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.MessageQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.SensitiveQueryParam;
 import top.ddgotxdy.common.util.RedisCache;
+import top.ddgotxdy.dal.entity.BlogComment;
 import top.ddgotxdy.dal.entity.BlogMessage;
 import top.ddgotxdy.dal.entity.BlogSensitive;
 import top.ddgotxdy.sms.convert.Entity2DTOConvert;
 import top.ddgotxdy.sms.convert.FieldName2FunctionConvert;
+import top.ddgotxdy.sms.service.BlogCommentService;
 import top.ddgotxdy.sms.service.BlogMessageService;
 import top.ddgotxdy.sms.service.BlogSensitiveService;
 import top.ddgotxdy.sms.service.SmsQueryBizService;
@@ -43,6 +47,8 @@ public class SmsQueryBizServiceImpl implements SmsQueryBizService {
     private BlogMessageService blogMessageService;
     @Resource
     private RedisCache redisCache;
+    @Resource
+    private BlogCommentService blogCommentService;
 
     @Override
     public PageResult<SensitivePageListDTO> querySensitiveByPage(PageQry<SensitiveQueryParam> sensitiveQueryParamPageQry) {
@@ -124,5 +130,50 @@ public class SmsQueryBizServiceImpl implements SmsQueryBizService {
         }
         String captcha = redisCache.getCacheObject(CAPTCHA + mail);
         return captcha;
+    }
+
+    @Override
+    public PageResult<CommentPageListDTO> queryCommentByPage(
+            PageQry<CommentQueryParam> commentQueryParamPageQry
+    ) {
+        return null;
+    }
+
+    @Override
+    public PageResult<CommentPageListDTO> queryCommentTreeByPage(
+            PageQry<CommentQueryParam> commentQueryParamPageQry
+    ) {
+        // 分页参数组装【先获取一级评论】
+        int pageNum = commentQueryParamPageQry.getPageNum();
+        int pageSize = commentQueryParamPageQry.getPageSize();
+        Page<BlogComment> page = new Page<>(pageNum, pageSize);
+        // 查询参数组装
+        LambdaQueryWrapper<BlogComment> queryWrapper = new LambdaQueryWrapper<>();
+        // 查询值
+        CommentQueryParam queryParam = commentQueryParamPageQry.getQueryParam();
+        queryWrapper
+                .isNull(BlogComment::getParentId)
+                .eq(Objects.nonNull(queryParam.getArticleId()), BlogComment::getArticleId, queryParam.getArticleId())
+                .eq(Objects.nonNull(queryParam.getAuditType()), BlogComment::getAuditType, queryParam.getAuditType())
+                .eq(Objects.nonNull(queryParam.getCommentId()), BlogComment::getCommentId, queryParam.getCommentId())
+                .eq(Objects.nonNull(queryParam.getUserId()), BlogComment::getUserId, queryParam.getUserId())
+                .like(Objects.nonNull(queryParam.getCommentContent()), BlogComment::getCommentContent, queryParam.getCommentContent());
+        // 排序规则
+        LinkedHashMap<String, Boolean> orderByFields = commentQueryParamPageQry.getOrderByFields();
+        if (CollectionUtils.isEmpty(orderByFields)) {
+            orderByFields = new LinkedHashMap<>();
+            orderByFields.put("createTime", false);
+        }
+        orderByFields.forEach((name, asc) ->
+                queryWrapper.orderBy(true, asc, FieldName2FunctionConvert.commentFiledName2Function(name))
+        );
+        Page<BlogComment> blogCommentPage = blogCommentService.page(page, queryWrapper);
+        List<BlogComment> blogCommentList = blogCommentPage.getRecords();
+        List<CommentPageListDTO> commentPageListDTOList = Entity2DTOConvert.commentList2TreeDTO(blogCommentList);
+        // 封装返回值
+        PageResult<CommentPageListDTO> pageResult = new PageResult<>();
+        pageResult.setTotalPage(blogCommentPage.getPages());
+        pageResult.setData(commentPageListDTOList);
+        return pageResult;
     }
 }

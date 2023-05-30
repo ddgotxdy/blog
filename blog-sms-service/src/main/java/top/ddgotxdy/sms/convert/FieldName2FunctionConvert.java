@@ -1,6 +1,7 @@
 package top.ddgotxdy.sms.convert;
 
 import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
+import top.ddgotxdy.dal.entity.BlogComment;
 import top.ddgotxdy.dal.entity.BlogMessage;
 import top.ddgotxdy.dal.entity.BlogSensitive;
 
@@ -24,6 +25,15 @@ public class FieldName2FunctionConvert {
                 return BlogMessage::getMessageContent;
             default:
                 return BlogMessage::getCreateTime;
+        }
+    }
+
+    public static SFunction<BlogComment, ?> commentFiledName2Function(String name) {
+        switch (name) {
+            case "commentContent":
+                return BlogComment::getCommentContent;
+            default:
+                return BlogComment::getCreateTime;
         }
     }
 }

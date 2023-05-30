@@ -22,6 +22,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Date;
 import java.util.Objects;
 
@@ -91,7 +92,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
         // 存入SecurityContextHolder
         // 获取权限信息封装到Authentication中
         UsernamePasswordAuthenticationToken authenticationToken =
-                new UsernamePasswordAuthenticationToken(loginUser, null);
+                new UsernamePasswordAuthenticationToken(loginUser, null, Collections.emptyList());
         SecurityContextHolder.getContext().setAuthentication(authenticationToken);
 
         // 放行

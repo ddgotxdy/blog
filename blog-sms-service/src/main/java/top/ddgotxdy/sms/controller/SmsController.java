@@ -5,15 +5,21 @@ import org.springframework.web.bind.annotation.*;
 import top.ddgotxdy.common.annotation.SensitiveWord;
 import top.ddgotxdy.common.model.*;
 import top.ddgotxdy.common.model.sms.addparam.CaptchaSendParam;
+import top.ddgotxdy.common.model.sms.addparam.CommentAddParam;
 import top.ddgotxdy.common.model.sms.addparam.MessageAddParam;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
+import top.ddgotxdy.common.model.sms.deleteparam.CommentDeleteParam;
 import top.ddgotxdy.common.model.sms.deleteparam.SensitiveDeleteParam;
+import top.ddgotxdy.common.model.sms.dto.CommentPageListDTO;
 import top.ddgotxdy.common.model.sms.dto.MessagePageListDTO;
 import top.ddgotxdy.common.model.sms.dto.SensitivePageListDTO;
 import top.ddgotxdy.common.model.sms.queryparam.CaptchaQueryParam;
+import top.ddgotxdy.common.model.sms.queryparam.CommentQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.MessageQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.SensitiveQueryParam;
+import top.ddgotxdy.common.model.sms.recoverparam.CommentRecoverParam;
 import top.ddgotxdy.common.model.sms.recoverparam.SensitiveRecoverParam;
+import top.ddgotxdy.common.model.sms.updateparam.CommentUpdateParam;
 import top.ddgotxdy.common.model.sms.updateparam.MessageUpdateParam;
 import top.ddgotxdy.common.model.sms.updateparam.SensitiveUpdateParam;
 import top.ddgotxdy.sms.service.SmsCmdBizService;
@@ -111,6 +117,58 @@ public class SmsController {
             @Validated @RequestBody CaptchaQueryParam captchaQueryParam
     ) {
         String result = smsQueryBizService.queryCaptcha(captchaQueryParam);
+        return ResultView.success(result);
+    }
+
+    @PostMapping("/comment/add")
+    @SensitiveWord
+    public ResultView<IdDTO> addComment(
+            @Validated @RequestBody CommentAddParam commentAddParam
+    ) {
+        IdDTO idDTO = smsCmdBizService.addComment(commentAddParam);
+        return ResultView.success(idDTO);
+    }
+
+    @PostMapping("/comment/update")
+    @SensitiveWord
+    public ResultView<IdDTO> updateComment(
+            @RequestBody CommentUpdateParam commentUpdateParam
+    ) {
+        IdDTO idDTO = smsCmdBizService.updateComment(commentUpdateParam);
+        return ResultView.success(idDTO);
+    }
+
+    @DeleteMapping("/comment/delete")
+    public ResultView<IdsDTO> deleteComment(
+            @RequestBody CommentDeleteParam commentDeleteParam
+    ) {
+        IdsDTO idsDTO = smsCmdBizService.deleteComment(commentDeleteParam);
+        return ResultView.success(idsDTO);
+    }
+
+    @DeleteMapping("/comment/recover")
+    public ResultView<IdsDTO> recoverComment(
+            @RequestBody CommentRecoverParam commentRecoverParam
+    ) {
+        IdsDTO idsDTO = smsCmdBizService.recoverComment(commentRecoverParam);
+        return ResultView.success(idsDTO);
+    }
+
+    @PostMapping("/comment/queryByPage")
+    public ResultView<PageResult<CommentPageListDTO>> queryCommentByPage(
+            @RequestBody PageQry<CommentQueryParam> commentQueryParamPageQry
+    ) {
+        PageResult<CommentPageListDTO> result
+                = smsQueryBizService.queryCommentByPage(commentQueryParamPageQry);
+        return ResultView.success(result);
+    }
+
+    @PostMapping("/comment/queryTreeByPage")
+    public ResultView<PageResult<CommentPageListDTO>> queryCommentTreeByPage(
+            @RequestBody PageQry<CommentQueryParam> commentQueryParamPageQry
+    ) {
+        PageResult<CommentPageListDTO> result
+                = smsQueryBizService.queryCommentTreeByPage(commentQueryParamPageQry);
         return ResultView.success(result);
     }
 

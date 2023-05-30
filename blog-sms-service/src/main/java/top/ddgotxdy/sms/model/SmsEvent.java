@@ -34,6 +34,22 @@ public enum SmsEvent {
      * 留言更新
      */
     MESSAGE_UPDATE(6),
+    /**
+     * 评论新增
+     */
+    COMMENT_ADD(7),
+    /**
+     * 评论更新
+     */
+    COMMENT_UPDATE(8),
+    /**
+     * 评论删除
+     */
+    COMMENT_DELETED(9),
+    /**
+     * 评论恢复
+     */
+    COMMENT_RECOVER(10),
     ;
     private final int code;
 }

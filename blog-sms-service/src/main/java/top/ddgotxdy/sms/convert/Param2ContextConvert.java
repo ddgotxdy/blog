@@ -1,9 +1,13 @@
 package top.ddgotxdy.sms.convert;
 
+import top.ddgotxdy.common.model.sms.addparam.CommentAddParam;
 import top.ddgotxdy.common.model.sms.addparam.MessageAddParam;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
+import top.ddgotxdy.common.model.sms.deleteparam.CommentDeleteParam;
 import top.ddgotxdy.common.model.sms.deleteparam.SensitiveDeleteParam;
+import top.ddgotxdy.common.model.sms.recoverparam.CommentRecoverParam;
 import top.ddgotxdy.common.model.sms.recoverparam.SensitiveRecoverParam;
+import top.ddgotxdy.common.model.sms.updateparam.CommentUpdateParam;
 import top.ddgotxdy.common.model.sms.updateparam.MessageUpdateParam;
 import top.ddgotxdy.common.model.sms.updateparam.SensitiveUpdateParam;
 import top.ddgotxdy.common.util.BeanCopyUtil;
@@ -68,6 +72,38 @@ public class Param2ContextConvert {
         BeanCopyUtil.copyProperties(messageUpdateParam, smsContext);
         // 设置事件
         smsContext.setSmsEvent(SmsEvent.MESSAGE_UPDATE);
+        return smsContext;
+    }
+
+    public static SmsContext addParamConvert(CommentAddParam commentAddParam) {
+        SmsContext smsContext = new SmsContext();
+        BeanCopyUtil.copyProperties(commentAddParam, smsContext);
+        // 设置事件
+        smsContext.setSmsEvent(SmsEvent.COMMENT_ADD);
+        return smsContext;
+    }
+
+    public static SmsContext updateParamConvert(CommentUpdateParam commentUpdateParam) {
+        SmsContext smsContext = new SmsContext();
+        BeanCopyUtil.copyProperties(commentUpdateParam, smsContext);
+        // 设置事件
+        smsContext.setSmsEvent(SmsEvent.COMMENT_UPDATE);
+        return smsContext;
+    }
+
+    public static SmsContext deleteParamContext(CommentDeleteParam commentDeleteParam) {
+        SmsContext smsContext = new SmsContext();
+        BeanCopyUtil.copyProperties(commentDeleteParam, smsContext);
+        // 设置事件
+        smsContext.setSmsEvent(SmsEvent.COMMENT_DELETED);
+        return smsContext;
+    }
+
+    public static SmsContext recoverSensitive(CommentRecoverParam commentRecoverParam) {
+        SmsContext smsContext = new SmsContext();
+        BeanCopyUtil.copyProperties(commentRecoverParam, smsContext);
+        // 设置事件
+        smsContext.setSmsEvent(SmsEvent.COMMENT_RECOVER);
         return smsContext;
     }
 }

@@ -2,9 +2,11 @@ package top.ddgotxdy.sms.service;
 
 import top.ddgotxdy.common.model.PageQry;
 import top.ddgotxdy.common.model.PageResult;
+import top.ddgotxdy.common.model.sms.dto.CommentPageListDTO;
 import top.ddgotxdy.common.model.sms.dto.MessagePageListDTO;
 import top.ddgotxdy.common.model.sms.dto.SensitivePageListDTO;
 import top.ddgotxdy.common.model.sms.queryparam.CaptchaQueryParam;
+import top.ddgotxdy.common.model.sms.queryparam.CommentQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.MessageQueryParam;
 import top.ddgotxdy.common.model.sms.queryparam.SensitiveQueryParam;
 
@@ -33,4 +35,8 @@ public interface SmsQueryBizService {
      * @return
      */
     String queryCaptcha(CaptchaQueryParam captchaQueryParam);
+
+    PageResult<CommentPageListDTO> queryCommentByPage(PageQry<CommentQueryParam> commentQueryParamPageQry);
+
+    PageResult<CommentPageListDTO> queryCommentTreeByPage(PageQry<CommentQueryParam> commentQueryParamPageQry);
 }

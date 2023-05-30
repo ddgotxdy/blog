@@ -9,7 +9,7 @@ import lombok.*;
 
 /**
  * @author: ddgo
- * @description: 博客文章实体类
+ * @description:
  */
 @Data
 @NoArgsConstructor

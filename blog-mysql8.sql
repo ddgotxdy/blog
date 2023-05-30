@@ -135,9 +135,8 @@ DROP TABLE IF EXISTS `blog_comment`;
 CREATE TABLE `blog_comment`  (
    `comment_id` bigint NOT NULL COMMENT '评论ID',
    `user_id` bigint NOT NULL COMMENT '评论用户ID',
-   `article_id` bigint NULL DEFAULT NULL COMMENT '评论主题id',
+   `article_id` bigint NULL DEFAULT NULL COMMENT '文章id',
    `comment_content` varchar(1024) NOT NULL COMMENT '评论内容',
-   `reply_user_id` bigint NULL DEFAULT NULL COMMENT '回复用户id',
    `parent_id` int NULL DEFAULT NULL COMMENT '父评论id',
    `is_delete` tinyint NOT NULL DEFAULT 0 COMMENT '是否删除  0否 1是',
    `audit_type` tinyint(4) NOT NULL DEFAULT 0 COMMENT '审核类型 0审核中 1审核通过 2审核失败',

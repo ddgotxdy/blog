@@ -1,8 +1,10 @@
 package top.ddgotxdy.sms.convert;
 
+import top.ddgotxdy.common.model.sms.dto.CommentPageListDTO;
 import top.ddgotxdy.common.model.sms.dto.MessagePageListDTO;
 import top.ddgotxdy.common.model.sms.dto.SensitivePageListDTO;
 import top.ddgotxdy.common.util.BeanCopyUtil;
+import top.ddgotxdy.dal.entity.BlogComment;
 import top.ddgotxdy.dal.entity.BlogMessage;
 import top.ddgotxdy.dal.entity.BlogSensitive;
 
@@ -25,5 +27,10 @@ public class Entity2DTOConvert {
         List<MessagePageListDTO> messagePageListDTOList
                 = BeanCopyUtil.copyListProperties(blogMessageList, MessagePageListDTO::new);
         return messagePageListDTOList;
+    }
+
+    public static List<CommentPageListDTO> commentList2TreeDTO(List<BlogComment> blogCommentList) {
+
+        return null;
     }
 }

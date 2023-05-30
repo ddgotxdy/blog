@@ -49,4 +49,29 @@ public class SmsContext {
      * 审核结果
      */
     private Integer auditType;
+
+    /**
+     * 评论ID
+     */
+    private Long commentId;
+
+    /**
+     * 文章id
+     */
+    private Long articleId;
+
+    /**
+     * 评论内容
+     */
+    private String commentContent;
+
+    /**
+     * 父评论id
+     */
+    private Integer parentId;
+
+    /**
+     * 评论id列表
+     */
+    private List<Long> commentIds;
 }

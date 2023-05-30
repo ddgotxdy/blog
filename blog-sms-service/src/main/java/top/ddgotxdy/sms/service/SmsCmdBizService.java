@@ -3,10 +3,14 @@ package top.ddgotxdy.sms.service;
 import top.ddgotxdy.common.model.IdDTO;
 import top.ddgotxdy.common.model.IdsDTO;
 import top.ddgotxdy.common.model.sms.addparam.CaptchaSendParam;
+import top.ddgotxdy.common.model.sms.addparam.CommentAddParam;
 import top.ddgotxdy.common.model.sms.addparam.MessageAddParam;
 import top.ddgotxdy.common.model.sms.addparam.SensitiveAddParam;
+import top.ddgotxdy.common.model.sms.deleteparam.CommentDeleteParam;
 import top.ddgotxdy.common.model.sms.deleteparam.SensitiveDeleteParam;
+import top.ddgotxdy.common.model.sms.recoverparam.CommentRecoverParam;
 import top.ddgotxdy.common.model.sms.recoverparam.SensitiveRecoverParam;
+import top.ddgotxdy.common.model.sms.updateparam.CommentUpdateParam;
 import top.ddgotxdy.common.model.sms.updateparam.MessageUpdateParam;
 import top.ddgotxdy.common.model.sms.updateparam.SensitiveUpdateParam;
 
@@ -63,4 +67,12 @@ public interface SmsCmdBizService {
      * @param captchaSendParam 请求参数
      */
     void sendCaptcha(CaptchaSendParam captchaSendParam);
+
+    IdDTO addComment(CommentAddParam commentAddParam);
+
+    IdDTO updateComment(CommentUpdateParam commentUpdateParam);
+
+    IdsDTO deleteComment(CommentDeleteParam commentDeleteParam);
+
+    IdsDTO recoverComment(CommentRecoverParam commentRecoverParam);
 }
