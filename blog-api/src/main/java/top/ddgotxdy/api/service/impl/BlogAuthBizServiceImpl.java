@@ -382,4 +382,11 @@ public class BlogAuthBizServiceImpl implements BlogAuthBizService {
                 .ids(idsDTO.getIds())
                 .build();
     }
+
+    @Override
+    public UserInfoByIdView getUserInfoById(Long userId) {
+        ResultView<UserInfoDTO> response = blogAuthClient.getUserInfo(userId);
+        UserInfoByIdView userInfoByIdView = SmsDTO2ViewConvert.userInfoByIdDTO2View(response.checkAndGetData());
+        return userInfoByIdView;
+    }
 }

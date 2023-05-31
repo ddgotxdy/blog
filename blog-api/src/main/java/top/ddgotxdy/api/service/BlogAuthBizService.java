@@ -222,4 +222,11 @@ public interface BlogAuthBizService {
      * @return IdView
      */
     IdsView recoverResource(List<Long> resourceIdList);
+
+    /**
+     * 通过id获取用户视图
+     * @param userId 用户id
+     * @return 用户信息视图
+     */
+    UserInfoByIdView getUserInfoById(Long userId);
 }

@@ -138,4 +138,10 @@ public class SmsDTO2ViewConvert {
         commentPageTreeListViewPageResult.setData(commentPageTreeListViews);
         return commentPageTreeListViewPageResult;
     }
+
+    public static UserInfoByIdView userInfoByIdDTO2View(UserInfoDTO userInfoDTO) {
+        UserInfoByIdView userInfoByIdView = new UserInfoByIdView();
+        BeanCopyUtil.copyProperties(userInfoDTO, userInfoByIdView);
+        return userInfoByIdView;
+    }
 }

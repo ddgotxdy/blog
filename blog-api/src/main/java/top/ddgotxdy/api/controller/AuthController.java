@@ -109,6 +109,15 @@ public class AuthController {
         return ResultView.success(userInfoViewPageResult);
     }
 
+    @ApiOperation("根据id获取用户信息")
+    @GetMapping("/user/getUserInfo/{userId}")
+    public ResultView<UserInfoByIdView> getUserInfoById(
+            @PathVariable("userId") Long userId
+    ) {
+        UserInfoByIdView userInfoByIdView = blogAuthBizService.getUserInfoById(userId);
+        return ResultView.success(userInfoByIdView);
+    }
+
     @ApiOperation("判断用户名是否合法")
     @GetMapping("/checkUsername")
     public ResultView<Boolean> checkUsername(
