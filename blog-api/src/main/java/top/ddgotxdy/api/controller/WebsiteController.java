@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.ddgotxdy.api.model.addparam.AboutMeAddApiParam;
+import top.ddgotxdy.api.model.addparam.PageConfigAddPaiParam;
+import top.ddgotxdy.api.model.view.PageConfigView;
 import top.ddgotxdy.api.service.BlogWebsiteBizService;
 import top.ddgotxdy.common.model.ResultView;
 
@@ -23,7 +25,7 @@ public class WebsiteController {
     @Resource
     private BlogWebsiteBizService blogWebsiteBizService;
 
-    @ApiOperation("管理员添加关于我")
+    @ApiOperation("管理员添加修改关于我")
     @PostMapping("/admin/aboutMe/add")
     public ResultView addAboutMe(
             @RequestBody AboutMeAddApiParam aboutMeAddApiParam
@@ -44,5 +46,28 @@ public class WebsiteController {
     public ResultView<String> queryAboutMeAdmin() {
         String aboutMe = blogWebsiteBizService.queryAboutMe();
         return ResultView.success(aboutMe);
+    }
+
+    @ApiOperation("管理员添加修改页面配置")
+    @PostMapping("/admin/page/add")
+    public ResultView addPage(
+            @RequestBody PageConfigAddPaiParam pageConfigAddPaiParam
+    ) {
+        blogWebsiteBizService.addPage(pageConfigAddPaiParam);
+        return ResultView.success();
+    }
+
+    @ApiOperation("用户查询page")
+    @PostMapping("/user/page/query")
+    public ResultView<PageConfigView> queryPage() {
+        PageConfigView pageConfigView = blogWebsiteBizService.queryPage();
+        return ResultView.success(pageConfigView);
+    }
+
+    @ApiOperation("管理查询page")
+    @PostMapping("/admin/page/query")
+    public ResultView<PageConfigView> queryPageAdmin() {
+        PageConfigView pageConfigView = blogWebsiteBizService.queryPage();
+        return ResultView.success(pageConfigView);
     }
 }

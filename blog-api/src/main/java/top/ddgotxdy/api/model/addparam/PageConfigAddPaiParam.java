@@ -9,8 +9,8 @@ import lombok.Data;
  * @description:
  */
 @Data
-@ApiModel("网站配置api添加参数")
-public class WebsiteConfigAddPaiParam {
+@ApiModel("网站页面api添加参数")
+public class PageConfigAddPaiParam {
     @ApiModelProperty("首页背景图片地址")
     private String homePageUrl;
     @ApiModelProperty("分类背景图片地址")
@@ -19,4 +19,16 @@ public class WebsiteConfigAddPaiParam {
     private String tagPageUrl;
     @ApiModelProperty("关于我背景图片地址")
     private String aboutMePageUrl;
+    @ApiModelProperty("留言背景图片地址")
+    private String messagePageUrl;
+    @ApiModelProperty("网站作者头像地址")
+    private String authorUrl;
+    @ApiModelProperty("网站作者名称")
+    private String authorName;
+    @ApiModelProperty("网站简介")
+    private String briefIntroduction;
+    @ApiModelProperty("qq地址")
+    private String qqUrl;
+    @ApiModelProperty("github地址")
+    private String githubUrl;
 }

@@ -21,4 +21,9 @@ public class RedisPrefix {
      * 关于我
      */
     public static final String ABOUT_ME = "aboutMe:";
+
+    /**
+     * Page配置
+     */
+    public static final String PAGE_CONFIG = "pageConfig:";
 }
