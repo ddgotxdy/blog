@@ -204,6 +204,8 @@ public class SmsApiParam2ClientParamConvert {
         // 范型复制
         CommentQueryApiUserParam commentQueryApiUserParam = commentQueryApiUserParamPageQry.getQueryParam();
         BeanCopyUtil.copyProperties(commentQueryApiUserParam, commentQueryParam);
+        // 默认值填充
+        commentQueryParam.setAuditType(AuditType.AUDIT_PASS.getCode());
         // 分页参数复制
         PageQry<CommentQueryParam> commentQueryParamPageQry = new PageQry<>();
         BeanCopyUtil.copyProperties(commentQueryApiUserParamPageQry, commentQueryParamPageQry);

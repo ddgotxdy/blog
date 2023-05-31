@@ -140,7 +140,7 @@ CREATE TABLE `blog_comment`  (
    `parent_id` bigint NULL DEFAULT NULL COMMENT '父评论id',
    `reply_user_id` bigint NULL DEFAULT NULL COMMENT '回复的用户ID',
    `is_delete` tinyint NOT NULL DEFAULT 0 COMMENT '是否删除  0否 1是',
-   `audit_type` tinyint(4) NOT NULL DEFAULT 0 COMMENT '审核类型 0审核中 1审核通过 2审核失败',
+   `audit_type` tinyint(4) NOT NULL DEFAULT 0 COMMENT '审核类型 1审核中 2审核通过 3审核失败',
    `create_time` bigint NOT NULL COMMENT '评论时间',
    `update_time` bigint NULL DEFAULT NULL COMMENT '更新时间',
    PRIMARY KEY (`comment_id`)

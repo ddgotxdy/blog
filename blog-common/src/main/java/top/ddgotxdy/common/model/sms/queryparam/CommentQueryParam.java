@@ -21,6 +21,6 @@ public class CommentQueryParam {
     @ApiModelProperty("评论内容")
     private String commentContent;
 
-    @ApiModelProperty("审核类型 0审核中 1审核通过 2审核失败")
+    @ApiModelProperty("审核类型 1审核中 2审核通过 3审核失败")
     private Integer auditType;
 }
