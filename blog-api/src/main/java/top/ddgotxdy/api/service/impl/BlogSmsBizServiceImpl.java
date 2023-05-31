@@ -217,7 +217,7 @@ public class BlogSmsBizServiceImpl implements BlogSmsBizService {
         PageQry<CommentQueryParam> commentQueryParamPageQry
                 = SmsApiParam2ClientParamConvert.commentTreeQueryApiParam2Param(commentQueryApiUserParamPageQry);
         ResultView<PageResult<CommentPageListDTO>> response
-                = blogSmsClient.queryCommentByPage(commentQueryParamPageQry);
+                = blogSmsClient.queryCommentTreeByPage(commentQueryParamPageQry);
         PageResult<CommentPageTreeListView> commentPageTreeListViewPageResult
                 = SmsDTO2ViewConvert.commentPageListDTO2TreeView(response.checkAndGetData());
         return commentPageTreeListViewPageResult;
