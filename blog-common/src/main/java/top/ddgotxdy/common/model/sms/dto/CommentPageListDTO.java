@@ -26,6 +26,9 @@ public class CommentPageListDTO {
     @ApiModelProperty("评论时间")
     private Long createTime;
 
+    @ApiModelProperty("回复评论用户ID")
+    private Long replyUserId;
+
     @ApiModelProperty("评论子节点")
     private List<CommentPageListDTO> children;
 }
