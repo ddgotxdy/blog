@@ -11,10 +11,7 @@ import top.ddgotxdy.api.model.queryparam.*;
 import top.ddgotxdy.api.model.updateparam.ArticleBodyUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.CategoryUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.TagUpdateApiParam;
-import top.ddgotxdy.api.model.view.ArticleBodyPageListUserView;
-import top.ddgotxdy.api.model.view.ArticleBodyPageListView;
-import top.ddgotxdy.api.model.view.CategoryPageListView;
-import top.ddgotxdy.api.model.view.TagPageListView;
+import top.ddgotxdy.api.model.view.*;
 import top.ddgotxdy.api.service.BlogArticleBizService;
 import top.ddgotxdy.common.model.*;
 
@@ -200,5 +197,12 @@ public class ArticleController {
     ) {
         PageResult<CategoryPageListView> result = articleBizService.queryCategoryByPageUser(categoryQueryApiUserParamPageQry);
         return ResultView.success(result);
+    }
+
+    @ApiOperation("查询用户总数")
+    @GetMapping("/user/getTotalCount")
+    public ResultView<TotalCountView> getTotalCount() {
+        TotalCountView totalCountView = articleBizService.getTotalCount();
+        return ResultView.success(totalCountView);
     }
 }

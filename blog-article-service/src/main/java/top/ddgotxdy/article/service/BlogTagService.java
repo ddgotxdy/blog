@@ -23,4 +23,6 @@ public interface BlogTagService extends IService<BlogTag> {
      * @return 是否成功
      */
     boolean deleteById(Long tagId);
+
+    long getCount();
 }

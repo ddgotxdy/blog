@@ -46,4 +46,6 @@ public interface ArticleQueryBizService {
      * @return PageResult<ArticleBodyPageListDTO>
      */
     PageResult<ArticleBodyPageListDTO> queryArticleBodyByPage(PageQry<ArticleBodyQueryParam> articleBodyQueryParamPageQry);
+
+    TotalCountDTO getTotalCount();
 }

@@ -52,4 +52,11 @@ public class BlogArticleServiceImpl extends ServiceImpl<BlogArticleMapper, BlogA
                 .in(BlogArticle::getArticleId, articleIds);
         return this.update(updateWrapper);
     }
+
+    @Override
+    public long getCount() {
+        LambdaQueryWrapper<BlogArticle> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(BlogArticle::getIsDelete, false);
+        return this.count(queryWrapper);
+    }
 }

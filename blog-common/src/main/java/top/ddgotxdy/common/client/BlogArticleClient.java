@@ -4,6 +4,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import top.ddgotxdy.common.model.*;
@@ -16,6 +17,7 @@ import top.ddgotxdy.common.model.article.deleteparam.TagDeleteParam;
 import top.ddgotxdy.common.model.article.dto.ArticleBodyPageListDTO;
 import top.ddgotxdy.common.model.article.dto.CategoryPageListDTO;
 import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
+import top.ddgotxdy.common.model.article.dto.TotalCountDTO;
 import top.ddgotxdy.common.model.article.queryparam.ArticleBodyQueryParam;
 import top.ddgotxdy.common.model.article.queryparam.CategoryQueryParam;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
@@ -186,4 +188,6 @@ public interface BlogArticleClient {
             @Validated @RequestBody PageQry<CategoryQueryParam> categoryQueryParamPageQry
     );
 
+    @GetMapping("openfeign/article/getTotalCount")
+    ResultView<TotalCountDTO> getTotalCount();
 }

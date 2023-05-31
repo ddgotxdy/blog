@@ -7,10 +7,7 @@ import top.ddgotxdy.api.model.queryparam.*;
 import top.ddgotxdy.api.model.updateparam.ArticleBodyUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.CategoryUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.TagUpdateApiParam;
-import top.ddgotxdy.api.model.view.ArticleBodyPageListUserView;
-import top.ddgotxdy.api.model.view.ArticleBodyPageListView;
-import top.ddgotxdy.api.model.view.CategoryPageListView;
-import top.ddgotxdy.api.model.view.TagPageListView;
+import top.ddgotxdy.api.model.view.*;
 import top.ddgotxdy.common.model.IdView;
 import top.ddgotxdy.common.model.IdsView;
 import top.ddgotxdy.common.model.PageQry;
@@ -148,4 +145,6 @@ public interface BlogArticleBizService {
      * @return PageResult<CategoryPageListView>
      */
     PageResult<CategoryPageListView> queryCategoryByPageUser(PageQry<CategoryQueryApiUserParam> categoryQueryApiUserParamPageQry);
+
+    TotalCountView getTotalCount();
 }

@@ -1,5 +1,6 @@
 package top.ddgotxdy.article.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,12 @@ public class BlogTagServiceImpl extends ServiceImpl<BlogTagMapper, BlogTag> impl
                 .set(BlogTag::getIsDelete, true)
                 .in(BlogTag::getTagId, tagId);
         return this.update(updateWrapper);
+    }
+
+    @Override
+    public long getCount() {
+        LambdaQueryWrapper<BlogTag> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(BlogTag::getIsDelete, false);
+        return this.count(queryWrapper);
     }
 }

@@ -1,5 +1,6 @@
 package top.ddgotxdy.article.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.LambdaUpdateWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.stereotype.Service;
@@ -32,5 +33,12 @@ public class BlogCategoryServiceImpl extends ServiceImpl<BlogCategoryMapper, Blo
                 .set(BlogCategory::getIsDelete, false)
                 .in(BlogCategory::getCategoryId, categoryIds);
         return this.update(updateWrapper);
+    }
+
+    @Override
+    public long getCount() {
+        LambdaQueryWrapper<BlogCategory> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(BlogCategory::getIsDelete, false);
+        return this.count(queryWrapper);
     }
 }

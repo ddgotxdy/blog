@@ -24,4 +24,6 @@ public interface BlogCategoryService extends IService<BlogCategory> {
      * @return 是否恢复成功
      */
     boolean recoverBatchByIds(List<Long> categoryIds);
+
+    long getCount();
 }

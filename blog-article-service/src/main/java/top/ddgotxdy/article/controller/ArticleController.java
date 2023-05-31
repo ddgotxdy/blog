@@ -172,4 +172,9 @@ public class ArticleController {
         return ResultView.success(result);
     }
 
+    @GetMapping("/getTotalCount")
+    public ResultView<TotalCountDTO> getTotalCount() {
+        TotalCountDTO totalCountDTO = articleQueryBizService.getTotalCount();
+        return ResultView.success(totalCountDTO);
+    }
 }

@@ -38,4 +38,5 @@ public interface BlogArticleService extends IService<BlogArticle> {
      */
     boolean recoveryBatchByIds(List<Long> articleIds);
 
+    long getCount();
 }

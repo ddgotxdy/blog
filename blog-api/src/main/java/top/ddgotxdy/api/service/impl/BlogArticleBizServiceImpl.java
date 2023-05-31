@@ -10,10 +10,7 @@ import top.ddgotxdy.api.model.queryparam.*;
 import top.ddgotxdy.api.model.updateparam.ArticleBodyUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.CategoryUpdateApiParam;
 import top.ddgotxdy.api.model.updateparam.TagUpdateApiParam;
-import top.ddgotxdy.api.model.view.ArticleBodyPageListUserView;
-import top.ddgotxdy.api.model.view.ArticleBodyPageListView;
-import top.ddgotxdy.api.model.view.CategoryPageListView;
-import top.ddgotxdy.api.model.view.TagPageListView;
+import top.ddgotxdy.api.model.view.*;
 import top.ddgotxdy.api.service.BlogArticleBizService;
 import top.ddgotxdy.common.client.BlogArticleClient;
 import top.ddgotxdy.common.model.*;
@@ -26,6 +23,7 @@ import top.ddgotxdy.common.model.article.deleteparam.TagDeleteParam;
 import top.ddgotxdy.common.model.article.dto.ArticleBodyPageListDTO;
 import top.ddgotxdy.common.model.article.dto.CategoryPageListDTO;
 import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
+import top.ddgotxdy.common.model.article.dto.TotalCountDTO;
 import top.ddgotxdy.common.model.article.queryparam.ArticleBodyQueryParam;
 import top.ddgotxdy.common.model.article.queryparam.CategoryQueryParam;
 import top.ddgotxdy.common.model.article.queryparam.TagQueryParam;
@@ -246,5 +244,13 @@ public class BlogArticleBizServiceImpl implements BlogArticleBizService {
         PageResult<CategoryPageListView> categoryPageListViewPageResult
                 = ArticleDTO2ViewConvert.categoryPageListDTO2View(response.checkAndGetData());
         return categoryPageListViewPageResult;
+    }
+
+    @Override
+    public TotalCountView getTotalCount() {
+        ResultView<TotalCountDTO> response = articleClient.getTotalCount();
+        TotalCountView totalCountView
+                = ArticleDTO2ViewConvert.totalDTO2View(response.checkAndGetData());
+        return totalCountView;
     }
 }

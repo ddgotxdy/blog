@@ -160,4 +160,16 @@ public class ArticleQueryBizServiceImpl implements ArticleQueryBizService {
         pageResult.setData(articleBodyPageListDTOList);
         return pageResult;
     }
+
+    @Override
+    public TotalCountDTO getTotalCount() {
+        long articleCount = blogArticleService.getCount();
+        long categoryCount = blogCategoryService.getCount();
+        long tagCount = blogTagService.getCount();
+        TotalCountDTO totalCountDTO = new TotalCountDTO();
+        totalCountDTO.setArticleCount(articleCount);
+        totalCountDTO.setCategoryCount(categoryCount);
+        totalCountDTO.setTagCount(tagCount);
+        return totalCountDTO;
+    }
 }

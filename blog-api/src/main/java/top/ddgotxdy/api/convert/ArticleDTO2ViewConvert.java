@@ -1,14 +1,12 @@
 package top.ddgotxdy.api.convert;
 
-import top.ddgotxdy.api.model.view.ArticleBodyPageListUserView;
-import top.ddgotxdy.api.model.view.ArticleBodyPageListView;
-import top.ddgotxdy.api.model.view.CategoryPageListView;
-import top.ddgotxdy.api.model.view.TagPageListView;
+import top.ddgotxdy.api.model.view.*;
 import top.ddgotxdy.common.enums.article.ArticleStatus;
 import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.article.dto.ArticleBodyPageListDTO;
 import top.ddgotxdy.common.model.article.dto.CategoryPageListDTO;
 import top.ddgotxdy.common.model.article.dto.TagPageListDTO;
+import top.ddgotxdy.common.model.article.dto.TotalCountDTO;
 import top.ddgotxdy.common.util.BeanCopyUtil;
 
 import java.util.List;
@@ -76,5 +74,11 @@ public class ArticleDTO2ViewConvert {
         BeanCopyUtil.copyProperties(articleBodyPageListDTOPageResult, articleBodyPageListUserViewPageResult);
         articleBodyPageListUserViewPageResult.setData(articleBodyPageListUserViews);
         return articleBodyPageListUserViewPageResult;
+    }
+
+    public static TotalCountView totalDTO2View(TotalCountDTO totalCountDTO) {
+        TotalCountView totalCountView = new TotalCountView();
+        BeanCopyUtil.copyProperties(totalCountDTO, totalCountView);
+        return totalCountView;
     }
 }
