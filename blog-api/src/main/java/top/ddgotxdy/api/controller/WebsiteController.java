@@ -38,4 +38,11 @@ public class WebsiteController {
         String aboutMe = blogWebsiteBizService.queryAboutMe();
         return ResultView.success(aboutMe);
     }
+
+    @ApiOperation("管理查看关于我")
+    @PostMapping("/admin/aboutMe/query")
+    public ResultView<String> queryAboutMeAdmin() {
+        String aboutMe = blogWebsiteBizService.queryAboutMe();
+        return ResultView.success(aboutMe);
+    }
 }
