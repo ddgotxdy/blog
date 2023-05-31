@@ -5,6 +5,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import top.ddgotxdy.common.enums.ResultCode;
+import top.ddgotxdy.common.enums.sms.AuditType;
 import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.dal.entity.BlogComment;
 import top.ddgotxdy.sms.annotation.SmsEventSelector;
@@ -56,6 +57,8 @@ public class CommentAddServiceImpl extends AbstractSmsService {
     @Transactional(rollbackFor = Exception.class)
     protected void doExecute(SmsContext smsContext) {
         BlogComment blogComment = Context2EntityConvert.context2CommentForAdd(smsContext);
+        // 新增默认审核中
+        blogComment.setAuditType(AuditType.AUDIT_ING.getCode());
         blogCommentService.save(blogComment);
         smsContext.setCommentId(blogComment.getCommentId());
     }
