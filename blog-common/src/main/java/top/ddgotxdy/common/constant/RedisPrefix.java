@@ -16,4 +16,9 @@ public class RedisPrefix {
      * 验证码
      */
     public static final String CAPTCHA = "captcha:";
+
+    /**
+     * 关于我
+     */
+    public static final String ABOUT_ME = "aboutMe:";
 }
