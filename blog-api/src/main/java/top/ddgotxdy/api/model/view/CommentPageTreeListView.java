@@ -22,6 +22,9 @@ public class CommentPageTreeListView {
     @ApiModelProperty("评论内容")
     private String commentContent;
 
+    @ApiModelProperty("回复评论用户ID")
+    private Long replyUserId;
+
     @ApiModelProperty("评论时间")
     private Long createTime;
 
