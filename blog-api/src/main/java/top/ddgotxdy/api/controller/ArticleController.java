@@ -199,7 +199,7 @@ public class ArticleController {
         return ResultView.success(result);
     }
 
-    @ApiOperation("查询用户总数")
+    @ApiOperation("查询总数")
     @GetMapping("/user/getTotalCount")
     public ResultView<TotalCountView> getTotalCount() {
         TotalCountView totalCountView = articleBizService.getTotalCount();
