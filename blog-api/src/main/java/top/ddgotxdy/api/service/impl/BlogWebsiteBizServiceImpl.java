@@ -2,6 +2,7 @@ package top.ddgotxdy.api.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 import top.ddgotxdy.api.model.addparam.AboutMeAddApiParam;
@@ -31,6 +32,7 @@ import static top.ddgotxdy.common.constant.RedisPrefix.PAGE_CONFIG;
  * @author: ddgo
  * @description:
  */
+@Slf4j
 @Service
 public class BlogWebsiteBizServiceImpl implements BlogWebsiteBizService {
     @Resource
@@ -72,11 +74,15 @@ public class BlogWebsiteBizServiceImpl implements BlogWebsiteBizService {
         LambdaQueryWrapper<BlogOplog> queryWrapper = new LambdaQueryWrapper<>();
         // 查询值
         OplogQueryApiParam queryParam = oplogQueryApiParamPageQry.getQueryParam();
+        OplogType operatorType = queryParam.getOperatorType();
+        Integer operatorTypeCode = Objects.isNull(operatorType) ? 0 : operatorType.getCode();
+        OplogStage oplogStage = queryParam.getOperatorStage();
+        Integer oplogStageCode = Objects.isNull(oplogStage) ? 0 : oplogStage.getCode();
         queryWrapper
                 .eq(Objects.nonNull(queryParam.getOperatorId()), BlogOplog::getOperatorId, queryParam.getOperatorId())
                 .eq(Objects.nonNull(queryParam.getUserId()), BlogOplog::getUserId, queryParam.getUserId())
-                .like(Objects.nonNull(queryParam.getOperatorType()), BlogOplog::getOperatorType, queryParam.getOperatorType().getCode())
-                .like(Objects.nonNull(queryParam.getOperatorStage()), BlogOplog::getOperatorStage, queryParam.getOperatorStage().getCode());
+                .eq(Objects.nonNull(operatorType), BlogOplog::getOperatorType, operatorTypeCode)
+                .eq(Objects.nonNull(oplogStage), BlogOplog::getOperatorStage, oplogStageCode);
         // 排序规则
         LinkedHashMap<String, Boolean> orderByFields = oplogQueryApiParamPageQry.getOrderByFields();
         if (CollectionUtils.isEmpty(orderByFields)) {
