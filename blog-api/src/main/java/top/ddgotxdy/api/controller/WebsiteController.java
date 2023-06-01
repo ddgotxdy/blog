@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.ddgotxdy.api.model.addparam.AboutMeAddApiParam;
-import top.ddgotxdy.api.model.addparam.PageConfigAddPaiParam;
+import top.ddgotxdy.api.model.addparam.PageConfigAddApiParam;
 import top.ddgotxdy.api.model.view.PageConfigView;
 import top.ddgotxdy.api.service.BlogWebsiteBizService;
 import top.ddgotxdy.common.model.ResultView;
@@ -51,9 +51,9 @@ public class WebsiteController {
     @ApiOperation("管理员添加修改页面配置")
     @PostMapping("/admin/page/add")
     public ResultView addPage(
-            @RequestBody PageConfigAddPaiParam pageConfigAddPaiParam
+            @RequestBody PageConfigAddApiParam pageConfigAddApiParam
     ) {
-        blogWebsiteBizService.addPage(pageConfigAddPaiParam);
+        blogWebsiteBizService.addPage(pageConfigAddApiParam);
         return ResultView.success();
     }
 

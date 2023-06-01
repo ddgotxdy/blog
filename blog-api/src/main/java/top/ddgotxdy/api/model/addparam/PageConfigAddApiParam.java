@@ -10,7 +10,7 @@ import lombok.Data;
  */
 @Data
 @ApiModel("网站页面api添加参数")
-public class PageConfigAddPaiParam {
+public class PageConfigAddApiParam {
     @ApiModelProperty("首页背景图片地址")
     private String homePageUrl;
     @ApiModelProperty("分类背景图片地址")

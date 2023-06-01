@@ -1,7 +1,7 @@
 package top.ddgotxdy.api.service;
 
 import top.ddgotxdy.api.model.addparam.AboutMeAddApiParam;
-import top.ddgotxdy.api.model.addparam.PageConfigAddPaiParam;
+import top.ddgotxdy.api.model.addparam.PageConfigAddApiParam;
 import top.ddgotxdy.api.model.view.PageConfigView;
 
 /**
@@ -13,7 +13,7 @@ public interface BlogWebsiteBizService {
 
     String queryAboutMe();
 
-    void addPage(PageConfigAddPaiParam pageConfigAddPaiParam);
+    void addPage(PageConfigAddApiParam pageConfigAddApiParam);
 
     PageConfigView queryPage();
 }

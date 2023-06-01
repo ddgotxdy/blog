@@ -2,9 +2,10 @@ package top.ddgotxdy.api.service.impl;
 
 import org.springframework.stereotype.Service;
 import top.ddgotxdy.api.model.addparam.AboutMeAddApiParam;
-import top.ddgotxdy.api.model.addparam.PageConfigAddPaiParam;
+import top.ddgotxdy.api.model.addparam.PageConfigAddApiParam;
 import top.ddgotxdy.api.model.view.PageConfigView;
 import top.ddgotxdy.api.service.BlogWebsiteBizService;
+import top.ddgotxdy.common.util.BeanCopyUtil;
 import top.ddgotxdy.common.util.RedisCache;
 
 import javax.annotation.Resource;
@@ -33,12 +34,15 @@ public class BlogWebsiteBizServiceImpl implements BlogWebsiteBizService {
     }
 
     @Override
-    public void addPage(PageConfigAddPaiParam pageConfigAddPaiParam) {
-        redisCache.setCacheObject(PAGE_CONFIG, pageConfigAddPaiParam);
+    public void addPage(PageConfigAddApiParam pageConfigAddApiParam) {
+        redisCache.setCacheObject(PAGE_CONFIG, pageConfigAddApiParam);
     }
 
     @Override
     public PageConfigView queryPage() {
-        return redisCache.getCacheObject(PAGE_CONFIG);
+        PageConfigAddApiParam pageConfigAddApiParam = redisCache.getCacheObject(PAGE_CONFIG);
+        PageConfigView pageConfigView = new PageConfigView();
+        BeanCopyUtil.copyProperties(pageConfigAddApiParam, pageConfigView);
+        return pageConfigView;
     }
 }
