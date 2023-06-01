@@ -2,14 +2,19 @@ package top.ddgotxdy.api.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import top.ddgotxdy.api.model.addparam.AboutMeAddApiParam;
 import top.ddgotxdy.api.model.addparam.PageConfigAddApiParam;
+import top.ddgotxdy.api.model.queryparam.OplogQueryApiParam;
+import top.ddgotxdy.api.model.view.OplogPageListView;
 import top.ddgotxdy.api.model.view.PageConfigView;
 import top.ddgotxdy.api.service.BlogWebsiteBizService;
+import top.ddgotxdy.common.model.PageQry;
+import top.ddgotxdy.common.model.PageResult;
 import top.ddgotxdy.common.model.ResultView;
 
 import javax.annotation.Resource;
@@ -69,5 +74,14 @@ public class WebsiteController {
     public ResultView<PageConfigView> queryPageAdmin() {
         PageConfigView pageConfigView = blogWebsiteBizService.queryPage();
         return ResultView.success(pageConfigView);
+    }
+
+    @ApiOperation("操作日志查询")
+    @PostMapping("/admin/oplog/queryByPage")
+    public ResultView<PageResult<OplogPageListView>> queryOplogByPage(
+            @Validated @RequestBody PageQry<OplogQueryApiParam> oplogQueryApiParamPageQry
+    ) {
+        PageResult<OplogPageListView> result = blogWebsiteBizService.queryOplogByPage(oplogQueryApiParamPageQry);
+        return ResultView.success(result);
     }
 }

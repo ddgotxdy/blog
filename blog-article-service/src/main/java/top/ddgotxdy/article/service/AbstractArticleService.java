@@ -1,10 +1,15 @@
 package top.ddgotxdy.article.service;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.CollectionUtils;
 import top.ddgotxdy.article.model.ArticleContext;
+import top.ddgotxdy.common.enums.OplogStage;
+import top.ddgotxdy.common.enums.OplogType;
+import top.ddgotxdy.common.service.BlogOplogService;
 import top.ddgotxdy.dal.entity.BlogCategory;
+import top.ddgotxdy.dal.entity.BlogOplog;
 import top.ddgotxdy.dal.entity.BlogTag;
 
 import javax.annotation.Resource;
@@ -21,6 +26,8 @@ public abstract class AbstractArticleService implements ArticleBaseService {
     private BlogCategoryService blogCategoryService;
     @Resource
     private BlogTagService blogTagService;
+    @Resource
+    private BlogOplogService blogOplogService;
 
     @Override
     public void execute(ArticleContext articleContext) {
@@ -29,11 +36,11 @@ public abstract class AbstractArticleService implements ArticleBaseService {
             return;
         }
         // 通过校验，操作日志预落库
-        preOplog(articleContext);
+        Long oplogId = preOplog(articleContext);
         // 开始执行文章操作
         doExecute(articleContext);
         // 已经落库，操作日志实际落库
-        afterOplog(articleContext);
+        afterOplog(oplogId);
     }
 
     /**
@@ -53,16 +60,26 @@ public abstract class AbstractArticleService implements ArticleBaseService {
      * 操作日志预落库
      * @param articleContext 文章上下文
      */
-    protected void preOplog(ArticleContext articleContext) {
-        // TODO 操作日志记录
+    protected Long preOplog(ArticleContext articleContext) {
+        BlogOplog blogOplog = new BlogOplog();
+        blogOplog.setUserId(articleContext.getUserId());
+        blogOplog.setOperatorType(
+                OplogType.valueOf(articleContext.getArticleEvent().name()).getCode()
+        );
+        blogOplog.setOperatorContent(JSON.toJSONString(articleContext));
+        blogOplog.setOperatorStage(OplogStage.PRE_OPLOG.getCode());
+        blogOplogService.save(blogOplog);
+        return blogOplog.getOperatorId();
     }
 
     /**
      * 操作日志后落库
-     * @param articleContext 文章上下文
+     * @param oplogId 文章上下文
      */
-    protected void afterOplog(ArticleContext articleContext) {
-        // TODO 操作日志记录
+    protected void afterOplog(Long oplogId) {
+        BlogOplog blogOplog = new BlogOplog();
+        blogOplog.setOperatorId(oplogId);
+        blogOplog.setOperatorStage(OplogStage.AFTER_OPLOG.getCode());
     }
 
     /**

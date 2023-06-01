@@ -1,6 +1,9 @@
 package top.ddgotxdy.article.model;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -9,6 +12,9 @@ import java.util.List;
  * @description: 文章上下文
  */
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class ArticleContext {
     /**
      * 文章的事件
