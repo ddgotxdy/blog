@@ -126,6 +126,9 @@ public class BlogUserServiceImpl extends ServiceImpl<BlogUserMapper, BlogUser> i
         }
         // 查询对应的权限信息
         List<Long> menuIdList = blogRoleMenuService.queryMenuIdListByRoleId(roleId);
+        if (CollectionUtils.isEmpty(menuIdList)) {
+            return new LoginUser(blogUser, null, Collections.emptyList());
+        }
         List<BlogMenu> blogMenus = blogMenuService.listByIds(menuIdList);
         // 路由去重
         List<String> paths = blogMenus.stream()
