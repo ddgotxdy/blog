@@ -4,13 +4,15 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
+import java.io.Serializable;
+
 /**
  * @author: ddgo
  * @description:
  */
 @Data
 @ApiModel("网站页面api添加参数")
-public class PageConfigAddApiParam {
+public class PageConfigAddApiParam implements Serializable {
     @ApiModelProperty("首页背景图片地址")
     private String homePageUrl;
     @ApiModelProperty("分类背景图片地址")

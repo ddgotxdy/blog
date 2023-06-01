@@ -1,4 +1,4 @@
-package top.ddgotxdy.common.service;
+package top.ddgotxdy.common.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import org.springframework.security.core.userdetails.UserDetails;

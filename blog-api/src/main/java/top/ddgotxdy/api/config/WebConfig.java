@@ -6,12 +6,18 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import top.ddgotxdy.api.interceptor.DataInitInterceptor;
 import top.ddgotxdy.api.interceptor.UrlAuthInterceptor;
 
+import javax.annotation.Resource;
+
 /**
  * @author: ddgo
  * @description: 拦截器配置
  */
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
+    @Resource
+    private UrlAuthInterceptor urlAuthInterceptor;
+    @Resource
+    private DataInitInterceptor dataInitInterceptor;
 
     /**
      * 添加拦截器
@@ -20,10 +26,10 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry
-                .addInterceptor(new DataInitInterceptor())
+                .addInterceptor(dataInitInterceptor)
                 .addPathPatterns("/**");
         registry
-                .addInterceptor(new UrlAuthInterceptor())
+                .addInterceptor(urlAuthInterceptor)
                 .addPathPatterns("/**");
     }
 }

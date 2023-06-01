@@ -1,6 +1,7 @@
 package top.ddgotxdy.api.interceptor;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import top.ddgotxdy.common.constant.RedisPrefix;
 import top.ddgotxdy.common.model.LoginUser;
@@ -10,13 +11,13 @@ import top.ddgotxdy.common.util.RedisCache;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * @author: ddgo
  * @description: 接口权限校验
  */
 @Slf4j
+@Component
 public class UrlAuthInterceptor implements HandlerInterceptor {
     @Resource
     private RedisCache redisCache;
@@ -28,8 +29,8 @@ public class UrlAuthInterceptor implements HandlerInterceptor {
         Long userId = ContextScope.getUserId();
         String redisKey = RedisPrefix.LOGIN + userId;
         LoginUser loginUser = redisCache.getCacheObject(redisKey);
-        List<String> uris = loginUser.getUris();
         // TODO 开发阶段不拦截
+//        List<String> uris = loginUser.getUris();
 //        if (!uris.contains(uri)) {
 //            throw new BlogException(HttpStatus.FORBIDDEN.value(), "权限不足");
 //        }
