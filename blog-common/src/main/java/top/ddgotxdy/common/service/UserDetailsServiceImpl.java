@@ -5,20 +5,14 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 import top.ddgotxdy.common.enums.ResultCode;
 import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.common.model.LoginUser;
-import top.ddgotxdy.dal.entity.BlogMenu;
-import top.ddgotxdy.dal.entity.BlogRole;
-import top.ddgotxdy.dal.entity.BlogRoleMenu;
-import top.ddgotxdy.dal.entity.BlogUser;
-import top.ddgotxdy.dal.mapper.BlogMenuMapper;
-import top.ddgotxdy.dal.mapper.BlogRoleMapper;
-import top.ddgotxdy.dal.mapper.BlogRoleMenuMapper;
-import top.ddgotxdy.dal.mapper.BlogUserMapper;
+import top.ddgotxdy.dal.entity.*;
+import top.ddgotxdy.dal.mapper.*;
 
 import javax.annotation.Resource;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -37,9 +31,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private BlogMenuMapper blogMenuMapper;
     @Resource
     private BlogRoleMenuMapper blogRoleMenuMapper;
+    @Resource
+    private BlogRoleResourceMapper blogRoleResourceMapper;
+    @Resource
+    private BlogResourceMapper blogResourceMapper;
 
     @Override
     public UserDetails loadUserByUsername(String accountName) throws UsernameNotFoundException {
+        LoginUser loginUser = new LoginUser();
         // 查询用户信息
         LambdaQueryWrapper<BlogUser> queryWrapper = new LambdaQueryWrapper<>();
         // 可以根据用户名或者邮箱进行登录
@@ -54,15 +53,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         if(Objects.isNull(blogUser)) {
             throw new BlogException(ResultCode.LOGIN_ERROR);
         }
+        loginUser.setUser(blogUser);
         // 获取角色表
         Long roleId = blogUser.getRoleId();
         BlogRole blogRole = blogRoleMapper.selectById(roleId);
-        // 如果没有查询到角色，就返回默认角色权限 TODO
         if(Objects.isNull(blogRole) || blogRole.getIsDelete()) {
-            List<String> permissionDefault = Collections.emptyList();
-            return new LoginUser(blogUser, permissionDefault, permissionDefault);
+            return loginUser;
         }
-        // 查询对应的权限信息
+        // 查询对应的路由信息
         LambdaQueryWrapper<BlogRoleMenu> lambdaQueryWrapper = new LambdaQueryWrapper<>();
         lambdaQueryWrapper
                 .eq(BlogRoleMenu::getRoleId, roleId);
@@ -70,20 +68,34 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         List<Long> menuIdList = roleMenuList.stream()
                 .map(BlogRoleMenu::getMenuId)
                 .collect(Collectors.toList());
-        List<BlogMenu> blogMenus = blogMenuMapper.selectBatchIds(menuIdList);
-        // 权限去重
-//        List<String> permissions = blogMenus.stream()
-//                .filter(blogMenu -> !blogMenu.getIsDelete())
-//                .map(BlogMenu::getPerms)
-//                .distinct()
-//                .collect(Collectors.toList());
-        // 路由去重
-        List<String> paths = blogMenus.stream()
-                .filter(blogMenu -> !blogMenu.getIsDelete())
-                .map(BlogMenu::getPath)
-                .distinct()
+        if (!CollectionUtils.isEmpty(menuIdList)) {
+            List<BlogMenu> blogMenus = blogMenuMapper.selectBatchIds(menuIdList);
+            // 路由去重
+            List<String> paths = blogMenus.stream()
+                    .filter(blogMenu -> !blogMenu.getIsDelete())
+                    .map(BlogMenu::getPath)
+                    .distinct()
+                    .collect(Collectors.toList());
+            loginUser.setPaths(paths);
+        }
+        // 查询对应的权限信息
+        LambdaQueryWrapper<BlogRoleResource> resourceLambdaQueryWrapper = new LambdaQueryWrapper<>();
+        resourceLambdaQueryWrapper
+                .eq(BlogRoleResource::getRoleId, roleId);
+        List<BlogRoleResource> roleResourceList = blogRoleResourceMapper.selectList(resourceLambdaQueryWrapper);
+        List<Long> resourceIdList = roleResourceList.stream()
+                .map(BlogRoleResource::getResourceId)
                 .collect(Collectors.toList());
-        // 封装成UserDetails
-        return new LoginUser(blogUser, null, paths);
+        if (!CollectionUtils.isEmpty(resourceIdList)) {
+            List<BlogResource> blogResources = blogResourceMapper.selectBatchIds(resourceIdList);
+            // path去重
+            List<String> uris = blogResources.stream()
+                    .filter(blogResource -> !blogResource.getIsDelete())
+                    .map(BlogResource::getUri)
+                    .distinct()
+                    .collect(Collectors.toList());
+            loginUser.setUris(uris);
+        }
+        return loginUser;
     }
 }

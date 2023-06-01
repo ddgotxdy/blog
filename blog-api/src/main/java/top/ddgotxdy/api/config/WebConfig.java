@@ -4,6 +4,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import top.ddgotxdy.api.interceptor.DataInitInterceptor;
+import top.ddgotxdy.api.interceptor.UrlAuthInterceptor;
 
 /**
  * @author: ddgo
@@ -20,6 +21,9 @@ public class WebConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry
                 .addInterceptor(new DataInitInterceptor())
+                .addPathPatterns("/**");
+        registry
+                .addInterceptor(new UrlAuthInterceptor())
                 .addPathPatterns("/**");
     }
 }

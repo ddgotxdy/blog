@@ -11,6 +11,7 @@ import top.ddgotxdy.common.enums.ResultCode;
 import top.ddgotxdy.common.exception.BlogException;
 import top.ddgotxdy.common.model.LoginUser;
 import top.ddgotxdy.dal.entity.BlogMenu;
+import top.ddgotxdy.dal.entity.BlogResource;
 import top.ddgotxdy.dal.entity.BlogRole;
 import top.ddgotxdy.dal.entity.BlogUser;
 import top.ddgotxdy.dal.mapper.BlogUserMapper;
@@ -37,6 +38,8 @@ public class BlogUserServiceImpl extends ServiceImpl<BlogUserMapper, BlogUser> i
     private BlogRoleMenuService blogRoleMenuService;
     @Resource
     private BlogRoleResourceService blogRoleResourceService;
+    @Resource
+    private BlogResourceService blogResourceService;
 
     @Override
     public boolean deleteById(Long userId) {
@@ -104,6 +107,7 @@ public class BlogUserServiceImpl extends ServiceImpl<BlogUserMapper, BlogUser> i
 
     @Override
     public LoginUser loadUserByUserId(Long userId) {
+        LoginUser loginUser = new LoginUser();
         // 查询用户信息
         LambdaQueryWrapper<BlogUser> queryWrapper = new LambdaQueryWrapper<>();
         // 可以根据用户id
@@ -116,28 +120,38 @@ public class BlogUserServiceImpl extends ServiceImpl<BlogUserMapper, BlogUser> i
             throw new BlogException(ResultCode.LOGIN_ERROR);
         }
         BlogUser blogUser = blogUserList.get(0);
+        loginUser.setUser(blogUser);
         // 获取角色表
         Long roleId = blogUser.getRoleId();
         BlogRole blogRole = blogRoleService.getById(roleId);
-        // 如果没有查询到角色，就返回默认角色权限 TODO
         if(Objects.isNull(blogRole) || blogRole.getIsDelete()) {
-            List<String> permissionDefault = Collections.emptyList();
-            return new LoginUser(blogUser, permissionDefault, permissionDefault);
+            return loginUser;
         }
-        // 查询对应的权限信息
+        // 查询对应的菜单信息
         List<Long> menuIdList = blogRoleMenuService.queryMenuIdListByRoleId(roleId);
-        if (CollectionUtils.isEmpty(menuIdList)) {
-            return new LoginUser(blogUser, null, Collections.emptyList());
+        if (!CollectionUtils.isEmpty(menuIdList)) {
+            List<BlogMenu> blogMenus = blogMenuService.listByIds(menuIdList);
+            // 路由去重
+            List<String> paths = blogMenus.stream()
+                    .filter(blogMenu -> !blogMenu.getIsDelete())
+                    .map(BlogMenu::getPath)
+                    .distinct()
+                    .collect(Collectors.toList());
+            loginUser.setPaths(paths);
         }
-        List<BlogMenu> blogMenus = blogMenuService.listByIds(menuIdList);
-        // 路由去重
-        List<String> paths = blogMenus.stream()
-                .filter(blogMenu -> !blogMenu.getIsDelete())
-                .map(BlogMenu::getPath)
-                .distinct()
-                .collect(Collectors.toList());
-        // 封装成UserDetails
-        return new LoginUser(blogUser, null, paths);
+        // 查询对应的资源信息
+        List<Long> resourceIdList = blogRoleResourceService.queryResourceIdListByRoleId(roleId);
+        if (!CollectionUtils.isEmpty(resourceIdList)) {
+            List<BlogResource> blogResources = blogResourceService.listByIds(menuIdList);
+            // 路由去重
+            List<String> uris = blogResources.stream()
+                    .filter(blogResource -> !blogResource.getIsDelete())
+                    .map(BlogResource::getUri)
+                    .distinct()
+                    .collect(Collectors.toList());
+            loginUser.setUris(uris);
+        }
+        return loginUser;
     }
 
     @Override

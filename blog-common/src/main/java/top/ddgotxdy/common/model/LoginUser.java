@@ -2,6 +2,7 @@ package top.ddgotxdy.common.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
@@ -9,7 +10,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import top.ddgotxdy.dal.entity.BlogUser;
 
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
  */
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class LoginUser implements UserDetails {
 
     /**
@@ -28,20 +32,19 @@ public class LoginUser implements UserDetails {
     private BlogUser user;
 
     /**
-     * 当前用户所得到的权限
+     * 当前用户所得到的权限 TODO 权限保留
      */
-    private List<String> permissions;
+    private List<String> permissions = Collections.emptyList();
 
     /**
      * 当前用户允许分配的路由
      */
-    private List<String> paths;
+    private List<String> paths = Arrays.asList("/");
 
-    public LoginUser(BlogUser user, List<String> permissions, List<String> paths) {
-        this.user = user;
-        this.permissions = permissions;
-        this.paths = paths;
-    }
+    /**
+     * 当前用户允许分配的路由
+     */
+    private List<String> uris = Arrays.asList("/auth/login", "/auth/register");
 
     @JSONField(serialize = false)
     private List<SimpleGrantedAuthority> authorities;
